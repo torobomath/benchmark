@@ -18,17 +18,6 @@
 (namespace 2d)
 
 (def-directive
-  p0
-  (Find (P)
-        (let* ((A (point 0 0))
-               (B (point 1 0))
-               (C (point 0 (^ 3 (/ 1 2)))))
-          (&& (point-inside-of P (triangle A B C))
-              (= (zero-vector) (v+ (sv* (/ 1 (distance P A)) (vec P A))
-                          (v+ (sv* (/ 1 (distance P B)) (vec P B))
-                              (sv* (/ 1 (distance P C)) (vec P C)))))))))
-
-(def-directive
   p1
   (Find (angles)
     (let* ((A (point 0 0))
@@ -54,8 +43,6 @@
         (= lengths (list-of (distance P A)
                 (distance P B)
                 (distance P C))))))))
-
-(def-answer p0 (PLam P (= P (point (/ 2 7) (/ (sqrt 3) 7)))))
 
 (def-answer p1 (PLam angles (= angles (list-of (/ -1 2) (/ -1 2)))))
 

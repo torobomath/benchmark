@@ -9,7 +9,7 @@
 
 (def-directive p
   (Find (min)
-    (forall (O X Y A P Q) (->
+    (forall (O X Y A) (->
       (&& (is-triangle X O Y)
         (= (/ (sqrt 3) 2) (cos-of-angle (angle X O Y)))
         (< (/ (sqrt 3) 2) (cos-of-angle (angle X O A)))

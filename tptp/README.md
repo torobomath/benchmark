@@ -13,7 +13,7 @@ A 'Find' directive is represented as a term of the form `'find/1'(...)` as in:
 ```
   thf(<name>_question,
       question,
-      'find/1' @ (^[V: <type>]: <formula>)).
+      'find/1' @ <type> @ (^[V: <type>]: <formula>)).
 ```
 
 where `<type>` can be of any type and `<formula>` defines the condition

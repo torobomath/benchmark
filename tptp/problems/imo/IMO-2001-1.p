@@ -17,16 +17,15 @@
 %            Maximal formula depth :   18 (  18 average)
 %            Number of connectives :   51 (   0   ~;   0   |;   4   &;  46   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   17 (   0   :)
+%            Number of symbols     :   17 (   0   :;   0   =)
 %            Number of variables   :    5 (   0 sgn;   5   !;   0   ?;   0   ^)
 %                                         (   5   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   2 pred;    2 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_O: '2d.Point',V_P: '2d.Point'] :
@@ -34,5 +33,6 @@ thf(p,conjecture,(
         & ( '2d.is-circumcenter-of/2' @ V_O @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) )
         & ( '2d.on/2' @ V_P @ ( '2d.seg/2' @ V_B @ V_C ) )
         & ( '2d.perpendicular/2' @ ( '2d.line/2' @ V_A @ V_P ) @ ( '2d.line/2' @ V_B @ V_C ) )
-        & ( '>=/2' @ ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_C @ V_A ) ) @ ( '+/2' @ ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_A @ V_B @ V_C ) ) @ ( '//2' @ 'Pi/0' @ 6 ) ) ) )
-     => ( '</2' @ ( '+/2' @ ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_C @ V_A @ V_B ) ) @ ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_C @ V_O @ V_P ) ) ) @ ( '//2' @ 'Pi/0' @ 2 ) ) ) )).
+        & ( $greatereq @ ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_C @ V_A ) ) @ ( $sum @ ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_A @ V_B @ V_C ) ) @ ( $quotient @ 'Pi/0' @ 6.0 ) ) ) )
+     => ( $less @ ( $sum @ ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_C @ V_A @ V_B ) ) @ ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_C @ V_O @ V_P ) ) ) @ ( $quotient @ 'Pi/0' @ 2.0 ) ) ) )).
+

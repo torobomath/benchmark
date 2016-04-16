@@ -20,48 +20,48 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   87 (   9 equality;  27 variable)
+%            Number of atoms       :   77 (   9 equality;  27 variable)
 %            Maximal formula depth :   21 (  12 average)
-%            Number of connectives :   67 (   0   ~;   0   |;   6   &;  59   @)
+%            Number of connectives :   57 (   0   ~;   0   |;   6   &;  49   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   16 (   0   :)
+%            Number of symbols     :   15 (   0   :;   0   =)
 %            Number of variables   :    6 (   0 sgn;   2   !;   1   ?;   3   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   11 (   2 pred;    3 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ans: 'Z'] :
-      ? [V_f: 'Z' > 'Z'] :
-        ( ! [V_n_dot_1: 'Z'] :
-            ( ( 'int.<=/2' @ V_n_dot_1 @ 0 )
-           => ( ( 'LamApp/2' @ V_f @ V_n_dot_1 )
+    ( 'find/1' @ $int
+    @ ^ [V_ans: $int] :
+      ? [V_f: ( $int > $int )] :
+        ( ! [V_n_dot_1: $int] :
+            ( ( $lesseq @ V_n_dot_1 @ 0 )
+           => ( ( V_f @ V_n_dot_1 )
               = 0 ) )
-        & ( ( 'LamApp/2' @ V_f @ 1 )
+        & ( ( V_f @ 1 )
           = 1 )
-        & ( ( 'LamApp/2' @ V_f @ 3 )
+        & ( ( V_f @ 3 )
           = 3 )
-        & ! [V_n_dot_0: 'Z'] :
-            ( ( 'int.>/2' @ V_n_dot_0 @ 0 )
-           => ( ( ( 'LamApp/2' @ V_f @ ( 'int.*/2' @ 2 @ V_n_dot_0 ) )
-                = ( 'LamApp/2' @ V_f @ V_n_dot_0 ) )
-              & ( ( 'LamApp/2' @ V_f @ ( 'int.+/2' @ ( 'int.*/2' @ 4 @ V_n_dot_0 ) @ 1 ) )
-                = ( 'int.-/2' @ ( 'int.*/2' @ 2 @ ( 'LamApp/2' @ V_f @ ( 'int.+/2' @ ( 'int.*/2' @ 2 @ V_n_dot_0 ) @ 1 ) ) ) @ ( 'LamApp/2' @ V_f @ V_n_dot_0 ) ) )
-              & ( ( 'LamApp/2' @ V_f @ ( 'int.+/2' @ ( 'int.*/2' @ 4 @ V_n_dot_0 ) @ 3 ) )
-                = ( 'int.-/2' @ ( 'int.*/2' @ 3 @ ( 'LamApp/2' @ V_f @ ( 'int.+/2' @ ( 'int.*/2' @ 2 @ V_n_dot_0 ) @ 1 ) ) ) @ ( 'int.*/2' @ 2 @ ( 'LamApp/2' @ V_f @ V_n_dot_0 ) ) ) ) ) )
+        & ! [V_n_dot_0: $int] :
+            ( ( $greater @ V_n_dot_0 @ 0 )
+           => ( ( ( V_f @ ( $product @ 2 @ V_n_dot_0 ) )
+                = ( V_f @ V_n_dot_0 ) )
+              & ( ( V_f @ ( $sum @ ( $product @ 4 @ V_n_dot_0 ) @ 1 ) )
+                = ( $difference @ ( $product @ 2 @ ( V_f @ ( $sum @ ( $product @ 2 @ V_n_dot_0 ) @ 1 ) ) ) @ ( V_f @ V_n_dot_0 ) ) )
+              & ( ( V_f @ ( $sum @ ( $product @ 4 @ V_n_dot_0 ) @ 3 ) )
+                = ( $difference @ ( $product @ 3 @ ( V_f @ ( $sum @ ( $product @ 2 @ V_n_dot_0 ) @ 1 ) ) ) @ ( $product @ 2 @ ( V_f @ V_n_dot_0 ) ) ) ) ) )
         & ( V_ans
           = ( 'int.cardinality-of/1'
-            @ ( 'set-by-def/1'
-              @ ^ [V_n: 'Z'] :
-                  ( ( 'LamApp/2' @ V_f @ V_n )
+            @ ( 'set-by-def/1' @ $int
+              @ ^ [V_n: $int] :
+                  ( ( V_f @ V_n )
                   = V_n ) ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_ans_dot_0: 'Z'] : ( V_ans_dot_0 = 92 ) ),
+    ^ [V_ans_dot_0: $int] : ( V_ans_dot_0 = 92 ) ),
     answer_to(p_question,[])).
+

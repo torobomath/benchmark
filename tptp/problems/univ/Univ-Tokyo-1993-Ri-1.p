@@ -14,33 +14,32 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   80 (   6 equality;  36 variable)
+%            Number of atoms       :   81 (   6 equality;  36 variable)
 %            Maximal formula depth :   26 (  14 average)
-%            Number of connectives :   66 (   0   ~;   0   |;  11   &;  53   @)
+%            Number of connectives :   67 (   0   ~;   0   |;  11   &;  54   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   27 (   0   :)
+%            Number of symbols     :   27 (   0   :;   0   =)
 %            Number of variables   :   12 (   0 sgn;   3   !;   6   ?;   3   ^)
 %                                         (  12   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   1 pred;    4 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_lim: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_lim: $real] :
       ? [V_V: 'R2R'] :
         ( ( 'converge/3'
           @ ( 'fun/1'
-            @ ^ [V_l_dot_0: 'R'] :
-                ( '//2' @ ( 'funapp/2' @ V_V @ V_l_dot_0 ) @ ( 'sqrt/1' @ ( '-/2' @ V_l_dot_0 @ 2 ) ) ) )
-          @ 2
+            @ ^ [V_l_dot_0: $real] :
+                ( $quotient @ ( 'funapp/2' @ V_V @ V_l_dot_0 ) @ ( 'sqrt/1' @ ( $difference @ V_l_dot_0 @ 2.0 ) ) ) )
+          @ 2.0
           @ V_lim )
-        & ! [V_l: 'R'] :
-            ( ( '>/2' @ V_l @ 2 )
+        & ! [V_l: $real] :
+            ( ( $greater @ V_l @ 2.0 )
            => ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_ABCD: '3d.Shape'] :
                 ( ( '3d.is-tetrahedron/4' @ V_A @ V_B @ V_C @ V_D )
                 & ( V_ABCD
@@ -53,14 +52,15 @@ thf(p_qustion,question,
                 & ( '3d.on/2' @ V_B @ '3d.y-axis/0' )
                 & ( '3d.on/2' @ V_C @ '3d.z-axis/0' )
                 & ( ( '3d.distance/2' @ V_A @ V_B )
-                  = ( '-/2' @ ( '*/2' @ 2 @ V_l ) @ 1 ) )
+                  = ( $difference @ ( $product @ 2.0 @ V_l ) @ 1.0 ) )
                 & ( ( '3d.distance/2' @ V_B @ V_C )
-                  = ( '*/2' @ 2 @ V_l ) )
+                  = ( $product @ 2.0 @ V_l ) )
                 & ( ( '3d.distance/2' @ V_C @ V_A )
-                  = ( '+/2' @ ( '*/2' @ 2 @ V_l ) @ 1 ) )
+                  = ( $sum @ ( $product @ 2.0 @ V_l ) @ 1.0 ) )
                 & ( ( 'funapp/2' @ V_V @ V_l )
                   = ( '3d.volume-of/1' @ V_ABCD ) ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_lim_dot_0: 'R'] : ( V_lim_dot_0 = 8 ) ),
+    ^ [V_lim_dot_0: $real] : ( V_lim_dot_0 = 8.0 ) ),
     answer_to(p_question,[])).
+

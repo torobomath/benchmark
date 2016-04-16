@@ -9,13 +9,11 @@
 
 (def-directive p1
   (Find (answer)
-    (exists (a b c O A B C M N) (&&
+    (exists (a b c O A B C M N u v w) (&&
       (= a (vec O A))
       (= b (vec O B))
       (= c (vec O C))
       (= answer (list-of u v w))
-      (< 0 x)
-      (< 0 y)
       (is-regular-tetrahedron O A B C)
       (= 1 (distance O A))
       (on M (seg O A))
@@ -34,8 +32,6 @@
       (= b (vec O B))
       (= c (vec O C))
       (= answer (list-of x y))
-      (< 0 x)
-      (< 0 y)
       (is-regular-tetrahedron O A B C)
       (= 1 (distance O A))
       (on M (seg O A))
@@ -79,14 +75,14 @@
   )
 )
 
-(def-answer p1 (PLam answer (&&
+(def-answer p1 (PLam answer (exists (u v w) (&&
   (= answer (list-of u v w))
-  (< 0 x)
-  (< 0 y)
+  (<= 0 x) (<= x 1)
+  (<= 0 y) (<= y 1)
   (= u (- x))
   (= v (- 1 y))
   (= w y)
-)))
+))))
 
 (def-answer p2 (PLam answer (&&
   (= answer (list-of x y))

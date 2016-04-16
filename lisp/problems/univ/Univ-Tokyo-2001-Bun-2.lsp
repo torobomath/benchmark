@@ -25,7 +25,7 @@
 
 (def-directive
   p1
-  (Find (x)
+  (Draw (x)
   (= x (shape-of-cpfun (PLam p (&& (= (y-coord p)
               (area-of (triangle
                   (point (^ (x-coord p) 2) 0)
@@ -35,33 +35,33 @@
 
 (def-directive
   p2
-  (Find (x) (= x (shape-of-cpfun (PLam p (&& (< 0 (x-coord p))
-           (= (y-coord p)
-              (max-of (PLam y (exists (t)
-                    (&& (= y
-                     (area-of (triangle
-                         (point (^ t 2) 0)
-                         (point (if (< t 3) 0 (- t 3)) (if (< t 3) t 3))
-                         (point 0 3))))
-                  (< 0 t)
-                  (<= t (x-coord p)))))))))))))
+  (Draw (x) (= x (shape-of-cpfun (PLam p (&& (< 0 (x-coord p))
+                                             (= (y-coord p)
+                                                (max-of (PLam y (exists (t)
+                                                                        (&& (= y
+                                                                               (area-of (triangle
+                                                                                          (point (^ t 2) 0)
+                                                                                          (point (if (< t 3) 0 (- t 3)) (if (< t 3) t 3))
+                                                                                          (point 0 3))))
+                                                                            (< 0 t)
+                                                                            (<= t (x-coord p)))))))))))))
 
-(def-answer p1 (PLam x (= x (shape-of-cpfun (PLam p (|| (&& (< 0 (x-coord p))
-                                                            (<= (x-coord p) 3)
+(def-answer p1 (shape-of-cpfun (PLam p (|| (&& (< 0 (x-coord p))
+                                               (<= (x-coord p) 3)
                                                (= (y-coord p)
                                                   (- (* (/ 3 2) (^ (x-coord p) 2))
                                                      (* (/ 1 2) (^ (x-coord p) 3)))))
                                            (&& (<= 3 (x-coord p))
                                                (= (y-coord p)
                                                   (- (* (/ 3 2) (x-coord p))
-                                                     (/ 9 2))))))))))
+                                                     (/ 9 2))))))))
 
-(def-answer p2 (PLam x (= x (shape-of-cpfun (PLam p (|| (&& (< 0 (x-coord p))
-                 (<= (x-coord p) 2)
-                 (= (y-coord p) (- (* (/ 3 2) (^ (x-coord p) 2)) (* (/ 1 2) (^ (x-coord p) 3)))))
-                   (&& (<= 2 (x-coord p))
-                 (<= (x-coord p) (/ 13 3))
-                 (= (y-coord p) 2))
-                   (&& (<= (/ 13 3) (x-coord p))
-                 (= (y-coord p) (- (* (/ 3 2) (x-coord p)) (/ 9 2))))))))))
+(def-answer p2 (shape-of-cpfun (PLam p (|| (&& (< 0 (x-coord p))
+                                               (<= (x-coord p) 2)
+                                               (= (y-coord p) (- (* (/ 3 2) (^ (x-coord p) 2)) (* (/ 1 2) (^ (x-coord p) 3)))))
+                                           (&& (<= 2 (x-coord p))
+                                               (<= (x-coord p) (/ 13 3))
+                                               (= (y-coord p) 2))
+                                           (&& (<= (/ 13 3) (x-coord p))
+                                               (= (y-coord p) (- (* (/ 3 2) (x-coord p)) (/ 9 2))))))))
 

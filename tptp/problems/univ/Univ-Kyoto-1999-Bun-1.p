@@ -16,16 +16,15 @@
 %            Maximal formula depth :   17 (  17 average)
 %            Number of connectives :   48 (   1   ~;   1   |;   6   &;  39   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   12 (   0   :)
+%            Number of symbols     :   12 (   0   :;   0   =)
 %            Number of variables   :    6 (   0 sgn;   6   !;   0   ?;   0   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   1 pred;    2 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_M: '2d.Point',V_H: '2d.Point',V_P: '2d.Point'] :
@@ -38,4 +37,5 @@ thf(p,conjecture,(
             & ( V_M != V_H ) )
           | ( ( V_M = V_H )
             & ( V_P = V_M ) ) ) )
-     => ( '>=/2' @ ( '+/2' @ ( '2d.distance^2/2' @ V_A @ V_B ) @ ( '2d.distance^2/2' @ V_A @ V_C ) ) @ ( '+/2' @ ( '*/2' @ 2 @ ( '2d.distance^2/2' @ V_A @ V_P ) ) @ ( '+/2' @ ( '2d.distance^2/2' @ V_B @ V_P ) @ ( '2d.distance^2/2' @ V_C @ V_P ) ) ) ) ) )).
+     => ( $greatereq @ ( $sum @ ( '2d.distance^2/2' @ V_A @ V_B ) @ ( '2d.distance^2/2' @ V_A @ V_C ) ) @ ( $sum @ ( $product @ 2.0 @ ( '2d.distance^2/2' @ V_A @ V_P ) ) @ ( $sum @ ( '2d.distance^2/2' @ V_B @ V_P ) @ ( '2d.distance^2/2' @ V_C @ V_P ) ) ) ) ) )).
+

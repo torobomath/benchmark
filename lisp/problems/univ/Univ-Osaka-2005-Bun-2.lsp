@@ -31,3 +31,9 @@
 
 (def-answer p2 (PLam m (> m 4)))
 
+(def-answer a1_1 (PLam table (false)))
+
+(def-answer a1_2 (graph-of (poly-fun (list-of -3 0 1 2))))
+
+(def-answer a2 (PLam m (> m 4)))
+

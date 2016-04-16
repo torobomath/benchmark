@@ -59,25 +59,3 @@
               (<= 0 t)
               (= d (v-sum (list-of (sv* r (vec (origin) c)) (sv* s (vec (origin) a)) (sv* t (vec (origin) b))))))))))))))
 
-(def-directive
-  p2_1
-  (Show
-   (exists (func a b c l m n)
-           (&&
-            (= func (Lam p (Lam q (- (* (x-coord p) (y-coord q)) (* (y-coord p) (x-coord q))))))
-            (= (LamApp (LamApp func a) b) l)
-            (= (LamApp (LamApp func b) c) m)
-            (= (LamApp (LamApp func c) a) n)
-      (->
-       (&&
-        (< 0 l)
-        (< 0 m)
-        (< 0 n))
-       (forall (d)
-         (exists (r s t)
-           (&&
-            (<= 0 r)
-            (<= 0 s)
-            (<= 0 t)
-            (= d (v-sum (list-of (sv* r (vec (origin) c)) (sv* s (vec (origin) a)) (sv* t (vec (origin) b)))))))))))))
-

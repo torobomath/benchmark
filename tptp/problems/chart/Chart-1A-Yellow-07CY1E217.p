@@ -5,25 +5,27 @@
 %% AUTHOR:    Jumma Kudo
 %% GENERATED: 2014-12-25
 
-% Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  586 (  36 equality; 265 variable)
-%            Maximal formula depth :   50 (  28 average)
-%            Number of connectives :  508 (   0   ~;   0   |;  74   &; 432   @)
+% Syntax   : Number of formulae    :    7 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  589 (  36 equality; 258 variable)
+%            Maximal formula depth :   50 (  24 average)
+%            Number of connectives :  511 (   0   ~;   0   |;  74   &; 435   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   29 (   0   :)
-%            Number of variables   :   59 (   0 sgn;   8   !;  38   ?;  11   ^)
+%            Number of symbols     :   30 (   1   :;   0   =)
+%            Number of variables   :   57 (   0 sgn;   8   !;  38   ?;  11   ^)
 %                                         (  57   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   2 pred;    3 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('t/0_type',type,(
+    't/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_St: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_St: $real] :
       ? [V_O: '3d.Point',V_X: '3d.Point',V_Y: '3d.Point',V_Z: '3d.Point',V_A: '3d.Point',V_P: '3d.Point',V_B: '3d.Point',V_Q: '3d.Point',V_C: '3d.Point',V_R: '3d.Point',V_F: '3d.Shape',V_G: '3d.Shape'] :
         ( ( '3d.perpendicular/2' @ ( '3d.line/2' @ V_O @ V_X ) @ ( '3d.line/2' @ V_O @ V_Y ) )
         & ( '3d.perpendicular/2' @ ( '3d.line/2' @ V_O @ V_X ) @ ( '3d.line/2' @ V_O @ V_Z ) )
@@ -35,19 +37,19 @@ thf(p1_qustion,question,
         & ( '3d.on/2' @ V_C @ ( '3d.half-line/2' @ V_O @ V_Z ) )
         & ( '3d.on/2' @ V_R @ ( '3d.half-line/2' @ V_O @ V_Z ) )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_A ) )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_B ) )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_C ) )
-          = 1 )
-        & ( '<=/2' @ 1 @ V_t )
-        & ( '<=/2' @ V_t @ 2 )
+          = 1.0 )
+        & ( $lesseq @ 1.0 @ 't/0' )
+        & ( $lesseq @ 't/0' @ 2.0 )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_P ) )
-          = V_t )
+          = 't/0' )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_Q ) )
-          = V_t )
+          = 't/0' )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_R ) )
-          = V_t )
+          = 't/0' )
         & ( V_F
           = ( '3d.cube/8' @ V_O @ V_A @ V_B @ ( '3d.vec->point/1' @ ( '3d.v+/2' @ ( '3d.vec/2' @ '3d.origin/0' @ V_A ) @ ( '3d.vec/2' @ '3d.origin/0' @ V_B ) ) ) @ V_C @ ( '3d.vec->point/1' @ ( '3d.v+/2' @ ( '3d.vec/2' @ '3d.origin/0' @ V_A ) @ ( '3d.vec/2' @ '3d.origin/0' @ V_C ) ) ) @ ( '3d.vec->point/1' @ ( '3d.v+/2' @ ( '3d.vec/2' @ '3d.origin/0' @ V_C ) @ ( '3d.vec/2' @ '3d.origin/0' @ V_B ) ) ) @ ( '3d.vec->point/1' @ ( '3d.v+/2' @ ( '3d.v+/2' @ ( '3d.vec/2' @ '3d.origin/0' @ V_A ) @ ( '3d.vec/2' @ '3d.origin/0' @ V_B ) ) @ ( '3d.vec/2' @ '3d.origin/0' @ V_C ) ) ) ) )
         & ( V_G
@@ -60,9 +62,9 @@ thf(p1_qustion,question,
                   & ( '3d.on/2' @ V_T @ V_F ) ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_t: 'R'] :
-      ? [V_O: '3d.Point',V_X: '3d.Point',V_Y: '3d.Point',V_Z: '3d.Point',V_A: '3d.Point',V_P: '3d.Point',V_B: '3d.Point',V_Q: '3d.Point',V_C: '3d.Point',V_R: '3d.Point',V_F: '3d.Shape',V_G: '3d.Shape',V_St: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_t: $real] :
+      ? [V_O: '3d.Point',V_X: '3d.Point',V_Y: '3d.Point',V_Z: '3d.Point',V_A: '3d.Point',V_P: '3d.Point',V_B: '3d.Point',V_Q: '3d.Point',V_C: '3d.Point',V_R: '3d.Point',V_F: '3d.Shape',V_G: '3d.Shape',V_St: $real] :
         ( ( '3d.perpendicular/2' @ ( '3d.line/2' @ V_O @ V_X ) @ ( '3d.line/2' @ V_O @ V_Y ) )
         & ( '3d.perpendicular/2' @ ( '3d.line/2' @ V_O @ V_X ) @ ( '3d.line/2' @ V_O @ V_Z ) )
         & ( '3d.perpendicular/2' @ ( '3d.line/2' @ V_O @ V_Y ) @ ( '3d.line/2' @ V_O @ V_Z ) )
@@ -73,13 +75,13 @@ thf(p2_qustion,question,
         & ( '3d.on/2' @ V_C @ ( '3d.half-line/2' @ V_O @ V_Z ) )
         & ( '3d.on/2' @ V_R @ ( '3d.half-line/2' @ V_O @ V_Z ) )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_A ) )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_B ) )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_C ) )
-          = 1 )
-        & ( '<=/2' @ 1 @ V_t )
-        & ( '<=/2' @ V_t @ 2 )
+          = 1.0 )
+        & ( $lesseq @ 1.0 @ V_t )
+        & ( $lesseq @ V_t @ 2.0 )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_P ) )
           = V_t )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_Q ) )
@@ -96,7 +98,7 @@ thf(p2_qustion,question,
               @ ^ [V_T_dot_0: '3d.Point'] :
                   ( ( '3d.on/2' @ V_T_dot_0 @ V_G )
                   & ( '3d.on/2' @ V_T_dot_0 @ V_F ) ) ) ) )
-        & ! [V_s: 'R',V_P2: '3d.Point',V_Q2: '3d.Point',V_R2: '3d.Point'] :
+        & ! [V_s: $real,V_P2: '3d.Point',V_Q2: '3d.Point',V_R2: '3d.Point'] :
             ( ( ( '3d.on/2' @ V_P2 @ ( '3d.half-line/2' @ V_O @ V_X ) )
               & ( '3d.on/2' @ V_Q2 @ ( '3d.half-line/2' @ V_O @ V_Y ) )
               & ( '3d.on/2' @ V_R2 @ ( '3d.half-line/2' @ V_O @ V_Z ) )
@@ -106,7 +108,7 @@ thf(p2_qustion,question,
                 = V_s )
               & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_R2 ) )
                 = V_s ) )
-           => ( '>=/2' @ V_St
+           => ( $greatereq @ V_St
               @ ( '3d.area-of/1'
                 @ ( '3d.shape-of-cpfun/1'
                   @ ^ [V_T: '3d.Point'] :
@@ -114,9 +116,9 @@ thf(p2_qustion,question,
                       & ( '3d.on/2' @ V_T @ V_F ) ) ) ) ) ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_St: 'R'] :
-      ? [V_O: '3d.Point',V_X: '3d.Point',V_Y: '3d.Point',V_Z: '3d.Point',V_A: '3d.Point',V_P: '3d.Point',V_B: '3d.Point',V_Q: '3d.Point',V_C: '3d.Point',V_R: '3d.Point',V_F: '3d.Shape',V_G: '3d.Shape',V_t: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_St: $real] :
+      ? [V_O: '3d.Point',V_X: '3d.Point',V_Y: '3d.Point',V_Z: '3d.Point',V_A: '3d.Point',V_P: '3d.Point',V_B: '3d.Point',V_Q: '3d.Point',V_C: '3d.Point',V_R: '3d.Point',V_F: '3d.Shape',V_G: '3d.Shape',V_t: $real] :
         ( ( '3d.perpendicular/2' @ ( '3d.line/2' @ V_O @ V_X ) @ ( '3d.line/2' @ V_O @ V_Y ) )
         & ( '3d.perpendicular/2' @ ( '3d.line/2' @ V_O @ V_X ) @ ( '3d.line/2' @ V_O @ V_Z ) )
         & ( '3d.perpendicular/2' @ ( '3d.line/2' @ V_O @ V_Y ) @ ( '3d.line/2' @ V_O @ V_Z ) )
@@ -127,13 +129,13 @@ thf(p3_qustion,question,
         & ( '3d.on/2' @ V_C @ ( '3d.half-line/2' @ V_O @ V_Z ) )
         & ( '3d.on/2' @ V_R @ ( '3d.half-line/2' @ V_O @ V_Z ) )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_A ) )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_B ) )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_C ) )
-          = 1 )
-        & ( '<=/2' @ 1 @ V_t )
-        & ( '<=/2' @ V_t @ 2 )
+          = 1.0 )
+        & ( $lesseq @ 1.0 @ V_t )
+        & ( $lesseq @ V_t @ 2.0 )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_P ) )
           = V_t )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_Q ) )
@@ -150,7 +152,7 @@ thf(p3_qustion,question,
               @ ^ [V_T_dot_0: '3d.Point'] :
                   ( ( '3d.on/2' @ V_T_dot_0 @ V_G )
                   & ( '3d.on/2' @ V_T_dot_0 @ V_F ) ) ) ) )
-        & ! [V_s: 'R',V_P2: '3d.Point',V_Q2: '3d.Point',V_R2: '3d.Point'] :
+        & ! [V_s: $real,V_P2: '3d.Point',V_Q2: '3d.Point',V_R2: '3d.Point'] :
             ( ( ( '3d.on/2' @ V_P2 @ ( '3d.half-line/2' @ V_O @ V_X ) )
               & ( '3d.on/2' @ V_Q2 @ ( '3d.half-line/2' @ V_O @ V_Y ) )
               & ( '3d.on/2' @ V_R2 @ ( '3d.half-line/2' @ V_O @ V_Z ) )
@@ -160,7 +162,7 @@ thf(p3_qustion,question,
                 = V_s )
               & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_O @ V_R2 ) )
                 = V_s ) )
-           => ( '>=/2' @ V_St
+           => ( $greatereq @ V_St
               @ ( '3d.area-of/1'
                 @ ( '3d.shape-of-cpfun/1'
                   @ ^ [V_T: '3d.Point'] :
@@ -168,19 +170,20 @@ thf(p3_qustion,question,
                       & ( '3d.on/2' @ V_T @ V_F ) ) ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_St_dot_0: 'R'] :
+    ^ [V_St_dot_0: $real] :
       ( V_St_dot_0
-      = ( '-/2' @ ( '-/2' @ ( '*/2' @ 3 @ ( '*/2' @ ( 'sqrt/1' @ 3 ) @ V_t ) ) @ ( '*/2' @ ( 'sqrt/1' @ 3 ) @ ( '^/2' @ V_t @ 2 ) ) ) @ ( '*/2' @ 3 @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) ) ) ) ),
+      = ( $difference @ ( $difference @ ( $product @ 3.0 @ ( $product @ ( 'sqrt/1' @ 3.0 ) @ 't/0' ) ) @ ( $product @ ( 'sqrt/1' @ 3.0 ) @ ( '^/2' @ 't/0' @ 2.0 ) ) ) @ ( $product @ 3.0 @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_t_dot_0: 'R'] :
+    ^ [V_t_dot_0: $real] :
       ( V_t_dot_0
-      = ( '//2' @ 3 @ 2 ) ) ),
+      = ( $quotient @ 3.0 @ 2.0 ) ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_St_dot_0: 'R'] :
+    ^ [V_St_dot_0: $real] :
       ( V_St_dot_0
-      = ( '*/2' @ ( '//2' @ 3 @ 4 ) @ ( 'sqrt/1' @ 3 ) ) ) ),
+      = ( $product @ ( $quotient @ 3.0 @ 4.0 ) @ ( 'sqrt/1' @ 3.0 ) ) ) ),
     answer_to(p3_question,[])).
+

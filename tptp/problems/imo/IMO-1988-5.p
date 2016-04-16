@@ -18,19 +18,18 @@
 %            Maximal formula depth :   29 (  29 average)
 %            Number of connectives :   62 (   0   ~;   0   |;  11   &;  50   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   17 (   0   :)
+%            Number of symbols     :   17 (   0   :;   0   =)
 %            Number of variables   :   11 (   0 sgn;  11   !;   0   ?;   0   ^)
 %                                         (  11   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    3 (   1 pred;    1 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_Ln: '2d.Shape',V_O1: '2d.Point',V_O2: '2d.Point',V_S: 'R',V_T: 'R',V_K: '2d.Point',V_L: '2d.Point'] :
+    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_Ln: '2d.Shape',V_O1: '2d.Point',V_O2: '2d.Point',V_S: $real,V_T: $real,V_K: '2d.Point',V_L: '2d.Point'] :
       ( ( ( '2d.is-triangle/3' @ V_B @ V_A @ V_C )
         & ( '2d.perpendicular/2' @ ( '2d.line/2' @ V_B @ V_A ) @ ( '2d.line/2' @ V_C @ V_A ) )
         & ( V_D
@@ -46,4 +45,5 @@ thf(p,conjecture,(
           = ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) )
         & ( V_T
           = ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_K @ V_L ) ) ) )
-     => ( '>=/2' @ V_S @ ( '*/2' @ 2 @ V_T ) ) ) )).
+     => ( $greatereq @ V_S @ ( $product @ 2.0 @ V_T ) ) ) )).
+

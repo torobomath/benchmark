@@ -15,20 +15,18 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  102 (   6 equality;  61 variable)
+%            Number of atoms       :  109 (   6 equality;  61 variable)
 %            Maximal formula depth :   39 (  39 average)
-%            Number of connectives :   92 (   3   ~;   0   |;  19   &;  69   @)
+%            Number of connectives :   99 (   3   ~;   0   |;  19   &;  76   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   14 (   0   :)
+%            Number of symbols     :   14 (   0   :;   0   =)
 %            Number of variables   :   13 (   0 sgn;  13   !;   0   ?;   0   ^)
 %                                         (  13   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_H: '2d.Point',V_K1: '2d.Shape',V_A1: '2d.Point',V_A2: '2d.Point',V_K2: '2d.Shape',V_B1: '2d.Point',V_B2: '2d.Point',V_K3: '2d.Shape',V_C1: '2d.Point',V_C2: '2d.Point'] :
@@ -55,4 +53,5 @@ thf(p,conjecture,(
         & ( V_C1 != V_C2 )
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_A @ V_B ) @ V_K3 @ V_C1 )
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_A @ V_B ) @ V_K3 @ V_C2 ) )
-     => ( '2d.concircular/1' @ ( 'cons/2' @ V_A1 @ ( 'cons/2' @ V_A2 @ ( 'cons/2' @ V_B1 @ ( 'cons/2' @ V_B2 @ ( 'cons/2' @ V_C1 @ ( 'cons/2' @ V_C2 @ 'nil/0' ) ) ) ) ) ) ) ) )).
+     => ( '2d.concircular/1' @ ( 'cons/2' @ '2d.Point' @ V_A1 @ ( 'cons/2' @ '2d.Point' @ V_A2 @ ( 'cons/2' @ '2d.Point' @ V_B1 @ ( 'cons/2' @ '2d.Point' @ V_B2 @ ( 'cons/2' @ '2d.Point' @ V_C1 @ ( 'cons/2' @ '2d.Point' @ V_C2 @ ( 'nil/0' @ '2d.Point' ) ) ) ) ) ) ) ) ) )).
+

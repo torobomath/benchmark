@@ -3,6 +3,16 @@
 ;; SOURCE:    Nagoya University, 2012, Humanities Course, Problem 1
 ;; AUTHOR:    Ukyo Suzuki
 ;; GENERATED: 2014-05-07
+;;
+;; <PROBLEM-TEXT>
+;; The line $l$ on the $xy$-plane pass through the point $(0, 1)$ and its inclination is $h$.
+;; (1) Let $Q(s,t)$ be the point symmetric to the point $P(a,b)$ with respect to $l$ on the $xy$-plane.
+;; Represent $s$ and $t$ using $a$, $b$, and $h$, assuming that the point $P(a,b)$ is not on $l$.
+;; (2) Let $A$ be the point symmetric to the origin $O(0,0)$ with respect to $l$ on the $xy$-plane.
+;; When $h$ moves in the range $-1 \le h \le 1$, find the maximum and minimum length of the segment $OA$.
+;; (3) Let $C$ be the locus of the point $A$ when $h$ moves in the range $-1 \le h \le 1$.
+;; Find the area of the region enclosed by $C$ and the line $y = 1$.
+;; </PROBLEM-TEXT>
 
 (namespace 2d)
 
@@ -59,7 +69,7 @@
   p3
   (Find (S)
   (exists (C) (&&
-    (= S (area-of (shape-enclosed-by (list-of C (graph-of (fun (Lam x 2)))))))
+    (= S (area-of (shape-enclosed-by (list-of C (graph-of (fun (Lam x 1)))))))
     (= C (shape-of-cpfun (PLam A (exists (l h O) (&&
            (on (point 0 1) l)
            (line-type l)
@@ -70,5 +80,5 @@
     )))))
   ))))
 
-(def-answer p3 (PLam a (= a (/ (Pi) 2))))
+(def-answer p3 (PLam S (= S (/ (Pi) 2))))
 

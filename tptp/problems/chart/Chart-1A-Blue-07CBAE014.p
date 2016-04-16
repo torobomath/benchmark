@@ -10,22 +10,22 @@
 %            Maximal formula depth :   13 (  13 average)
 %            Number of connectives :   23 (   1   ~;   0   |;   3   &;  18   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   10 (   0   :)
+%            Number of symbols     :   10 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   3   !;   0   ?;   0   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   1 pred;    1 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_m: 'Z',V_n: 'Z',V_k: 'Z'] :
+    ! [V_m: $int,V_n: $int,V_k: $int] :
       ( ( ( 'int.is-natural-number/1' @ V_m )
         & ( 'int.is-natural-number/1' @ V_n )
-        & ( 'int.</2' @ V_m @ V_n )
+        & ( $less @ V_m @ V_n )
         & ( 'int.is-natural-number/1' @ V_k ) )
-     => ( ( '^/2' @ ( 'int->real/1' @ 2 ) @ ( 'int->real/1' @ V_k ) )
-       != ( 'seq.sum-from-to/3' @ ( 'seq.arith-seq/2' @ ( 'int->real/1' @ 1 ) @ ( 'int->real/1' @ 1 ) ) @ ( 'seq.index/1' @ V_m ) @ ( 'seq.index/1' @ V_n ) ) ) ) )).
+     => ( ( '^/2' @ ( $to_real @ 2 ) @ ( $to_real @ V_k ) )
+       != ( 'seq.sum-from-to/3' @ ( 'seq.arith-seq/2' @ ( $to_real @ 1 ) @ ( $to_real @ 1 ) ) @ ( 'seq.index/1' @ V_m ) @ ( 'seq.index/1' @ V_n ) ) ) ) )).
+

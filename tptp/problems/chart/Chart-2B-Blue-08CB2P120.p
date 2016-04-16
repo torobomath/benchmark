@@ -5,33 +5,41 @@
 %% AUTHOR:    Takuya Matsuzaki
 %% GENERATED: 2015-01-07
 
-% Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  156 (  14 equality;  61 variable)
-%            Maximal formula depth :   28 (  18 average)
-%            Number of connectives :  129 (   3   ~;   0   |;  16   &; 109   @)
+% Syntax   : Number of formulae    :    7 (   0 unit;   3 type;   0 defn)
+%            Number of atoms       :  181 (  14 equality;  44 variable)
+%            Maximal formula depth :   29 (  11 average)
+%            Number of connectives :  154 (   3   ~;   0   |;  16   &; 134   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :)
-%            Number of variables   :   28 (   2 sgn;   8   !;  10   ?;   4   ^)
+%            Number of symbols     :   23 (   3   :;   0   =)
+%            Number of variables   :   22 (   0 sgn;   8   !;  10   ?;   4   ^)
 %                                         (  22   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   0 pred;    4 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
+
+thf('m/0_type',type,(
+    'm/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_BC: 'ListOf' @ 'R'] :
-      ? [V_l1: '2d.Shape',V_l2: '2d.Shape',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_Bx: 'R',V_By: 'R',V_Cx: 'R',V_Cy: 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_BC: ( 'ListOf' @ $real )] :
+      ? [V_l1: '2d.Shape',V_l2: '2d.Shape',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_Bx: $real,V_By: $real,V_Cx: $real,V_Cy: $real] :
         ( ( V_l1
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) )
         & ( V_l2
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ V_m @ 'nil/0' ) ) ) ) )
-        & ( V_m != 1 )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 'm/0' @ ( 'nil/0' @ $real ) ) ) ) ) )
+        & ( 'm/0' != 1.0 )
         & ( V_A
-          = ( '2d.point/2' @ V_a @ V_b ) )
+          = ( '2d.point/2' @ 'a/0' @ 'b/0' ) )
         & ( V_B
           = ( '2d.point/2' @ V_Bx @ V_By ) )
         & ( V_C
@@ -40,17 +48,17 @@ thf(p1_qustion,question,
         & ( '2d.line-symmetry/3' @ V_B @ V_C @ V_l2 )
         & ( '2d.line-symmetry/3' @ V_C @ V_D @ V_l1 )
         & ( V_BC
-          = ( 'cons/2' @ V_Bx @ ( 'cons/2' @ V_By @ ( 'cons/2' @ V_Cx @ ( 'cons/2' @ V_Cy @ 'nil/0' ) ) ) ) ) ) )).
+          = ( 'cons/2' @ $real @ V_Bx @ ( 'cons/2' @ $real @ V_By @ ( 'cons/2' @ $real @ V_Cx @ ( 'cons/2' @ $real @ V_Cy @ ( 'nil/0' @ $real ) ) ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_m: 'R'] :
-        ( ( V_m != 1 )
-        & ! [V_l1: '2d.Shape',V_l2: '2d.Shape',V_A: '2d.Point',V_a: 'R',V_b: 'R',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point'] :
+    ( 'find/1' @ $real
+    @ ^ [V_m: $real] :
+        ( ( V_m != 1.0 )
+        & ! [V_l1: '2d.Shape',V_l2: '2d.Shape',V_A: '2d.Point',V_a: $real,V_b: $real,V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point'] :
             ( ( ( V_l1
-                = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) )
+                = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) )
               & ( V_l2
-                = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ V_m @ 'nil/0' ) ) ) ) )
+                = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ V_m @ ( 'nil/0' @ $real ) ) ) ) ) )
               & ( V_A
                 = ( '2d.point/2' @ V_a @ V_b ) )
               & ( '2d.line-symmetry/3' @ V_A @ V_B @ V_l1 )
@@ -59,12 +67,13 @@ thf(p2_qustion,question,
            => ( '2d.line-symmetry/3' @ V_A @ V_D @ V_l2 ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_BC_dot_0: 'ListOf' @ 'R'] :
-      ( ( V_m != 1 )
+    ^ [V_BC_dot_0: ( 'ListOf' @ $real )] :
+      ( ( 'm/0' != 1.0 )
       & ( V_BC_dot_0
-        = ( 'cons/2' @ V_b @ ( 'cons/2' @ V_a @ ( 'cons/2' @ ( '//2' @ ( '+/2' @ ( '*/2' @ 2 @ ( '*/2' @ V_m @ V_a ) ) @ ( '*/2' @ ( '-/2' @ 1 @ ( '^/2' @ V_m @ 2 ) ) @ V_b ) ) @ ( '+/2' @ ( '^/2' @ V_m @ 2 ) @ 1 ) ) @ ( 'cons/2' @ ( '//2' @ ( '+/2' @ ( '*/2' @ ( '-/2' @ ( '^/2' @ V_m @ 2 ) @ 1 ) @ V_a ) @ ( '*/2' @ 2 @ ( '*/2' @ V_m @ V_b ) ) ) @ ( '+/2' @ ( '^/2' @ V_m @ 2 ) @ 1 ) ) @ 'nil/0' ) ) ) ) ) ) ),
+        = ( 'cons/2' @ $real @ 'b/0' @ ( 'cons/2' @ $real @ 'a/0' @ ( 'cons/2' @ $real @ ( $quotient @ ( $sum @ ( $product @ 2.0 @ ( $product @ 'm/0' @ 'a/0' ) ) @ ( $product @ ( $difference @ 1.0 @ ( '^/2' @ 'm/0' @ 2.0 ) ) @ 'b/0' ) ) @ ( $sum @ ( '^/2' @ 'm/0' @ 2.0 ) @ 1.0 ) ) @ ( 'cons/2' @ $real @ ( $quotient @ ( $sum @ ( $product @ ( $difference @ ( '^/2' @ 'm/0' @ 2.0 ) @ 1.0 ) @ 'a/0' ) @ ( $product @ 2.0 @ ( $product @ 'm/0' @ 'b/0' ) ) ) @ ( $sum @ ( '^/2' @ 'm/0' @ 2.0 ) @ 1.0 ) ) @ ( 'nil/0' @ $real ) ) ) ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_m_dot_0: 'R'] : ( V_m_dot_0 = -1 ) ),
+    ^ [V_m_dot_0: $real] : ( V_m_dot_0 = -1.0 ) ),
     answer_to(p2_question,[])).
+

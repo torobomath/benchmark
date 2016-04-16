@@ -20,50 +20,56 @@
 %% $a > b > 0$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  100 (   6 equality;  37 variable)
-%            Maximal formula depth :   31 (  23 average)
-%            Number of connectives :   86 (   0   ~;   0   |;  12   &;  74   @)
+% Syntax   : Number of formulae    :    4 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :  109 (   6 equality;  22 variable)
+%            Maximal formula depth :   32 (  13 average)
+%            Number of connectives :   95 (   0   ~;   0   |;  12   &;  83   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   25 (   0   :)
-%            Number of variables   :   11 (   0 sgn;   0   !;   4   ?;   3   ^)
+%            Number of symbols     :   27 (   2   :;   0   =)
+%            Number of variables   :    7 (   0 sgn;   0   !;   4   ?;   3   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   11 (   3 pred;    4 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_V: 'R'] :
-        ( ( '>/2' @ V_a @ V_b )
-        & ( '>/2' @ V_b @ 0 )
+    ( 'find/1' @ $real
+    @ ^ [V_V: $real] :
+        ( ( $greater @ 'a/0' @ 'b/0' )
+        & ( $greater @ 'b/0' @ 0.0 )
         & ? [V_R: '3d.Shape'] :
             ( ( V_R
               = ( '3d.shape-of-cpfun/1'
                 @ ^ [V_p: '3d.Point'] :
-                  ? [V_x: 'R',V_y: 'R',V_z: 'R'] :
+                  ? [V_x: $real,V_y: $real,V_z: $real] :
                     ( ( V_x
                       = ( '3d.x-coord/1' @ V_p ) )
                     & ( V_y
                       = ( '3d.y-coord/1' @ V_p ) )
                     & ( V_z
                       = ( '3d.z-coord/1' @ V_p ) )
-                    & ( '>=/2' @ V_x @ 0 )
-                    & ( '>=/2' @ V_y @ 0 )
-                    & ( '>=/2' @ V_z @ 0 )
-                    & ( '<=/2' @ ( 'list-max/1' @ ( 'cons/2' @ V_x @ ( 'cons/2' @ V_y @ ( 'cons/2' @ V_z @ 'nil/0' ) ) ) ) @ V_a )
-                    & ( '<=/2' @ ( '+/2' @ V_x @ ( '+/2' @ V_y @ ( '+/2' @ V_z @ ( '-/1' @ ( 'list-min/1' @ ( 'cons/2' @ V_x @ ( 'cons/2' @ V_y @ ( 'cons/2' @ V_z @ 'nil/0' ) ) ) ) ) ) ) ) @ ( '+/2' @ V_a @ V_b ) ) ) ) )
+                    & ( $greatereq @ V_x @ 0.0 )
+                    & ( $greatereq @ V_y @ 0.0 )
+                    & ( $greatereq @ V_z @ 0.0 )
+                    & ( $lesseq @ ( 'list-max/1' @ ( 'cons/2' @ $real @ V_x @ ( 'cons/2' @ $real @ V_y @ ( 'cons/2' @ $real @ V_z @ ( 'nil/0' @ $real ) ) ) ) ) @ 'a/0' )
+                    & ( $lesseq @ ( $sum @ V_x @ ( $sum @ V_y @ ( $sum @ V_z @ ( $uminus @ ( 'list-min/1' @ ( 'cons/2' @ $real @ V_x @ ( 'cons/2' @ $real @ V_y @ ( 'cons/2' @ $real @ V_z @ ( 'nil/0' @ $real ) ) ) ) ) ) ) ) ) @ ( $sum @ 'a/0' @ 'b/0' ) ) ) ) )
             & ( V_V
               = ( '3d.volume-of/1' @ V_R ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_V_dot_0: 'R'] :
-      ( ( '>/2' @ V_a @ V_b )
-      & ( '>/2' @ V_b @ 0 )
+    ^ [V_V_dot_0: $real] :
+      ( ( $greater @ 'a/0' @ 'b/0' )
+      & ( $greater @ 'b/0' @ 0.0 )
       & ( V_V_dot_0
-        = ( '//2' @ ( '+/2' @ ( '^/2' @ V_a @ 3 ) @ ( '+/2' @ ( '*/2' @ 3 @ ( '*/2' @ ( '^/2' @ V_a @ 2 ) @ V_b ) ) @ ( '+/2' @ ( '*/2' @ 3 @ ( '*/2' @ V_a @ ( '^/2' @ V_b @ 2 ) ) ) @ ( '-/1' @ ( '*/2' @ 3 @ ( '^/2' @ V_b @ 3 ) ) ) ) ) ) @ 4 ) ) ) ),
+        = ( $quotient @ ( $sum @ ( '^/2' @ 'a/0' @ 3.0 ) @ ( $sum @ ( $product @ 3.0 @ ( $product @ ( '^/2' @ 'a/0' @ 2.0 ) @ 'b/0' ) ) @ ( $sum @ ( $product @ 3.0 @ ( $product @ 'a/0' @ ( '^/2' @ 'b/0' @ 2.0 ) ) ) @ ( $uminus @ ( $product @ 3.0 @ ( '^/2' @ 'b/0' @ 3.0 ) ) ) ) ) ) @ 4.0 ) ) ) ),
     answer_to(p_question,[])).
+

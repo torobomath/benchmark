@@ -23,21 +23,38 @@
 %% using $|\vec{p}|$, $|\vec{q}|$, and $|\vec{r}|$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    5 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  310 (  42 equality; 146 variable)
-%            Maximal formula depth :   45 (  23 average)
-%            Number of connectives :  223 (   0   ~;   0   |;  44   &; 177   @)
+% Syntax   : Number of formulae    :   11 (   0 unit;   6 type;   0 defn)
+%            Number of atoms       :  318 (  42 equality; 131 variable)
+%            Maximal formula depth :   45 (  12 average)
+%            Number of connectives :  231 (   0   ~;   0   |;  44   &; 185   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   23 (   0   :)
-%            Number of variables   :   55 (   9 sgn;  10   !;  29   ?;   4   ^)
+%            Number of symbols     :   29 (   6   :;   0   =)
+%            Number of variables   :   43 (   0 sgn;  10   !;  29   ?;   4   ^)
 %                                         (  43   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   0 pred;    2 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('p/0_type',type,(
+    'p/0': '3d.Vector' )).
+
+thf('p_abs/0_type',type,(
+    'p_abs/0': $real )).
+
+thf('q/0_type',type,(
+    'q/0': '3d.Vector' )).
+
+thf('q_abs/0_type',type,(
+    'q_abs/0': $real )).
+
+thf('r/0_type',type,(
+    'r/0': '3d.Vector' )).
+
+thf('r_abs/0_type',type,(
+    'r_abs/0': $real )).
 
 thf(p1,conjecture,(
     ! [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_L: '3d.Point',V_M: '3d.Point',V_N: '3d.Point',V_P: '3d.Point',V_Q: '3d.Point',V_R: '3d.Point'] :
@@ -65,9 +82,41 @@ thf(p1,conjecture,(
              => ( V_S = V_T ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_a_b_c: 'ListOf' @ '3d.Vector'] :
+    ( 'find/1' @ ( 'ListOf' @ '3d.Vector' )
+    @ ^ [V_a_b_c: ( 'ListOf' @ '3d.Vector' )] :
       ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_L: '3d.Point',V_M: '3d.Point',V_N: '3d.Point',V_P: '3d.Point',V_Q: '3d.Point',V_R: '3d.Point',V_a: '3d.Vector',V_b: '3d.Vector',V_c: '3d.Vector'] :
+        ( ( '3d.is-tetrahedron/4' @ '3d.origin/0' @ V_A @ V_B @ V_C )
+        & ( V_a
+          = ( '3d.vec/2' @ '3d.origin/0' @ V_A ) )
+        & ( V_b
+          = ( '3d.vec/2' @ '3d.origin/0' @ V_B ) )
+        & ( V_c
+          = ( '3d.vec/2' @ '3d.origin/0' @ V_C ) )
+        & ( V_L
+          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ '3d.origin/0' @ V_A ) ) )
+        & ( V_M
+          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ '3d.origin/0' @ V_B ) ) )
+        & ( V_N
+          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ '3d.origin/0' @ V_C ) ) )
+        & ( V_P
+          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ V_B @ V_C ) ) )
+        & ( V_Q
+          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ V_C @ V_A ) ) )
+        & ( V_R
+          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ V_A @ V_B ) ) )
+        & ( 'p/0'
+          = ( '3d.vec/2' @ V_L @ V_P ) )
+        & ( 'q/0'
+          = ( '3d.vec/2' @ V_M @ V_Q ) )
+        & ( 'r/0'
+          = ( '3d.vec/2' @ V_N @ V_R ) )
+        & ( V_a_b_c
+          = ( 'cons/2' @ '3d.Vector' @ V_a @ ( 'cons/2' @ '3d.Vector' @ V_b @ ( 'cons/2' @ '3d.Vector' @ V_c @ ( 'nil/0' @ '3d.Vector' ) ) ) ) ) ) )).
+
+thf(p3_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_V_XABC: $real] :
+      ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_L: '3d.Point',V_M: '3d.Point',V_N: '3d.Point',V_P: '3d.Point',V_Q: '3d.Point',V_R: '3d.Point',V_a: '3d.Vector',V_b: '3d.Vector',V_c: '3d.Vector',V_p: '3d.Vector',V_q: '3d.Vector',V_r: '3d.Vector',V_X: '3d.Point'] :
         ( ( '3d.is-tetrahedron/4' @ '3d.origin/0' @ V_A @ V_B @ V_C )
         & ( V_a
           = ( '3d.vec/2' @ '3d.origin/0' @ V_A ) )
@@ -93,63 +142,32 @@ thf(p2_qustion,question,
           = ( '3d.vec/2' @ V_M @ V_Q ) )
         & ( V_r
           = ( '3d.vec/2' @ V_N @ V_R ) )
-        & ( V_a_b_c
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ ( 'cons/2' @ V_c @ 'nil/0' ) ) ) ) ) )).
-
-thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_V_XABC: 'R'] :
-      ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_L: '3d.Point',V_M: '3d.Point',V_N: '3d.Point',V_P: '3d.Point',V_Q: '3d.Point',V_R: '3d.Point',V_a: '3d.Vector',V_b: '3d.Vector',V_c: '3d.Vector',V_p_dot_0: '3d.Vector',V_q_dot_0: '3d.Vector',V_r_dot_0: '3d.Vector',V_X: '3d.Point'] :
-        ( ( '3d.is-tetrahedron/4' @ '3d.origin/0' @ V_A @ V_B @ V_C )
-        & ( V_a
-          = ( '3d.vec/2' @ '3d.origin/0' @ V_A ) )
-        & ( V_b
-          = ( '3d.vec/2' @ '3d.origin/0' @ V_B ) )
-        & ( V_c
-          = ( '3d.vec/2' @ '3d.origin/0' @ V_C ) )
-        & ( V_L
-          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ '3d.origin/0' @ V_A ) ) )
-        & ( V_M
-          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ '3d.origin/0' @ V_B ) ) )
-        & ( V_N
-          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ '3d.origin/0' @ V_C ) ) )
-        & ( V_P
-          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ V_B @ V_C ) ) )
-        & ( V_Q
-          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ V_C @ V_A ) ) )
-        & ( V_R
-          = ( '3d.seg-midpoint-of/1' @ ( '3d.seg/2' @ V_A @ V_B ) ) )
-        & ( V_p_dot_0
-          = ( '3d.vec/2' @ V_L @ V_P ) )
-        & ( V_q_dot_0
-          = ( '3d.vec/2' @ V_M @ V_Q ) )
-        & ( V_r_dot_0
-          = ( '3d.vec/2' @ V_N @ V_R ) )
-        & ( 0
+        & ( 0.0
           = ( '3d.inner-prod/2' @ ( '3d.vec/2' @ V_L @ V_P ) @ ( '3d.vec/2' @ V_M @ V_Q ) ) )
-        & ( 0
+        & ( 0.0
           = ( '3d.inner-prod/2' @ ( '3d.vec/2' @ V_M @ V_Q ) @ ( '3d.vec/2' @ V_N @ V_R ) ) )
-        & ( 0
+        & ( 0.0
           = ( '3d.inner-prod/2' @ ( '3d.vec/2' @ V_N @ V_R ) @ ( '3d.vec/2' @ V_L @ V_P ) ) )
         & ( ( '3d.vec/2' @ V_A @ V_X )
           = ( '3d.vec/2' @ V_L @ V_P ) )
-        & ( V_p_abs
-          = ( '3d.radius/1' @ V_p_dot_0 ) )
-        & ( V_q_abs
-          = ( '3d.radius/1' @ V_q_dot_0 ) )
-        & ( V_r_abs
-          = ( '3d.radius/1' @ V_r_dot_0 ) )
+        & ( 'p_abs/0'
+          = ( '3d.radius/1' @ V_p ) )
+        & ( 'q_abs/0'
+          = ( '3d.radius/1' @ V_q ) )
+        & ( 'r_abs/0'
+          = ( '3d.radius/1' @ V_r ) )
         & ( V_V_XABC
           = ( '3d.volume-of/1' @ ( '3d.tetrahedron/4' @ V_X @ V_A @ V_B @ V_C ) ) ) ) )).
 
 thf(p2_answer,answer,(
-    ^ [V_a_b_c_dot_0: 'ListOf' @ '3d.Vector'] :
+    ^ [V_a_b_c_dot_0: ( 'ListOf' @ '3d.Vector' )] :
       ( V_a_b_c_dot_0
-      = ( 'cons/2' @ ( '3d.v+/2' @ V_q @ V_r ) @ ( 'cons/2' @ ( '3d.v+/2' @ V_p @ V_r ) @ ( 'cons/2' @ ( '3d.v+/2' @ V_p @ V_q ) @ 'nil/0' ) ) ) ) ),
+      = ( 'cons/2' @ '3d.Vector' @ ( '3d.v+/2' @ 'q/0' @ 'r/0' ) @ ( 'cons/2' @ '3d.Vector' @ ( '3d.v+/2' @ 'p/0' @ 'r/0' ) @ ( 'cons/2' @ '3d.Vector' @ ( '3d.v+/2' @ 'p/0' @ 'q/0' ) @ ( 'nil/0' @ '3d.Vector' ) ) ) ) ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_V_XABC_dot_0: 'R'] :
+    ^ [V_V_XABC_dot_0: $real] :
       ( V_V_XABC_dot_0
-      = ( '*/2' @ ( '//2' @ 1 @ 6 ) @ ( '*/2' @ ( '3d.radius/1' @ V_p ) @ ( '*/2' @ ( '3d.radius/1' @ V_q ) @ ( '3d.radius/1' @ V_r ) ) ) ) ) ),
+      = ( $product @ ( $quotient @ 1.0 @ 6.0 ) @ ( $product @ 'p_abs/0' @ ( $product @ 'q_abs/0' @ 'r_abs/0' ) ) ) ) ),
     answer_to(p3_question,[])).
+

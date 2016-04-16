@@ -16,34 +16,34 @@
 %            Maximal formula depth :   23 (  23 average)
 %            Number of connectives :   39 (   0   ~;   0   |;  12   &;  26   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   10 (   0   :)
+%            Number of symbols     :   10 (   0   :;   0   =)
 %            Number of variables   :    6 (   0 sgn;   4   !;   2   ?;   0   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   2 pred;    2 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_a: 'Z',V_b: 'Z',V_c: 'Z',V_d: 'Z'] :
-      ( ( ( 'int.</2' @ 0 @ V_a )
-        & ( 'int.</2' @ V_a @ V_b )
-        & ( 'int.</2' @ V_b @ V_c )
-        & ( 'int.</2' @ V_c @ V_d )
+    ! [V_a: $int,V_b: $int,V_c: $int,V_d: $int] :
+      ( ( ( $less @ 0 @ V_a )
+        & ( $less @ V_a @ V_b )
+        & ( $less @ V_b @ V_c )
+        & ( $less @ V_c @ V_d )
         & ( 'int.is-odd-number/1' @ V_a )
         & ( 'int.is-odd-number/1' @ V_b )
         & ( 'int.is-odd-number/1' @ V_c )
         & ( 'int.is-odd-number/1' @ V_d )
-        & ( ( 'int.*/2' @ V_a @ V_d )
-          = ( 'int.*/2' @ V_b @ V_c ) )
-        & ? [V_m: 'Z',V_k: 'Z'] :
-            ( ( 'int.is-integer/1' @ V_m )
-            & ( 'int.is-integer/1' @ V_k )
-            & ( ( 'int.+/2' @ V_a @ V_d )
+        & ( ( $product @ V_a @ V_d )
+          = ( $product @ V_b @ V_c ) )
+        & ? [V_m: $int,V_k: $int] :
+            ( ( $is_int @ V_m )
+            & ( $is_int @ V_k )
+            & ( ( $sum @ V_a @ V_d )
               = ( 'int.^/2' @ 2 @ V_k ) )
-            & ( ( 'int.+/2' @ V_b @ V_c )
+            & ( ( $sum @ V_b @ V_c )
               = ( 'int.^/2' @ 2 @ V_m ) ) ) )
      => ( V_a = 1 ) ) )).
+

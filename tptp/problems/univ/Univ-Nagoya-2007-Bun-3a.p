@@ -12,45 +12,45 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   60 (   9 equality;  24 variable)
+%            Number of atoms       :   61 (   9 equality;  24 variable)
 %            Maximal formula depth :   21 (  12 average)
-%            Number of connectives :   40 (   0   ~;   0   |;   8   &;  32   @)
+%            Number of connectives :   41 (   0   ~;   0   |;   8   &;  33   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   15 (   0   :)
+%            Number of symbols     :   15 (   0   :;   0   =)
 %            Number of variables   :    9 (   0 sgn;   0   !;   6   ?;   3   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   1 pred;    3 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_p: 'R'] :
-      ? [V_x1: 'R',V_x2: 'R',V_x3: 'R',V_x4: 'R',V_m: 'R',V_f: 'R2R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_p: $real] :
+      ? [V_x1: $real,V_x2: $real,V_x3: $real,V_x4: $real,V_m: $real,V_f: 'R2R'] :
         ( ( V_f
           = ( 'fun/1'
-            @ ^ [V_x: 'R'] :
-                ( '+/2' @ ( '^/2' @ V_x @ 4 ) @ ( '+/2' @ ( '*/2' @ ( '-/2' @ 8 @ ( '*/2' @ 2 @ V_p ) ) @ ( '^/2' @ V_x @ 2 ) ) @ V_p ) ) ) )
-        & ( 0
+            @ ^ [V_x: $real] :
+                ( $sum @ ( '^/2' @ V_x @ 4.0 ) @ ( $sum @ ( $product @ ( $difference @ 8.0 @ ( $product @ 2.0 @ V_p ) ) @ ( '^/2' @ V_x @ 2.0 ) ) @ V_p ) ) ) )
+        & ( 0.0
           = ( 'funapp/2' @ V_f @ V_x1 ) )
-        & ( 0
+        & ( 0.0
           = ( 'funapp/2' @ V_f @ V_x2 ) )
-        & ( 0
+        & ( 0.0
           = ( 'funapp/2' @ V_f @ V_x3 ) )
-        & ( 0
+        & ( 0.0
           = ( 'funapp/2' @ V_f @ V_x4 ) )
-        & ( '</2' @ 0 @ V_m )
+        & ( $less @ 0.0 @ V_m )
         & ( V_x1
-          = ( '+/2' @ V_x2 @ V_m ) )
+          = ( $sum @ V_x2 @ V_m ) )
         & ( V_x2
-          = ( '+/2' @ V_x3 @ V_m ) )
+          = ( $sum @ V_x3 @ V_m ) )
         & ( V_x3
-          = ( '+/2' @ V_x4 @ V_m ) ) ) )).
+          = ( $sum @ V_x4 @ V_m ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_p_dot_0: 'R'] : ( V_p_dot_0 = 9 ) ),
+    ^ [V_p_dot_0: $real] : ( V_p_dot_0 = 9.0 ) ),
     answer_to(p1_question,[])).
+

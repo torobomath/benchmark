@@ -15,7 +15,7 @@
 
 (def-directive p2_1
   (Find (V)
-    (exists (S C E)
+    (exists (E)
         (&& (= E (2d.set-of-cfun (Lam x (PLam y (&& (>= y (* (/ 2 (Pi)) x))
                             (<= y (sin x))
                             (<= 0 x) (<= x (/ (Pi) 2))

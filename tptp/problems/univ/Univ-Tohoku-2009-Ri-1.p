@@ -18,25 +18,25 @@
 %            Maximal formula depth :   13 (  12 average)
 %            Number of connectives :   42 (   0   ~;   0   |;   0   &;  40   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    6 (   0   :)
+%            Number of symbols     :    6 (   0   :;   0   =)
 %            Number of variables   :    6 (   0 sgn;   6   !;   0   ?;   0   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   1 pred;    2 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
-    ! [V_a: 'R',V_b: 'R',V_c: 'R'] :
-      ( ( ( '+/2' @ V_a @ V_b )
+    ! [V_a: $real,V_b: $real,V_c: $real] :
+      ( ( ( $sum @ V_a @ V_b )
         = V_c )
-     => ( ( '+/2' @ ( '^/2' @ V_a @ 3 ) @ ( '+/2' @ ( '^/2' @ V_b @ 3 ) @ ( '*/2' @ 3 @ ( '*/2' @ V_a @ ( '*/2' @ V_b @ V_c ) ) ) ) )
-        = ( '^/2' @ V_c @ 3 ) ) ) )).
+     => ( ( $sum @ ( '^/2' @ V_a @ 3.0 ) @ ( $sum @ ( '^/2' @ V_b @ 3.0 ) @ ( $product @ 3.0 @ ( $product @ V_a @ ( $product @ V_b @ V_c ) ) ) ) )
+        = ( '^/2' @ V_c @ 3.0 ) ) ) )).
 
 thf(p2,conjecture,(
-    ! [V_a: 'R',V_b: 'R',V_c: 'R'] :
-      ( ( '>=/2' @ ( '+/2' @ V_a @ V_b ) @ V_c )
-     => ( '>=/2' @ ( '+/2' @ ( '^/2' @ V_a @ 3 ) @ ( '+/2' @ ( '^/2' @ V_b @ 3 ) @ ( '*/2' @ 3 @ ( '*/2' @ V_a @ ( '*/2' @ V_b @ V_c ) ) ) ) ) @ ( '^/2' @ V_c @ 3 ) ) ) )).
+    ! [V_a: $real,V_b: $real,V_c: $real] :
+      ( ( $greatereq @ ( $sum @ V_a @ V_b ) @ V_c )
+     => ( $greatereq @ ( $sum @ ( '^/2' @ V_a @ 3.0 ) @ ( $sum @ ( '^/2' @ V_b @ 3.0 ) @ ( $product @ 3.0 @ ( $product @ V_a @ ( $product @ V_b @ V_c ) ) ) ) ) @ ( '^/2' @ V_c @ 3.0 ) ) ) )).
+

@@ -14,35 +14,34 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   52 (   4 equality;  15 variable)
+%            Number of atoms       :   54 (   4 equality;  15 variable)
 %            Maximal formula depth :   23 (  14 average)
-%            Number of connectives :   42 (   0   ~;   0   |;   8   &;  34   @)
+%            Number of connectives :   44 (   0   ~;   0   |;   8   &;  36   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   23 (   0   :)
+%            Number of symbols     :   23 (   0   :;   0   =)
 %            Number of variables   :    7 (   0 sgn;   0   !;   4   ?;   3   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   0 pred;    1 func;    8 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
         ( 'minimum/2'
-        @ ( 'set-by-def/1'
-          @ ^ [V_d: 'R'] :
+        @ ( 'set-by-def/1' @ $real
+          @ ^ [V_d: $real] :
             ? [V_l: '3d.Shape',V_m: '3d.Shape'] :
               ( ( '3d.line-type/1' @ V_l )
               & ( '3d.line-type/1' @ V_m )
-              & ( '3d.on/2' @ ( '3d.point/3' @ 3 @ 4 @ 0 ) @ V_l )
-              & ( ( '3d.vec3d/3' @ 1 @ 1 @ 1 )
+              & ( '3d.on/2' @ ( '3d.point/3' @ 3.0 @ 4.0 @ 0.0 ) @ V_l )
+              & ( ( '3d.vec3d/3' @ 1.0 @ 1.0 @ 1.0 )
                 = ( '3d.direction-vec/1' @ V_l ) )
-              & ( '3d.on/2' @ ( '3d.point/3' @ 2 @ -1 @ 0 ) @ V_m )
-              & ( ( '3d.vec3d/3' @ 1 @ -2 @ 0 )
+              & ( '3d.on/2' @ ( '3d.point/3' @ 2.0 @ -1.0 @ 0.0 ) @ V_m )
+              & ( ( '3d.vec3d/3' @ 1.0 @ -2.0 @ 0.0 )
                 = ( '3d.direction-vec/1' @ V_m ) )
               & ? [V_P: '3d.Point',V_Q: '3d.Point'] :
                   ( ( '3d.on/2' @ V_P @ V_l )
@@ -52,7 +51,8 @@ thf(p1_qustion,question,
         @ V_x ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_x_dot_0: 'R'] :
+    ^ [V_x_dot_0: $real] :
       ( V_x_dot_0
-      = ( '//2' @ ( 'sqrt/1' @ 14 ) @ 2 ) ) ),
+      = ( $quotient @ ( 'sqrt/1' @ 14.0 ) @ 2.0 ) ) ),
     answer_to(p1_question,[])).
+

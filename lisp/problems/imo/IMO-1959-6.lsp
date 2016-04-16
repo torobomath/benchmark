@@ -39,7 +39,7 @@
 
 (def-answer
   p
-  (PLam BD (exists (a c A AA C p alpha beta)
+  (PLam BD (exists (a c A AA C p alpha beta B D)
                    (&& (= alpha (plane a1 b1 c1 d1))
                        (= beta (plane a2 b2 c2 d2))
                        (= A (point Ax Ay Az))
@@ -60,5 +60,6 @@
                        (= (length-of (seg AA C)) (length-of (seg A D)))
                        (on B a)
                        (on D c)
+                       (= BD (list-of B D))
                        (vec-opp-direction (vec A B) (vec C D))))))
 

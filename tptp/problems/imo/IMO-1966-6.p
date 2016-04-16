@@ -17,16 +17,15 @@
 %            Maximal formula depth :   19 (  19 average)
 %            Number of connectives :   69 (   6   ~;   2   |;   9   &;  51   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    9 (   0   :)
+%            Number of symbols     :    9 (   0   :;   0   =)
 %            Number of variables   :    6 (   0 sgn;   6   !;   0   ?;   0   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    3 (   1 pred;    1 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_M: '2d.Point',V_K: '2d.Point',V_L: '2d.Point'] :
@@ -40,6 +39,7 @@ thf(p,conjecture,(
         & ( V_K != V_C )
         & ( V_L != V_C )
         & ( V_L != V_A ) )
-     => ( ( '<=/2' @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_M @ V_A @ V_L ) ) @ ( '//2' @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) @ 4 ) )
-        | ( '<=/2' @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_K @ V_B @ V_M ) ) @ ( '//2' @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) @ 4 ) )
-        | ( '<=/2' @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_L @ V_C @ V_K ) ) @ ( '//2' @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) @ 4 ) ) ) ) )).
+     => ( ( $lesseq @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_M @ V_A @ V_L ) ) @ ( $quotient @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) @ 4.0 ) )
+        | ( $lesseq @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_K @ V_B @ V_M ) ) @ ( $quotient @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) @ 4.0 ) )
+        | ( $lesseq @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_L @ V_C @ V_K ) ) @ ( $quotient @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) @ 4.0 ) ) ) ) )).
+

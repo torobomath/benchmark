@@ -168,3 +168,18 @@
 
 (def-answer p3minV (PLam minV (= minV (/ 49 486))))
 
+(def-answer a1_1 (PLam _ (true)))
+
+(def-answer a1_2 (PLam S (&& (<= 0 t) (<= t 1)
+                             (= S (* (/ (sqrt 3) 2) (+ (^ t 2) (- t) 1))))))
+
+(def-answer a2 (PLam _ (true)))
+
+(def-answer a3_1 (PLam V (&& (<= 0 t) (<= t 1)
+                             (= V (/ (+ (- (^ t 3)) (* 4 (^ t 2)) (- (* 4 t)) 3) 18))
+                             )
+                       ))
+
+(def-answer p3_2 (PLam mint_V (= mint_V (list-of (/ 2 3)
+                                                 (/ 49 486)))))
+

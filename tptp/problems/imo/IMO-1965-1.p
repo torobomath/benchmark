@@ -13,31 +13,31 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   61 (   0 equality;   9 variable)
+%            Number of atoms       :   62 (   0 equality;   9 variable)
 %            Maximal formula depth :   16 (  12 average)
-%            Number of connectives :   59 (   0   ~;   0   |;   4   &;  55   @)
+%            Number of connectives :   60 (   0   ~;   0   |;   4   &;  56   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   17 (   0   :)
+%            Number of symbols     :   17 (   0   :;   0   =)
 %            Number of variables   :    2 (   0 sgn;   0   !;   0   ?;   2   ^)
 %                                         (   2   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   10 (   1 pred;    4 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
-        ( ( '<=/2' @ 0 @ V_x )
-        & ( '<=/2' @ V_x @ ( '*/2' @ 2 @ 'Pi/0' ) )
-        & ( '<=/2' @ ( '*/2' @ 2 @ ( 'cos/1' @ V_x ) ) @ ( 'abs/1' @ ( '-/2' @ ( 'sqrt/1' @ ( '+/2' @ 1 @ ( 'sin/1' @ ( '*/2' @ 2 @ V_x ) ) ) ) @ ( 'sqrt/1' @ ( '-/2' @ 1 @ ( 'sin/1' @ ( '*/2' @ 2 @ V_x ) ) ) ) ) ) )
-        & ( '<=/2' @ ( 'abs/1' @ ( '-/2' @ ( 'sqrt/1' @ ( '+/2' @ 1 @ ( 'sin/1' @ ( '*/2' @ 2 @ V_x ) ) ) ) @ ( 'sqrt/1' @ ( '-/2' @ 1 @ ( 'sin/1' @ ( '*/2' @ 2 @ V_x ) ) ) ) ) ) @ ( 'sqrt/1' @ 2 ) ) ) )).
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
+        ( ( $lesseq @ 0.0 @ V_x )
+        & ( $lesseq @ V_x @ ( $product @ 2.0 @ 'Pi/0' ) )
+        & ( $lesseq @ ( $product @ 2.0 @ ( 'cos/1' @ V_x ) ) @ ( 'abs/1' @ ( $difference @ ( 'sqrt/1' @ ( $sum @ 1.0 @ ( 'sin/1' @ ( $product @ 2.0 @ V_x ) ) ) ) @ ( 'sqrt/1' @ ( $difference @ 1.0 @ ( 'sin/1' @ ( $product @ 2.0 @ V_x ) ) ) ) ) ) )
+        & ( $lesseq @ ( 'abs/1' @ ( $difference @ ( 'sqrt/1' @ ( $sum @ 1.0 @ ( 'sin/1' @ ( $product @ 2.0 @ V_x ) ) ) ) @ ( 'sqrt/1' @ ( $difference @ 1.0 @ ( 'sin/1' @ ( $product @ 2.0 @ V_x ) ) ) ) ) ) @ ( 'sqrt/1' @ 2.0 ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_x_dot_0: 'R'] :
-      ( ( '<=/2' @ ( '//2' @ 'Pi/0' @ 4 ) @ V_x_dot_0 )
-      & ( '<=/2' @ V_x_dot_0 @ ( '//2' @ ( '*/2' @ 'Pi/0' @ 7 ) @ 4 ) ) ) ),
+    ^ [V_x_dot_0: $real] :
+      ( ( $lesseq @ ( $quotient @ 'Pi/0' @ 4.0 ) @ V_x_dot_0 )
+      & ( $lesseq @ V_x_dot_0 @ ( $quotient @ ( $product @ 'Pi/0' @ 7.0 ) @ 4.0 ) ) ) ),
     answer_to(p_question,[])).
+

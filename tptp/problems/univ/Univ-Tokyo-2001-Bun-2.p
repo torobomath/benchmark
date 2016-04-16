@@ -22,101 +22,97 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  199 (  12 equality;  41 variable)
+%            Number of atoms       :  201 (  10 equality;  39 variable)
 %            Maximal formula depth :   24 (  18 average)
-%            Number of connectives :  171 (   0   ~;   3   |;  12   &; 156   @)
+%            Number of connectives :  177 (   0   ~;   3   |;  12   &; 162   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   25 (   0   :)
-%            Number of variables   :   14 (   4 sgn;   0   !;   1   ?;  13   ^)
-%                                         (  14   :;   0  !>;   0  ?*)
+%            Number of symbols     :   25 (   0   :;   0   =)
+%            Number of variables   :   12 (   4 sgn;   0   !;   1   ?;  11   ^)
+%                                         (  12   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   11 (   2 pred;    3 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
+    ( 'draw/1' @ '2d.Shape'
     @ ^ [V_x: '2d.Shape'] :
         ( V_x
         = ( '2d.shape-of-cpfun/1'
           @ ^ [V_p: '2d.Point'] :
               ( ( ( '2d.y-coord/1' @ V_p )
                 = ( '2d.area-of/1'
-                  @ ( '2d.triangle/3' @ ( '2d.point/2' @ ( '^/2' @ ( '2d.x-coord/1' @ V_p ) @ 2 ) @ 0 )
+                  @ ( '2d.triangle/3' @ ( '2d.point/2' @ ( '^/2' @ ( '2d.x-coord/1' @ V_p ) @ 2.0 ) @ 0.0 )
                     @ ( '2d.point/2'
-                      @ ( 'if/3'
+                      @ ( 'if/3' @ $real
                         @ ^ [V___dot_0: 'Unit'] :
-                            ( '</2' @ ( '2d.x-coord/1' @ V_p ) @ 3 )
-                        @ 0
-                        @ ( '-/2' @ ( '2d.x-coord/1' @ V_p ) @ 3 ) )
-                      @ ( 'if/3'
+                            ( $less @ ( '2d.x-coord/1' @ V_p ) @ 3.0 )
+                        @ 0.0
+                        @ ( $difference @ ( '2d.x-coord/1' @ V_p ) @ 3.0 ) )
+                      @ ( 'if/3' @ $real
                         @ ^ [V__: 'Unit'] :
-                            ( '</2' @ ( '2d.x-coord/1' @ V_p ) @ 3 )
+                            ( $less @ ( '2d.x-coord/1' @ V_p ) @ 3.0 )
                         @ ( '2d.x-coord/1' @ V_p )
-                        @ 3 ) )
-                    @ ( '2d.point/2' @ 0 @ 3 ) ) ) )
-              & ( '</2' @ 0 @ ( '2d.x-coord/1' @ V_p ) ) ) ) ) )).
+                        @ 3.0 ) )
+                    @ ( '2d.point/2' @ 0.0 @ 3.0 ) ) ) )
+              & ( $less @ 0.0 @ ( '2d.x-coord/1' @ V_p ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
+    ( 'draw/1' @ '2d.Shape'
     @ ^ [V_x: '2d.Shape'] :
         ( V_x
         = ( '2d.shape-of-cpfun/1'
           @ ^ [V_p: '2d.Point'] :
-              ( ( '</2' @ 0 @ ( '2d.x-coord/1' @ V_p ) )
+              ( ( $less @ 0.0 @ ( '2d.x-coord/1' @ V_p ) )
               & ( ( '2d.y-coord/1' @ V_p )
                 = ( 'max-of/1'
-                  @ ^ [V_y: 'R'] :
-                    ? [V_t: 'R'] :
+                  @ ^ [V_y: $real] :
+                    ? [V_t: $real] :
                       ( ( V_y
                         = ( '2d.area-of/1'
-                          @ ( '2d.triangle/3' @ ( '2d.point/2' @ ( '^/2' @ V_t @ 2 ) @ 0 )
+                          @ ( '2d.triangle/3' @ ( '2d.point/2' @ ( '^/2' @ V_t @ 2.0 ) @ 0.0 )
                             @ ( '2d.point/2'
-                              @ ( 'if/3'
+                              @ ( 'if/3' @ $real
                                 @ ^ [V___dot_0: 'Unit'] :
-                                    ( '</2' @ V_t @ 3 )
-                                @ 0
-                                @ ( '-/2' @ V_t @ 3 ) )
-                              @ ( 'if/3'
+                                    ( $less @ V_t @ 3.0 )
+                                @ 0.0
+                                @ ( $difference @ V_t @ 3.0 ) )
+                              @ ( 'if/3' @ $real
                                 @ ^ [V__: 'Unit'] :
-                                    ( '</2' @ V_t @ 3 )
+                                    ( $less @ V_t @ 3.0 )
                                 @ V_t
-                                @ 3 ) )
-                            @ ( '2d.point/2' @ 0 @ 3 ) ) ) )
-                      & ( '</2' @ 0 @ V_t )
-                      & ( '<=/2' @ V_t @ ( '2d.x-coord/1' @ V_p ) ) ) ) ) ) ) ) )).
+                                @ 3.0 ) )
+                            @ ( '2d.point/2' @ 0.0 @ 3.0 ) ) ) )
+                      & ( $less @ 0.0 @ V_t )
+                      & ( $lesseq @ V_t @ ( '2d.x-coord/1' @ V_p ) ) ) ) ) ) ) ) )).
 
-thf(p1_answer,answer,(
-    ^ [V_x_dot_0: '2d.Shape'] :
-      ( V_x_dot_0
-      = ( '2d.shape-of-cpfun/1'
-        @ ^ [V_p_dot_0: '2d.Point'] :
-            ( ( ( '</2' @ 0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
-              & ( '<=/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 3 )
-              & ( ( '2d.y-coord/1' @ V_p_dot_0 )
-                = ( '-/2' @ ( '*/2' @ ( '//2' @ 3 @ 2 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2 ) ) @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 3 ) ) ) ) )
-            | ( ( '<=/2' @ 3 @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
-              & ( ( '2d.y-coord/1' @ V_p_dot_0 )
-                = ( '-/2' @ ( '*/2' @ ( '//2' @ 3 @ 2 ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) ) @ ( '//2' @ 9 @ 2 ) ) ) ) ) ) ) ),
+thf(p1_answer,answer,
+    ( '2d.shape-of-cpfun/1'
+    @ ^ [V_p_dot_0: '2d.Point'] :
+        ( ( ( $less @ 0.0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 3.0 )
+          & ( ( '2d.y-coord/1' @ V_p_dot_0 )
+            = ( $difference @ ( $product @ ( $quotient @ 3.0 @ 2.0 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 3.0 ) ) ) ) )
+        | ( ( $lesseq @ 3.0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
+          & ( ( '2d.y-coord/1' @ V_p_dot_0 )
+            = ( $difference @ ( $product @ ( $quotient @ 3.0 @ 2.0 ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) ) @ ( $quotient @ 9.0 @ 2.0 ) ) ) ) ) ),
     answer_to(p1_question,[])).
 
-thf(p2_answer,answer,(
-    ^ [V_x_dot_0: '2d.Shape'] :
-      ( V_x_dot_0
-      = ( '2d.shape-of-cpfun/1'
-        @ ^ [V_p_dot_0: '2d.Point'] :
-            ( ( ( '</2' @ 0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
-              & ( '<=/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2 )
-              & ( ( '2d.y-coord/1' @ V_p_dot_0 )
-                = ( '-/2' @ ( '*/2' @ ( '//2' @ 3 @ 2 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2 ) ) @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 3 ) ) ) ) )
-            | ( ( '<=/2' @ 2 @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
-              & ( '<=/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ ( '//2' @ 13 @ 3 ) )
-              & ( ( '2d.y-coord/1' @ V_p_dot_0 )
-                = 2 ) )
-            | ( ( '<=/2' @ ( '//2' @ 13 @ 3 ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
-              & ( ( '2d.y-coord/1' @ V_p_dot_0 )
-                = ( '-/2' @ ( '*/2' @ ( '//2' @ 3 @ 2 ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) ) @ ( '//2' @ 9 @ 2 ) ) ) ) ) ) ) ),
+thf(p2_answer,answer,
+    ( '2d.shape-of-cpfun/1'
+    @ ^ [V_p_dot_0: '2d.Point'] :
+        ( ( ( $less @ 0.0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 )
+          & ( ( '2d.y-coord/1' @ V_p_dot_0 )
+            = ( $difference @ ( $product @ ( $quotient @ 3.0 @ 2.0 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 3.0 ) ) ) ) )
+        | ( ( $lesseq @ 2.0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ ( $quotient @ 13.0 @ 3.0 ) )
+          & ( ( '2d.y-coord/1' @ V_p_dot_0 )
+            = 2.0 ) )
+        | ( ( $lesseq @ ( $quotient @ 13.0 @ 3.0 ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
+          & ( ( '2d.y-coord/1' @ V_p_dot_0 )
+            = ( $difference @ ( $product @ ( $quotient @ 3.0 @ 2.0 ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) ) @ ( $quotient @ 9.0 @ 2.0 ) ) ) ) ) ),
     answer_to(p2_question,[])).
+

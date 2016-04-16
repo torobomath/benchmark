@@ -15,21 +15,21 @@
 %            Maximal formula depth :   12 (  12 average)
 %            Number of connectives :   11 (   1   ~;   0   |;   1   &;   8   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    7 (   0   :)
+%            Number of symbols     :    7 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   2   !;   1   ?;   0   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    3 (   1 pred;    1 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_N: 'Z'] :
-    ? [V_a: 'Z'] :
-      ( ( 'int.</2' @ V_N @ V_a )
-      & ! [V_n: 'Z'] :
+    ! [V_N: $int] :
+    ? [V_a: $int] :
+      ( ( $less @ V_N @ V_a )
+      & ! [V_n: $int] :
           ( ( 'int.is-natural-number/1' @ V_n )
-         => ~ ( 'int.is-prime/1' @ ( 'int.+/2' @ ( 'int.^/2' @ V_n @ 4 ) @ V_a ) ) ) ) )).
+         => ~ ( 'int.is-prime/1' @ ( $sum @ ( 'int.^/2' @ V_n @ 4 ) @ V_a ) ) ) ) )).
+

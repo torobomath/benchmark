@@ -19,33 +19,33 @@
 %            Maximal formula depth :   14 (  14 average)
 %            Number of connectives :   51 (   0   ~;   0   |;   8   &;  40   @)
 %                                         (   0 <=>;   3  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   11 (   0   :)
+%            Number of symbols     :   11 (   0   :;   0   =)
 %            Number of variables   :    5 (   0 sgn;   4   !;   1   ?;   0   ^)
 %                                         (   5   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   4 pred;    2 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_f: 'R2R'] :
-      ( ( ! [V_x: 'R',V_y: 'R'] :
-            ( ( ( 'is-rational/1' @ V_x )
-              & ( 'is-rational/1' @ V_y )
-              & ( '</2' @ 0 @ V_x )
-              & ( '</2' @ 0 @ V_y ) )
-           => ( ( '>=/2' @ ( '*/2' @ ( 'funapp/2' @ V_f @ V_x ) @ ( 'funapp/2' @ V_f @ V_y ) ) @ ( 'funapp/2' @ V_f @ ( '*/2' @ V_x @ V_y ) ) )
-              & ( '>=/2' @ ( 'funapp/2' @ V_f @ ( '+/2' @ V_x @ V_y ) ) @ ( '+/2' @ ( 'funapp/2' @ V_f @ V_x ) @ ( 'funapp/2' @ V_f @ V_y ) ) ) ) )
-        & ? [V_a: 'R'] :
-            ( ( 'is-rational/1' @ V_a )
-            & ( '>/2' @ V_a @ 1 )
+      ( ( ! [V_x: $real,V_y: $real] :
+            ( ( ( $is_rat @ V_x )
+              & ( $is_rat @ V_y )
+              & ( $less @ 0.0 @ V_x )
+              & ( $less @ 0.0 @ V_y ) )
+           => ( ( $greatereq @ ( $product @ ( 'funapp/2' @ V_f @ V_x ) @ ( 'funapp/2' @ V_f @ V_y ) ) @ ( 'funapp/2' @ V_f @ ( $product @ V_x @ V_y ) ) )
+              & ( $greatereq @ ( 'funapp/2' @ V_f @ ( $sum @ V_x @ V_y ) ) @ ( $sum @ ( 'funapp/2' @ V_f @ V_x ) @ ( 'funapp/2' @ V_f @ V_y ) ) ) ) )
+        & ? [V_a: $real] :
+            ( ( $is_rat @ V_a )
+            & ( $greater @ V_a @ 1.0 )
             & ( ( 'funapp/2' @ V_f @ V_a )
               = V_a ) ) )
-     => ! [V_x_dot_0: 'R'] :
-          ( ( ( 'is-rational/1' @ V_x_dot_0 )
-            & ( '</2' @ 0 @ V_x_dot_0 ) )
+     => ! [V_x_dot_0: $real] :
+          ( ( ( $is_rat @ V_x_dot_0 )
+            & ( $less @ 0.0 @ V_x_dot_0 ) )
          => ( ( 'funapp/2' @ V_f @ V_x_dot_0 )
             = V_x_dot_0 ) ) ) )).
+

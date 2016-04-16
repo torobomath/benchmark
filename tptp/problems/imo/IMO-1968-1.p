@@ -16,25 +16,24 @@
 %            Maximal formula depth :   29 (  29 average)
 %            Number of connectives :  104 (   0   ~;   8   |;  13   &;  82   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   0   :)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :   12 (   0 sgn;   4   !;   8   ?;   0   ^)
 %                                         (  12   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   0 pred;    3 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ? [V_a: 'Z',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point'] :
+    ? [V_a: $int,V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point'] :
       ( ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) )
-        = ( 'int->real/1' @ V_a ) )
+        = ( $to_real @ V_a ) )
       & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_C ) )
-        = ( '+/2' @ ( 'int->real/1' @ V_a ) @ 1 ) )
+        = ( $sum @ ( $to_real @ V_a ) @ 1.0 ) )
       & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_C ) )
-        = ( '+/2' @ ( 'int->real/1' @ V_a ) @ 2 ) )
+        = ( $sum @ ( $to_real @ V_a ) @ 2.0 ) )
       & ( '2d.is-triangle/3' @ V_A @ V_B @ V_C )
       & ? [V_Ang1_dot_0: '2d.Angle',V_Ang2_dot_0: '2d.Angle'] :
           ( ( ( V_Ang1_dot_0
@@ -50,14 +49,14 @@ thf(p,conjecture,(
             | ( V_Ang2_dot_0
               = ( '2d.angle/3' @ V_C @ V_A @ V_B ) ) )
           & ( ( '2d.rad-of-angle/1' @ V_Ang1_dot_0 )
-            = ( '*/2' @ 2 @ ( '2d.rad-of-angle/1' @ V_Ang2_dot_0 ) ) ) )
-      & ! [V_b: 'Z',V_A1: '2d.Point',V_B1: '2d.Point',V_C1: '2d.Point'] :
+            = ( $product @ 2.0 @ ( '2d.rad-of-angle/1' @ V_Ang2_dot_0 ) ) ) )
+      & ! [V_b: $int,V_A1: '2d.Point',V_B1: '2d.Point',V_C1: '2d.Point'] :
           ( ( ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A1 @ V_B1 ) )
-              = ( 'int->real/1' @ V_b ) )
+              = ( $to_real @ V_b ) )
             & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B1 @ V_C1 ) )
-              = ( '+/2' @ ( 'int->real/1' @ V_b ) @ 1 ) )
+              = ( $sum @ ( $to_real @ V_b ) @ 1.0 ) )
             & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A1 @ V_C1 ) )
-              = ( '+/2' @ ( 'int->real/1' @ V_b ) @ 2 ) )
+              = ( $sum @ ( $to_real @ V_b ) @ 2.0 ) )
             & ( '2d.is-triangle/3' @ V_A1 @ V_B1 @ V_C1 )
             & ? [V_Ang1: '2d.Angle',V_Ang2: '2d.Angle'] :
                 ( ( ( V_Ang1
@@ -73,5 +72,6 @@ thf(p,conjecture,(
                   | ( V_Ang2
                     = ( '2d.angle/3' @ V_C1 @ V_A1 @ V_B1 ) ) )
                 & ( ( '2d.rad-of-angle/1' @ V_Ang1 )
-                  = ( '*/2' @ 2 @ ( '2d.rad-of-angle/1' @ V_Ang2 ) ) ) ) )
+                  = ( $product @ 2.0 @ ( '2d.rad-of-angle/1' @ V_Ang2 ) ) ) ) )
          => ( V_b = V_a ) ) ) )).
+

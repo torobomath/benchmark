@@ -16,64 +16,56 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   85 (   5 equality;  28 variable)
-%            Maximal formula depth :   16 (  15 average)
-%            Number of connectives :   74 (   1   ~;   0   |;   7   &;  62   @)
+%            Number of atoms       :   72 (   5 equality;  27 variable)
+%            Maximal formula depth :   15 (  14 average)
+%            Number of connectives :   60 (   1   ~;   0   |;   7   &;  48   @)
 %                                         (   0 <=>;   4  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
-%            Number of type conns  :    2 (   2   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   17 (   0   :)
-%            Number of variables   :   11 (   3 sgn;   5   !;   0   ?;   6   ^)
-%                                         (  11   :;   0  !>;   0  ?*)
+%                                         (   0  ~|;   0  ~&)
+%            Number of type conns  :    3 (   3   >;   0   *;   0   +;   0  <<)
+%            Number of symbols     :   13 (   0   :;   0   =)
+%            Number of variables   :   10 (   2 sgn;   5   !;   0   ?;   5   ^)
+%                                         (  10   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   3 pred;    4 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_f: 'R' > 'R'] :
-        ( ! [V_x_dot_2: 'R'] :
-            ( ( '</2' @ V_x_dot_2 @ 0 )
-           => ( ( 'LamApp/2' @ V_f @ V_x_dot_2 )
-              = 0 ) )
-        & ! [V_x_dot_1: 'R'] :
-            ( ( '>=/2' @ V_x_dot_1 @ 0 )
-           => ( '>=/2' @ ( 'LamApp/2' @ V_f @ V_x_dot_1 ) @ 0 ) )
-        & ! [V_x_dot_0: 'R',V_y: 'R'] :
-            ( ( ( '>=/2' @ V_x_dot_0 @ 0 )
-              & ( '>=/2' @ V_y @ 0 ) )
-           => ( ( '*/2' @ ( 'LamApp/2' @ V_f @ ( '*/2' @ V_x_dot_0 @ ( 'LamApp/2' @ V_f @ V_y ) ) ) @ ( 'LamApp/2' @ V_f @ V_y ) )
-              = ( 'LamApp/2' @ V_f @ ( '+/2' @ V_x_dot_0 @ V_y ) ) ) )
-        & ( ( 'LamApp/2' @ V_f @ 2 )
-          = 0 )
-        & ! [V_x: 'R'] :
-            ( ( ( '<=/2' @ 0 @ V_x )
-              & ( '</2' @ V_x @ 2 ) )
-           => ( ( 'LamApp/2' @ V_f @ V_x )
-             != 0 ) ) ) )).
+    ( 'find/1' @ ( $real > $real )
+    @ ^ [V_f: ( $real > $real )] :
+        ( ! [V_x_dot_2: $real] :
+            ( ( $less @ V_x_dot_2 @ 0.0 )
+           => ( ( V_f @ V_x_dot_2 )
+              = 0.0 ) )
+        & ! [V_x_dot_1: $real] :
+            ( ( $greatereq @ V_x_dot_1 @ 0.0 )
+           => ( $greatereq @ ( V_f @ V_x_dot_1 ) @ 0.0 ) )
+        & ! [V_x_dot_0: $real,V_y: $real] :
+            ( ( ( $greatereq @ V_x_dot_0 @ 0.0 )
+              & ( $greatereq @ V_y @ 0.0 ) )
+           => ( ( $product @ ( V_f @ ( $product @ V_x_dot_0 @ ( V_f @ V_y ) ) ) @ ( V_f @ V_y ) )
+              = ( V_f @ ( $sum @ V_x_dot_0 @ V_y ) ) ) )
+        & ( ( V_f @ 2.0 )
+          = 0.0 )
+        & ! [V_x: $real] :
+            ( ( ( $lesseq @ 0.0 @ V_x )
+              & ( $less @ V_x @ 2.0 ) )
+           => ( ( V_f @ V_x )
+             != 0.0 ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_f_dot_0: 'R' > 'R'] :
+    ^ [V_f_dot_0: ( $real > $real )] :
       ( V_f_dot_0
-      = ( ^ [V_x_dot_3: 'R'] :
-            ( 'cond/1'
-            @ ( 'cons/2'
-              @ ( 'pair/2'
-                @ ^ [V___dot_1: 'Unit'] :
-                    ( '</2' @ V_x_dot_3 @ 0 )
-                @ 0 )
-              @ ( 'cons/2'
-                @ ( 'pair/2'
-                  @ ^ [V___dot_0: 'Unit'] :
-                      ( ( '<=/2' @ 0 @ V_x_dot_3 )
-                      & ( '</2' @ V_x_dot_3 @ 2 ) )
-                  @ ( '//2' @ 2 @ ( '-/2' @ 2 @ V_x_dot_3 ) ) )
-                @ ( 'cons/2'
-                  @ ( 'pair/2'
-                    @ ^ [V__: 'Unit'] :
-                        ( '<=/2' @ 2 @ V_x_dot_3 )
-                    @ 0 )
-                  @ 'nil/0' ) ) ) ) ) ) ),
+      = ( ^ [V_x_dot_3: $real] :
+            ( 'if/3' @ $real
+            @ ^ [V___dot_0: 'Unit'] :
+                ( $less @ V_x_dot_3 @ 0.0 )
+            @ 0.0
+            @ ( 'if/3' @ $real
+              @ ^ [V__: 'Unit'] :
+                  ( ( $lesseq @ 0.0 @ V_x_dot_3 )
+                  & ( $less @ V_x_dot_3 @ 2.0 ) )
+              @ ( $quotient @ 2.0 @ ( $difference @ 2.0 @ V_x_dot_3 ) )
+              @ 0.0 ) ) ) ) ),
     answer_to(p_question,[])).
+

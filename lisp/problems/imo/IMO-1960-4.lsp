@@ -25,8 +25,9 @@
                     (= hb (point-shape-distance B (line A C)))
                     (= ma (distance A (midpoint-of B C)))))))
 
-(def-answer p (PLam X (exists (A B C M G H)
-                              (&& (= (distance A M) ma)
+(def-answer p (PLam X (exists (A B C M G H T)
+                              (&& (= X (triangle A B C))
+                                  (= (distance A M) ma)
                                   (= G (circle (midpoint-of A M) (/ ma 2)))
                                   (intersect G (circle A ha) H)
                                   (intersect G (circle M (/ hb 2)) T)

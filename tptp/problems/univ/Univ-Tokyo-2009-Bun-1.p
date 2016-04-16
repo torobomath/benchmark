@@ -19,92 +19,95 @@
 %% of $b$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  142 (  15 equality;  52 variable)
-%            Maximal formula depth :   21 (  13 average)
-%            Number of connectives :  109 (   0   ~;   0   |;  22   &;  87   @)
+% Syntax   : Number of formulae    :    7 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  153 (  15 equality;  46 variable)
+%            Maximal formula depth :   21 (  12 average)
+%            Number of connectives :  120 (   0   ~;   0   |;  22   &;  98   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   25 (   0   :)
-%            Number of variables   :   27 (   1 sgn;   0   !;  18   ?;   7   ^)
+%            Number of symbols     :   26 (   1   :;   0   =)
+%            Number of variables   :   25 (   0 sgn;   0   !;  18   ?;   7   ^)
 %                                         (  25   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   2 pred;    2 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
-thf(p1_1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ab: 'ListOf' @ 'R'] :
-      ? [V_C1: '2d.Shape',V_C2: '2d.Shape',V_C3: '2d.Shape',V_a: 'R',V_b: 'R'] :
+thf('t/0_type',type,(
+    't/0': $real )).
+
+thf(a1_1_qustion,question,
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_ab: ( 'ListOf' @ $real )] :
+      ? [V_C1: '2d.Shape',V_C2: '2d.Shape',V_C3: '2d.Shape',V_a: $real,V_b: $real] :
         ( ( V_C1
-          = ( '2d.circle/2' @ '2d.origin/0' @ 2 ) )
+          = ( '2d.circle/2' @ '2d.origin/0' @ 2.0 ) )
         & ( V_C2
-          = ( '2d.circle/2' @ ( '2d.point/2' @ 1 @ 0 ) @ 1 ) )
+          = ( '2d.circle/2' @ ( '2d.point/2' @ 1.0 @ 0.0 ) @ 1.0 ) )
         & ( V_C3
-          = ( '2d.circle/2' @ ( '2d.point/2' @ V_a @ V_b ) @ V_t ) )
-        & ( '>/2' @ V_b @ 0 )
+          = ( '2d.circle/2' @ ( '2d.point/2' @ V_a @ V_b ) @ 't/0' ) )
+        & ( $greater @ V_b @ 0.0 )
         & ( '2d.is-circumscribed-about/2' @ V_C3 @ V_C2 )
         & ( '2d.is-inscribed-in/2' @ V_C3 @ V_C1 )
         & ( V_ab
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ 'nil/0' ) ) ) ) )).
+          = ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ V_b @ ( 'nil/0' @ $real ) ) ) ) ) )).
 
-thf(p1_2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_t: 'R'] :
-      ? [V_C1: '2d.Shape',V_C2: '2d.Shape',V_C3: '2d.Shape',V_a: 'R',V_b: 'R'] :
+thf(a1_2_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_t: $real] :
+      ? [V_C1: '2d.Shape',V_C2: '2d.Shape',V_C3: '2d.Shape',V_a: $real,V_b: $real] :
         ( ( V_C1
-          = ( '2d.circle/2' @ '2d.origin/0' @ 2 ) )
+          = ( '2d.circle/2' @ '2d.origin/0' @ 2.0 ) )
         & ( V_C2
-          = ( '2d.circle/2' @ ( '2d.point/2' @ 1 @ 0 ) @ 1 ) )
+          = ( '2d.circle/2' @ ( '2d.point/2' @ 1.0 @ 0.0 ) @ 1.0 ) )
         & ( V_C3
           = ( '2d.circle/2' @ ( '2d.point/2' @ V_a @ V_b ) @ V_t ) )
-        & ( '</2' @ 0 @ V_b )
+        & ( $less @ 0.0 @ V_b )
         & ( '2d.is-circumscribed-about/2' @ V_C3 @ V_C2 )
         & ( '2d.is-inscribed-in/2' @ V_C3 @ V_C1 ) ) )).
 
-thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_M: 'R'] :
-      ? [V_b_set: 'SetOf' @ 'R'] :
+thf(a2_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_M: $real] :
+      ? [V_b_set: ( 'SetOf' @ $real )] :
         ( ( 'maximum/2' @ V_b_set @ V_M )
         & ( V_b_set
-          = ( 'set-by-def/1'
-            @ ^ [V_b: 'R'] :
-              ? [V_C1: '2d.Shape',V_C2: '2d.Shape',V_C3: '2d.Shape',V_a: 'R',V_t: 'R'] :
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_b: $real] :
+              ? [V_C1: '2d.Shape',V_C2: '2d.Shape',V_C3: '2d.Shape',V_a: $real,V_t: $real] :
                 ( ( V_C1
-                  = ( '2d.circle/2' @ '2d.origin/0' @ 2 ) )
+                  = ( '2d.circle/2' @ '2d.origin/0' @ 2.0 ) )
                 & ( V_C2
-                  = ( '2d.circle/2' @ ( '2d.point/2' @ 1 @ 0 ) @ 1 ) )
+                  = ( '2d.circle/2' @ ( '2d.point/2' @ 1.0 @ 0.0 ) @ 1.0 ) )
                 & ( V_C3
                   = ( '2d.circle/2' @ ( '2d.point/2' @ V_a @ V_b ) @ V_t ) )
-                & ( '>/2' @ V_b @ 0 )
+                & ( $greater @ V_b @ 0.0 )
                 & ( '2d.is-circumscribed-about/2' @ V_C3 @ V_C2 )
                 & ( '2d.is-inscribed-in/2' @ V_C3 @ V_C1 ) ) ) ) ) )).
 
-thf(p1_1_answer,answer,(
-    ^ [V_ab_dot_0: 'ListOf' @ 'R'] :
-    ? [V_ab1: 'R',V_ab2: 'R'] :
-      ( ( '</2' @ 0 @ V_t )
-      & ( '</2' @ V_t @ 1 )
+thf(a1_1_answer,answer,(
+    ^ [V_ab_dot_0: ( 'ListOf' @ $real )] :
+    ? [V_ab1: $real,V_ab2: $real] :
+      ( ( $less @ 0.0 @ 't/0' )
+      & ( $less @ 't/0' @ 1.0 )
       & ( V_ab1
-        = ( '-/2' @ 2 @ ( '*/2' @ 3 @ V_t ) ) )
+        = ( $difference @ 2.0 @ ( $product @ 3.0 @ 't/0' ) ) )
       & ( V_ab2
-        = ( 'sqrt/1' @ ( '-/2' @ ( '*/2' @ 8 @ V_t ) @ ( '*/2' @ 8 @ ( '^/2' @ V_t @ 2 ) ) ) ) )
+        = ( 'sqrt/1' @ ( $difference @ ( $product @ 8.0 @ 't/0' ) @ ( $product @ 8.0 @ ( '^/2' @ 't/0' @ 2.0 ) ) ) ) )
       & ( V_ab_dot_0
-        = ( 'cons/2' @ V_ab1 @ ( 'cons/2' @ V_ab2 @ 'nil/0' ) ) ) ) ),
-    answer_to(p1_1_question,[])).
+        = ( 'cons/2' @ $real @ V_ab1 @ ( 'cons/2' @ $real @ V_ab2 @ ( 'nil/0' @ $real ) ) ) ) ) ),
+    answer_to(a1_1_question,[])).
 
-thf(p1_2_answer,answer,(
-    ^ [V_t_dot_0: 'R'] :
-      ( ( '</2' @ 0 @ V_t_dot_0 )
-      & ( '</2' @ V_t_dot_0 @ 1 ) ) ),
-    answer_to(p1_2_question,[])).
+thf(a1_2_answer,answer,(
+    ^ [V_t_dot_0: $real] :
+      ( ( $less @ 0.0 @ V_t_dot_0 )
+      & ( $less @ V_t_dot_0 @ 1.0 ) ) ),
+    answer_to(a1_2_question,[])).
 
-thf(p2_answer,answer,(
-    ^ [V_M_dot_0: 'R'] :
+thf(a2_answer,answer,(
+    ^ [V_M_dot_0: $real] :
       ( V_M_dot_0
-      = ( 'sqrt/1' @ 2 ) ) ),
-    answer_to(p2_question,[])).
+      = ( 'sqrt/1' @ 2.0 ) ) ),
+    answer_to(a2_question,[])).
+

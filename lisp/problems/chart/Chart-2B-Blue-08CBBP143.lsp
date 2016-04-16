@@ -70,10 +70,10 @@
   (< 0 n)
 )))
 
-(def-answer p2 (PLam answer (&&
+(def-answer p2 (PLam answer (exists (l m min) (&&
   (= answer (list-of l m min))
   (= l (/ (sqrt 6) 4))
   (= m (/ (sqrt 6) 4))
   (= min (/ 8 3))
-)))
+))))
 

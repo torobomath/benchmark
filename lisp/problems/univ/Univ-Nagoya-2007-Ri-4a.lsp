@@ -20,7 +20,7 @@
 (namespace 2d)
 
 (def-directive
-  p1
+  a1_1
   (Find (Q)
   (exists (l m s t) (&&
     (line-type l)
@@ -34,7 +34,7 @@
     (= Q (midpoint-of s t))))))
 
 (def-answer
-  p1
+  a1_1
   (PLam Q (exists (Q1 Q2)
       (&& (= Q1 (/ x0 (+ (^ x0 2) (^ y0 2))))
           (= Q2 (/ y0 (+ (^ x0 2) (^ y0 2))))
@@ -42,7 +42,7 @@
           (< 1 (+ (^ x0 2) (^ y0 2)))))))
 
 (def-directive
-  p2
+  a1_2
   (Show
    (forall (l m s t Q x0 y0) (->
        (&& (line-type l)
@@ -56,8 +56,10 @@
            (= Q (midpoint-of s t)))
        (= 1 (* (distance (origin) Q) (distance (origin) (point x0 y0))))))))
 
+(def-answer a1_2 (PLam _ (true)))
+
 (def-directive
-  p3
+  a2
   (Find (C)
   (= C (shape-of-cpfun (PLam p (exists (l m s t x0 y0) (&&
                  (line-type l)
@@ -72,7 +74,7 @@
                  (= 2 (+ x0 y0)))))))))
 
 (def-answer
-  p3
+  a2
   (PLam C (= C (shape-of-cpfun (PLam P (&& (on P (circle (point (/ 1 4) (/ 1 4)) (/ 1 (* 2 (sqrt 2)))))
                                            (! (= P (origin)))
                                            ))))))

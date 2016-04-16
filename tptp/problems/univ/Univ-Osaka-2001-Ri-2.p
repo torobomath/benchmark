@@ -12,32 +12,31 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   56 (   5 equality;  24 variable)
+%            Number of atoms       :   63 (   5 equality;  24 variable)
 %            Maximal formula depth :   19 (  11 average)
-%            Number of connectives :   44 (   0   ~;   0   |;   9   &;  33   @)
+%            Number of connectives :   51 (   0   ~;   0   |;   9   &;  40   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   16 (   0   :)
+%            Number of symbols     :   16 (   0   :;   0   =)
 %            Number of variables   :    8 (   0 sgn;   3   !;   3   ?;   2   ^)
 %                                         (   8   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   0 pred;    0 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_a: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_a: $real] :
       ? [V_f: '2d.Shape',V_l: '2d.Shape',V_P: '2d.Point'] :
         ( ( V_f
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ -3 @ ( 'cons/2' @ 1 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) ) ) )
-        & ( '2d.on/2' @ ( '2d.point/2' @ 0 @ V_a ) @ V_l )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ -3.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ) ) )
+        & ( '2d.on/2' @ ( '2d.point/2' @ 0.0 @ V_a ) @ V_l )
         & ( '2d.line-type/1' @ V_l )
         & ( '2d.tangent/3' @ V_f @ V_l @ V_P )
         & ! [V_m: '2d.Shape',V_Q: '2d.Point'] :
-            ( ( ( '2d.on/2' @ ( '2d.point/2' @ 0 @ V_a ) @ V_m )
+            ( ( ( '2d.on/2' @ ( '2d.point/2' @ 0.0 @ V_a ) @ V_m )
               & ( '2d.line-type/1' @ V_m )
               & ( '2d.tangent/3' @ V_f @ V_m @ V_Q ) )
            => ( ( V_m = V_l )
@@ -48,5 +47,6 @@ thf(p_qustion,question,
            => ( V_R = V_P ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_a_dot_0: 'R'] : ( V_a_dot_0 = 2 ) ),
+    ^ [V_a_dot_0: $real] : ( V_a_dot_0 = 2.0 ) ),
     answer_to(p_question,[])).
+

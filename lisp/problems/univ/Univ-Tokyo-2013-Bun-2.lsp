@@ -23,7 +23,7 @@
 (namespace 2d)
 
 (def-directive
-  p1_1
+  a1_1
   (Show
     (exists (d)
             (forall (P Q A a)
@@ -36,7 +36,7 @@
                                 (length-of (seg A Q)))))))))
 
 (def-directive
-  p1_2
+  a1_2
   (Find (d)
         (forall (P Q A a)
                 (-> (&& (= P (point 0 (- (sqrt 2))))
@@ -48,7 +48,7 @@
                             (length-of (seg A Q))))))))
 
 (def-directive
-  p2_1
+  a2_1
   (Show
     (exists (s)
             (forall (P Q A a B C l m)
@@ -70,7 +70,7 @@
                                 (length-of (seg B C)))))))))
 
 (def-directive
-  p2_2
+  a2_2
   (Find (s)
         (forall (P Q A a B C l m)
                 (-> (&& (= P (point 0 (- (sqrt 2))))
@@ -90,7 +90,11 @@
                             (length-of (seg A B))
                             (length-of (seg B C))))))))
 
-(def-answer p1_2 (PLam d (= d 2)))
+(def-answer a1_1 (PLam _ (true)))
 
-(def-answer p2_2 (PLam s (= s (sqrt 2))))
+(def-answer a1_2 (PLam d (= d 2)))
+
+(def-answer a2_1 (PLam _ (true)))
+
+(def-answer a2_2 (PLam s (= s (sqrt 2))))
 

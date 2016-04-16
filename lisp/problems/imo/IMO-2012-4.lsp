@@ -26,11 +26,18 @@
                  (* 2 (LamApp f a) (LamApp f c))))))))
 
 (def-answer p (PLam f
-  (exists (d)
-     (|| (= f (Lam x (* d x)))
-         (= f (Lam x (cond ((is-divisible-by x 2) 0)
-                           ((! (is-divisible-by x 2)) d) )))
-         (= f (Lam x (cond ((is-divisible-by x 4) 0)
-                           ((! (is-divisible-by x 2)) d)
-                           ((= (div x 4) 2) (* 4 d)))))))))
+   (exists (k)
+      (&& (! (= k 0))
+          (|| (= f (Lam x 0))
+              (= f (Lam x (if (= (mod x 2) 0)
+                            0
+                            k)))
+              (= f (Lam x (if (= (mod x 4) 0)
+                            0
+                            (if (= (mod x 4) 1)
+                              k
+                              (if (= (mod x 4) 2)
+                                (* 4 k)
+                                k)))))
+              (= f (Lam x (* k (^ x 2)))))))))
 

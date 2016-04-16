@@ -14,47 +14,47 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   45 (   5 equality;  13 variable)
+%            Number of atoms       :   52 (   5 equality;  13 variable)
 %            Maximal formula depth :   17 (  13 average)
-%            Number of connectives :   34 (   0   ~;   1   |;   3   &;  30   @)
+%            Number of connectives :   41 (   0   ~;   1   |;   3   &;  37   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   18 (   0   :)
+%            Number of symbols     :   20 (   0   :;   0   =)
 %            Number of variables   :    7 (   0 sgn;   0   !;   2   ?;   5   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   10 (   1 pred;    3 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_n: 'Z'] :
-        ( ( 'int.</2' @ 0 @ V_n )
-        & ? [V_a: 'ListOf' @ 'Z'] :
-            ( ( ( 'list-len/1' @ V_a )
+    ( 'find/1' @ $int
+    @ ^ [V_n: $int] :
+        ( ( $less @ 0 @ V_n )
+        & ? [V_a: ( 'ListOf' @ $int )] :
+            ( ( ( 'list-len/1' @ $int @ V_a )
               = V_n )
             & ( ( 'rat.sum/1'
-                @ ( 'map/2'
-                  @ ^ [V_x_dot_0: 'Z'] :
-                      ( 'rat.ratio/2' @ 1 @ ( 'int.^/2' @ 2 @ V_x_dot_0 ) )
+                @ ( 'map/2' @ $rat @ $int
+                  @ ^ [V_x_dot_0: $int] :
+                      ( $quotient @ 1 @ ( 'int.^/2' @ 2 @ V_x_dot_0 ) )
                   @ V_a ) )
-              = 1 )
+              = 1/1 )
             & ( ( 'rat.sum/1'
-                @ ( 'zip-with/3'
-                  @ ^ [V_n_dot_0: 'Z',V_x: 'Z'] :
-                      ( 'rat.ratio/2' @ V_n_dot_0 @ ( 'int.^/2' @ 3 @ V_x ) )
+                @ ( 'zip-with/3' @ $rat @ $int @ $int
+                  @ ^ [V_n_dot_0: $int,V_x: $int] :
+                      ( $quotient @ V_n_dot_0 @ ( 'int.^/2' @ 3 @ V_x ) )
                   @ ( 'int.iota/2' @ 1 @ V_n )
                   @ V_a ) )
-              = 1 ) ) ) )).
+              = 1/1 ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_n_dot_1: 'Z'] :
-    ? [V_m: 'Z'] :
+    ^ [V_n_dot_1: $int] :
+    ? [V_m: $int] :
       ( ( V_n_dot_1
-        = ( 'int.+/2' @ ( 'int.*/2' @ 4 @ V_m ) @ 1 ) )
+        = ( $sum @ ( $product @ 4 @ V_m ) @ 1 ) )
       | ( V_n_dot_1
-        = ( 'int.+/2' @ ( 'int.*/2' @ 4 @ V_m ) @ 2 ) ) ) ),
+        = ( $sum @ ( $product @ 4 @ V_m ) @ 2 ) ) ) ),
     answer_to(p_question,[])).
+

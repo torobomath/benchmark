@@ -52,3 +52,14 @@
   p3
   (PLam minfk (= minfk (- (* (/ 2 33) (sqrt 11))))))
 
+(def-answer
+  a1
+  (PLam k (&& (< (- (/ 1 2)) k)
+        (< k (/ 1 2)))))
+
+(def-answer
+  a2
+  (PLam min_max (= min_max (list-of
+                             (- (* (/ 2 33) (sqrt 11)))
+                             (* (/ 2 33) (sqrt 11))))))
+

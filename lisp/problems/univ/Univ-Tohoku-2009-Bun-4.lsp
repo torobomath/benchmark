@@ -12,7 +12,7 @@
 ;; </PROBLEM-TEXT>
 
 (def-directive
-  p
+  a
   (Find (a)
   (forall (x y)
     (->
@@ -30,7 +30,7 @@
        (-> (2d.on P C)
            (2d.on P D)))))))
 
-(def-answer p (PLam a (&& (< (/ 1 8) a) (< a 2))))
+(def-answer a (PLam a (&& (< (/ 1 8) a) (< a 2))))
 
 (def-answer p_another (PLam a (&& (< (/ 1 8) a) (< a 2))))
 

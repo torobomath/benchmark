@@ -19,85 +19,86 @@
 %% $f\circ g$ is $h$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    8 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  188 (   9 equality;  58 variable)
-%            Maximal formula depth :   19 (  13 average)
-%            Number of connectives :  162 (   0   ~;   0   |;   4   &; 157   @)
+% Syntax   : Number of formulae    :    9 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  190 (   9 equality;  49 variable)
+%            Maximal formula depth :   18 (  12 average)
+%            Number of connectives :  164 (   0   ~;   0   |;   4   &; 159   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   26 (   0   :)
-%            Number of variables   :   36 (   1 sgn;  12   !;  12   ?;  10   ^)
+%            Number of symbols     :   26 (   1   :;   0   =)
+%            Number of variables   :   34 (   0 sgn;  12   !;  12   ?;  10   ^)
 %                                         (  34   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   0 pred;    5 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('c/0_type',type,(
+    'c/0': $real )).
 
 thf(p1_1_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Matrix'
     @ ^ [V_A: '2d.Matrix'] :
-      ? [V_s: 'R',V_t: 'R',V_u: 'R',V_v: 'R'] :
+      ? [V_s: $real,V_t: $real,V_u: $real,V_v: $real] :
         ( ( V_A
           = ( '2d.matrix/4' @ V_s @ V_t @ V_u @ V_v ) )
-        & ! [V_x: 'R',V_y: 'R'] :
-            ( '2d.line-symmetry/3' @ ( '2d.point/2' @ V_x @ V_y ) @ ( '2d.vec->point/1' @ ( '2d.mv*/2' @ V_A @ ( '2d.vec2d/2' @ V_x @ V_y ) ) ) @ ( '2d.line/2' @ '2d.origin/0' @ ( '2d.point/2' @ 1 @ 1 ) ) ) ) )).
+        & ! [V_x: $real,V_y: $real] :
+            ( '2d.line-symmetry/3' @ ( '2d.point/2' @ V_x @ V_y ) @ ( '2d.vec->point/1' @ ( '2d.mv*/2' @ V_A @ ( '2d.vec2d/2' @ V_x @ V_y ) ) ) @ ( '2d.line/2' @ '2d.origin/0' @ ( '2d.point/2' @ 1.0 @ 1.0 ) ) ) ) )).
 
 thf(p1_2_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Matrix'
     @ ^ [V_C: '2d.Matrix'] :
-      ? [V_s: 'R',V_t: 'R',V_u: 'R',V_v: 'R'] :
+      ? [V_s: $real,V_t: $real,V_u: $real,V_v: $real] :
         ( ( V_C
           = ( '2d.matrix/4' @ V_s @ V_t @ V_u @ V_v ) )
-        & ! [V_x: 'R',V_y: 'R'] :
+        & ! [V_x: $real,V_y: $real] :
             ( ( '2d.vec->point/1' @ ( '2d.mv*/2' @ V_C @ ( '2d.vec2d/2' @ V_x @ V_y ) ) )
-            = ( 'LamApp/2'
-              @ ^ [V_P: '2d.Point'] :
-                  ( '2d.point-rotate-around-origin/2' @ V_P @ ( '//2' @ ( '*/2' @ 2 @ 'Pi/0' ) @ 3 ) )
+            = ( ^ [V_P: '2d.Point'] :
+                  ( '2d.point-rotate-around-origin/2' @ V_P @ ( $quotient @ ( $product @ 2.0 @ 'Pi/0' ) @ 3.0 ) )
               @ ( '2d.point/2' @ V_x @ V_y ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Matrix'
     @ ^ [V_B: '2d.Matrix'] :
-      ? [V_s: 'R',V_t: 'R',V_u: 'R',V_v: 'R'] :
+      ? [V_s: $real,V_t: $real,V_u: $real,V_v: $real] :
         ( ( V_B
           = ( '2d.matrix/4' @ V_s @ V_t @ V_u @ V_v ) )
-        & ! [V_x: 'R',V_y: 'R'] :
-            ( '2d.line-symmetry/3' @ ( '2d.point/2' @ V_x @ V_y ) @ ( '2d.vec->point/1' @ ( '2d.mv*/2' @ V_B @ ( '2d.vec2d/2' @ V_x @ V_y ) ) ) @ ( '2d.line/2' @ '2d.origin/0' @ ( '2d.point/2' @ 1 @ V_c ) ) ) ) )).
+        & ! [V_x: $real,V_y: $real] :
+            ( '2d.line-symmetry/3' @ ( '2d.point/2' @ V_x @ V_y ) @ ( '2d.vec->point/1' @ ( '2d.mv*/2' @ V_B @ ( '2d.vec2d/2' @ V_x @ V_y ) ) ) @ ( '2d.line/2' @ '2d.origin/0' @ ( '2d.point/2' @ 1.0 @ 'c/0' ) ) ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_c: 'R'] :
-      ! [V_x: 'R',V_y: 'R',V_p: 'R',V_q: 'R',V_r: 'R',V_s: 'R'] :
-        ( ( ( '2d.line-symmetry/3' @ ( '2d.point/2' @ V_x @ V_y ) @ ( '2d.point/2' @ V_p @ V_q ) @ ( '2d.line/2' @ '2d.origin/0' @ ( '2d.point/2' @ 1 @ V_c ) ) )
-          & ( '2d.line-symmetry/3' @ ( '2d.point/2' @ V_p @ V_q ) @ ( '2d.point/2' @ V_r @ V_s ) @ ( '2d.line/2' @ '2d.origin/0' @ ( '2d.point/2' @ 1 @ 1 ) ) ) )
+    ( 'find/1' @ $real
+    @ ^ [V_c: $real] :
+      ! [V_x: $real,V_y: $real,V_p: $real,V_q: $real,V_r: $real,V_s: $real] :
+        ( ( ( '2d.line-symmetry/3' @ ( '2d.point/2' @ V_x @ V_y ) @ ( '2d.point/2' @ V_p @ V_q ) @ ( '2d.line/2' @ '2d.origin/0' @ ( '2d.point/2' @ 1.0 @ V_c ) ) )
+          & ( '2d.line-symmetry/3' @ ( '2d.point/2' @ V_p @ V_q ) @ ( '2d.point/2' @ V_r @ V_s ) @ ( '2d.line/2' @ '2d.origin/0' @ ( '2d.point/2' @ 1.0 @ 1.0 ) ) ) )
        => ( ( '2d.point/2' @ V_r @ V_s )
-          = ( 'LamApp/2'
-            @ ^ [V_P: '2d.Point'] :
-                ( '2d.point-rotate-around-origin/2' @ V_P @ ( '//2' @ ( '*/2' @ 2 @ 'Pi/0' ) @ 3 ) )
+          = ( ^ [V_P: '2d.Point'] :
+                ( '2d.point-rotate-around-origin/2' @ V_P @ ( $quotient @ ( $product @ 2.0 @ 'Pi/0' ) @ 3.0 ) )
             @ ( '2d.point/2' @ V_x @ V_y ) ) ) ) )).
 
 thf(p1_1_answer,answer,(
     ^ [V_A_dot_0: '2d.Matrix'] :
       ( V_A_dot_0
-      = ( '2d.matrix/4' @ 0 @ 1 @ 1 @ 0 ) ) ),
+      = ( '2d.matrix/4' @ 0.0 @ 1.0 @ 1.0 @ 0.0 ) ) ),
     answer_to(p1_1_question,[])).
 
 thf(p1_2_answer,answer,(
     ^ [V_C_dot_0: '2d.Matrix'] :
       ( V_C_dot_0
-      = ( '2d.matrix/4' @ ( '-/1' @ ( '//2' @ 1 @ 2 ) ) @ ( '-/1' @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) ) @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) @ ( '-/1' @ ( '//2' @ 1 @ 2 ) ) ) ) ),
+      = ( '2d.matrix/4' @ ( $uminus @ ( $quotient @ 1.0 @ 2.0 ) ) @ ( $uminus @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) ) @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) @ ( $uminus @ ( $quotient @ 1.0 @ 2.0 ) ) ) ) ),
     answer_to(p1_2_question,[])).
 
 thf(p2_answer,answer,(
     ^ [V_B_dot_0: '2d.Matrix'] :
       ( V_B_dot_0
-      = ( '2d.matrix/4' @ ( '//2' @ ( '-/2' @ 1 @ ( '^/2' @ V_c @ 2 ) ) @ ( '+/2' @ 1 @ ( '^/2' @ V_c @ 2 ) ) ) @ ( '//2' @ ( '*/2' @ 2 @ V_c ) @ ( '+/2' @ 1 @ ( '^/2' @ V_c @ 2 ) ) ) @ ( '//2' @ ( '*/2' @ 2 @ V_c ) @ ( '+/2' @ 1 @ ( '^/2' @ V_c @ 2 ) ) ) @ ( '//2' @ ( '-/2' @ ( '^/2' @ V_c @ 2 ) @ 1 ) @ ( '+/2' @ 1 @ ( '^/2' @ V_c @ 2 ) ) ) ) ) ),
+      = ( '2d.matrix/4' @ ( $quotient @ ( $difference @ 1.0 @ ( '^/2' @ 'c/0' @ 2.0 ) ) @ ( $sum @ 1.0 @ ( '^/2' @ 'c/0' @ 2.0 ) ) ) @ ( $quotient @ ( $product @ 2.0 @ 'c/0' ) @ ( $sum @ 1.0 @ ( '^/2' @ 'c/0' @ 2.0 ) ) ) @ ( $quotient @ ( $product @ 2.0 @ 'c/0' ) @ ( $sum @ 1.0 @ ( '^/2' @ 'c/0' @ 2.0 ) ) ) @ ( $quotient @ ( $difference @ ( '^/2' @ 'c/0' @ 2.0 ) @ 1.0 ) @ ( $sum @ 1.0 @ ( '^/2' @ 'c/0' @ 2.0 ) ) ) ) ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_c_dot_0: 'R'] :
+    ^ [V_c_dot_0: $real] :
       ( V_c_dot_0
-      = ( '-/2' @ ( 'sqrt/1' @ 3 ) @ 2 ) ) ),
+      = ( $difference @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) ) ),
     answer_to(p3_question,[])).
+

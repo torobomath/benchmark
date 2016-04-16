@@ -13,27 +13,27 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   32 (   0 equality;  17 variable)
-%            Maximal formula depth :   12 (  12 average)
-%            Number of connectives :   31 (   0   ~;   0   |;   1   &;  28   @)
+%            Number of atoms       :   24 (   0 equality;  17 variable)
+%            Maximal formula depth :   11 (  11 average)
+%            Number of connectives :   23 (   0   ~;   0   |;   1   &;  20   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    7 (   0   :)
+%            Number of symbols     :    6 (   0   :;   0   =)
 %            Number of variables   :    6 (   0 sgn;   6   !;   0   ?;   0   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   2 pred;    1 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_f: 'Z' > 'Z'] :
-      ( ( ! [V_m_dot_0: 'Z'] :
-            ( 'int.</2' @ 0 @ ( 'LamApp/2' @ V_f @ V_m_dot_0 ) )
-        & ! [V_m: 'Z',V_n: 'Z'] :
-            ( 'int.is-divisible-by/2' @ ( 'int.-/2' @ ( 'LamApp/2' @ V_f @ V_m ) @ ( 'LamApp/2' @ V_f @ V_n ) ) @ ( 'LamApp/2' @ V_f @ ( 'int.-/2' @ V_m @ V_n ) ) ) )
-     => ! [V_m_dot_1: 'Z',V_n_dot_0: 'Z'] :
-          ( ( 'int.<=/2' @ ( 'LamApp/2' @ V_f @ V_m_dot_1 ) @ ( 'LamApp/2' @ V_f @ V_n_dot_0 ) )
-         => ( 'int.is-divisible-by/2' @ ( 'LamApp/2' @ V_f @ V_n_dot_0 ) @ ( 'LamApp/2' @ V_f @ V_m_dot_1 ) ) ) ) )).
+    ! [V_f: ( $int > $int )] :
+      ( ( ! [V_m_dot_0: $int] :
+            ( $less @ 0 @ ( V_f @ V_m_dot_0 ) )
+        & ! [V_m: $int,V_n: $int] :
+            ( 'int.is-divisible-by/2' @ ( $difference @ ( V_f @ V_m ) @ ( V_f @ V_n ) ) @ ( V_f @ ( $difference @ V_m @ V_n ) ) ) )
+     => ! [V_m_dot_1: $int,V_n_dot_0: $int] :
+          ( ( $lesseq @ ( V_f @ V_m_dot_1 ) @ ( V_f @ V_n_dot_0 ) )
+         => ( 'int.is-divisible-by/2' @ ( V_f @ V_n_dot_0 ) @ ( V_f @ V_m_dot_1 ) ) ) ) )).
+

@@ -61,3 +61,7 @@
 
 (def-answer p2 (PLam k (|| (= k 0) (= k -2))))
 
+(def-answer a1 (PLam g (= g (poly-fun (list-of -1 k 0 1)))))
+
+(def-answer a2 (PLam k (|| (= k 0) (= k -2))))
+

@@ -22,92 +22,92 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  249 (  18 equality;  73 variable)
+%            Number of atoms       :  311 (  18 equality;  73 variable)
 %            Maximal formula depth :   25 (  16 average)
-%            Number of connectives :  214 (   3   ~;   0   |;  22   &; 188   @)
+%            Number of connectives :  276 (   3   ~;   0   |;  22   &; 250   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   22 (   0   :)
+%            Number of symbols     :   22 (   0   :;   0   =)
 %            Number of variables   :   32 (   0 sgn;   5   !;  21   ?;   6   ^)
 %                                         (  32   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   1 pred;    3 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
-thf(p1_qustion,question,
-    ( 'Find/1'
+thf(a1_qustion,question,
+    ( 'find/1' @ '2d.Point'
     @ ^ [V_P: '2d.Point'] :
-      ! [V_a: 'R',V_b: 'R',V_l: '2d.Shape',V_l1: '2d.Shape',V_l2: '2d.Shape'] :
+      ! [V_a: $real,V_b: $real,V_l: '2d.Shape',V_l1: '2d.Shape',V_l2: '2d.Shape'] :
         ( ( ( V_l
-            = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '-/2' @ 0 @ 1 ) @ 'nil/0' ) ) ) ) )
+            = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $difference @ 0.0 @ 1.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) )
           & ( V_l1
-            = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '+/2' @ ( '*/2' @ 2 @ V_a ) @ 2 ) @ ( 'cons/2' @ ( '-/2' @ 0 @ V_a ) @ 'nil/0' ) ) ) ) )
+            = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $sum @ ( $product @ 2.0 @ V_a ) @ 2.0 ) @ ( 'cons/2' @ $real @ ( $difference @ 0.0 @ V_a ) @ ( 'nil/0' @ $real ) ) ) ) ) )
           & ( V_l2
-            = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '+/2' @ ( '*/2' @ 2 @ V_b ) @ 2 ) @ ( 'cons/2' @ ( '-/2' @ 0 @ V_b ) @ 'nil/0' ) ) ) ) ) )
+            = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $sum @ ( $product @ 2.0 @ V_b ) @ 2.0 ) @ ( 'cons/2' @ $real @ ( $difference @ 0.0 @ V_b ) @ ( 'nil/0' @ $real ) ) ) ) ) ) )
        => ( '2d.on/2' @ V_P @ V_l1 ) ) )).
 
-thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ab: 'ListOf' @ 'R'] :
-      ? [V_a: 'R',V_b: 'R'] :
+thf(a2_qustion,question,
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_ab: ( 'ListOf' @ $real )] :
+      ? [V_a: $real,V_b: $real] :
         ( ( V_ab
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ 'nil/0' ) ) )
+          = ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ V_b @ ( 'nil/0' @ $real ) ) ) )
         & ? [V_l: '2d.Shape',V_l1: '2d.Shape',V_l2: '2d.Shape',V_P01: '2d.Point',V_P12: '2d.Point',V_P20: '2d.Point'] :
             ( ( V_l
-              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '-/2' @ 0 @ 1 ) @ 'nil/0' ) ) ) ) )
+              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $difference @ 0.0 @ 1.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) )
             & ( V_l1
-              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '+/2' @ ( '*/2' @ 2 @ V_a ) @ 2 ) @ ( 'cons/2' @ ( '-/2' @ 0 @ V_a ) @ 'nil/0' ) ) ) ) )
+              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $sum @ ( $product @ 2.0 @ V_a ) @ 2.0 ) @ ( 'cons/2' @ $real @ ( $difference @ 0.0 @ V_a ) @ ( 'nil/0' @ $real ) ) ) ) ) )
             & ( V_l2
-              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '+/2' @ ( '*/2' @ 2 @ V_b ) @ 2 ) @ ( 'cons/2' @ ( '-/2' @ 0 @ V_b ) @ 'nil/0' ) ) ) ) )
-            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ V_l @ ( 'cons/2' @ V_l1 @ 'nil/0' ) ) @ V_P01 )
-            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ V_l1 @ ( 'cons/2' @ V_l2 @ 'nil/0' ) ) @ V_P12 )
-            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ V_l @ ( 'cons/2' @ V_l2 @ 'nil/0' ) ) @ V_P20 )
+              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $sum @ ( $product @ 2.0 @ V_b ) @ 2.0 ) @ ( 'cons/2' @ $real @ ( $difference @ 0.0 @ V_b ) @ ( 'nil/0' @ $real ) ) ) ) ) )
+            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ V_l @ ( 'cons/2' @ '2d.Shape' @ V_l1 @ ( 'nil/0' @ '2d.Shape' ) ) ) @ V_P01 )
+            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ V_l1 @ ( 'cons/2' @ '2d.Shape' @ V_l2 @ ( 'nil/0' @ '2d.Shape' ) ) ) @ V_P12 )
+            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ V_l @ ( 'cons/2' @ '2d.Shape' @ V_l2 @ ( 'nil/0' @ '2d.Shape' ) ) ) @ V_P20 )
             & ( '2d.is-triangle/3' @ V_P01 @ V_P12 @ V_P20 ) ) ) )).
 
-thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ab: 'ListOf' @ 'R'] :
-      ? [V_a: 'R',V_b: 'R'] :
+thf(a3_1_qustion,question,
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_ab: ( 'ListOf' @ $real )] :
+      ? [V_a: $real,V_b: $real] :
         ( ( V_ab
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ 'nil/0' ) ) )
+          = ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ V_b @ ( 'nil/0' @ $real ) ) ) )
         & ? [V_l: '2d.Shape',V_l1: '2d.Shape',V_l2: '2d.Shape',V_P01: '2d.Point',V_P12: '2d.Point',V_P20: '2d.Point',V_T: '2d.Shape'] :
             ( ( V_l
-              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '-/2' @ 0 @ 1 ) @ 'nil/0' ) ) ) ) )
+              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $difference @ 0.0 @ 1.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) )
             & ( V_l1
-              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '+/2' @ ( '*/2' @ 2 @ V_a ) @ 2 ) @ ( 'cons/2' @ ( '-/2' @ 0 @ V_a ) @ 'nil/0' ) ) ) ) )
+              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $sum @ ( $product @ 2.0 @ V_a ) @ 2.0 ) @ ( 'cons/2' @ $real @ ( $difference @ 0.0 @ V_a ) @ ( 'nil/0' @ $real ) ) ) ) ) )
             & ( V_l2
-              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '+/2' @ ( '*/2' @ 2 @ V_b ) @ 2 ) @ ( 'cons/2' @ ( '-/2' @ 0 @ V_b ) @ 'nil/0' ) ) ) ) )
-            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ V_l @ ( 'cons/2' @ V_l1 @ 'nil/0' ) ) @ V_P01 )
-            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ V_l1 @ ( 'cons/2' @ V_l2 @ 'nil/0' ) ) @ V_P12 )
-            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ V_l @ ( 'cons/2' @ V_l2 @ 'nil/0' ) ) @ V_P20 )
+              = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $sum @ ( $product @ 2.0 @ V_b ) @ 2.0 ) @ ( 'cons/2' @ $real @ ( $difference @ 0.0 @ V_b ) @ ( 'nil/0' @ $real ) ) ) ) ) )
+            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ V_l @ ( 'cons/2' @ '2d.Shape' @ V_l1 @ ( 'nil/0' @ '2d.Shape' ) ) ) @ V_P01 )
+            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ V_l1 @ ( 'cons/2' @ '2d.Shape' @ V_l2 @ ( 'nil/0' @ '2d.Shape' ) ) ) @ V_P12 )
+            & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ V_l @ ( 'cons/2' @ '2d.Shape' @ V_l2 @ ( 'nil/0' @ '2d.Shape' ) ) ) @ V_P20 )
             & ( '2d.is-triangle/3' @ V_P01 @ V_P12 @ V_P20 )
             & ( V_T
               = ( '2d.triangle/3' @ V_P01 @ V_P12 @ V_P20 ) )
-            & ( '2d.point-inside-of/2' @ ( '2d.point/2' @ 1 @ 1 ) @ V_T ) ) ) )).
+            & ( '2d.point-inside-of/2' @ ( '2d.point/2' @ 1.0 @ 1.0 ) @ V_T ) ) ) )).
 
-thf(p1_answer,answer,(
+thf(a1_answer,answer,(
     ^ [V_P_dot_0: '2d.Point'] :
       ( V_P_dot_0
-      = ( '2d.point/2' @ 2 @ 2 ) ) ),
-    answer_to(p1_question,[])).
+      = ( '2d.point/2' @ 2.0 @ 2.0 ) ) ),
+    answer_to(a1_question,[])).
 
-thf(p2_answer,answer,(
-    ^ [V_ab_dot_0: 'ListOf' @ 'R'] :
-    ? [V_a_dot_0: 'R',V_b_dot_0: 'R'] :
+thf(a2_answer,answer,(
+    ^ [V_ab_dot_0: ( 'ListOf' @ $real )] :
+    ? [V_a_dot_0: $real,V_b_dot_0: $real] :
       ( ( V_ab_dot_0
-        = ( 'cons/2' @ V_a_dot_0 @ ( 'cons/2' @ V_b_dot_0 @ 'nil/0' ) ) )
-      & ( V_a_dot_0 != 1 )
-      & ( V_b_dot_0 != 1 )
+        = ( 'cons/2' @ $real @ V_a_dot_0 @ ( 'cons/2' @ $real @ V_b_dot_0 @ ( 'nil/0' @ $real ) ) ) )
+      & ( V_a_dot_0 != 1.0 )
+      & ( V_b_dot_0 != 1.0 )
       & ( V_a_dot_0 != V_b_dot_0 ) ) ),
-    answer_to(p2_question,[])).
+    answer_to(a2_question,[])).
 
-thf(p3_answer,answer,(
-    ^ [V_ab_dot_0: 'ListOf' @ 'R'] :
-    ? [V_a_dot_0: 'R',V_b_dot_0: 'R'] :
+thf(a3_1_answer,answer,(
+    ^ [V_ab_dot_0: ( 'ListOf' @ $real )] :
+    ? [V_a_dot_0: $real,V_b_dot_0: $real] :
       ( ( V_ab_dot_0
-        = ( 'cons/2' @ V_a_dot_0 @ ( 'cons/2' @ V_b_dot_0 @ 'nil/0' ) ) )
-      & ( '</2' @ ( '*/2' @ ( '+/2' @ V_a_dot_0 @ 1 ) @ ( '*/2' @ ( '-/2' @ V_a_dot_0 @ 1 ) @ ( '*/2' @ ( '+/2' @ V_b_dot_0 @ 1 ) @ ( '-/2' @ V_b_dot_0 @ 1 ) ) ) ) @ 0 ) ) ),
-    answer_to(p3_question,[])).
+        = ( 'cons/2' @ $real @ V_a_dot_0 @ ( 'cons/2' @ $real @ V_b_dot_0 @ ( 'nil/0' @ $real ) ) ) )
+      & ( $less @ ( $product @ ( $sum @ V_a_dot_0 @ 1.0 ) @ ( $product @ ( $difference @ V_a_dot_0 @ 1.0 ) @ ( $product @ ( $sum @ V_b_dot_0 @ 1.0 ) @ ( $difference @ V_b_dot_0 @ 1.0 ) ) ) ) @ 0.0 ) ) ),
+    answer_to(a3_1_question,[])).
+

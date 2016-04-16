@@ -101,7 +101,7 @@
 (def-answer p2 (PLam a_b_c (= a_b_c (list-of (v+ q r) (v+ p r) (v+ p q)))))
 
 (def-answer p3 (PLam Vs (= Vs (list-of
-  (* (/ 1 6) (radius p) (radius q) (radius r))
-  (* (/ 1 3) (radius p) (radius q) (radius r))
+  (* (/ 1 6) p_abs q_abs r_abs)
+  (* (/ 1 3) p_abs q_abs r_abs)
 ))))
 

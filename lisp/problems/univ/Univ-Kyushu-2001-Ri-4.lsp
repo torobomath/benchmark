@@ -58,3 +58,18 @@
            (= Dz (2d.circle (complex->point (/ (- (* (complex d1 d2) (complex p1 p2)) (* (conjugate (complex d1 d2)) (complex q1 q2))) (- (complex d1 d2) (conjugate (complex d1 d2)))))
                 (./ (.* (abs (complex d1 d2)) (abs (- (complex p1 p2) (complex q1 q2)))) (abs (- (complex d1 d2) (conjugate (complex d1 d2))))))))))))
 
+(def-answer a1 (PLam D (= D (2d.circle (complex->point (- (* (real->complex (./ 1 a)) b)))
+                             (./ (sqrt (.- (.^ (abs b) 2) (.* a c)))
+                                 (.abs a))))))
+
+(def-answer a2 (PLam D (||
+    (&& (real-number d)
+        (= D (2d.line p q)))
+    (&& (! (real-number d))
+        (= D (2d.circle (complex->point (/ (- (* d (point->complex p))
+                                           (* (conjugate d) (point->complex q)))
+                                        (- d (conjugate d))))
+                     (./ (.* (abs d) (abs (- (point->complex p)
+                                             (point->complex q))))
+                         (abs (- d (conjugate d))))))))))
+

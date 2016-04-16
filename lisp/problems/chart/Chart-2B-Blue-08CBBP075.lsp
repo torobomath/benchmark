@@ -50,10 +50,10 @@
   (= (- 1 t) d2)
 ))))
 
-(def-answer p2 (PLam answer (&&
+(def-answer p2 (PLam answer (exists (OA OB AB) (&&
   (= answer (list-of OA OB AB))
   (< 0 OA)
   (= OA OB)
   (= OB AB)
-)))
+))))
 

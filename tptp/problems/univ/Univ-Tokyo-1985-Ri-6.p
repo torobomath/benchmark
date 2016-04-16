@@ -17,70 +17,70 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  121 (  13 equality;  27 variable)
+%            Number of atoms       :  123 (  13 equality;  27 variable)
 %            Maximal formula depth :   20 (  15 average)
-%            Number of connectives :   91 (   0   ~;   0   |;  10   &;  81   @)
+%            Number of connectives :   93 (   0   ~;   0   |;  10   &;  83   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   31 (   0   :)
+%            Number of symbols     :   31 (   0   :;   0   =)
 %            Number of variables   :   17 (   0 sgn;   0   !;  10   ?;   7   ^)
 %                                         (  17   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   14 (   1 pred;    4 func;    9 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_S: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_S: $real] :
       ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_K: '3d.Shape'] :
         ( ( V_A = '3d.origin/0' )
         & ( V_B
-          = ( '3d.point/3' @ 8 @ 0 @ 0 ) )
+          = ( '3d.point/3' @ 8.0 @ 0.0 @ 0.0 ) )
         & ( V_C
-          = ( '3d.point/3' @ 6 @ ( '*/2' @ 2 @ ( '^/2' @ 3 @ ( '//2' @ 1 @ 2 ) ) ) @ 0 ) )
+          = ( '3d.point/3' @ 6.0 @ ( $product @ 2.0 @ ( '^/2' @ 3.0 @ ( $quotient @ 1.0 @ 2.0 ) ) ) @ 0.0 ) )
         & ( V_K
           = ( '3d.shape-of-cpfun/1'
             @ ^ [V_p_dot_0: '3d.Point'] :
               ? [V_P: '3d.Point'] :
                 ( ( '3d.on/2' @ V_P @ ( '3d.triangle/3' @ V_A @ V_B @ V_C ) )
-                & ( '>=/2' @ 1 @ ( '3d.distance/2' @ V_p_dot_0 @ V_P ) ) ) ) )
+                & ( $greatereq @ 1.0 @ ( '3d.distance/2' @ V_p_dot_0 @ V_P ) ) ) ) )
         & ( V_S
           = ( '3d.area-of/1'
             @ ( '3d.intersection/2' @ V_K
               @ ( '3d.shape-of-cpfun/1'
                 @ ^ [V_p: '3d.Point'] :
                     ( ( '3d.z-coord/1' @ V_p )
-                    = 0 ) ) ) ) ) ) )).
+                    = 0.0 ) ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_V: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_V: $real] :
       ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_K: '3d.Shape'] :
         ( ( V_A = '3d.origin/0' )
         & ( V_B
-          = ( '3d.point/3' @ 8 @ 0 @ 0 ) )
+          = ( '3d.point/3' @ 8.0 @ 0.0 @ 0.0 ) )
         & ( V_C
-          = ( '3d.point/3' @ 6 @ ( '*/2' @ 2 @ ( '^/2' @ 3 @ ( '//2' @ 1 @ 2 ) ) ) @ 0 ) )
+          = ( '3d.point/3' @ 6.0 @ ( $product @ 2.0 @ ( '^/2' @ 3.0 @ ( $quotient @ 1.0 @ 2.0 ) ) ) @ 0.0 ) )
         & ( V_K
           = ( '3d.shape-of-cpfun/1'
             @ ^ [V_p: '3d.Point'] :
               ? [V_P: '3d.Point'] :
                 ( ( '3d.on/2' @ V_P @ ( '3d.triangle/3' @ V_A @ V_B @ V_C ) )
-                & ( '>=/2' @ 1 @ ( '3d.distance/2' @ V_p @ V_P ) ) ) ) )
+                & ( $greatereq @ 1.0 @ ( '3d.distance/2' @ V_p @ V_P ) ) ) ) )
         & ( V_V
           = ( '3d.volume-of/1' @ V_K ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_S_dot_0: 'R'] :
+    ^ [V_S_dot_0: $real] :
       ( V_S_dot_0
-      = ( '+/2' @ 'Pi/0' @ ( '+/2' @ 21 @ ( '*/2' @ 6 @ ( 'sqrt/1' @ 3 ) ) ) ) ) ),
+      = ( $sum @ 'Pi/0' @ ( $sum @ 21.0 @ ( $product @ 6.0 @ ( 'sqrt/1' @ 3.0 ) ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_V_dot_0: 'R'] :
+    ^ [V_V_dot_0: $real] :
       ( V_V_dot_0
-      = ( '-/2' @ ( '*/2' @ ( '//2' @ ( '*/2' @ 4 @ ( '+/2' @ 10 @ ( '*/2' @ 3 @ ( 'sqrt/1' @ 3 ) ) ) ) @ 3 ) @ 'Pi/0' ) @ ( '//2' @ ( '*/2' @ 4 @ ( '+/2' @ 3 @ ( '*/2' @ 2 @ ( 'sqrt/1' @ 3 ) ) ) ) @ 3 ) ) ) ),
+      = ( $difference @ ( $product @ ( $quotient @ ( $product @ 4.0 @ ( $sum @ 10.0 @ ( $product @ 3.0 @ ( 'sqrt/1' @ 3.0 ) ) ) ) @ 3.0 ) @ 'Pi/0' ) @ ( $quotient @ ( $product @ 4.0 @ ( $sum @ 3.0 @ ( $product @ 2.0 @ ( 'sqrt/1' @ 3.0 ) ) ) ) @ 3.0 ) ) ) ),
     answer_to(p2_question,[])).
+

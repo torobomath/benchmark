@@ -22,7 +22,7 @@
 (namespace 2d)
 
 (def-directive
-  p1_1
+  a1_1
   (Find (b)
     (exists (a c P Q C l1 l2)
       (&&
@@ -39,7 +39,7 @@
       ))))
 
 (def-directive
-  p1_2
+  a1_2
   (Find (c)
     (exists (b P Q C l1 l2)
       (&&
@@ -56,7 +56,7 @@
       ))))
 
 (def-directive
-  p2
+  a2
   (Find (U)
     (exists (b c P Q C l1 l2)
       (&&
@@ -74,7 +74,7 @@
       ))))
 
 (def-directive
-  p3
+  a3
   (Find (a)
     (exists (b c P Q C l1 l2)
       (&&
@@ -91,15 +91,15 @@
         (= 1 (area-of (shape-enclosed-by (list-of C l1 l2))))
       ))))
 
-(def-answer p1_1 (PLam b (= b (/ 1 2))))
+(def-answer a1_1 (PLam b (= b (/ 1 2))))
 
-(def-answer p1_2 (PLam c (&& (= c (- (/ 7 2) a)) (< 0 a))))
+(def-answer a1_2 (PLam c (&& (= c (- (/ 7 2) a)) (< 0 a))))
 
-(def-answer p2 (PLam U (exists (Ux Uy)
+(def-answer a2 (PLam U (exists (Ux Uy)
              (&& (< 0 a)
            (= U (point Ux Uy))
            (= Ux 0)
            (= Uy (+ (* -2 a) (/ 7 2)))))))
 
-(def-answer p3 (PLam a (= a (/ 3 2))))
+(def-answer a3 (PLam a (= a (/ 3 2))))
 

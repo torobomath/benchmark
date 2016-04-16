@@ -15,22 +15,22 @@
 %            Maximal formula depth :   14 (  14 average)
 %            Number of connectives :   38 (   0   ~;   0   |;   3   &;  34   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    9 (   0   :)
+%            Number of symbols     :    9 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   3   !;   0   ?;   0   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   2 pred;    4 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_A: 'R',V_B: 'R',V_C: 'R'] :
-      ( ( ( 1
-          = ( '*/2' @ V_A @ ( '*/2' @ V_B @ V_C ) ) )
-        & ( '</2' @ 0 @ V_A )
-        & ( '</2' @ 0 @ V_B )
-        & ( '</2' @ 0 @ V_C ) )
-     => ( '<=/2' @ ( '*/2' @ ( '+/2' @ ( '-/2' @ V_A @ 1 ) @ ( '//2' @ 1 @ V_B ) ) @ ( '*/2' @ ( '+/2' @ ( '-/2' @ V_B @ 1 ) @ ( '//2' @ 1 @ V_C ) ) @ ( '+/2' @ ( '-/2' @ V_C @ 1 ) @ ( '//2' @ 1 @ V_A ) ) ) ) @ 1 ) ) )).
+    ! [V_A: $real,V_B: $real,V_C: $real] :
+      ( ( ( 1.0
+          = ( $product @ V_A @ ( $product @ V_B @ V_C ) ) )
+        & ( $less @ 0.0 @ V_A )
+        & ( $less @ 0.0 @ V_B )
+        & ( $less @ 0.0 @ V_C ) )
+     => ( $lesseq @ ( $product @ ( $sum @ ( $difference @ V_A @ 1.0 ) @ ( $quotient @ 1.0 @ V_B ) ) @ ( $product @ ( $sum @ ( $difference @ V_B @ 1.0 ) @ ( $quotient @ 1.0 @ V_C ) ) @ ( $sum @ ( $difference @ V_C @ 1.0 ) @ ( $quotient @ 1.0 @ V_A ) ) ) ) @ 1.0 ) ) )).
+

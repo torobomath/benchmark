@@ -18,151 +18,149 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  391 (  32 equality; 161 variable)
-%            Maximal formula depth :   45 (  23 average)
-%            Number of connectives :  346 (   3   ~;   0   |;  45   &; 298   @)
+%            Number of atoms       :  453 (  31 equality; 158 variable)
+%            Maximal formula depth :   49 (  25 average)
+%            Number of connectives :  410 (   3   ~;   0   |;  44   &; 363   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   26 (   0   :)
-%            Number of variables   :   46 (   1 sgn;   0   !;  18   ?;  22   ^)
-%                                         (  40   :;   0  !>;   0  ?*)
+%            Number of symbols     :   26 (   0   :;   0   =)
+%            Number of variables   :   45 (   0 sgn;   0   !;  23   ?;  22   ^)
+%                                         (  45   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   11 (   3 pred;    4 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ab: 'ListOf' @ 'R'] :
-      ? [V_f: 'R2R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_ab: ( 'ListOf' @ $real )] :
+      ? [V_f: 'R2R',V_a: $real,V_b: $real] :
         ( ( V_f
           = ( 'fun/1'
-            @ ^ [V_x: 'R'] :
-                ( '//2' @ ( '-/2' @ ( 'sqrt/1' @ ( '+/2' @ 1 @ ( '*/2' @ 2 @ V_x ) ) ) @ 1 ) @ V_x ) ) )
-        & ( 'converge/3' @ V_f @ 0 @ V_a )
-        & ( 'converge/3' @ ( 'derivative/1' @ V_f ) @ 0 @ V_b )
+            @ ^ [V_x: $real] :
+                ( $quotient @ ( $difference @ ( 'sqrt/1' @ ( $sum @ 1.0 @ ( $product @ 2.0 @ V_x ) ) ) @ 1.0 ) @ V_x ) ) )
+        & ( 'converge/3' @ V_f @ 0.0 @ V_a )
+        & ( 'converge/3' @ ( 'derivative/1' @ V_f ) @ 0.0 @ V_b )
         & ( V_ab
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ 'nil/0' ) ) ) ) )).
+          = ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ V_b @ ( 'nil/0' @ $real ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ans: 'ListOf' @ ( 'SetOf' @ 'R' )] :
-      ? [V_a: 'R',V_b: 'R',V_f: 'R2R',V_r123: 'SetOf' @ 'R',V_r132: 'SetOf' @ 'R',V_r213: 'SetOf' @ 'R',V_r231: 'SetOf' @ 'R',V_r312: 'SetOf' @ 'R',V_r321: 'SetOf' @ 'R',V_p12_3: 'SetOf' @ 'R',V_p13_2: 'SetOf' @ 'R',V_p23_1: 'SetOf' @ 'R',V_p123: 'SetOf' @ 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ ( 'SetOf' @ $real ) )
+    @ ^ [V_ans: ( 'ListOf' @ ( 'SetOf' @ $real ) )] :
+      ? [V_a: $real,V_b: $real,V_f: 'R2R',V_f1: 'R2R',V_f2: 'R2R',V_f3: 'R2R',V_r123: ( 'SetOf' @ $real ),V_r132: ( 'SetOf' @ $real ),V_r213: ( 'SetOf' @ $real ),V_r231: ( 'SetOf' @ $real ),V_r312: ( 'SetOf' @ $real ),V_r321: ( 'SetOf' @ $real ),V_p12_3: ( 'SetOf' @ $real ),V_p13_2: ( 'SetOf' @ $real ),V_p23_1: ( 'SetOf' @ $real ),V_p123: ( 'SetOf' @ $real )] :
         ( ( V_f
           = ( 'fun/1'
-            @ ^ [V_x_dot_12: 'R'] :
-                ( '//2' @ ( '-/2' @ ( 'sqrt/1' @ ( '+/2' @ 1 @ ( '*/2' @ 2 @ V_x_dot_12 ) ) ) @ 1 ) @ V_x_dot_12 ) ) )
-        & ( 'converge/3' @ V_f @ 0 @ V_a )
-        & ( 'converge/3' @ ( 'derivative/1' @ V_f ) @ 0 @ V_b )
-        & ( V_ab
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ 'nil/0' ) ) )
+            @ ^ [V_x_dot_12: $real] :
+                ( $quotient @ ( $difference @ ( 'sqrt/1' @ ( $sum @ 1.0 @ ( $product @ 2.0 @ V_x_dot_12 ) ) ) @ 1.0 ) @ V_x_dot_12 ) ) )
+        & ( 'converge/3' @ V_f @ 0.0 @ V_a )
+        & ( 'converge/3' @ ( 'derivative/1' @ V_f ) @ 0.0 @ V_b )
         & ( V_f1
           = ( 'fun/1'
-            @ ^ [V_x_dot_11: 'R'] :
-                ( 'sqrt/1' @ ( '+/2' @ 1 @ ( '*/2' @ 2 @ V_x_dot_11 ) ) ) ) )
+            @ ^ [V_x_dot_11: $real] :
+                ( 'sqrt/1' @ ( $sum @ 1.0 @ ( $product @ 2.0 @ V_x_dot_11 ) ) ) ) )
         & ( V_f2
           = ( 'fun/1'
-            @ ^ [V_x_dot_10: 'R'] :
-                ( '+/2' @ 1 @ ( '+/2' @ V_a @ V_x_dot_10 ) ) ) )
+            @ ^ [V_x_dot_10: $real] :
+                ( $sum @ 1.0 @ ( $sum @ V_a @ V_x_dot_10 ) ) ) )
         & ( V_f3
           = ( 'fun/1'
-            @ ^ [V_x_dot_9: 'R'] :
-                ( '+/2' @ 1 @ ( '+/2' @ ( '*/2' @ V_a @ V_x_dot_9 ) @ ( '*/2' @ V_b @ ( '^/2' @ V_x_dot_9 @ 2 ) ) ) ) ) )
+            @ ^ [V_x_dot_9: $real] :
+                ( $sum @ 1.0 @ ( $sum @ ( $product @ V_a @ V_x_dot_9 ) @ ( $product @ V_b @ ( '^/2' @ V_x_dot_9 @ 2.0 ) ) ) ) ) )
         & ( V_r123
-          = ( 'set-by-def/1'
-            @ ^ [V_x_dot_8: 'R'] :
-                ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x_dot_8 )
-                & ( '>/2' @ ( 'funapp/2' @ V_f1 @ V_x_dot_8 ) @ ( 'funapp/2' @ V_f2 @ V_x_dot_8 ) )
-                & ( '>/2' @ ( 'funapp/2' @ V_f2 @ V_x_dot_8 ) @ ( 'funapp/2' @ V_f3 @ V_x_dot_8 ) ) ) ) )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_x_dot_8: $real] :
+                ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x_dot_8 )
+                & ( $greater @ ( 'funapp/2' @ V_f1 @ V_x_dot_8 ) @ ( 'funapp/2' @ V_f2 @ V_x_dot_8 ) )
+                & ( $greater @ ( 'funapp/2' @ V_f2 @ V_x_dot_8 ) @ ( 'funapp/2' @ V_f3 @ V_x_dot_8 ) ) ) ) )
         & ( V_r132
-          = ( 'set-by-def/1'
-            @ ^ [V_x_dot_7: 'R'] :
-                ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x_dot_7 )
-                & ( '>/2' @ ( 'funapp/2' @ V_f1 @ V_x_dot_7 ) @ ( 'funapp/2' @ V_f3 @ V_x_dot_7 ) )
-                & ( '>/2' @ ( 'funapp/2' @ V_f3 @ V_x_dot_7 ) @ ( 'funapp/2' @ V_f2 @ V_x_dot_7 ) ) ) ) )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_x_dot_7: $real] :
+                ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x_dot_7 )
+                & ( $greater @ ( 'funapp/2' @ V_f1 @ V_x_dot_7 ) @ ( 'funapp/2' @ V_f3 @ V_x_dot_7 ) )
+                & ( $greater @ ( 'funapp/2' @ V_f3 @ V_x_dot_7 ) @ ( 'funapp/2' @ V_f2 @ V_x_dot_7 ) ) ) ) )
         & ( V_r213
-          = ( 'set-by-def/1'
-            @ ^ [V_x_dot_6: 'R'] :
-                ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x_dot_6 )
-                & ( '>/2' @ ( 'funapp/2' @ V_f2 @ V_x_dot_6 ) @ ( 'funapp/2' @ V_f1 @ V_x_dot_6 ) )
-                & ( '>/2' @ ( 'funapp/2' @ V_f1 @ V_x_dot_6 ) @ ( 'funapp/2' @ V_f3 @ V_x_dot_6 ) ) ) ) )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_x_dot_6: $real] :
+                ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x_dot_6 )
+                & ( $greater @ ( 'funapp/2' @ V_f2 @ V_x_dot_6 ) @ ( 'funapp/2' @ V_f1 @ V_x_dot_6 ) )
+                & ( $greater @ ( 'funapp/2' @ V_f1 @ V_x_dot_6 ) @ ( 'funapp/2' @ V_f3 @ V_x_dot_6 ) ) ) ) )
         & ( V_r231
-          = ( 'set-by-def/1'
-            @ ^ [V_x_dot_5: 'R'] :
-                ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x_dot_5 )
-                & ( '>/2' @ ( 'funapp/2' @ V_f2 @ V_x_dot_5 ) @ ( 'funapp/2' @ V_f3 @ V_x_dot_5 ) )
-                & ( '>/2' @ ( 'funapp/2' @ V_f3 @ V_x_dot_5 ) @ ( 'funapp/2' @ V_f1 @ V_x_dot_5 ) ) ) ) )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_x_dot_5: $real] :
+                ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x_dot_5 )
+                & ( $greater @ ( 'funapp/2' @ V_f2 @ V_x_dot_5 ) @ ( 'funapp/2' @ V_f3 @ V_x_dot_5 ) )
+                & ( $greater @ ( 'funapp/2' @ V_f3 @ V_x_dot_5 ) @ ( 'funapp/2' @ V_f1 @ V_x_dot_5 ) ) ) ) )
         & ( V_r312
-          = ( 'set-by-def/1'
-            @ ^ [V_x_dot_4: 'R'] :
-                ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x_dot_4 )
-                & ( '>/2' @ ( 'funapp/2' @ V_f3 @ V_x_dot_4 ) @ ( 'funapp/2' @ V_f1 @ V_x_dot_4 ) )
-                & ( '>/2' @ ( 'funapp/2' @ V_f1 @ V_x_dot_4 ) @ ( 'funapp/2' @ V_f2 @ V_x_dot_4 ) ) ) ) )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_x_dot_4: $real] :
+                ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x_dot_4 )
+                & ( $greater @ ( 'funapp/2' @ V_f3 @ V_x_dot_4 ) @ ( 'funapp/2' @ V_f1 @ V_x_dot_4 ) )
+                & ( $greater @ ( 'funapp/2' @ V_f1 @ V_x_dot_4 ) @ ( 'funapp/2' @ V_f2 @ V_x_dot_4 ) ) ) ) )
         & ( V_r321
-          = ( 'set-by-def/1'
-            @ ^ [V_x_dot_3: 'R'] :
-                ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x_dot_3 )
-                & ( '>/2' @ ( 'funapp/2' @ V_f3 @ V_x_dot_3 ) @ ( 'funapp/2' @ V_f2 @ V_x_dot_3 ) )
-                & ( '>/2' @ ( 'funapp/2' @ V_f2 @ V_x_dot_3 ) @ ( 'funapp/2' @ V_f1 @ V_x_dot_3 ) ) ) ) )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_x_dot_3: $real] :
+                ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x_dot_3 )
+                & ( $greater @ ( 'funapp/2' @ V_f3 @ V_x_dot_3 ) @ ( 'funapp/2' @ V_f2 @ V_x_dot_3 ) )
+                & ( $greater @ ( 'funapp/2' @ V_f2 @ V_x_dot_3 ) @ ( 'funapp/2' @ V_f1 @ V_x_dot_3 ) ) ) ) )
         & ( V_p12_3
-          = ( 'set-by-def/1'
-            @ ^ [V_x_dot_2: 'R'] :
-                ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x_dot_2 )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_x_dot_2: $real] :
+                ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x_dot_2 )
                 & ( ( 'funapp/2' @ V_f1 @ V_x_dot_2 )
                   = ( 'funapp/2' @ V_f2 @ V_x_dot_2 ) )
                 & ( ( 'funapp/2' @ V_f2 @ V_x_dot_2 )
                  != ( 'funapp/2' @ V_f3 @ V_x_dot_2 ) ) ) ) )
         & ( V_p13_2
-          = ( 'set-by-def/1'
-            @ ^ [V_x_dot_1: 'R'] :
-                ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x_dot_1 )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_x_dot_1: $real] :
+                ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x_dot_1 )
                 & ( ( 'funapp/2' @ V_f1 @ V_x_dot_1 )
                   = ( 'funapp/2' @ V_f3 @ V_x_dot_1 ) )
                 & ( ( 'funapp/2' @ V_f3 @ V_x_dot_1 )
                  != ( 'funapp/2' @ V_f2 @ V_x_dot_1 ) ) ) ) )
         & ( V_p23_1
-          = ( 'set-by-def/1'
-            @ ^ [V_x_dot_0: 'R'] :
-                ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x_dot_0 )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_x_dot_0: $real] :
+                ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x_dot_0 )
                 & ( ( 'funapp/2' @ V_f2 @ V_x_dot_0 )
                   = ( 'funapp/2' @ V_f3 @ V_x_dot_0 ) )
                 & ( ( 'funapp/2' @ V_f3 @ V_x_dot_0 )
                  != ( 'funapp/2' @ V_f1 @ V_x_dot_0 ) ) ) ) )
         & ( V_p123
-          = ( 'set-by-def/1'
-            @ ^ [V_x: 'R'] :
-                ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_x: $real] :
+                ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x )
                 & ( ( 'funapp/2' @ V_f1 @ V_x )
                   = ( 'funapp/2' @ V_f2 @ V_x ) )
                 & ( ( 'funapp/2' @ V_f2 @ V_x )
                   = ( 'funapp/2' @ V_f3 @ V_x ) ) ) ) )
         & ( V_ans
-          = ( 'cons/2' @ V_r123 @ ( 'cons/2' @ V_r132 @ ( 'cons/2' @ V_r213 @ ( 'cons/2' @ V_r231 @ ( 'cons/2' @ V_r312 @ ( 'cons/2' @ V_r321 @ ( 'cons/2' @ V_p12_3 @ ( 'cons/2' @ V_p13_2 @ ( 'cons/2' @ V_p23_1 @ ( 'cons/2' @ V_p123 @ 'nil/0' ) ) ) ) ) ) ) ) ) ) ) ) )).
+          = ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_r123 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_r132 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_r213 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_r231 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_r312 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_r321 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_p12_3 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_p13_2 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_p23_1 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_p123 @ ( 'nil/0' @ ( 'SetOf' @ $real ) ) ) ) ) ) ) ) ) ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_ab_dot_0: 'ListOf' @ 'R'] :
+    ^ [V_ab_dot_0: ( 'ListOf' @ $real )] :
       ( V_ab_dot_0
-      = ( 'cons/2' @ 1 @ ( 'cons/2' @ ( '//2' @ -1 @ 2 ) @ 'nil/0' ) ) ) ),
+      = ( 'cons/2' @ $real @ 1.0 @ ( 'cons/2' @ $real @ ( $quotient @ -1.0 @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_ans_dot_0: 'ListOf' @ ( 'SetOf' @ 'R' )] :
-    ? [V_E: 'SetOf' @ 'R',V_r231_dot_0: 'SetOf' @ 'R',V_p123_dot_0: 'SetOf' @ 'R',V_r213_dot_0: 'SetOf' @ 'R'] :
-      ( ( 'is-empty/1' @ V_E )
+    ^ [V_ans_dot_0: ( 'ListOf' @ ( 'SetOf' @ $real ) )] :
+    ? [V_E: ( 'SetOf' @ $real ),V_r231_dot_0: ( 'SetOf' @ $real ),V_p123_dot_0: ( 'SetOf' @ $real ),V_r213_dot_0: ( 'SetOf' @ $real )] :
+      ( ( 'is-empty/1' @ $real @ V_E )
       & ( V_r231_dot_0
-        = ( 'set-by-def/1'
-          @ ^ [V_x_dot_15: 'R'] :
-              ( ( '<=/2' @ ( '//2' @ -1 @ 2 ) @ V_x_dot_15 )
-              & ( '</2' @ V_x_dot_15 @ 0 ) ) ) )
+        = ( 'set-by-def/1' @ $real
+          @ ^ [V_x_dot_15: $real] :
+              ( ( $lesseq @ ( $quotient @ -1.0 @ 2.0 ) @ V_x_dot_15 )
+              & ( $less @ V_x_dot_15 @ 0.0 ) ) ) )
       & ( V_p123_dot_0
-        = ( 'set-by-def/1'
-          @ ^ [V_x_dot_14: 'R'] : ( V_x_dot_14 = 0 ) ) )
+        = ( 'set-by-def/1' @ $real
+          @ ^ [V_x_dot_14: $real] : ( V_x_dot_14 = 0.0 ) ) )
       & ( V_r213_dot_0
-        = ( 'set-by-def/1'
-          @ ^ [V_x_dot_13: 'R'] :
-              ( '>/2' @ V_x_dot_13 @ 0 ) ) )
+        = ( 'set-by-def/1' @ $real
+          @ ^ [V_x_dot_13: $real] :
+              ( $greater @ V_x_dot_13 @ 0.0 ) ) )
       & ( V_ans_dot_0
-        = ( 'cons/2' @ V_E @ ( 'cons/2' @ V_E @ ( 'cons/2' @ V_r213_dot_0 @ ( 'cons/2' @ V_r231_dot_0 @ ( 'cons/2' @ V_E @ ( 'cons/2' @ V_E @ ( 'cons/2' @ V_E @ ( 'cons/2' @ V_E @ ( 'cons/2' @ V_E @ ( 'cons/2' @ V_p123_dot_0 @ 'nil/0' ) ) ) ) ) ) ) ) ) ) ) ) ),
+        = ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_E @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_E @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_r213_dot_0 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_r231_dot_0 @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_E @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_E @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_E @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_E @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_E @ ( 'cons/2' @ ( 'SetOf' @ $real ) @ V_p123_dot_0 @ ( 'nil/0' @ ( 'SetOf' @ $real ) ) ) ) ) ) ) ) ) ) ) ) ) ) ),
     answer_to(p2_question,[])).
+

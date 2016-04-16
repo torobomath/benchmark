@@ -88,3 +88,10 @@
 
 (def-answer p2 (PLam m (= m 4)))
 
+(def-answer a1 (PLam M_f (|| (= M_f (pair (/ (* 4 (sqrt 13)) 3)
+                                          (poly-fun (list-of (/ 4 3) (/ 2 3)))))
+                             (= M_f (pair (/ (* 4 (sqrt 13)) 3)
+                                          (poly-fun (list-of (/ 8 3) (/ -2 3))))))))
+
+(def-answer a2 (PLam m (= m 4)))
+

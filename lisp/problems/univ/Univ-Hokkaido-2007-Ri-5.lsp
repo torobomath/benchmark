@@ -18,7 +18,7 @@
 (def-directive
   p1
   (Show
-   (forall (alpha beta a b C1 C2 p1 p2) (->
+   (forall (alpha beta a b C1 C2 p1 p2 p l k) (->
       (&&
         (! (= a 0))
         (! (= b 0))
@@ -31,17 +31,13 @@
         (is-focus-of p1 C2)
         (is-focus-of p2 C1)
         (is-focus-of p2 C2)
+        (intersect C1 C2 p)
+        (line-type l)
+        (tangent C1 l p)
+        (line-type k)
+        (tangent C2 k p)
       )
-      (forall (p l k) (->
-           (&&
-      (intersect C1 C2 p)
-      (line-type l)
-      (line-type k)
-      (tangent C1 l p)
-      (tangent C1 k p)
-      )
-           (perpendicular l k)
-           ))
+  (perpendicular l k)
       ))
    )
 )

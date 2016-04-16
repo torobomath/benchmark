@@ -21,7 +21,7 @@
 
 (namespace 2d)
 
-(def-directive p1_1
+(def-directive a1_1
   (Find (ab)
   (exists (C1 C2 C3 a b)
     (&& (= C1 (circle (origin) 2))
@@ -33,7 +33,7 @@
         (= ab (list-of a b))))))
 
 (def-directive
-  p1_2
+  a1_2
   (Find (t)
         (exists (C1 C2 C3 a b)
                 (&& (= C1 (circle (origin) 2))
@@ -44,7 +44,7 @@
                     (is-inscribed-in C3 C1)))))
 
 (def-directive
-  p2
+  a2
   (Find (M)
         (exists (b_set)
                 (&& (maximum b_set M)
@@ -56,15 +56,15 @@
                                                              (is-circumscribed-about C3 C2)
                                                              (is-inscribed-in C3 C1))))))))))
 
-(def-answer p1_1 (PLam ab (exists (ab1 ab2)
+(def-answer a1_1 (PLam ab (exists (ab1 ab2)
           (&& (< 0 t)
               (< t 1)
               (= ab1 (- 2 (* 3 t)))
               (= ab2 (sqrt (- (* 8 t) (* 8 (^ t 2)))))
               (= ab (list-of ab1 ab2))))))
 
-(def-answer p1_2 (PLam t (&& (< 0 t)
+(def-answer a1_2 (PLam t (&& (< 0 t)
                              (< t 1))))
 
-(def-answer p2 (PLam M (= M (sqrt 2))))
+(def-answer a2 (PLam M (= M (sqrt 2))))
 

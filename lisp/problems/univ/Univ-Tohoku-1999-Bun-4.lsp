@@ -20,20 +20,7 @@
 (namespace complex)
 
 (def-directive
-  p1_c
-  (Find (p)
-    (exists (a b pc)
-      (&&
-        (! (= 0 p))
-        (= pc (real->complex p))
-        (= pc (+ a b))
-        (= (* (complex 5 0) pc) (* a b))
-        (= (^ pc 5) (+ (^ a 5) (^ b 5)))
-    )
-  )))
-
-(def-directive
-  p1_c2
+  p1
   (Find (p)
     (exists (a b)
      (&&
@@ -54,9 +41,7 @@
 
 (namespace default)
 
-(def-answer p1_c (PLam p (= p 5)))
-
-(def-answer p1_c2 (PLam p (= p 5)))
+(def-answer p1 (PLam p (= p 5)))
 
 (def-answer p2 (PLam p (||
   (= p (/ (+ 15 (* 5 (sqrt 5))) 2))

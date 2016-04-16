@@ -12,34 +12,34 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   38 (   2 equality;   7 variable)
+%            Number of atoms       :   39 (   2 equality;   7 variable)
 %            Maximal formula depth :   19 (  12 average)
-%            Number of connectives :   32 (   0   ~;   0   |;   2   &;  30   @)
+%            Number of connectives :   33 (   0   ~;   0   |;   2   &;  31   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :)
+%            Number of symbols     :   20 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   0   !;   0   ?;   3   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   11 (   2 pred;    4 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_S: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_S: $real] :
         ( V_S
         = ( '2d.area-of/1'
           @ ( '2d.shape-of-cpfun/1'
             @ ^ [V_xy: '2d.Point'] :
-                ( ( '<=/2' @ ( 'abs/1' @ ( '2d.x-coord/1' @ V_xy ) ) @ 2 )
-                & ( '>=/2' @ ( '2d.y-coord/1' @ V_xy ) @ ( '2d.x-coord/1' @ V_xy ) )
-                & ( '<=/2' @ ( '2d.y-coord/1' @ V_xy ) @ ( '+/2' @ ( 'abs/1' @ ( '+/2' @ ( '*/2' @ ( '//2' @ 3 @ 4 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_xy ) @ 2 ) ) @ ( '-/1' @ 3 ) ) ) @ ( '-/1' @ 2 ) ) ) ) ) ) ) )).
+                ( ( $lesseq @ ( 'abs/1' @ ( '2d.x-coord/1' @ V_xy ) ) @ 2.0 )
+                & ( $greatereq @ ( '2d.y-coord/1' @ V_xy ) @ ( '2d.x-coord/1' @ V_xy ) )
+                & ( $lesseq @ ( '2d.y-coord/1' @ V_xy ) @ ( $sum @ ( 'abs/1' @ ( $sum @ ( $product @ ( $quotient @ 3.0 @ 4.0 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_xy ) @ 2.0 ) ) @ ( $uminus @ 3.0 ) ) ) @ ( $uminus @ 2.0 ) ) ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_S_dot_0: 'R'] :
+    ^ [V_S_dot_0: $real] :
       ( V_S_dot_0
-      = ( '//2' @ 64 @ 27 ) ) ),
+      = ( $quotient @ 64.0 @ 27.0 ) ) ),
     answer_to(p1_question,[])).
+

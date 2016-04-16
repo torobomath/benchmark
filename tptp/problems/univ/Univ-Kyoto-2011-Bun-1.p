@@ -20,31 +20,30 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   47 (   6 equality;  23 variable)
+%            Number of atoms       :   48 (   6 equality;  23 variable)
 %            Maximal formula depth :   19 (  12 average)
-%            Number of connectives :   33 (   0   ~;   0   |;   7   &;  26   @)
+%            Number of connectives :   34 (   0   ~;   0   |;   7   &;  27   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   16 (   0   :)
+%            Number of symbols     :   16 (   0   :;   0   =)
 %            Number of variables   :    7 (   0 sgn;   0   !;   5   ?;   2   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   0 pred;    1 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_lenAD: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_lenAD: $real] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_AD: '2d.Shape'] :
         ( ( '2d.is-triangle/3' @ V_A @ V_B @ V_C )
-        & ( 12
+        & ( 12.0
           = ( '2d.distance/2' @ V_A @ V_B ) )
-        & ( 11
+        & ( 11.0
           = ( '2d.distance/2' @ V_B @ V_C ) )
-        & ( 10
+        & ( 10.0
           = ( '2d.distance/2' @ V_C @ V_A ) )
         & ( V_AD
           = ( '2d.line/2' @ V_A @ V_D ) )
@@ -54,7 +53,8 @@ thf(p1_qustion,question,
           = ( '2d.distance/2' @ V_A @ V_D ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_lenAD_dot_0: 'R'] :
+    ^ [V_lenAD_dot_0: $real] :
       ( V_lenAD_dot_0
-      = ( '*/2' @ 3 @ ( 'sqrt/1' @ 10 ) ) ) ),
+      = ( $product @ 3.0 @ ( 'sqrt/1' @ 10.0 ) ) ) ),
     answer_to(p1_question,[])).
+

@@ -14,44 +14,44 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    3 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  131 (   2 equality;  60 variable)
+%            Number of atoms       :  139 (   2 equality;  60 variable)
 %            Maximal formula depth :   19 (  16 average)
-%            Number of connectives :  128 (   3   ~;   0   |;   2   &; 122   @)
+%            Number of connectives :  136 (   3   ~;   0   |;   2   &; 130   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   16 (   0   :)
+%            Number of symbols     :   16 (   0   :;   0   =)
 %            Number of variables   :   11 (   0 sgn;   9   !;   0   ?;   2   ^)
 %                                         (  11   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   2 pred;    3 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
-    ! [V_a1: 'R',V_a2: 'R',V_a3: 'R'] :
-      ( '>=/2' @ ( '+/2' @ ( '*/2' @ ( '-/2' @ V_a1 @ V_a2 ) @ ( '-/2' @ V_a1 @ V_a3 ) ) @ ( '+/2' @ ( '*/2' @ ( '-/2' @ V_a2 @ V_a1 ) @ ( '-/2' @ V_a2 @ V_a3 ) ) @ ( '*/2' @ ( '-/2' @ V_a3 @ V_a1 ) @ ( '-/2' @ V_a3 @ V_a2 ) ) ) ) @ 0 ) )).
+    ! [V_a1: $real,V_a2: $real,V_a3: $real] :
+      ( $greatereq @ ( $sum @ ( $product @ ( $difference @ V_a1 @ V_a2 ) @ ( $difference @ V_a1 @ V_a3 ) ) @ ( $sum @ ( $product @ ( $difference @ V_a2 @ V_a1 ) @ ( $difference @ V_a2 @ V_a3 ) ) @ ( $product @ ( $difference @ V_a3 @ V_a1 ) @ ( $difference @ V_a3 @ V_a2 ) ) ) ) @ 0.0 ) )).
 
 thf(p2,conjecture,(
-    ! [V_a1: 'R',V_a2: 'R',V_a3: 'R',V_a4: 'R',V_a5: 'R'] :
-      ( '>=/2' @ ( '+/2' @ ( '*/2' @ ( '-/2' @ V_a1 @ V_a2 ) @ ( '*/2' @ ( '-/2' @ V_a1 @ V_a3 ) @ ( '*/2' @ ( '-/2' @ V_a1 @ V_a4 ) @ ( '-/2' @ V_a1 @ V_a5 ) ) ) ) @ ( '+/2' @ ( '*/2' @ ( '-/2' @ V_a2 @ V_a1 ) @ ( '*/2' @ ( '-/2' @ V_a2 @ V_a3 ) @ ( '*/2' @ ( '-/2' @ V_a2 @ V_a4 ) @ ( '-/2' @ V_a2 @ V_a5 ) ) ) ) @ ( '+/2' @ ( '*/2' @ ( '-/2' @ V_a3 @ V_a1 ) @ ( '*/2' @ ( '-/2' @ V_a3 @ V_a2 ) @ ( '*/2' @ ( '-/2' @ V_a3 @ V_a4 ) @ ( '-/2' @ V_a3 @ V_a5 ) ) ) ) @ ( '+/2' @ ( '*/2' @ ( '-/2' @ V_a4 @ V_a1 ) @ ( '*/2' @ ( '-/2' @ V_a4 @ V_a2 ) @ ( '*/2' @ ( '-/2' @ V_a4 @ V_a3 ) @ ( '-/2' @ V_a4 @ V_a5 ) ) ) ) @ ( '*/2' @ ( '-/2' @ V_a5 @ V_a1 ) @ ( '*/2' @ ( '-/2' @ V_a5 @ V_a2 ) @ ( '*/2' @ ( '-/2' @ V_a5 @ V_a3 ) @ ( '-/2' @ V_a5 @ V_a4 ) ) ) ) ) ) ) ) @ 0 ) )).
+    ! [V_a1: $real,V_a2: $real,V_a3: $real,V_a4: $real,V_a5: $real] :
+      ( $greatereq @ ( $sum @ ( $product @ ( $difference @ V_a1 @ V_a2 ) @ ( $product @ ( $difference @ V_a1 @ V_a3 ) @ ( $product @ ( $difference @ V_a1 @ V_a4 ) @ ( $difference @ V_a1 @ V_a5 ) ) ) ) @ ( $sum @ ( $product @ ( $difference @ V_a2 @ V_a1 ) @ ( $product @ ( $difference @ V_a2 @ V_a3 ) @ ( $product @ ( $difference @ V_a2 @ V_a4 ) @ ( $difference @ V_a2 @ V_a5 ) ) ) ) @ ( $sum @ ( $product @ ( $difference @ V_a3 @ V_a1 ) @ ( $product @ ( $difference @ V_a3 @ V_a2 ) @ ( $product @ ( $difference @ V_a3 @ V_a4 ) @ ( $difference @ V_a3 @ V_a5 ) ) ) ) @ ( $sum @ ( $product @ ( $difference @ V_a4 @ V_a1 ) @ ( $product @ ( $difference @ V_a4 @ V_a2 ) @ ( $product @ ( $difference @ V_a4 @ V_a3 ) @ ( $difference @ V_a4 @ V_a5 ) ) ) ) @ ( $product @ ( $difference @ V_a5 @ V_a1 ) @ ( $product @ ( $difference @ V_a5 @ V_a2 ) @ ( $product @ ( $difference @ V_a5 @ V_a3 ) @ ( $difference @ V_a5 @ V_a4 ) ) ) ) ) ) ) ) @ 0.0 ) )).
 
 thf(p3,conjecture,(
-    ~ ( ! [V_as: 'ListOf' @ 'R'] :
-          ( ( ( 'int.</2' @ 2 @ ( 'list-len/1' @ V_as ) )
-            & ( ( 'list-len/1' @ V_as )
+    ~ ( ! [V_as: ( 'ListOf' @ $real )] :
+          ( ( ( $less @ 2 @ ( 'list-len/1' @ $real @ V_as ) )
+            & ( ( 'list-len/1' @ $real @ V_as )
              != 3 )
-            & ( ( 'list-len/1' @ V_as )
+            & ( ( 'list-len/1' @ $real @ V_as )
              != 5 ) )
-         => ( '>=/2'
+         => ( $greatereq
             @ ( 'sum/1'
-              @ ( 'map/2'
-                @ ^ [V_b: 'R'] :
+              @ ( 'map/2' @ $real @ $real
+                @ ^ [V_b: $real] :
                     ( 'product/1'
-                    @ ( 'map/2'
-                      @ ^ [V_c: 'R'] :
-                          ( '-/2' @ V_b @ V_c )
-                      @ ( 'delete/2' @ V_b @ V_as ) ) )
+                    @ ( 'map/2' @ $real @ $real
+                      @ ^ [V_c: $real] :
+                          ( $difference @ V_b @ V_c )
+                      @ ( 'delete/2' @ $real @ V_b @ V_as ) ) )
                 @ V_as ) )
-            @ 0 ) ) ) )).
+            @ 0.0 ) ) ) )).
+

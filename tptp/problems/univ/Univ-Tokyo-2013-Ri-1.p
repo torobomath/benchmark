@@ -14,52 +14,52 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  106 (  12 equality;  41 variable)
-%            Maximal formula depth :   31 (  21 average)
-%            Number of connectives :   82 (   0   ~;   1   |;  10   &;  71   @)
+%            Number of atoms       :  119 (  12 equality;  41 variable)
+%            Maximal formula depth :   32 (  22 average)
+%            Number of connectives :   95 (   0   ~;   1   |;  10   &;  84   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   21 (   0   :)
+%            Number of symbols     :   20 (   0   :;   0   =)
 %            Number of variables   :   13 (   0 sgn;   0   !;  10   ?;   3   ^)
 %                                         (  13   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   0 pred;    5 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ab: 'ListOf' @ 'R'] :
-      ? [V_a: 'R',V_b: 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_ab: ( 'ListOf' @ $real )] :
+      ? [V_a: $real,V_b: $real] :
         ( ( V_ab
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ 'nil/0' ) ) )
-        & ? [V_P0: '2d.Point',V_P1: '2d.Point',V_P2: '2d.Point',V_P3: '2d.Point',V_P4: '2d.Point',V_P5: '2d.Point',V_P6: '2d.Point',V_f: '2d.Point' > '2d.Point'] :
+          = ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ V_b @ ( 'nil/0' @ $real ) ) ) )
+        & ? [V_P0: '2d.Point',V_P1: '2d.Point',V_P2: '2d.Point',V_P3: '2d.Point',V_P4: '2d.Point',V_P5: '2d.Point',V_P6: '2d.Point',V_f: ( '2d.Point' > '2d.Point' )] :
             ( ( V_f
               = ( ^ [V_p: '2d.Point'] :
-                    ( '2d.point/2' @ ( '-/2' @ ( '*/2' @ V_a @ ( '2d.x-coord/1' @ V_p ) ) @ ( '*/2' @ V_b @ ( '2d.y-coord/1' @ V_p ) ) ) @ ( '+/2' @ ( '*/2' @ V_b @ ( '2d.x-coord/1' @ V_p ) ) @ ( '*/2' @ V_a @ ( '2d.y-coord/1' @ V_p ) ) ) ) ) )
+                    ( '2d.point/2' @ ( $difference @ ( $product @ V_a @ ( '2d.x-coord/1' @ V_p ) ) @ ( $product @ V_b @ ( '2d.y-coord/1' @ V_p ) ) ) @ ( $sum @ ( $product @ V_b @ ( '2d.x-coord/1' @ V_p ) ) @ ( $product @ V_a @ ( '2d.y-coord/1' @ V_p ) ) ) ) ) )
             & ( V_P0
-              = ( '2d.point/2' @ 1 @ 0 ) )
+              = ( '2d.point/2' @ 1.0 @ 0.0 ) )
             & ( V_P1
-              = ( 'LamApp/2' @ V_f @ V_P0 ) )
+              = ( V_f @ V_P0 ) )
             & ( V_P2
-              = ( 'LamApp/2' @ V_f @ V_P1 ) )
+              = ( V_f @ V_P1 ) )
             & ( V_P3
-              = ( 'LamApp/2' @ V_f @ V_P2 ) )
+              = ( V_f @ V_P2 ) )
             & ( V_P4
-              = ( 'LamApp/2' @ V_f @ V_P3 ) )
+              = ( V_f @ V_P3 ) )
             & ( V_P5
-              = ( 'LamApp/2' @ V_f @ V_P4 ) )
+              = ( V_f @ V_P4 ) )
             & ( V_P6
-              = ( 'LamApp/2' @ V_f @ V_P5 ) )
+              = ( V_f @ V_P5 ) )
             & ( V_P0 = V_P6 )
-            & ( 'pairwise-distinct/1' @ ( 'cons/2' @ V_P0 @ ( 'cons/2' @ V_P1 @ ( 'cons/2' @ V_P2 @ ( 'cons/2' @ V_P3 @ ( 'cons/2' @ V_P4 @ ( 'cons/2' @ V_P5 @ 'nil/0' ) ) ) ) ) ) ) ) ) )).
+            & ( 'pairwise-distinct/1' @ '2d.Point' @ ( 'cons/2' @ '2d.Point' @ V_P0 @ ( 'cons/2' @ '2d.Point' @ V_P1 @ ( 'cons/2' @ '2d.Point' @ V_P2 @ ( 'cons/2' @ '2d.Point' @ V_P3 @ ( 'cons/2' @ '2d.Point' @ V_P4 @ ( 'cons/2' @ '2d.Point' @ V_P5 @ ( 'nil/0' @ '2d.Point' ) ) ) ) ) ) ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_ab_dot_0: 'ListOf' @ 'R'] :
+    ^ [V_ab_dot_0: ( 'ListOf' @ $real )] :
       ( ( V_ab_dot_0
-        = ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ ( 'cons/2' @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) @ 'nil/0' ) ) )
+        = ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'cons/2' @ $real @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) )
       | ( V_ab_dot_0
-        = ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ ( 'cons/2' @ ( '-/1' @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) ) @ 'nil/0' ) ) ) ) ),
+        = ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'cons/2' @ $real @ ( $uminus @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) ) @ ( 'nil/0' @ $real ) ) ) ) ) ),
     answer_to(p_question,[])).
+

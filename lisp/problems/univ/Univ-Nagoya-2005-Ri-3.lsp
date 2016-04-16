@@ -214,3 +214,17 @@
   p6
   (PLam om (= om (v+ (sv* (/ 1 3) a) (sv* (/ 1 6) b) (sv* (/ 1 3) c)))))
 
+(def-answer a1
+   (PLam vecs (= vecs (list-of
+      (sv* t a)
+      (v+ (sv* (- 1 (/ t 2)) a) (sv* (/ t 2) b))
+      (v+ (sv* (- 1 t) b) (sv* t c))
+      (sv* (- 1 (/ t 2)) c)))))
+
+(def-answer a2_1
+  (PLam t (= t (/ 2 3))))
+
+(def-answer
+  a2_2
+  (PLam om (= om (v+ (sv* (/ 1 3) a) (sv* (/ 1 6) b) (sv* (/ 1 3) c)))))
+

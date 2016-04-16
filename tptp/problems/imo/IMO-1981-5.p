@@ -12,26 +12,28 @@
 %% collinear.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  100 (   2 equality;  56 variable)
-%            Maximal formula depth :   35 (  35 average)
-%            Number of connectives :   95 (   0   ~;   0   |;  18   &;  76   @)
+% Syntax   : Number of formulae    :    2 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  104 (   2 equality;  55 variable)
+%            Maximal formula depth :   36 (  19 average)
+%            Number of connectives :   99 (   0   ~;   0   |;  18   &;  80   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   19 (   0   :)
-%            Number of variables   :   10 (   1 sgn;   9   !;   0   ?;   0   ^)
+%            Number of symbols     :   21 (   1   :;   0   =)
+%            Number of variables   :    9 (   0 sgn;   9   !;   0   ?;   0   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    2 (   1 pred;    0 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('r/0_type',type,(
+    'r/0': $real )).
 
 thf(p,conjecture,(
     ! [V_K1: '2d.Shape',V_K2: '2d.Shape',V_K3: '2d.Shape',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_incenter: '2d.Point',V_circumcenter: '2d.Point',V_O: '2d.Point'] :
       ( ( ( '2d.is-triangle/3' @ V_A @ V_B @ V_C )
-        & ( '</2' @ 0 @ V_r )
+        & ( $less @ 0.0 @ 'r/0' )
         & ( '2d.is-incenter-of/2' @ V_incenter @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) )
         & ( '2d.is-circumcenter-of/2' @ V_circumcenter @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) )
         & ( '2d.circle-type/1' @ V_K1 )
@@ -50,5 +52,6 @@ thf(p,conjecture,(
         & ( '2d.tangent/2' @ V_K2 @ ( '2d.seg/2' @ V_C @ V_A ) )
         & ( '2d.tangent/2' @ V_K3 @ ( '2d.seg/2' @ V_B @ V_C ) )
         & ( '2d.tangent/2' @ V_K3 @ ( '2d.seg/2' @ V_C @ V_A ) )
-        & ( '2d.on/2' @ V_O @ ( '2d.intersection/1' @ ( 'cons/2' @ V_K1 @ ( 'cons/2' @ V_K2 @ ( 'cons/2' @ V_K3 @ 'nil/0' ) ) ) ) ) )
+        & ( '2d.on/2' @ V_O @ ( '2d.intersection/1' @ ( 'cons/2' @ '2d.Shape' @ V_K1 @ ( 'cons/2' @ '2d.Shape' @ V_K2 @ ( 'cons/2' @ '2d.Shape' @ V_K3 @ ( 'nil/0' @ '2d.Shape' ) ) ) ) ) ) )
      => ( '2d.colinear/3' @ V_O @ V_incenter @ V_circumcenter ) ) )).
+

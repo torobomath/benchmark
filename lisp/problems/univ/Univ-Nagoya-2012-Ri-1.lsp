@@ -3,6 +3,19 @@
 ;; SOURCE:    Nagoya University, 2012, Science Course, Problem 1
 ;; AUTHOR:    Ukyo Suzuki
 ;; GENERATED: 2014-05-07
+;;
+;; <PROBLEM-TEXT>
+;; Let $a$ be a positive constant.
+;; The curve $C$ on the $xy$-plane has equation $y = x^3 - a^2 x$.
+;; (1) Let $l$ be the tangent to $l$ at the point $A(t, t^3 - a^2 t)$.
+;; Find the area $S(t)$ of the region enclosed by $l$ and $C$, where $t$ is not $0$.
+;; (2) Let $b$ be a real number. How many of the tangents to $C$ pass through the point $B(2a,b)$
+;; on the $xy$-plane?
+;; (3) Assume that only two of the tangets $l_1$ and $l_2$ to $C$ pass through the point $B(2a,b)$ and
+;; they do not pass through the origin $(0,0)$.
+;; Let $S_1$ be the area of the region enclosed by $l_1$ and $C$ and $S_2$ be the area of the region
+;; enclosed by $l_2$ and $C$. When $S_1 \ge S_2$, find the value of $\frac{S_1}{S_2}$.
+;; </PROBLEM-TEXT>
 
 (namespace 2d)
 

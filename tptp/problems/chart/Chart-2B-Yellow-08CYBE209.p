@@ -10,23 +10,23 @@
 %            Maximal formula depth :   10 (  10 average)
 %            Number of connectives :   24 (   0   ~;   0   |;   0   &;  22   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   11 (   0   :)
+%            Number of symbols     :   11 (   0   :;   0   =)
 %            Number of variables   :    2 (   0 sgn;   2   !;   0   ?;   0   ^)
 %                                         (   2   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   2 pred;    3 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p2,conjecture,(
-    ! [V_n: 'Z'] :
-      ( ( 'int.<=/2' @ 2 @ V_n )
-     => ( 'rat.>/2' @ ( 'rat.^/2' @ ( 'rat.+/2' @ ( 'rat.int->rat/1' @ 1 ) @ ( 'rat.ratio/2' @ 1 @ V_n ) ) @ V_n ) @ ( 'rat.int->rat/1' @ 2 ) ) ) )).
+    ! [V_n: $int] :
+      ( ( $lesseq @ 2 @ V_n )
+     => ( $greater @ ( 'rat.^/2' @ ( $sum @ ( $to_rat @ 1 ) @ ( $quotient @ 1 @ V_n ) ) @ V_n ) @ ( $to_rat @ 2 ) ) ) )).
 
 thf(p3,conjecture,(
-    ! [V_n: 'Z'] :
-      ( ( 'int.<=/2' @ 6 @ V_n )
-     => ( 'rat.>/2' @ ( 'rat.^/2' @ ( 'rat.ratio/2' @ V_n @ 2 ) @ V_n ) @ ( 'rat.int->rat/1' @ ( 'int.factorial/1' @ V_n ) ) ) ) )).
+    ! [V_n: $int] :
+      ( ( $lesseq @ 6 @ V_n )
+     => ( $greater @ ( 'rat.^/2' @ ( $quotient @ V_n @ 2 ) @ V_n ) @ ( $to_rat @ ( 'int.factorial/1' @ V_n ) ) ) ) )).
+

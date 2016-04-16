@@ -81,3 +81,21 @@
     )
 ))))
 
+(def-answer a1 (PLam Dz (&&
+    (.real-number a)
+    (.real-number c)
+    (! (= a 0))
+    (.> (.- (.^ (abs b) 2) (.* a c)) 0)
+    (= Dz (2d.circle (complex->point (/ b (real->complex (.- a))))
+                     (./ (sqrt (.- (.^ (abs b) 2) (.* a c))) (.abs a))))
+)))
+
+(def-answer a2 (PLam Dz (&&
+    (! (= d (complex 0 0)))
+    (|| (&& (= (imaginary-part d) 0)
+            (= Dz (2d.x-axis)))
+        (&& (! (= (imaginary-part d) 0))
+            (= Dz (2d.circle (complex->point (/ (conjugate d) (- d (conjugate d)))) (abs (/ (conjugate d) (- d (conjugate d)))))))
+    )
+)))
+

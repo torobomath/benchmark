@@ -12,25 +12,32 @@
 ;;@ is-natural-number(n) <-> n is a natural number i.e. n is an integer and 1 <= n
 (def-pred is-natural-number :: Z => Bool)
 
-;;@ a + b = the sum of a and b in integers
+;; a + b = the sum of a and b in integers
+;;# DONT_EXPORT: $sum
 (def-fun +   :: Z -> Z => Z)
 
-;;@ a - b = the difference of a and b in integers
+;; a - b = the difference of a and b in integers
+;;# DONT_EXPORT: $difference
 (def-fun -   :: Z -> Z => Z)
 
-;;@ - a = the negation of a in integers
+;; - a = the negation of a in integers
+;;# DONT_EXPORT: $uminus
 (def-fun -   :: Z => Z)
 
-;;@ a * b = the product of a and b in integers
+;; a * b = the product of a and b in integers
+;;# DONT_EXPORT: $product
 (def-fun *   :: Z -> Z => Z)
 
 ;;@ a ^ b = the power of a to b in integers
+;; effective only if b >= 0
 (def-fun ^   :: Z -> Z => Z)
 
-;;@ div(a,b) = the quotient of a and b by division with remainders in integers
+;; div(a,b) = the quotient of a and b by division with remainders in integers
+;;# DONT_EXPORT: $quotient_f
 (def-fun div :: Z -> Z => Z)
 
-;;@ mod(a,b) = the remainder of a and b by division with remainders in integers
+;; mod(a,b) = the remainder of a and b by division with remainders in integers
+;;# DONT_EXPORT: $remainder_f
 (def-fun mod :: Z -> Z => Z)
 
 ;;@ sum([a1,...,an]) = the sum of a1,...,an in integers
@@ -38,12 +45,6 @@
 
 ;;@ product([a1,...,an]) = the product of a1,...,an in integers
 (def-fun product :: (ListOf Z) => Z)
-
-;;@ division between two integers
-(def-type IntegerDivision)
-(def-fun integer-division :: Z -> Z => IntegerDivision)
-(def-fun quot-of :: IntegerDivision => Z)
-(def-fun rem-of  :: IntegerDivision => Z)
 
 ;;@ set-to-list(set) = the list of all elements in set
 ;;@ effective only if set is a finite set
@@ -79,16 +80,20 @@
 ;;@ combination(n,k) = the number of k-combinations of n
 (def-fun combination :: Z -> Z => Z)
 
-;;@ a <= b <-> a is less than or equal to b
+;; a <= b <-> a is less than or equal to b
+;;# DONT_EXPORT: $lesseq
 (def-pred <= :: Z -> Z => Bool)
 
-;;@ a < b <-> a is less than b
+;; a < b <-> a is less than b
+;;# DONT_EXPORT: $less
 (def-pred <  :: Z -> Z => Bool)
 
-;;@ a >= b <-> a is greater than or equal to b
+;; a >= b <-> a is greater than or equal to b
+;;# DONT_EXPORT: $greatereq
 (def-pred >= :: Z -> Z => Bool)
 
-;;@ a > b <-> a is greater than b
+;; a > b <-> a is greater than b
+;;# DONT_EXPORT: $greater
 (def-pred >  :: Z -> Z => Bool)
 
 ;;@ is-zero(a) <-> a is equal to 0

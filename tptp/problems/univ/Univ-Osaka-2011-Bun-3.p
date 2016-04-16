@@ -28,42 +28,47 @@
 %% possible pairs of real numbers $(a, b, c)$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    5 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  226 (  18 equality;  79 variable)
-%            Maximal formula depth :   22 (  16 average)
-%            Number of connectives :  189 (   0   ~;   1   |;  11   &; 176   @)
+% Syntax   : Number of formulae    :    7 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :  248 (  18 equality;  74 variable)
+%            Maximal formula depth :   22 (  12 average)
+%            Number of connectives :  211 (   0   ~;   1   |;  11   &; 198   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   21 (   0   :)
-%            Number of variables   :   26 (   3 sgn;   6   !;  12   ?;   4   ^)
+%            Number of symbols     :   23 (   2   :;   0   =)
+%            Number of variables   :   22 (   0 sgn;   6   !;  12   ?;   4   ^)
 %                                         (  22   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   10 (   0 pred;    4 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('x/0_type',type,(
+    'x/0': $real )).
+
+thf('y/0_type',type,(
+    'y/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_st: 'ListOf' @ 'R'] :
-      ? [V_v1: '2d.Vector',V_v2: '2d.Vector',V_s: 'R',V_t: 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_st: ( 'ListOf' @ $real )] :
+      ? [V_v1: '2d.Vector',V_v2: '2d.Vector',V_s: $real,V_t: $real] :
         ( ( V_v1
-          = ( '2d.vec2d/2' @ 3 @ 0 ) )
+          = ( '2d.vec2d/2' @ 3.0 @ 0.0 ) )
         & ( V_v2
-          = ( '2d.vec2d/2' @ 1 @ ( '*/2' @ 2 @ ( 'sqrt/1' @ 2 ) ) ) )
-        & ( ( '2d.vec2d/2' @ V_x @ V_y )
+          = ( '2d.vec2d/2' @ 1.0 @ ( $product @ 2.0 @ ( 'sqrt/1' @ 2.0 ) ) ) )
+        & ( ( '2d.vec2d/2' @ 'x/0' @ 'y/0' )
           = ( '2d.v+/2' @ ( '2d.sv*/2' @ V_s @ V_v1 ) @ ( '2d.sv*/2' @ V_t @ V_v2 ) ) )
         & ( V_st
-          = ( 'cons/2' @ V_s @ ( 'cons/2' @ V_t @ 'nil/0' ) ) ) ) )).
+          = ( 'cons/2' @ $real @ V_s @ ( 'cons/2' @ $real @ V_t @ ( 'nil/0' @ $real ) ) ) ) ) )).
 
 thf(p2,conjecture,(
     ? [V_v1: '2d.Vector',V_v2: '2d.Vector'] :
       ( ( V_v1
-        = ( '2d.vec2d/2' @ 3 @ 0 ) )
+        = ( '2d.vec2d/2' @ 3.0 @ 0.0 ) )
       & ( V_v2
-        = ( '2d.vec2d/2' @ 1 @ ( '*/2' @ 2 @ ( 'sqrt/1' @ 2 ) ) ) )
-      & ! [V_a: 'R',V_b: 'R',V_c: 'R',V_v3: '2d.Vector',V_v: '2d.Vector'] :
+        = ( '2d.vec2d/2' @ 1.0 @ ( $product @ 2.0 @ ( 'sqrt/1' @ 2.0 ) ) ) )
+      & ! [V_a: $real,V_b: $real,V_c: $real,V_v3: '2d.Vector',V_v: '2d.Vector'] :
           ( ( ( V_v3
               = ( '2d.v+/2' @ ( '2d.sv*/2' @ V_a @ V_v1 ) @ ( '2d.sv*/2' @ V_b @ V_v2 ) ) )
             & ( ( '2d.v+/2' @ ( '2d.sv*/2' @ ( '2d.inner-prod/2' @ V_v1 @ V_v1 ) @ V_v1 ) @ ( '2d.v+/2' @ ( '2d.sv*/2' @ ( '2d.inner-prod/2' @ V_v2 @ V_v1 ) @ V_v2 ) @ ( '2d.sv*/2' @ ( '2d.inner-prod/2' @ V_v3 @ V_v1 ) @ V_v3 ) ) )
@@ -74,15 +79,15 @@ thf(p2,conjecture,(
             = ( '2d.sv*/2' @ V_c @ V_v ) ) ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_abc: 'ListOf' @ 'R'] :
-      ? [V_a: 'R',V_b: 'R',V_c: 'R',V_v1: '2d.Vector',V_v2: '2d.Vector',V_v3: '2d.Vector'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_abc: ( 'ListOf' @ $real )] :
+      ? [V_a: $real,V_b: $real,V_c: $real,V_v1: '2d.Vector',V_v2: '2d.Vector',V_v3: '2d.Vector'] :
         ( ( V_abc
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ ( 'cons/2' @ V_c @ 'nil/0' ) ) ) )
+          = ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ V_b @ ( 'cons/2' @ $real @ V_c @ ( 'nil/0' @ $real ) ) ) ) )
         & ( V_v1
-          = ( '2d.vec2d/2' @ 3 @ 0 ) )
+          = ( '2d.vec2d/2' @ 3.0 @ 0.0 ) )
         & ( V_v2
-          = ( '2d.vec2d/2' @ 1 @ ( '*/2' @ 2 @ ( 'sqrt/1' @ 2 ) ) ) )
+          = ( '2d.vec2d/2' @ 1.0 @ ( $product @ 2.0 @ ( 'sqrt/1' @ 2.0 ) ) ) )
         & ( V_v3
           = ( '2d.v+/2' @ ( '2d.sv*/2' @ V_a @ V_v1 ) @ ( '2d.sv*/2' @ V_b @ V_v2 ) ) )
         & ! [V_v: '2d.Vector'] :
@@ -90,15 +95,16 @@ thf(p3_qustion,question,
             = ( '2d.sv*/2' @ V_c @ V_v ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_st_dot_0: 'ListOf' @ 'R'] :
+    ^ [V_st_dot_0: ( 'ListOf' @ $real )] :
       ( V_st_dot_0
-      = ( 'cons/2' @ ( '+/2' @ ( '*/2' @ ( '//2' @ 1 @ 3 ) @ V_x ) @ ( '-/1' @ ( '*/2' @ ( '//2' @ ( 'sqrt/1' @ 2 ) @ 12 ) @ V_y ) ) ) @ ( 'cons/2' @ ( '*/2' @ ( '//2' @ ( 'sqrt/1' @ 2 ) @ 4 ) @ V_y ) @ 'nil/0' ) ) ) ),
+      = ( 'cons/2' @ $real @ ( $sum @ ( $product @ ( $quotient @ 1.0 @ 3.0 ) @ 'x/0' ) @ ( $uminus @ ( $product @ ( $quotient @ ( 'sqrt/1' @ 2.0 ) @ 12.0 ) @ 'y/0' ) ) ) @ ( 'cons/2' @ $real @ ( $product @ ( $quotient @ ( 'sqrt/1' @ 2.0 ) @ 4.0 ) @ 'y/0' ) @ ( 'nil/0' @ $real ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_abc_dot_0: 'ListOf' @ 'R'] :
+    ^ [V_abc_dot_0: ( 'ListOf' @ $real )] :
       ( ( V_abc_dot_0
-        = ( 'cons/2' @ ( '//2' @ 1 @ ( 'sqrt/1' @ 2 ) ) @ ( 'cons/2' @ ( '-/1' @ ( '//2' @ 1 @ ( 'sqrt/1' @ 2 ) ) ) @ ( 'cons/2' @ 12 @ 'nil/0' ) ) ) )
+        = ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) @ ( 'cons/2' @ $real @ ( $uminus @ ( $quotient @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) ) @ ( 'cons/2' @ $real @ 12.0 @ ( 'nil/0' @ $real ) ) ) ) )
       | ( V_abc_dot_0
-        = ( 'cons/2' @ ( '-/1' @ ( '//2' @ 1 @ ( 'sqrt/1' @ 2 ) ) ) @ ( 'cons/2' @ ( '//2' @ 1 @ ( 'sqrt/1' @ 2 ) ) @ ( 'cons/2' @ 12 @ 'nil/0' ) ) ) ) ) ),
+        = ( 'cons/2' @ $real @ ( $uminus @ ( $quotient @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) ) @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) @ ( 'cons/2' @ $real @ 12.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ),
     answer_to(p3_question,[])).
+

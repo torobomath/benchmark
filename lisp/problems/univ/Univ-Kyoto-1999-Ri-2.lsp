@@ -16,16 +16,16 @@
 (def-directive
   p0
   (Find (Pn)
-    (= Pn (shape-of-cpfun (PLam P
-        (exists (A B) (&&
-          (= A (point Ax Ay))
-          (= B (point Bx By))
-          (> c 0)
-          (= (+ (* (distance P A) (distance P B))
-                (inner-prod (vec P A) (vec P B))) c)
-        ))
-      )
-    ))
+    (&& (> c 0)
+        (= Pn (shape-of-cpfun (PLam P
+          (exists (A B) (&&
+            (= A (point Ax Ay))
+            (= B (point Bx By))
+            (= (+ (* (distance P A) (distance P B))
+                  (inner-prod (vec P A) (vec P B))) c)
+          ))
+        )))
+    )
   )
 )
 

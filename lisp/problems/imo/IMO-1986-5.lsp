@@ -28,7 +28,9 @@
        (forall (x) (-> (&& (<= 0 x) (< x 2))
                        (! (= (LamApp f x) 0)))))))
 
-(def-answer p (PLam f (= f (Lam x (cond ((< x 0) 0)
-                                        ((&& (<= 0 x) (< x 2)) (/ 2 (- 2 x)))
-                                        ((<= 2 x) 0))))))
+(def-answer p (PLam f (= f (Lam x (if (< x 0)
+                                    0
+                                    (if (&& (<= 0 x) (< x 2))
+                                      (/ 2 (- 2 x))
+                                      0))))))
 

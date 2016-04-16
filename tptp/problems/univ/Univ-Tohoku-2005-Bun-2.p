@@ -19,23 +19,22 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    3 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  167 (  14 equality;  95 variable)
+%            Number of atoms       :  185 (  15 equality;  98 variable)
 %            Maximal formula depth :   26 (  19 average)
-%            Number of connectives :  136 (   0   ~;   0   |;  23   &; 112   @)
+%            Number of connectives :  152 (   0   ~;   0   |;  24   &; 127   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :)
+%            Number of symbols     :   25 (   0   :;   0   =)
 %            Number of variables   :   16 (   0 sgn;   8   !;   6   ?;   2   ^)
 %                                         (  16   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   1 pred;    2 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
-    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_r: 'R',V_alpha: '2d.Angle',V_beta: '2d.Angle'] :
+    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_r: $real,V_alpha: '2d.Angle',V_beta: '2d.Angle'] :
       ( ( ( '2d.is-square/4' @ V_A @ V_B @ V_C @ V_D )
         & ( '2d.is-acute/1' @ ( '2d.angle/3' @ V_A @ V_B @ V_C ) )
         & ( '2d.is-acute/1' @ ( '2d.angle/3' @ V_B @ V_C @ V_D ) )
@@ -46,7 +45,7 @@ thf(p1,conjecture,(
         & ( ( '2d.distance/2' @ V_B @ V_C )
           = V_r )
         & ( ( '2d.distance/2' @ V_A @ V_D )
-          = ( '*/2' @ 2 @ V_r ) )
+          = ( $product @ 2.0 @ V_r ) )
         & ( '2d.on/2' @ V_E @ ( '2d.seg/2' @ V_C @ V_D ) )
         & ( ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) )
           = ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_C @ V_E ) ) )
@@ -59,30 +58,33 @@ thf(p1,conjecture,(
      => ( '2d.same-angle/2' @ V_alpha @ V_beta ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_CAE: 'R'] :
-      ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_r: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_sin_CAE: $real] :
+      ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_r: $real] :
         ( ( '2d.is-square/4' @ V_A @ V_B @ V_C @ V_D )
-        & ( '2d.is-acute/1' @ ( '2d.angle/3' @ V_A @ V_B @ V_C ) )
-        & ( '2d.is-acute/1' @ ( '2d.angle/3' @ V_B @ V_C @ V_D ) )
-        & ( '2d.is-acute/1' @ ( '2d.angle/3' @ V_C @ V_D @ V_A ) )
-        & ( '2d.is-acute/1' @ ( '2d.angle/3' @ V_D @ V_A @ V_B ) )
+        & ( $less @ 0.0 @ ( '2d.sin-of-angle/1' @ ( '2d.angle/3' @ V_A @ V_B @ V_C ) ) )
+        & ( $less @ 0.0 @ ( '2d.sin-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_C @ V_D ) ) )
+        & ( $less @ 0.0 @ ( '2d.sin-of-angle/1' @ ( '2d.angle/3' @ V_C @ V_D @ V_A ) ) )
+        & ( $less @ 0.0 @ ( '2d.sin-of-angle/1' @ ( '2d.angle/3' @ V_D @ V_A @ V_B ) ) )
         & ( ( '2d.distance/2' @ V_A @ V_B )
           = V_r )
         & ( ( '2d.distance/2' @ V_B @ V_C )
           = V_r )
         & ( ( '2d.distance/2' @ V_A @ V_D )
-          = ( '*/2' @ 2 @ V_r ) )
+          = ( $product @ 2.0 @ V_r ) )
         & ( '2d.on/2' @ V_E @ ( '2d.seg/2' @ V_C @ V_D ) )
         & ( ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) )
           = ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_C @ V_E ) ) )
         & ( ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_C @ V_E ) )
           = ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_D @ V_E ) ) )
-        & ( V_CAE
+        & ( ( $quotient @ 3.0 @ 5.0 )
+          = ( '2d.cos-of-angle/1' @ ( '2d.angle/3' @ V_D @ V_A @ V_B ) ) )
+        & ( V_sin_CAE
           = ( '2d.sin-of-angle/1' @ ( '2d.angle/3' @ V_C @ V_A @ V_E ) ) ) ) )).
 
 thf(p2_answer,answer,(
-    ^ [V_CAE_dot_0: 'R'] :
-      ( V_CAE_dot_0
-      = ( '//2' @ 1 @ ( 'sqrt/1' @ 17 ) ) ) ),
+    ^ [V_sin_CAE_dot_0: $real] :
+      ( V_sin_CAE_dot_0
+      = ( $quotient @ 1.0 @ ( 'sqrt/1' @ 17.0 ) ) ) ),
     answer_to(p2_question,[])).
+

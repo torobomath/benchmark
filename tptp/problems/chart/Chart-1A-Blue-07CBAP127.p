@@ -10,28 +10,27 @@
 %            Maximal formula depth :   22 (  22 average)
 %            Number of connectives :   66 (   4   ~;   2   |;  15   &;  44   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    9 (   0   :)
+%            Number of symbols     :    9 (   0   :;   0   =)
 %            Number of variables   :    4 (   0 sgn;   4   !;   0   ?;   0   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   2 pred;    1 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_a: 'Z',V_b: 'Z',V_c: 'Z',V_d: 'Z'] :
-      ( ( ( 'int.is-integer/1' @ V_a )
-        & ( 'int.</2' @ 0 @ V_a )
-        & ( 'int.is-integer/1' @ V_b )
-        & ( 'int.</2' @ 0 @ V_b )
-        & ( 'int.is-integer/1' @ V_c )
-        & ( 'int.</2' @ 0 @ V_c )
-        & ( 'int.is-integer/1' @ V_d )
-        & ( 'int.</2' @ 0 @ V_d )
-        & ( ( 'int.+/2' @ ( 'int.+/2' @ ( 'int.^/2' @ V_a @ 2 ) @ ( 'int.^/2' @ V_b @ 2 ) ) @ ( 'int.^/2' @ V_c @ 2 ) )
+    ! [V_a: $int,V_b: $int,V_c: $int,V_d: $int] :
+      ( ( ( $is_int @ V_a )
+        & ( $less @ 0 @ V_a )
+        & ( $is_int @ V_b )
+        & ( $less @ 0 @ V_b )
+        & ( $is_int @ V_c )
+        & ( $less @ 0 @ V_c )
+        & ( $is_int @ V_d )
+        & ( $less @ 0 @ V_d )
+        & ( ( $sum @ ( $sum @ ( 'int.^/2' @ V_a @ 2 ) @ ( 'int.^/2' @ V_b @ 2 ) ) @ ( 'int.^/2' @ V_c @ 2 ) )
           = ( 'int.^/2' @ V_d @ 2 ) )
         & ~ ( 'int.is-divisible-by/2' @ V_d @ 3 ) )
      => ( ( ~ ( 'int.is-divisible-by/2' @ V_a @ 3 )
@@ -43,3 +42,4 @@ thf(p,conjecture,(
         | ( ( 'int.is-divisible-by/2' @ V_a @ 3 )
           & ( 'int.is-divisible-by/2' @ V_b @ 3 )
           & ~ ( 'int.is-divisible-by/2' @ V_c @ 3 ) ) ) ) )).
+

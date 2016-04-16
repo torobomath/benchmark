@@ -21,7 +21,7 @@
 (namespace complex)
 
 (def-directive
-  p1_1
+  a1_1
   (Find (w)
         (&& (!(= w (real->complex -1)))
       (= z (/ (- w (real->complex 1)) (+ w (real->complex 1))))
@@ -29,10 +29,10 @@
   )
 )
 
-(def-answer p1_1 (PLam w (= w (/ (+ (- z) (- 1)) (- z 1)))))
+(def-answer a1_1 (PLam w (= w (/ (+ (- z) (- (complex 1 0))) (- z (complex 1 0))))))
 
 (def-directive
-        p1_2
+        a1_2
         (Find (ans)
               (exists (z w s t)
                       (&& (!(= w (real->complex -1)))
@@ -44,12 +44,12 @@
         )
 )
 
-(def-answer p1_2 (PLam ans (&& (! (&& (= x 1) (= y 0)))
+(def-answer a1_2 (PLam ans (&& (! (&& (= x 1) (= y 0)))
                             (= ans (list-of (./ (.+ (.- (.- (.^ x 2) 1)) (.- (.^ y 2))) (.+ (.^ (.- x 1) 2) (.^ y 2))) (./ (.* 2 y) (.+ (.^ (.- x 1) 2) (.^ y 2)))))
                             )))
 
 (def-directive
-  p2
+  a2
   (Draw (D)
     (let*
       (
@@ -67,7 +67,7 @@
   )
 )
 
-(def-answer p2 (2d.set-of-cfun (Lam x (PLam y (&&
+(def-answer a2 (2d.set-of-cfun (Lam x (PLam y (&&
   (.<= (.+ (.^ x 2) (.^ y 2)) 1)
   (.<= (./ 1 4) (.+ (.^ (.- x (./ 1 2)) 2) (.^ y 2)))
   (.<= 0 y)
@@ -76,7 +76,7 @@
 )))))
 
 (def-directive
-  p3
+  a3
   (Find (m)
     (let*
       (
@@ -103,5 +103,5 @@
   )
 )
 
-(def-answer p3 (PLam m (= m (.- (./ 3 5)))))
+(def-answer a3 (PLam m (= m (.- (./ 3 5)))))
 

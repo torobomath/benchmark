@@ -16,7 +16,7 @@
 (namespace 3d)
 
 (def-directive
-  p1
+  a_1
   (Show
     (let* ((S (sphere (origin) (sqrt 6))))
       (forall (s t u v) (let* ((alpha (plane s t u v))) (->
@@ -27,8 +27,10 @@
         (exists (p) (on p (intersection S alpha)))
       ))))))
 
+(def-answer a_1 (PLam _ (true)))
+
 (def-directive
-  p2
+  a_2
   (Find (V)
     (let* ((S (sphere (origin) (sqrt 6))))
       (forall (s t u v) (let* ((alpha (plane s t u v))) (->
@@ -40,5 +42,5 @@
           (on p (intersection S alpha))
           (= V (* (x-coord p) (* (y-coord p) (z-coord p))))))))))))
 
-(def-answer p2 (PLam V (&& (<= (/ 50 27) V) (<= V 2))))
+(def-answer a_2 (PLam V (&& (<= (/ 50 27) V) (<= V 2))))
 

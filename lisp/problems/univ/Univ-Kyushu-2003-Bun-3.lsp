@@ -85,3 +85,11 @@
     (= h (+ (+ (* a (^ x 2)) (* b x)) c))
 )))
 
+(def-answer a1 (PLam f (&& (< 0 a)
+                           (= f (poly-fun (list-of 0 0 (/ 1 2)))))))
+
+(def-answer a2 (PLam h (&& (< 0 a)
+                           (= h (poly-fun (list-of c b a))))))
+
+(def-answer a3 (PLam _ (true)))
+

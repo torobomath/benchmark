@@ -19,25 +19,37 @@
 %% $A$ and $B$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  283 (  25 equality; 164 variable)
-%            Maximal formula depth :   39 (  30 average)
-%            Number of connectives :  241 (  12   ~;   0   |;  49   &; 177   @)
+% Syntax   : Number of formulae    :    8 (   0 unit;   4 type;   0 defn)
+%            Number of atoms       :  287 (  26 equality; 158 variable)
+%            Maximal formula depth :   40 (  16 average)
+%            Number of connectives :  244 (  13   ~;   0   |;  50   &; 178   @)
 %                                         (   0 <=>;   3  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   29 (   0   :)
-%            Number of variables   :   50 (   8 sgn;  24   !;  15   ?;   3   ^)
+%            Number of symbols     :   34 (   4   :;   0   =)
+%            Number of variables   :   42 (   0 sgn;  24   !;  15   ?;   3   ^)
 %                                         (  42   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    2 (   0 pred;    1 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('Ax/0_type',type,(
+    'Ax/0': $real )).
+
+thf('Ay/0_type',type,(
+    'Ay/0': $real )).
+
+thf('Bx/0_type',type,(
+    'Bx/0': $real )).
+
+thf('By/0_type',type,(
+    'By/0': $real )).
 
 thf(p1,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_M: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_K1: '2d.Shape',V_K2: '2d.Shape',V_P: '2d.Point',V_Q: '2d.Point',V_N: '2d.Point'] :
-      ( ( ( '2d.on/2' @ V_M @ ( '2d.seg/2' @ V_A @ V_B ) )
+      ( ( ( V_A != V_B )
+        & ( '2d.on/2' @ V_M @ ( '2d.seg/2' @ V_A @ V_B ) )
         & ( V_M != V_A )
         & ( V_M != V_B )
         & ( '2d.is-regular-square/4' @ V_A @ V_M @ V_C @ V_D )
@@ -68,8 +80,8 @@ thf(p2,conjecture,(
             & ( '2d.vec-same-direction/2' @ ( '2d.vec/2' @ V_M @ V_C ) @ ( '2d.vec/2' @ V_M @ V_F ) )
             & ( '2d.circle-type/1' @ V_K1 )
             & ( '2d.circle-type/1' @ V_K2 )
-            & ( '2d.is-inscribed-in/2' @ ( '2d.polygon/1' @ ( 'cons/2' @ V_A @ ( 'cons/2' @ V_M @ ( 'cons/2' @ V_C @ ( 'cons/2' @ V_D @ 'nil/0' ) ) ) ) ) @ V_K1 )
-            & ( '2d.is-inscribed-in/2' @ ( '2d.polygon/1' @ ( 'cons/2' @ V_B @ ( 'cons/2' @ V_M @ ( 'cons/2' @ V_F @ ( 'cons/2' @ V_E @ 'nil/0' ) ) ) ) ) @ V_K2 )
+            & ( '2d.is-inscribed-in/2' @ ( '2d.square/4' @ V_A @ V_M @ V_C @ V_D ) @ V_K1 )
+            & ( '2d.is-inscribed-in/2' @ ( '2d.square/4' @ V_B @ V_M @ V_F @ V_E ) @ V_K2 )
             & ( V_P
               = ( '2d.center-of/1' @ V_K1 ) )
             & ( V_Q
@@ -79,7 +91,7 @@ thf(p2,conjecture,(
          => ( '2d.on/2' @ V_S @ ( '2d.line/2' @ V_M @ V_N ) ) ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Shape'
     @ ^ [V_Sp: '2d.Shape'] :
         ( V_Sp
         = ( '2d.shape-of-cpfun/1'
@@ -87,9 +99,9 @@ thf(p3_qustion,question,
             ? [V_A: '2d.Point',V_B: '2d.Point',V_M: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_K1: '2d.Shape',V_K2: '2d.Shape',V_P: '2d.Point',V_Q: '2d.Point',V_N: '2d.Point'] :
               ( ( V_A != V_B )
               & ( V_A
-                = ( '2d.point/2' @ V_Ax @ V_Ay ) )
+                = ( '2d.point/2' @ 'Ax/0' @ 'Ay/0' ) )
               & ( V_B
-                = ( '2d.point/2' @ V_Bx @ V_By ) )
+                = ( '2d.point/2' @ 'Bx/0' @ 'By/0' ) )
               & ( '2d.on/2' @ V_M @ ( '2d.seg/2' @ V_A @ V_B ) )
               & ( V_M != V_A )
               & ( V_M != V_B )
@@ -98,8 +110,8 @@ thf(p3_qustion,question,
               & ( '2d.vec-same-direction/2' @ ( '2d.vec/2' @ V_M @ V_C ) @ ( '2d.vec/2' @ V_M @ V_F ) )
               & ( '2d.circle-type/1' @ V_K1 )
               & ( '2d.circle-type/1' @ V_K2 )
-              & ( '2d.is-inscribed-in/2' @ ( '2d.polygon/1' @ ( 'cons/2' @ V_A @ ( 'cons/2' @ V_M @ ( 'cons/2' @ V_C @ ( 'cons/2' @ V_D @ 'nil/0' ) ) ) ) ) @ V_K1 )
-              & ( '2d.is-inscribed-in/2' @ ( '2d.polygon/1' @ ( 'cons/2' @ V_B @ ( 'cons/2' @ V_M @ ( 'cons/2' @ V_F @ ( 'cons/2' @ V_E @ 'nil/0' ) ) ) ) ) @ V_K2 )
+              & ( '2d.is-inscribed-in/2' @ ( '2d.polygon/1' @ ( 'cons/2' @ '2d.Point' @ V_A @ ( 'cons/2' @ '2d.Point' @ V_M @ ( 'cons/2' @ '2d.Point' @ V_C @ ( 'cons/2' @ '2d.Point' @ V_D @ ( 'nil/0' @ '2d.Point' ) ) ) ) ) ) @ V_K1 )
+              & ( '2d.is-inscribed-in/2' @ ( '2d.polygon/1' @ ( 'cons/2' @ '2d.Point' @ V_B @ ( 'cons/2' @ '2d.Point' @ V_M @ ( 'cons/2' @ '2d.Point' @ V_F @ ( 'cons/2' @ '2d.Point' @ V_E @ ( 'nil/0' @ '2d.Point' ) ) ) ) ) ) @ V_K2 )
               & ( V_P
                 = ( '2d.center-of/1' @ V_K1 ) )
               & ( V_Q
@@ -114,12 +126,13 @@ thf(p3_answer,answer,(
     ? [V_A_dot_0: '2d.Point',V_B_dot_0: '2d.Point'] :
       ( ( V_A_dot_0 != V_B_dot_0 )
       & ( V_A_dot_0
-        = ( '2d.point/2' @ V_Ax @ V_Ay ) )
+        = ( '2d.point/2' @ 'Ax/0' @ 'Ay/0' ) )
       & ( V_B_dot_0
-        = ( '2d.point/2' @ V_Bx @ V_By ) )
+        = ( '2d.point/2' @ 'Bx/0' @ 'By/0' ) )
       & ( '2d.segment-type/1' @ V_Sp_dot_0 )
       & ( '2d.parallel/2' @ V_Sp_dot_0 @ ( '2d.line/2' @ V_A_dot_0 @ V_B_dot_0 ) )
       & ( ( '2d.line-line-distance/2' @ ( '2d.seg-extention-of/1' @ V_Sp_dot_0 ) @ ( '2d.line/2' @ V_A_dot_0 @ V_B_dot_0 ) )
-        = ( '//2' @ ( '2d.distance/2' @ V_A_dot_0 @ V_B_dot_0 ) @ 4 ) )
+        = ( $quotient @ ( '2d.distance/2' @ V_A_dot_0 @ V_B_dot_0 ) @ 4.0 ) )
       & ( '2d.perpendicular/2' @ ( '2d.line/2' @ V_A_dot_0 @ V_B_dot_0 ) @ ( '2d.line/2' @ ( '2d.midpoint-of/2' @ V_A_dot_0 @ V_B_dot_0 ) @ ( '2d.seg-midpoint-of/1' @ V_Sp_dot_0 ) ) ) ) ),
     answer_to(p3_question,[])).
+

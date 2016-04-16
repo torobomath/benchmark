@@ -18,16 +18,15 @@
 %            Maximal formula depth :   27 (  27 average)
 %            Number of connectives :   69 (   0   ~;   0   |;  12   &;  56   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :)
+%            Number of symbols     :   20 (   0   :;   0   =)
 %            Number of variables   :    9 (   0 sgn;   9   !;   0   ?;   0   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    3 (   1 pred;    1 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_O: '2d.Point',V_Ga: '2d.Shape',V_B: '2d.Point',V_C: '2d.Point',V_A: '2d.Point',V_D: '2d.Point',V_J: '2d.Point',V_E: '2d.Point',V_F: '2d.Point'] :
@@ -36,7 +35,7 @@ thf(p,conjecture,(
           = V_O )
         & ( '2d.is-diameter-of/2' @ ( '2d.seg/2' @ V_B @ V_C ) @ V_Ga )
         & ( '2d.on/2' @ V_A @ V_Ga )
-        & ( '</2' @ ( '*/2' @ 60 @ 'Degree/0' ) @ ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_A @ V_O @ V_C ) ) )
+        & ( $less @ ( $product @ 60.0 @ 'Degree/0' ) @ ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_A @ V_O @ V_C ) ) )
         & ( '2d.is-perp-bisector/2' @ ( '2d.line/2' @ V_E @ V_F ) @ ( '2d.seg/2' @ V_O @ V_A ) )
         & ( '2d.on/2' @ V_E @ V_Ga )
         & ( '2d.on/2' @ V_F @ V_Ga )
@@ -46,3 +45,4 @@ thf(p,conjecture,(
         & ( '2d.parallel/2' @ ( '2d.line/2' @ V_O @ V_J ) @ ( '2d.line/2' @ V_A @ V_D ) )
         & ( '2d.on/2' @ V_J @ ( '2d.line/2' @ V_A @ V_C ) ) )
      => ( '2d.is-incenter-of/2' @ V_J @ ( '2d.triangle/3' @ V_C @ V_E @ V_F ) ) ) )).
+

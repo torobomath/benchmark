@@ -15,20 +15,20 @@
 %            Maximal formula depth :   15 (  15 average)
 %            Number of connectives :   23 (   0   ~;   0   |;   2   &;  20   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   10 (   0   :)
+%            Number of symbols     :   10 (   0   :;   0   =)
 %            Number of variables   :    2 (   0 sgn;   2   !;   0   ?;   0   ^)
 %                                         (   2   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   1 pred;    2 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_a: 'Z',V_b: 'Z'] :
-      ( ( ( 'int.</2' @ 0 @ V_a )
-        & ( 'int.</2' @ 0 @ V_b )
-        & ( 'int.is-divisible-by/2' @ ( 'int.^/2' @ ( 'int.-/2' @ ( 'int.*/2' @ 4 @ ( 'int.^/2' @ V_a @ 2 ) ) @ 1 ) @ 2 ) @ ( 'int.-/2' @ ( 'int.*/2' @ 4 @ ( 'int.*/2' @ V_a @ V_b ) ) @ 1 ) ) )
+    ! [V_a: $int,V_b: $int] :
+      ( ( ( $less @ 0 @ V_a )
+        & ( $less @ 0 @ V_b )
+        & ( 'int.is-divisible-by/2' @ ( 'int.^/2' @ ( $difference @ ( $product @ 4 @ ( 'int.^/2' @ V_a @ 2 ) ) @ 1 ) @ 2 ) @ ( $difference @ ( $product @ 4 @ ( $product @ V_a @ V_b ) ) @ 1 ) ) )
      => ( V_a = V_b ) ) )).
+

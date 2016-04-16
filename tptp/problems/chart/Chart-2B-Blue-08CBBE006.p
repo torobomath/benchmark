@@ -10,19 +10,18 @@
 %            Maximal formula depth :   21 (  18 average)
 %            Number of connectives :   56 (   0   ~;   0   |;  10   &;  44   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    9 (   0   :)
+%            Number of symbols     :    9 (   0   :;   0   =)
 %            Number of variables   :   16 (   0 sgn;  13   !;   3   ?;   0   ^)
 %                                         (  16   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    3 (   2 pred;    0 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
-    ! [V_a: '2d.Vector',V_b: '2d.Vector',V_c: '2d.Vector',V_l: 'R',V_m: 'R',V_n: 'R'] :
+    ! [V_a: '2d.Vector',V_b: '2d.Vector',V_c: '2d.Vector',V_l: $real,V_m: $real,V_n: $real] :
       ( ( ( V_l
           = ( '2d.outer-prod/2' @ V_a @ V_b ) )
         & ( V_m
@@ -33,19 +32,20 @@ thf(p1,conjecture,(
         = ( '2d.v+/2' @ ( '2d.sv*/2' @ V_l @ V_c ) @ ( '2d.v+/2' @ ( '2d.sv*/2' @ V_m @ V_a ) @ ( '2d.sv*/2' @ V_n @ V_b ) ) ) ) ) )).
 
 thf(p2,conjecture,(
-    ! [V_a: '2d.Vector',V_b: '2d.Vector',V_c: '2d.Vector',V_d: '2d.Vector',V_l: 'R',V_m: 'R',V_n: 'R'] :
-      ( ( ( '</2' @ 0 @ V_l )
-        & ( '</2' @ 0 @ V_m )
-        & ( '</2' @ 0 @ V_n )
+    ! [V_a: '2d.Vector',V_b: '2d.Vector',V_c: '2d.Vector',V_d: '2d.Vector',V_l: $real,V_m: $real,V_n: $real] :
+      ( ( ( $less @ 0.0 @ V_l )
+        & ( $less @ 0.0 @ V_m )
+        & ( $less @ 0.0 @ V_n )
         & ( V_l
           = ( '2d.outer-prod/2' @ V_a @ V_b ) )
         & ( V_m
           = ( '2d.outer-prod/2' @ V_b @ V_c ) )
         & ( V_n
           = ( '2d.outer-prod/2' @ V_c @ V_a ) ) )
-     => ? [V_r: 'R',V_s: 'R',V_t: 'R'] :
-          ( ( '<=/2' @ 0 @ V_r )
-          & ( '<=/2' @ 0 @ V_s )
-          & ( '<=/2' @ 0 @ V_t )
+     => ? [V_r: $real,V_s: $real,V_t: $real] :
+          ( ( $lesseq @ 0.0 @ V_r )
+          & ( $lesseq @ 0.0 @ V_s )
+          & ( $lesseq @ 0.0 @ V_t )
           & ( V_d
             = ( '2d.v+/2' @ ( '2d.sv*/2' @ V_r @ V_a ) @ ( '2d.v+/2' @ ( '2d.sv*/2' @ V_s @ V_b ) @ ( '2d.sv*/2' @ V_t @ V_c ) ) ) ) ) ) )).
+

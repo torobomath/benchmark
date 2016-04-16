@@ -12,29 +12,29 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   24 (   2 equality;   6 variable)
+%            Number of atoms       :   25 (   2 equality;   6 variable)
 %            Maximal formula depth :   13 (   8 average)
-%            Number of connectives :   18 (   0   ~;   0   |;   0   &;  17   @)
+%            Number of connectives :   19 (   0   ~;   0   |;   0   &;  18   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   11 (   0   :)
+%            Number of symbols     :   11 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   1   !;   0   ?;   2   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   1 pred;    1 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_a: 'Z'] :
-      ! [V_n: 'Z'] :
-        ( ( 'int.>=/2' @ V_n @ 1 )
-       => ( ( 'int.gcd/2' @ V_a @ ( 'int.+/2' @ ( 'int.^/2' @ 2 @ V_n ) @ ( 'int.+/2' @ ( 'int.^/2' @ 3 @ V_n ) @ ( 'int.+/2' @ ( 'int.^/2' @ 6 @ V_n ) @ -1 ) ) ) )
+    ( 'find/1' @ $int
+    @ ^ [V_a: $int] :
+      ! [V_n: $int] :
+        ( ( $greatereq @ V_n @ 1 )
+       => ( ( 'int.gcd/2' @ V_a @ ( $sum @ ( 'int.^/2' @ 2 @ V_n ) @ ( $sum @ ( 'int.^/2' @ 3 @ V_n ) @ ( $sum @ ( 'int.^/2' @ 6 @ V_n ) @ -1 ) ) ) )
           = 1 ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_a_dot_0: 'Z'] : ( V_a_dot_0 = 1 ) ),
+    ^ [V_a_dot_0: $int] : ( V_a_dot_0 = 1 ) ),
     answer_to(p_question,[])).
+

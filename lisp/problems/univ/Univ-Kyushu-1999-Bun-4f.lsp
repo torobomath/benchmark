@@ -32,7 +32,7 @@
 (namespace 3d)
 
 (def-directive
-  p1_1
+  a1_1
   (Find (xyz)
    (exists (a b c d e f O x y z D E F)
     (&& (= 1 (radius a))
@@ -52,7 +52,7 @@
         (= xyz (list-of x y z))))))
 
 (def-directive
-  p1_2
+  a1_2
   (Find (f)
    (exists (d e O D E F)
     (&& (= 1 (radius a))
@@ -70,7 +70,7 @@
         (= O (origin))))))
 
 (def-directive
-  p2
+  a2
   (Find (ans)
    (exists (a b c d e f O D E F)
     (&& (= 1 (radius a))
@@ -89,7 +89,7 @@
         (= ans (list-of (radius d) (radius f) (radius (v- d f))))))))
 
 (def-directive
-  p3
+  a3
   (Find (areaODF)
    (exists (a b c d e f O D E F)
     (&& (= 1 (radius a))
@@ -108,7 +108,7 @@
         (= areaODF (area-of (triangle O D F)))))))
 
 (def-directive
-  p4
+  a4
   (Find (volumeODEF)
    (exists (a b c d e f O D E F)
     (&& (= 1 (radius a))
@@ -126,13 +126,13 @@
         (= O (origin))
         (= volumeODEF (volume-of (tetrahedron O D E F)))))))
 
-(def-answer p1_1 (PLam xyz (= xyz (list-of (/ 3 2) 1 (/ 1 2)))))
+(def-answer a1_1 (PLam xyz (= xyz (list-of (/ 3 2) 1 (/ 1 2)))))
 
-(def-answer p1_2 (PLam f (= f (v+ (sv* (/ 1 2) a) b (sv* (/ 3 2) c)))))
+(def-answer a1_2 (PLam f (= f (v+ (sv* (/ 1 2) a) b (sv* (/ 3 2) c)))))
 
-(def-answer p2 (PLam ans (= ans (list-of (/ (sqrt 6) 2) (/ (sqrt 6) 2) (sqrt 2)))))
+(def-answer a2 (PLam ans (= ans (list-of (/ (sqrt 6) 2) (/ (sqrt 6) 2) (sqrt 2)))))
 
-(def-answer p3 (PLam areaODF (= areaODF (/ (sqrt 2) 2))))
+(def-answer a3 (PLam areaODF (= areaODF (/ (sqrt 2) 2))))
 
-(def-answer p4 (PLam volumeODEF (= volumeODEF (/ (sqrt 2) 6))))
+(def-answer a4 (PLam volumeODEF (= volumeODEF (/ (sqrt 2) 6))))
 

@@ -12,29 +12,29 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   43 (   4 equality;  12 variable)
+%            Number of atoms       :   55 (   4 equality;  12 variable)
 %            Maximal formula depth :   14 (  14 average)
-%            Number of connectives :   39 (   5   ~;   0   |;   6   &;  27   @)
+%            Number of connectives :   51 (   5   ~;   0   |;   6   &;  39   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   0   :)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   1   !;   2   ?;   0   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   1 pred;    2 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_d: 'Z'] :
-      ( ( ( 'int.>/2' @ V_d @ 0 )
+    ! [V_d: $int] :
+      ( ( ( $greater @ V_d @ 0 )
         & ( V_d != 2 )
         & ( V_d != 5 )
         & ( V_d != 13 ) )
-     => ? [V_a: 'Z',V_b: 'Z'] :
-          ( ( 'member/2' @ V_a @ ( 'cons/2' @ 2 @ ( 'cons/2' @ 5 @ ( 'cons/2' @ 13 @ ( 'cons/2' @ V_d @ 'nil/0' ) ) ) ) )
-          & ( 'member/2' @ V_b @ ( 'cons/2' @ 2 @ ( 'cons/2' @ 5 @ ( 'cons/2' @ 13 @ ( 'cons/2' @ V_d @ 'nil/0' ) ) ) ) )
+     => ? [V_a: $int,V_b: $int] :
+          ( ( 'member/2' @ $int @ V_a @ ( 'cons/2' @ $int @ 2 @ ( 'cons/2' @ $int @ 5 @ ( 'cons/2' @ $int @ 13 @ ( 'cons/2' @ $int @ V_d @ ( 'nil/0' @ $int ) ) ) ) ) )
+          & ( 'member/2' @ $int @ V_b @ ( 'cons/2' @ $int @ 2 @ ( 'cons/2' @ $int @ 5 @ ( 'cons/2' @ $int @ 13 @ ( 'cons/2' @ $int @ V_d @ ( 'nil/0' @ $int ) ) ) ) ) )
           & ( V_a != V_b )
-          & ~ ( 'int.is-square-number/1' @ ( 'int.-/2' @ ( 'int.*/2' @ V_a @ V_b ) @ 1 ) ) ) ) )).
+          & ~ ( 'int.is-square-number/1' @ ( $difference @ ( $product @ V_a @ V_b ) @ 1 ) ) ) ) )).
+

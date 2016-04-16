@@ -126,8 +126,8 @@
 ;;@ is-divergent(seq) <-> seq is divergent
 (def-fun is-divergent :: Seq => Bool)
 
-;;@ list-from-to((an), i, j) = the list [ai, ..., aj]
-(def-fun list-from-to :: Seq -> Index -> Index => (ListOf R))
+; ;;@ list-from-to((an), i, j) = the list [ai, ..., aj]
+;(def-fun list-from-to :: Seq -> Index -> Index => (ListOf R))
 
 ;;@ is-strictly-increasing(seq) <-> seq is strictly increasing
 (def-pred is-strictly-increasing :: Seq => Bool)

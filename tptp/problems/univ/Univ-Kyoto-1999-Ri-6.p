@@ -14,79 +14,79 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  150 (   8 equality;  38 variable)
+%            Number of atoms       :  155 (   8 equality;  38 variable)
 %            Maximal formula depth :   24 (  12 average)
-%            Number of connectives :  128 (   0   ~;   0   |;  11   &; 117   @)
+%            Number of connectives :  133 (   0   ~;   0   |;  11   &; 122   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   26 (   0   :)
+%            Number of symbols     :   27 (   0   :;   0   =)
 %            Number of variables   :   15 (   0 sgn;   0   !;   5   ?;  10   ^)
 %                                         (  15   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   15 (   2 pred;    5 func;    8 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_x_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
-      ? [V_t: 'R',V_y: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
+      ? [V_t: $real,V_y: $real] :
         ( ( V_x
-          = ( '//2' @ ( '+/2' @ ( '*/2' @ 3 @ V_t ) @ ( '-/1' @ ( '^/2' @ V_t @ 2 ) ) ) @ ( '+/2' @ V_t @ 1 ) ) )
+          = ( $quotient @ ( $sum @ ( $product @ 3.0 @ V_t ) @ ( $uminus @ ( '^/2' @ V_t @ 2.0 ) ) ) @ ( $sum @ V_t @ 1.0 ) ) )
         & ( V_y
-          = ( '//2' @ ( '+/2' @ ( '*/2' @ 3 @ ( '^/2' @ V_t @ 2 ) ) @ ( '-/1' @ ( '^/2' @ V_t @ 3 ) ) ) @ ( '+/2' @ V_t @ 1 ) ) )
-        & ( '<=/2' @ 0 @ V_t )
-        & ( '<=/2' @ V_t @ 3 ) ) )).
+          = ( $quotient @ ( $sum @ ( $product @ 3.0 @ ( '^/2' @ V_t @ 2.0 ) ) @ ( $uminus @ ( '^/2' @ V_t @ 3.0 ) ) ) @ ( $sum @ V_t @ 1.0 ) ) )
+        & ( $lesseq @ 0.0 @ V_t )
+        & ( $lesseq @ V_t @ 3.0 ) ) )).
 
 thf(p1_y_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_y: 'R'] :
-      ? [V_t: 'R',V_x: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_y: $real] :
+      ? [V_t: $real,V_x: $real] :
         ( ( V_x
-          = ( '//2' @ ( '+/2' @ ( '*/2' @ 3 @ V_t ) @ ( '-/1' @ ( '^/2' @ V_t @ 2 ) ) ) @ ( '+/2' @ V_t @ 1 ) ) )
+          = ( $quotient @ ( $sum @ ( $product @ 3.0 @ V_t ) @ ( $uminus @ ( '^/2' @ V_t @ 2.0 ) ) ) @ ( $sum @ V_t @ 1.0 ) ) )
         & ( V_y
-          = ( '//2' @ ( '+/2' @ ( '*/2' @ 3 @ ( '^/2' @ V_t @ 2 ) ) @ ( '-/1' @ ( '^/2' @ V_t @ 3 ) ) ) @ ( '+/2' @ V_t @ 1 ) ) )
-        & ( '<=/2' @ 0 @ V_t )
-        & ( '<=/2' @ V_t @ 3 ) ) )).
+          = ( $quotient @ ( $sum @ ( $product @ 3.0 @ ( '^/2' @ V_t @ 2.0 ) ) @ ( $uminus @ ( '^/2' @ V_t @ 3.0 ) ) ) @ ( $sum @ V_t @ 1.0 ) ) )
+        & ( $lesseq @ 0.0 @ V_t )
+        & ( $lesseq @ V_t @ 3.0 ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_S: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_S: $real] :
         ( V_S
         = ( '2d.area-of/1'
           @ ( '2d.intersection/2'
             @ ( '2d.shape-enclosed-by/1'
-              @ ( 'cons/2'
+              @ ( 'cons/2' @ '2d.Shape'
                 @ ( '2d.set-of-cfun/1'
-                  @ ^ [V_x_dot_0: 'R',V_y_dot_0: 'R'] :
-                    ? [V_t: 'R'] :
+                  @ ^ [V_x_dot_0: $real,V_y_dot_0: $real] :
+                    ? [V_t: $real] :
                       ( ( V_x_dot_0
-                        = ( '//2' @ ( '+/2' @ ( '*/2' @ 3 @ V_t ) @ ( '-/1' @ ( '^/2' @ V_t @ 2 ) ) ) @ ( '+/2' @ V_t @ 1 ) ) )
+                        = ( $quotient @ ( $sum @ ( $product @ 3.0 @ V_t ) @ ( $uminus @ ( '^/2' @ V_t @ 2.0 ) ) ) @ ( $sum @ V_t @ 1.0 ) ) )
                       & ( V_y_dot_0
-                        = ( '//2' @ ( '+/2' @ ( '*/2' @ 3 @ ( '^/2' @ V_t @ 2 ) ) @ ( '-/1' @ ( '^/2' @ V_t @ 3 ) ) ) @ ( '+/2' @ V_t @ 1 ) ) )
-                      & ( '<=/2' @ 0 @ V_t )
-                      & ( '<=/2' @ V_t @ 3 ) ) )
-                @ 'nil/0' ) )
+                        = ( $quotient @ ( $sum @ ( $product @ 3.0 @ ( '^/2' @ V_t @ 2.0 ) ) @ ( $uminus @ ( '^/2' @ V_t @ 3.0 ) ) ) @ ( $sum @ V_t @ 1.0 ) ) )
+                      & ( $lesseq @ 0.0 @ V_t )
+                      & ( $lesseq @ V_t @ 3.0 ) ) )
+                @ ( 'nil/0' @ '2d.Shape' ) ) )
             @ ( '2d.set-of-cfun/1'
-              @ ^ [V_x: 'R',V_y: 'R'] :
-                  ( '>=/2' @ V_y @ V_x ) ) ) ) ) )).
+              @ ^ [V_x: $real,V_y: $real] :
+                  ( $greatereq @ V_y @ V_x ) ) ) ) ) )).
 
 thf(p1_x_answer,answer,(
-    ^ [V_x_dot_0: 'R'] :
-      ( ( '<=/2' @ 0 @ V_x_dot_0 )
-      & ( '<=/2' @ V_x_dot_0 @ 1 ) ) ),
+    ^ [V_x_dot_0: $real] :
+      ( ( $lesseq @ 0.0 @ V_x_dot_0 )
+      & ( $lesseq @ V_x_dot_0 @ 1.0 ) ) ),
     answer_to(p1_x_question,[])).
 
 thf(p1_y_answer,answer,(
-    ^ [V_y_dot_0: 'R'] :
-      ( ( '<=/2' @ 0 @ V_y_dot_0 )
-      & ( '<=/2' @ V_y_dot_0 @ ( '-/2' @ ( '*/2' @ 6 @ ( 'sqrt/1' @ 3 ) ) @ 9 ) ) ) ),
+    ^ [V_y_dot_0: $real] :
+      ( ( $lesseq @ 0.0 @ V_y_dot_0 )
+      & ( $lesseq @ V_y_dot_0 @ ( $difference @ ( $product @ 6.0 @ ( 'sqrt/1' @ 3.0 ) ) @ 9.0 ) ) ) ),
     answer_to(p1_y_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_S_dot_0: 'R'] :
+    ^ [V_S_dot_0: $real] :
       ( V_S_dot_0
-      = ( '-/2' @ ( '//2' @ 43 @ 3 ) @ ( '*/2' @ 20 @ ( 'ln/1' @ 2 ) ) ) ) ),
+      = ( $difference @ ( $quotient @ 43.0 @ 3.0 ) @ ( $product @ 20.0 @ ( 'ln/1' @ 2.0 ) ) ) ) ),
     answer_to(p2_question,[])).
+

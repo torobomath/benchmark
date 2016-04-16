@@ -20,25 +20,27 @@
 %% in terms of $t$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  100 (   6 equality;  57 variable)
-%            Maximal formula depth :   37 (  22 average)
-%            Number of connectives :   89 (   3   ~;   0   |;  19   &;  67   @)
+% Syntax   : Number of formulae    :    3 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  101 (   6 equality;  54 variable)
+%            Maximal formula depth :   37 (  15 average)
+%            Number of connectives :   90 (   3   ~;   0   |;  19   &;  68   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   16 (   0   :)
-%            Number of variables   :   14 (   1 sgn;   0   !;  10   ?;   2   ^)
+%            Number of symbols     :   17 (   1   :;   0   =)
+%            Number of variables   :   12 (   0 sgn;   0   !;  10   ?;   2   ^)
 %                                         (  12   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   0 pred;    3 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('t/0_type',type,(
+    't/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ratio: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_ratio: $real] :
       ? [V_c: '2d.Shape',V_c1: '2d.Shape',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_G: '2d.Point',V_M: '2d.Point'] :
         ( ( '2d.circle-type/1' @ V_c )
         & ( '2d.on/2' @ V_A @ V_c )
@@ -59,13 +61,14 @@ thf(p_qustion,question,
         & ( '2d.tangent/3' @ ( '2d.line/2' @ V_F @ V_G ) @ V_c1 @ V_E )
         & ( '2d.on/2' @ V_F @ ( '2d.line/2' @ V_B @ V_C ) )
         & ( '2d.on/2' @ V_G @ ( '2d.line/2' @ V_A @ V_C ) )
-        & ( ( '*/2' @ V_t @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) )
+        & ( ( $product @ 't/0' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_M ) ) )
-        & ( ( '*/2' @ V_ratio @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_E @ V_F ) ) )
+        & ( ( $product @ V_ratio @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_E @ V_F ) ) )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_E @ V_G ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_ratio_dot_0: 'R'] :
+    ^ [V_ratio_dot_0: $real] :
       ( V_ratio_dot_0
-      = ( '//2' @ V_t @ ( '-/2' @ 1 @ V_t ) ) ) ),
+      = ( $quotient @ 't/0' @ ( $difference @ 1.0 @ 't/0' ) ) ) ),
     answer_to(p_question,[])).
+

@@ -17,36 +17,62 @@
 %% </PROBLEM-TEXT>
 %%@ NOTE: eps is set to the xy-plane
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  123 (  14 equality;  69 variable)
-%            Maximal formula depth :   37 (  26 average)
-%            Number of connectives :   99 (   6   ~;   2   |;  21   &;  70   @)
+% Syntax   : Number of formulae    :   11 (   0 unit;   9 type;   0 defn)
+%            Number of atoms       :  124 (  14 equality;  36 variable)
+%            Maximal formula depth :   37 (   6 average)
+%            Number of connectives :  100 (   6   ~;   2   |;  21   &;  71   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :)
-%            Number of variables   :   32 (  12 sgn;   0   !;  10   ?;   4   ^)
+%            Number of symbols     :   30 (   9   :;   0   =)
+%            Number of variables   :   14 (   0 sgn;   0   !;  10   ?;   4   ^)
 %                                         (  14   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   1 pred;    2 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('Ax/0_type',type,(
+    'Ax/0': $real )).
+
+thf('Ay/0_type',type,(
+    'Ay/0': $real )).
+
+thf('Az/0_type',type,(
+    'Az/0': $real )).
+
+thf('Bx/0_type',type,(
+    'Bx/0': $real )).
+
+thf('By/0_type',type,(
+    'By/0': $real )).
+
+thf('Bz/0_type',type,(
+    'Bz/0': $real )).
+
+thf('Cx/0_type',type,(
+    'Cx/0': $real )).
+
+thf('Cy/0_type',type,(
+    'Cy/0': $real )).
+
+thf('Cz/0_type',type,(
+    'Cz/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '3d.Shape'
     @ ^ [V_Gs: '3d.Shape'] :
       ? [V_eps: '3d.Shape',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point'] :
         ( ( V_eps = '3d.xy-plane/0' )
         & ( V_A
-          = ( '3d.point/3' @ V_Ax @ V_Ay @ V_Az ) )
+          = ( '3d.point/3' @ 'Ax/0' @ 'Ay/0' @ 'Az/0' ) )
         & ( V_B
-          = ( '3d.point/3' @ V_Bx @ V_By @ V_Bz ) )
+          = ( '3d.point/3' @ 'Bx/0' @ 'By/0' @ 'Bz/0' ) )
         & ( V_C
-          = ( '3d.point/3' @ V_Cx @ V_Cy @ V_Cz ) )
-        & ( '</2' @ 0 @ V_Az )
-        & ( '</2' @ 0 @ V_Bz )
-        & ( '</2' @ 0 @ V_Cz )
+          = ( '3d.point/3' @ 'Cx/0' @ 'Cy/0' @ 'Cz/0' ) )
+        & ( $less @ 0.0 @ 'Az/0' )
+        & ( $less @ 0.0 @ 'Bz/0' )
+        & ( $less @ 0.0 @ 'Cz/0' )
         & ~ ( '3d.colinear/3' @ V_A @ V_B @ V_C )
         & ~ ( '3d.parallel/2' @ ( '3d.plane1/3' @ V_A @ V_B @ V_C ) @ V_eps )
         & ( V_Gs
@@ -68,16 +94,17 @@ thf(p_qustion,question,
 
 thf(p_answer,answer,(
     ^ [V_Gs_dot_0: '3d.Shape'] :
-      ( ~ ( '3d.colinear/3' @ ( '3d.point/3' @ V_Ax @ V_Ay @ V_Az ) @ ( '3d.point/3' @ V_Bx @ V_By @ V_Bz ) @ ( '3d.point/3' @ V_Cx @ V_Cy @ V_Cz ) )
-      & ( ( V_Az != V_Bz )
-        | ( V_Bz != V_Cz )
-        | ( V_Cz != V_Az ) )
-      & ( '</2' @ 0 @ V_Az )
-      & ( '</2' @ 0 @ V_Bz )
-      & ( '</2' @ 0 @ V_Cz )
+      ( ~ ( '3d.colinear/3' @ ( '3d.point/3' @ 'Ax/0' @ 'Ay/0' @ 'Az/0' ) @ ( '3d.point/3' @ 'Bx/0' @ 'By/0' @ 'Bz/0' ) @ ( '3d.point/3' @ 'Cx/0' @ 'Cy/0' @ 'Cz/0' ) )
+      & ( ( 'Az/0' != 'Bz/0' )
+        | ( 'Bz/0' != 'Cz/0' )
+        | ( 'Cz/0' != 'Az/0' ) )
+      & ( $less @ 0.0 @ 'Az/0' )
+      & ( $less @ 0.0 @ 'Bz/0' )
+      & ( $less @ 0.0 @ 'Cz/0' )
       & ( V_Gs_dot_0
         = ( '3d.shape-of-cpfun/1'
           @ ^ [V_G_dot_0: '3d.Point'] :
               ( ( '3d.z-coord/1' @ V_G_dot_0 )
-              = ( '//2' @ ( '+/2' @ V_Az @ ( '+/2' @ V_Bz @ V_Cz ) ) @ 6 ) ) ) ) ) ),
+              = ( $quotient @ ( $sum @ 'Az/0' @ ( $sum @ 'Bz/0' @ 'Cz/0' ) ) @ 6.0 ) ) ) ) ) ),
     answer_to(p_question,[])).
+

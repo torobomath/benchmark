@@ -6,75 +6,72 @@
 %% GENERATED: 2014-12-30
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   86 (   9 equality;  22 variable)
-%            Maximal formula depth :   19 (  12 average)
-%            Number of connectives :   62 (   0   ~;   0   |;   7   &;  55   @)
+%            Number of atoms       :   89 (   9 equality;  22 variable)
+%            Maximal formula depth :   15 (  11 average)
+%            Number of connectives :   65 (   0   ~;   0   |;   7   &;  58   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   25 (   0   :)
-%            Number of variables   :   23 (   4 sgn;   4   !;   7   ?;  12   ^)
-%                                         (  23   :;   0  !>;   0  ?*)
+%            Number of symbols     :   24 (   0   :;   0   =)
+%            Number of variables   :   15 (   0 sgn;   0   !;   3   ?;  12   ^)
+%                                         (  15   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   12 (   2 pred;    4 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
-thf(p1_qustion,question,(
-    ! [Tv1: $tType] :
-      ( 'Find/1'
-      @ ^ [V_V: 'R'] :
-        ? [V_C: Tv1,V_E: '2d.Shape'] :
-          ( ( V_E
-            = ( '2d.set-of-cfun/1'
-              @ ^ [V_x: 'R',V_y: 'R'] :
-                  ( ( '>=/2' @ V_x @ ( '-/2' @ ( '^/2' @ V_y @ 2 ) @ 1 ) )
-                  & ( '<=/2' @ V_x @ 0 ) ) ) )
-          & ( V_V
-            = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ ( '3d.import-2d-shape/1' @ V_E ) @ '3d.y-axis/0' ) ) ) ) ) )).
+thf(p1_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_V: $real] :
+      ? [V_E: '2d.Shape'] :
+        ( ( V_E
+          = ( '2d.set-of-cfun/1'
+            @ ^ [V_x: $real,V_y: $real] :
+                ( ( $greatereq @ V_x @ ( $difference @ ( '^/2' @ V_y @ 2.0 ) @ 1.0 ) )
+                & ( $lesseq @ V_x @ 0.0 ) ) ) )
+        & ( V_V
+          = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ ( '3d.import-2d-shape/1' @ V_E ) @ '3d.y-axis/0' ) ) ) ) )).
 
-thf(p1_1_qustion,question,(
-    ! [Tv1: $tType] :
-      ( 'Find/1'
-      @ ^ [V_V: 'R'] :
-        ? [V_C: Tv1,V_E: '2d.Shape'] :
-          ( ( V_E
-            = ( '2d.set-of-cfun/1'
-              @ ^ [V_y: 'R',V_x: 'R'] :
-                  ( ( '>=/2' @ V_y @ ( '-/2' @ ( '^/2' @ V_x @ 2 ) @ 1 ) )
-                  & ( '<=/2' @ V_y @ 0 ) ) ) )
-          & ( V_V
-            = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ ( '3d.import-2d-shape/1' @ V_E ) @ '3d.x-axis/0' ) ) ) ) ) )).
+thf(p1_1_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_V: $real] :
+      ? [V_E: '2d.Shape'] :
+        ( ( V_E
+          = ( '2d.set-of-cfun/1'
+            @ ^ [V_y: $real,V_x: $real] :
+                ( ( $greatereq @ V_y @ ( $difference @ ( '^/2' @ V_x @ 2.0 ) @ 1.0 ) )
+                & ( $lesseq @ V_y @ 0.0 ) ) ) )
+        & ( V_V
+          = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ ( '3d.import-2d-shape/1' @ V_E ) @ '3d.x-axis/0' ) ) ) ) )).
 
-thf(p2_qustion,question,(
-    ! [Tv1: $tType,Tv2: $tType] :
-      ( 'Find/1'
-      @ ^ [V_V: 'R'] :
-        ? [V_C1: Tv1,V_C2: Tv2,V_E: '2d.Shape'] :
-          ( ( V_E
-            = ( '2d.set-of-cfun/1'
-              @ ^ [V_x: 'R',V_y: 'R'] :
-                  ( ( '<=/2' @ V_y @ 2 )
-                  & ( '<=/2' @ 0 @ V_x )
-                  & ( '<=/2' @ V_x @ ( 'sqrt/1' @ ( '+/2' @ V_y @ 1 ) ) ) ) ) )
-          & ( V_V
-            = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ ( '3d.import-2d-shape/1' @ V_E ) @ '3d.y-axis/0' ) ) ) ) ) )).
+thf(p2_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_V: $real] :
+      ? [V_E: '2d.Shape'] :
+        ( ( V_E
+          = ( '2d.set-of-cfun/1'
+            @ ^ [V_x: $real,V_y: $real] :
+                ( ( $lesseq @ V_y @ 2.0 )
+                & ( $lesseq @ 0.0 @ V_x )
+                & ( $lesseq @ V_x @ ( 'sqrt/1' @ ( $sum @ V_y @ 1.0 ) ) ) ) ) )
+        & ( V_V
+          = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ ( '3d.import-2d-shape/1' @ V_E ) @ '3d.y-axis/0' ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_V_dot_0: 'R'] :
+    ^ [V_V_dot_0: $real] :
       ( V_V_dot_0
-      = ( '*/2' @ ( '//2' @ 16 @ 15 ) @ 'Pi/0' ) ) ),
+      = ( $product @ ( $quotient @ 16.0 @ 15.0 ) @ 'Pi/0' ) ) ),
     answer_to(p1_question,[])).
 
 thf(p1_1_answer,answer,(
-    ^ [V_V_dot_0: 'R'] :
+    ^ [V_V_dot_0: $real] :
       ( V_V_dot_0
-      = ( '*/2' @ ( '//2' @ 16 @ 15 ) @ 'Pi/0' ) ) ),
+      = ( $product @ ( $quotient @ 16.0 @ 15.0 ) @ 'Pi/0' ) ) ),
     answer_to(p1_1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_V_dot_0: 'R'] :
+    ^ [V_V_dot_0: $real] :
       ( V_V_dot_0
-      = ( '*/2' @ ( '//2' @ 9 @ 2 ) @ 'Pi/0' ) ) ),
+      = ( $product @ ( $quotient @ 9.0 @ 2.0 ) @ 'Pi/0' ) ) ),
     answer_to(p2_question,[])).
+

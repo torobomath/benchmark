@@ -81,3 +81,11 @@
 
 (def-answer p3 (PLam minCP2 (= minCP2 20)))
 
+(def-answer a1_1 (PLam C (= C (point 4 2))))
+
+(def-answer a1_2 (PLam CP2 (= CP2 (+ (* 40 (^ s 2)) (* 60 s t) (* 25 (^ t 2)) (* -40 s) (* -40 t) 20))))
+
+(def-answer a2 (PLam minCP2 (= minCP2 9)))
+
+(def-answer a3 (PLam minCP2 (= minCP2 20)))
+

@@ -35,8 +35,9 @@
 (def-directive
   p2
   (Find (Ps)
-        (exists (O A B C P1 P2)
-                (&& (= O (origin))
+        (&& (< 0 r)
+            (exists (O A B C P1 P2) (&&
+                    (= O (origin))
                     (= A (point 1 0 0))
                     (= B (point 0 1 0))
                     (= C (point 0 0 1))
@@ -48,27 +49,29 @@
                     (= (radius (vec P2 B)) (* r (radius (vec P2 O))))
                     (= (radius (vec P2 C)) (radius (vec P2 O)))
                     (= Ps (list-of P1 P2))
-                    ))))
+            ))
+        )))
 
 (def-answer p1 (PLam r (|| (&& (< (sqrt (- 3 (sqrt 6))) r)
                                (< r 1))
                            (&& (< 1 r)
                                (< r (sqrt (+ 3 (sqrt 6))))))))
 
-(def-answer p2 (PLam Ps (exists (P1 P2) (&&
-                                          (||
-                                            (= Ps (list-of P1 P2))
-                                            (= Ps (list-of P2 P1))
-                                            )
-                                          (= P1 (point (/ (+ -2 (sqrt (* (- 2) (+ (- (^ r 4) (* 6 (^ r 2))) 3))))
-                                                          (* 4 (- (^ r 2) 1)))
-                                                       (/ (+ -2 (sqrt (* (- 2) (+ (- (^ r 4) (* 6 (^ r 2))) 3))))
-                                                          (* 4 (- (^ r 2) 1)))
-                                                       (/ 1 2)))
-                                          (= P2 (point (/ (- -2 (sqrt (* (- 2) (+ (- (^ r 4) (* 6 (^ r 2))) 3))))
-                                                          (* 4 (- (^ r 2) 1)))
-                                                       (/ (- -2 (sqrt (* (- 2) (+ (- (^ r 4) (* 6 (^ r 2))) 3))))
-                                                          (* 4 (- (^ r 2) 1)))
-                                                       (/ 1 2)))
-                                          ))))
+(def-answer p2 (PLam Ps (&&
+  (! (= 1 r)) (< (sqrt (- 3 (sqrt 6))) r) (< r (sqrt (+ 3 (sqrt 6))))
+  (exists (P1 P2) (&&
+    (|| (= Ps (list-of P1 P2))
+        (= Ps (list-of P2 P1)))
+    (= P1 (point (/ (+ -2 (sqrt (* (- 2) (+ (+ (^ r 4) (* -6 (^ r 2))) 3))))
+                    (* 4 (- (^ r 2) 1)))
+                 (/ (+ -2 (sqrt (* (- 2) (+ (+ (^ r 4) (* -6 (^ r 2))) 3))))
+                    (* 4 (- (^ r 2) 1)))
+                 (/ 1 2)))
+    (= P2 (point (/ (- -2 (sqrt (* (- 2) (+ (+ (^ r 4) (* -6 (^ r 2))) 3))))
+                    (* 4 (- (^ r 2) 1)))
+                 (/ (- -2 (sqrt (* (- 2) (+ (+ (^ r 4) (* -6 (^ r 2))) 3))))
+                    (* 4 (- (^ r 2) 1)))
+                 (/ 1 2)))
+  ))
+)))
 

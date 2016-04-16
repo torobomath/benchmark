@@ -109,3 +109,12 @@
 (def-answer p2_rcf (PLam ymin (&& (< 0 a) (< a 1)
           (= ymin (/ (sqrt (- 1 (^ a 2))) 2)))))
 
+(def-answer a1 (PLam Q (&&
+  (= 1 (+ (^ s 2) (^ c 2)))
+  (< 0 a) (< a 1)
+  (< 0 s) (< s 1)
+  (= Q (point (/ a 2) (/ (- 1 (* a c)) (* 2 s)))))))
+
+(def-answer a2 (PLam ymin (&& (< 0 a) (< a 1)
+                              (= ymin (/ (sqrt (- 1 (^ a 2))) 2)))))
+

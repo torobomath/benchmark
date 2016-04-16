@@ -108,3 +108,15 @@
 
 (def-answer p3_2 (PLam x (= x (/ 5 6))))
 
+(def-answer a1 (PLam pq_P (= pq_P (pair (list-of (/ 1 2) (/ 3 4))
+                                        (point 1 1)))))
+
+(def-answer a2 (PLam _ (true)))
+
+(def-answer a3_1 (set-of-cfun (Lam x (PLam y (&&
+  (<= 0 x) (<= x 1)
+  (<= 0 y) (<= y (+ (+ (^ x 2) (- x)) 1))
+)))))
+
+(def-answer a3_2 (PLam x (= x (/ 5 6))))
+

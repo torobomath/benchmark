@@ -2,11 +2,13 @@
 (default-namespace)
 
 ; => Bool
+;;# DONT_EXPORT
 (axiom
   def_true
   ()
   (true))
 
+;;# DONT_EXPORT
 (axiom
   def_false
   ()
@@ -20,17 +22,6 @@
  def-is-var
  (v)
  (is-var v))
-
-;;------------------------------------------------------------------------------
-;; 1-place predicate that is always true
-;;------------------------------------------------------------------------------
-
-
-; a => Bool
-(axiom
- def_anything
- (x)
- (anything x))
 
 
 ;;------------------------------------------------------------------------------
@@ -868,6 +859,14 @@
        (PLamApp def x)))
 
 (axiom
+  def_set_image
+  (fun def)
+  (= (image fun (set-by-def def))
+     (set-by-def (PLam x (exists (y)
+                                 (&& (PLamApp def y)
+                                     (= x (LamApp fun y))))))))
+
+(axiom
   def_finset_base
   ()
   (= (finset (nil))
@@ -905,9 +904,12 @@
   def_is_singleton
   (a)
   (<-> (is-singleton a)
-       (forall (x y) (|| (! (elem x a))
-                         (! (elem y a))
-                         (= x y)))))
+       
+       ;(forall (x y) (|| (! (elem x a))
+       ;                  (! (elem y a))
+       ;                  (= x y)))))
+       (exists (x)
+          (= a (set-by-def (PLam y (= y x)))))))
 (axiom
  def-is-subset-of
  (A B)
@@ -1064,33 +1066,6 @@
            (forall (lb) (-> (is-lower-bound-of lb (set-by-def s))
                             (<= lb inf))))))
 ;;------------------------------------------------------------------------------
-;; intentional interpretation of variable names: for NLP
-;;------------------------------------------------------------------------------
-
-; (IntentSetOf a) => (SetOf a)
-;;# DONT_EXPORT
-(axiom
- def_setify
- (term def)
- (= (setify (intent-set term def))
-    (set-by-def def)))
-
-; (IntentSetOf a) => a
-;;# DONT_EXPORT
-(axiom
- def_extent_of
- (term def)
- (= (extent-of (intent-set term def))
-    term))
-
-;;# DONT_EXPORT
-(axiom
-  def_intent_set_eq
-  (t1 t2 f1 f2)
-  (<-> (= (intent-set t1 f1) (intent-set t2 f2))
-       (= f1 f2)))
-
-;;------------------------------------------------------------------------------
 ; (SetOf a) => Bool
 (axiom
   def_is_range
@@ -1125,8 +1100,18 @@
  def_is_someint
  (x)
  (<-> (is-someint x)
+      
+      (is-integer x)))
+      ;(= (floor x) x)))
+
+;;# DONT_EXPORT
+(axiom
+ def_is_integer
+ (x)
+ (<-> (is-integer x)
       (= (floor x) x)))
 
+;;# DONT_EXPORT
 (axiom
   def_is_rational
   (x)
@@ -1254,12 +1239,12 @@
 
 ;; is-abs-of :: R -> R => Bool
 (axiom
- def_is_abs_of
- (x y)
- (<-> (is-abs-of x y)
-			(&& (<= 0 x)
-					(|| (= x y)
-							(= x (- y))))))
+  def_is_abs_of
+  (x y)
+  (<-> (is-abs-of x y)
+       (&& (<= 0 x)
+           (|| (= x y)
+               (= x (- y))))))
 
 
 
@@ -1994,6 +1979,17 @@
   def-coordinate-of-1d
   (P)
   (= (coordinate-of P) P))
+
+;;------------------------------------------------------------------------------
+;; Ratio
+;;------------------------------------------------------------------------------
+(axiom
+  def-ratio-equality
+  (r1 r2)
+  (<-> (= (ratio r1) (ratio r2))
+       (exists (k)
+          (&& (! (= k 0))
+              (= r1 (map (Lam x (* k x)) r2))))))
 
 ;;------------------------------------------------------------------------------
 ;;------------------------------------------------------------------------------

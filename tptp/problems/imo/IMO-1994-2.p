@@ -18,20 +18,18 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   93 (   6 equality;  52 variable)
-%            Maximal formula depth :   26 (  26 average)
-%            Number of connectives :   82 (   2   ~;   0   |;  12   &;  65   @)
-%                                         (   0 <=>;   3  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%            Number of atoms       :   82 (   5 equality;  44 variable)
+%            Maximal formula depth :   27 (  27 average)
+%            Number of connectives :   73 (   2   ~;   0   |;  11   &;  58   @)
+%                                         (   1 <=>;   1  =>;   0  <=;   0 <~>)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   0   :)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :    8 (   0 sgn;   8   !;   0   ?;   0   ^)
 %                                         (   8   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_M: '2d.Point',V_O: '2d.Point',V_Q: '2d.Point',V_E: '2d.Point',V_F: '2d.Point'] :
@@ -48,10 +46,8 @@ thf(p,conjecture,(
         & ( '2d.on/2' @ V_E @ ( '2d.line/2' @ V_A @ V_B ) )
         & ( '2d.on/2' @ V_F @ ( '2d.line/2' @ V_A @ V_C ) )
         & ( '2d.colinear/3' @ V_E @ V_Q @ V_F )
-        & ( 'pairwise-distinct/1' @ ( 'cons/2' @ V_E @ ( 'cons/2' @ V_Q @ ( 'cons/2' @ V_F @ 'nil/0' ) ) ) ) )
-     => ( ( ( '2d.perpendicular/2' @ ( '2d.line/2' @ V_O @ V_Q ) @ ( '2d.line/2' @ V_E @ V_F ) )
-         => ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_Q @ V_E ) )
-            = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_Q @ V_F ) ) ) )
-        & ( ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_Q @ V_E ) )
-            = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_Q @ V_F ) ) )
-         => ( '2d.perpendicular/2' @ ( '2d.line/2' @ V_O @ V_Q ) @ ( '2d.line/2' @ V_E @ V_F ) ) ) ) ) )).
+        & ( 'pairwise-distinct/1' @ '2d.Point' @ ( 'cons/2' @ '2d.Point' @ V_E @ ( 'cons/2' @ '2d.Point' @ V_Q @ ( 'cons/2' @ '2d.Point' @ V_F @ ( 'nil/0' @ '2d.Point' ) ) ) ) ) )
+     => ( ( '2d.perpendicular/2' @ ( '2d.line/2' @ V_O @ V_Q ) @ ( '2d.line/2' @ V_E @ V_F ) )
+      <=> ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_Q @ V_E ) )
+          = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_Q @ V_F ) ) ) ) ) )).
+

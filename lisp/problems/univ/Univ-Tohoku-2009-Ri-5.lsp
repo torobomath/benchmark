@@ -44,6 +44,9 @@
             (= P (matrix p 0 0 q))
             (= (m* A P A) (m^ P 2))))))
 
-(def-answer p2 (PLam A (|| (= A (matrix (sqrt p) 0 (sqrt q) 0))
-         (= A (sm* -1 (matrix (sqrt p) 0 (sqrt q) 0))))))
+(def-answer p2 (PLam A (&&
+  (< 0 p) (< 0 q)
+  (|| (= A (matrix (sqrt p) 0 0 (sqrt q)))
+      (= A (sm* -1 (matrix (sqrt p) 0 0 (sqrt q)))))
+)))
 

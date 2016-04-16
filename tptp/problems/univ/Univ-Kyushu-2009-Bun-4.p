@@ -20,190 +20,195 @@
 %% the minimum value of the area found in (2).
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    8 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  346 (  16 equality; 137 variable)
-%            Maximal formula depth :   37 (  19 average)
-%            Number of connectives :  306 (   0   ~;   0   |;  57   &; 249   @)
+% Syntax   : Number of formulae    :   10 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :  359 (  16 equality; 107 variable)
+%            Maximal formula depth :   37 (  16 average)
+%            Number of connectives :  319 (   0   ~;   0   |;  57   &; 262   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   35 (   0   :)
-%            Number of variables   :   64 (   0 sgn;   0   !;  23   ?;  27   ^)
+%            Number of symbols     :   37 (   2   :;   0   =)
+%            Number of variables   :   50 (   0 sgn;   0   !;  23   ?;  27   ^)
 %                                         (  50   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   12 (   1 pred;    4 func;    7 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
 
 thf(p1_R_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Point'
     @ ^ [V_R: '2d.Point'] :
       ? [V_P: '2d.Point',V_Q: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape'] :
         ( ( '2d.on/2' @ V_P
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_2: 'R'] :
-                  ( '^/2' @ V_x_dot_2 @ 2 ) ) ) )
+              @ ^ [V_x_dot_2: $real] :
+                  ( '^/2' @ V_x_dot_2 @ 2.0 ) ) ) )
         & ( '2d.on/2' @ V_Q
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_1: 'R'] :
-                  ( '^/2' @ V_x_dot_1 @ 2 ) ) ) )
+              @ ^ [V_x_dot_1: $real] :
+                  ( '^/2' @ V_x_dot_1 @ 2.0 ) ) ) )
         & ( '2d.line-type/1' @ V_l )
         & ( '2d.line-type/1' @ V_m )
         & ( '2d.tangent/3'
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_0: 'R'] :
-                  ( '^/2' @ V_x_dot_0 @ 2 ) ) )
+              @ ^ [V_x_dot_0: $real] :
+                  ( '^/2' @ V_x_dot_0 @ 2.0 ) ) )
           @ V_l
           @ V_P )
         & ( '2d.tangent/3'
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x: 'R'] :
-                  ( '^/2' @ V_x @ 2 ) ) )
+              @ ^ [V_x: $real] :
+                  ( '^/2' @ V_x @ 2.0 ) ) )
           @ V_m
           @ V_Q )
         & ( ( '2d.x-coord/1' @ V_P )
-          = V_a )
+          = 'a/0' )
         & ( ( '2d.x-coord/1' @ V_Q )
-          = V_b )
-        & ( '</2' @ V_a @ 0 )
-        & ( '</2' @ 0 @ V_b )
+          = 'b/0' )
+        & ( $less @ 'a/0' @ 0.0 )
+        & ( $less @ 0.0 @ 'b/0' )
         & ( '2d.on/2' @ V_R @ V_l )
         & ( '2d.on/2' @ V_R @ V_m ) ) )).
 
 thf(p1_PRQ_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_PRQ: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_PRQ: $real] :
       ? [V_P: '2d.Point',V_Q: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape',V_R: '2d.Point'] :
         ( ( '2d.on/2' @ V_P
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_2: 'R'] :
-                  ( '^/2' @ V_x_dot_2 @ 2 ) ) ) )
+              @ ^ [V_x_dot_2: $real] :
+                  ( '^/2' @ V_x_dot_2 @ 2.0 ) ) ) )
         & ( '2d.on/2' @ V_Q
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_1: 'R'] :
-                  ( '^/2' @ V_x_dot_1 @ 2 ) ) ) )
+              @ ^ [V_x_dot_1: $real] :
+                  ( '^/2' @ V_x_dot_1 @ 2.0 ) ) ) )
         & ( '2d.line-type/1' @ V_l )
         & ( '2d.line-type/1' @ V_m )
         & ( '2d.tangent/3'
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_0: 'R'] :
-                  ( '^/2' @ V_x_dot_0 @ 2 ) ) )
+              @ ^ [V_x_dot_0: $real] :
+                  ( '^/2' @ V_x_dot_0 @ 2.0 ) ) )
           @ V_l
           @ V_P )
         & ( '2d.tangent/3'
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x: 'R'] :
-                  ( '^/2' @ V_x @ 2 ) ) )
+              @ ^ [V_x: $real] :
+                  ( '^/2' @ V_x @ 2.0 ) ) )
           @ V_m
           @ V_Q )
         & ( ( '2d.x-coord/1' @ V_P )
-          = V_a )
+          = 'a/0' )
         & ( ( '2d.x-coord/1' @ V_Q )
-          = V_b )
-        & ( '</2' @ V_a @ 0 )
-        & ( '</2' @ 0 @ V_b )
+          = 'b/0' )
+        & ( $less @ 'a/0' @ 0.0 )
+        & ( $less @ 0.0 @ 'b/0' )
         & ( '2d.on/2' @ V_R @ V_l )
         & ( '2d.on/2' @ V_R @ V_m )
         & ( V_PRQ
           = ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_P @ V_R @ V_Q ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ans: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_ans: $real] :
       ? [V_P: '2d.Point',V_Q: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape',V_R: '2d.Point',V_S: '2d.Point'] :
         ( ( '2d.on/2' @ V_P
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_3: 'R'] :
-                  ( '^/2' @ V_x_dot_3 @ 2 ) ) ) )
+              @ ^ [V_x_dot_3: $real] :
+                  ( '^/2' @ V_x_dot_3 @ 2.0 ) ) ) )
         & ( '2d.on/2' @ V_Q
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_2: 'R'] :
-                  ( '^/2' @ V_x_dot_2 @ 2 ) ) ) )
+              @ ^ [V_x_dot_2: $real] :
+                  ( '^/2' @ V_x_dot_2 @ 2.0 ) ) ) )
         & ( '2d.line-type/1' @ V_l )
         & ( '2d.line-type/1' @ V_m )
         & ( '2d.tangent/3'
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_1: 'R'] :
-                  ( '^/2' @ V_x_dot_1 @ 2 ) ) )
+              @ ^ [V_x_dot_1: $real] :
+                  ( '^/2' @ V_x_dot_1 @ 2.0 ) ) )
           @ V_l
           @ V_P )
         & ( '2d.tangent/3'
           @ ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_0: 'R'] :
-                  ( '^/2' @ V_x_dot_0 @ 2 ) ) )
+              @ ^ [V_x_dot_0: $real] :
+                  ( '^/2' @ V_x_dot_0 @ 2.0 ) ) )
           @ V_m
           @ V_Q )
         & ( ( '2d.x-coord/1' @ V_P )
-          = V_a )
+          = 'a/0' )
         & ( ( '2d.x-coord/1' @ V_Q )
-          = V_b )
-        & ( '</2' @ V_a @ 0 )
-        & ( '</2' @ 0 @ V_b )
+          = 'b/0' )
+        & ( $less @ 'a/0' @ 0.0 )
+        & ( $less @ 0.0 @ 'b/0' )
         & ( '2d.on/2' @ V_R @ V_l )
         & ( '2d.on/2' @ V_R @ V_m )
         & ( '2d.is-parallelogram/4' @ V_P @ V_R @ V_Q @ V_S )
         & ( V_ans
           = ( '2d.area-of/1'
             @ ( '2d.shape-enclosed-by/1'
-              @ ( 'cons/2'
+              @ ( 'cons/2' @ '2d.Shape'
                 @ ( '2d.graph-of/1'
                   @ ( 'fun/1'
-                    @ ^ [V_x: 'R'] :
-                        ( '^/2' @ V_x @ 2 ) ) )
-                @ ( 'cons/2' @ ( '2d.seg/2' @ V_P @ V_S ) @ ( 'cons/2' @ ( '2d.seg/2' @ V_S @ V_Q ) @ 'nil/0' ) ) ) ) ) ) ) )).
+                    @ ^ [V_x: $real] :
+                        ( '^/2' @ V_x @ 2.0 ) ) )
+                @ ( 'cons/2' @ '2d.Shape' @ ( '2d.seg/2' @ V_P @ V_S ) @ ( 'cons/2' @ '2d.Shape' @ ( '2d.seg/2' @ V_S @ V_Q ) @ ( 'nil/0' @ '2d.Shape' ) ) ) ) ) ) ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_min_ans: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_min_ans: $real] :
         ( 'minimum/2'
-        @ ( 'set-by-def/1'
-          @ ^ [V_ans: 'R'] :
+        @ ( 'set-by-def/1' @ $real
+          @ ^ [V_ans: $real] :
             ? [V_P: '2d.Point',V_Q: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape',V_R: '2d.Point',V_S: '2d.Point'] :
               ( ( '2d.on/2' @ V_P
                 @ ( '2d.graph-of/1'
                   @ ( 'fun/1'
-                    @ ^ [V_x_dot_3: 'R'] :
-                        ( '^/2' @ V_x_dot_3 @ 2 ) ) ) )
+                    @ ^ [V_x_dot_3: $real] :
+                        ( '^/2' @ V_x_dot_3 @ 2.0 ) ) ) )
               & ( '2d.on/2' @ V_Q
                 @ ( '2d.graph-of/1'
                   @ ( 'fun/1'
-                    @ ^ [V_x_dot_2: 'R'] :
-                        ( '^/2' @ V_x_dot_2 @ 2 ) ) ) )
+                    @ ^ [V_x_dot_2: $real] :
+                        ( '^/2' @ V_x_dot_2 @ 2.0 ) ) ) )
               & ( '2d.line-type/1' @ V_l )
               & ( '2d.line-type/1' @ V_m )
               & ( '2d.tangent/3'
                 @ ( '2d.graph-of/1'
                   @ ( 'fun/1'
-                    @ ^ [V_x_dot_1: 'R'] :
-                        ( '^/2' @ V_x_dot_1 @ 2 ) ) )
+                    @ ^ [V_x_dot_1: $real] :
+                        ( '^/2' @ V_x_dot_1 @ 2.0 ) ) )
                 @ V_l
                 @ V_P )
               & ( '2d.tangent/3'
                 @ ( '2d.graph-of/1'
                   @ ( 'fun/1'
-                    @ ^ [V_x_dot_0: 'R'] :
-                        ( '^/2' @ V_x_dot_0 @ 2 ) ) )
+                    @ ^ [V_x_dot_0: $real] :
+                        ( '^/2' @ V_x_dot_0 @ 2.0 ) ) )
                 @ V_m
                 @ V_Q )
               & ( ( '2d.x-coord/1' @ V_P )
-                = V_a )
+                = 'a/0' )
               & ( ( '2d.x-coord/1' @ V_Q )
-                = V_b )
-              & ( '</2' @ V_a @ 0 )
-              & ( '</2' @ 0 @ V_b )
+                = 'b/0' )
+              & ( $less @ 'a/0' @ 0.0 )
+              & ( $less @ 0.0 @ 'b/0' )
               & ( '2d.on/2' @ V_R @ V_l )
               & ( '2d.on/2' @ V_R @ V_m )
               & ( '2d.is-right/1' @ ( '2d.angle/3' @ V_P @ V_R @ V_Q ) )
@@ -211,43 +216,44 @@ thf(p3_qustion,question,
               & ( V_ans
                 = ( '2d.area-of/1'
                   @ ( '2d.shape-enclosed-by/1'
-                    @ ( 'cons/2'
+                    @ ( 'cons/2' @ '2d.Shape'
                       @ ( '2d.graph-of/1'
                         @ ( 'fun/1'
-                          @ ^ [V_x: 'R'] :
-                              ( '^/2' @ V_x @ 2 ) ) )
-                      @ ( 'cons/2' @ ( '2d.seg/2' @ V_P @ V_S ) @ ( 'cons/2' @ ( '2d.seg/2' @ V_S @ V_Q ) @ 'nil/0' ) ) ) ) ) ) ) )
+                          @ ^ [V_x: $real] :
+                              ( '^/2' @ V_x @ 2.0 ) ) )
+                      @ ( 'cons/2' @ '2d.Shape' @ ( '2d.seg/2' @ V_P @ V_S ) @ ( 'cons/2' @ '2d.Shape' @ ( '2d.seg/2' @ V_S @ V_Q ) @ ( 'nil/0' @ '2d.Shape' ) ) ) ) ) ) ) ) )
         @ V_min_ans ) )).
 
 thf(p1_R_answer,answer,(
     ^ [V_R_dot_0: '2d.Point'] :
-    ? [V_Rx: 'R',V_Ry: 'R'] :
+    ? [V_Rx: $real,V_Ry: $real] :
       ( ( V_R_dot_0
         = ( '2d.point/2' @ V_Rx @ V_Ry ) )
-      & ( '</2' @ V_a @ 0 )
-      & ( '</2' @ 0 @ V_b )
+      & ( $less @ 'a/0' @ 0.0 )
+      & ( $less @ 0.0 @ 'b/0' )
       & ( V_R_dot_0
-        = ( '2d.point/2' @ ( '+/2' @ ( '//2' @ V_a @ 2 ) @ ( '//2' @ V_b @ 2 ) ) @ ( '*/2' @ V_a @ V_b ) ) ) ) ),
+        = ( '2d.point/2' @ ( $sum @ ( $quotient @ 'a/0' @ 2.0 ) @ ( $quotient @ 'b/0' @ 2.0 ) ) @ ( $product @ 'a/0' @ 'b/0' ) ) ) ) ),
     answer_to(p1_R_question,[])).
 
 thf(p1_PRQ_answer,answer,(
-    ^ [V_PRQ_dot_0: 'R'] :
-      ( ( '</2' @ V_a @ 0 )
-      & ( '</2' @ 0 @ V_b )
+    ^ [V_PRQ_dot_0: $real] :
+      ( ( $less @ 'a/0' @ 0.0 )
+      & ( $less @ 0.0 @ 'b/0' )
       & ( V_PRQ_dot_0
-        = ( '*/2' @ ( '//2' @ 1 @ 4 ) @ ( '^/2' @ ( '-/2' @ V_b @ V_a ) @ 3 ) ) ) ) ),
+        = ( $product @ ( $quotient @ 1.0 @ 4.0 ) @ ( '^/2' @ ( $difference @ 'b/0' @ 'a/0' ) @ 3.0 ) ) ) ) ),
     answer_to(p1_PRQ_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_ans_dot_0: 'R'] :
-      ( ( '</2' @ V_a @ 0 )
-      & ( '</2' @ 0 @ V_b )
+    ^ [V_ans_dot_0: $real] :
+      ( ( $less @ 'a/0' @ 0.0 )
+      & ( $less @ 0.0 @ 'b/0' )
       & ( V_ans_dot_0
-        = ( '*/2' @ ( '//2' @ 1 @ 5 ) @ ( '^/2' @ ( '-/2' @ V_b @ V_a ) @ 3 ) ) ) ) ),
+        = ( $product @ ( $quotient @ 1.0 @ 5.0 ) @ ( '^/2' @ ( $difference @ 'b/0' @ 'a/0' ) @ 3.0 ) ) ) ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_min_ans_dot_0: 'R'] :
+    ^ [V_min_ans_dot_0: $real] :
       ( V_min_ans_dot_0
-      = ( '//2' @ 5 @ 12 ) ) ),
+      = ( $quotient @ 5.0 @ 12.0 ) ) ),
     answer_to(p3_question,[])).
+

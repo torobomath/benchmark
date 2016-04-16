@@ -88,6 +88,7 @@
 ;;@;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;@ line2d(a,b,c) = the line ax + by = c
 (def-fun line2d :: R -> R -> R => Line)
+(non-degen-cond line2d 3 line-type)
 
 ;;@ is-slope-of(a,line) <-> the slope of line is a
 (def-pred is-slope-of :: R -> Line => Bool)
@@ -181,22 +182,30 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ellipses
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(def-pred ellipse-type :: Shape => Bool)
 (def-fun ellipse :: Point -> Point -> R => Shape)
+(def-pred ellipse-type :: Shape => Bool)
+(non-degen-cond ellipse 3 ellipse-type)
+
 (def-fun major-radius :: Shape => R)
 (def-fun minor-radius :: Shape => R)
+(def-pred is-axis-of :: Shape -> Shape => Bool) 
+(def-fun major-axis-of :: Shape => Shape)
+(def-fun minor-axis-of :: Shape => Shape)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hyperbola
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (def-pred hyperbola-type :: Shape => Bool)
 (def-fun hyperbola :: Point -> Point -> R => Shape)
+(non-degen-cond hyperbola 3 hyperbola-type)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; parabola
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (def-pred parabola-type :: Shape => Bool)
 (def-fun parabola :: Point -> Point => Shape)
+(non-degen-cond parabola 2 parabola-type)
+
 (def-fun directrix :: Shape => Shape)
 
 
@@ -214,15 +223,23 @@
 
 ;;@ circle-type(shape) <-> shape is a circle
 (def-pred circle-type :: Shape => Bool)
+(non-degen-cond circle 2 circle-type)
 
 ;;@ disk-type(shape) <-> shape is a disk
 (def-pred disk-type :: Shape => Bool)
+(non-degen-cond disk 2 disk-type)
 
 ;;@ semicircle-type(shape) <-> shape is a semicircle
 (def-pred semicircle-type :: Shape => Bool)
+(non-degen-cond semicircle 3 semicircle-type)
 
 ;;@ arc-type(shape) <-> shape is an arc
 (def-pred arc-type :: Shape => Bool)
+(non-degen-cond arc 3 arc-type)
+
+;;@ circular-sector-type(shape) <-> shape is a circular sector
+(def-pred circular-sector-type :: Shape => Bool)
+(non-degen-cond circular-sector 4 circular-sector-type)
 
 
 ;;;; area of a region enclosed by a set of curves

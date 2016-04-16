@@ -19,35 +19,34 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    3 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  127 (  12 equality;  57 variable)
+%            Number of atoms       :  129 (  12 equality;  57 variable)
 %            Maximal formula depth :   32 (  20 average)
-%            Number of connectives :  102 (   1   ~;   0   |;  18   &;  82   @)
+%            Number of connectives :  104 (   1   ~;   0   |;  18   &;  84   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   25 (   0   :)
+%            Number of symbols     :   25 (   0   :;   0   =)
 %            Number of variables   :   26 (   0 sgn;   1   !;  18   ?;   7   ^)
 %                                         (  26   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   10 (   1 pred;    5 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
-    ! [V_a: 'R'] :
-      ( ( '>/2' @ V_a @ 0 )
+    ! [V_a: $real] :
+      ( ( $greater @ V_a @ 0.0 )
      => ? [V_C1: '2d.Shape',V_C2: '2d.Shape'] :
           ( ( V_C1
             = ( '2d.graph-of/1'
               @ ( 'fun/1'
-                @ ^ [V_x_dot_0: 'R'] :
-                    ( '+/2' @ ( '^/2' @ V_x_dot_0 @ 2 ) @ ( '//2' @ 1 @ ( '^/2' @ V_a @ 2 ) ) ) ) ) )
+                @ ^ [V_x_dot_0: $real] :
+                    ( $sum @ ( '^/2' @ V_x_dot_0 @ 2.0 ) @ ( $quotient @ 1.0 @ ( '^/2' @ V_a @ 2.0 ) ) ) ) ) )
           & ( V_C2
             = ( '2d.graph-of/1'
               @ ( 'fun/1'
-                @ ^ [V_x: 'R'] :
-                    ( '-/1' @ ( '^/2' @ ( '-/2' @ V_x @ V_a ) @ 2 ) ) ) ) )
+                @ ^ [V_x: $real] :
+                    ( $uminus @ ( '^/2' @ ( $difference @ V_x @ V_a ) @ 2.0 ) ) ) ) )
           & ? [V_p1: '2d.Point',V_p2: '2d.Point',V_q1: '2d.Point',V_q2: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape'] :
               ( ( V_l
                 = ( '2d.line/2' @ V_p1 @ V_p2 ) )
@@ -60,24 +59,24 @@ thf(p1,conjecture,(
               & ( '2d.tangent/2' @ V_m @ V_C2 ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_S_min: 'R'] :
-      ? [V_S_set: 'SetOf' @ 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_S_min: $real] :
+      ? [V_S_set: ( 'SetOf' @ $real )] :
         ( ( V_S_set
-          = ( 'set-by-def/1'
-            @ ^ [V_S: 'R'] :
-              ? [V_a: 'R',V_C1: '2d.Shape',V_C2: '2d.Shape'] :
-                ( ( '>/2' @ V_a @ 0 )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_S: $real] :
+              ? [V_a: $real,V_C1: '2d.Shape',V_C2: '2d.Shape'] :
+                ( ( $greater @ V_a @ 0.0 )
                 & ( V_C1
                   = ( '2d.graph-of/1'
                     @ ( 'fun/1'
-                      @ ^ [V_x_dot_0: 'R'] :
-                          ( '+/2' @ ( '^/2' @ V_x_dot_0 @ 2 ) @ ( '//2' @ 1 @ ( '^/2' @ V_a @ 2 ) ) ) ) ) )
+                      @ ^ [V_x_dot_0: $real] :
+                          ( $sum @ ( '^/2' @ V_x_dot_0 @ 2.0 ) @ ( $quotient @ 1.0 @ ( '^/2' @ V_a @ 2.0 ) ) ) ) ) )
                 & ( V_C2
                   = ( '2d.graph-of/1'
                     @ ( 'fun/1'
-                      @ ^ [V_x: 'R'] :
-                          ( '-/1' @ ( '^/2' @ ( '-/2' @ V_x @ V_a ) @ 2 ) ) ) ) )
+                      @ ^ [V_x: $real] :
+                          ( $uminus @ ( '^/2' @ ( $difference @ V_x @ V_a ) @ 2.0 ) ) ) ) )
                 & ? [V_p1: '2d.Point',V_p2: '2d.Point',V_q1: '2d.Point',V_q2: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape'] :
                     ( ( V_l
                       = ( '2d.line/2' @ V_p1 @ V_p2 ) )
@@ -92,7 +91,8 @@ thf(p2_qustion,question,
         & ( 'minimum/2' @ V_S_set @ V_S_min ) ) )).
 
 thf(p2_answer,answer,(
-    ^ [V_S_min_dot_0: 'R'] :
+    ^ [V_S_min_dot_0: $real] :
       ( V_S_min_dot_0
-      = ( '*/2' @ 4 @ ( '^/2' @ 2 @ ( '//2' @ 1 @ 4 ) ) ) ) ),
+      = ( $product @ 4.0 @ ( '^/2' @ 2.0 @ ( $quotient @ 1.0 @ 4.0 ) ) ) ) ),
     answer_to(p2_question,[])).
+

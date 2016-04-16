@@ -20,98 +20,98 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  210 (  27 equality;  77 variable)
+%            Number of atoms       :  220 (  27 equality;  77 variable)
 %            Maximal formula depth :   23 (  13 average)
-%            Number of connectives :  152 (   0   ~;   0   |;  21   &; 131   @)
+%            Number of connectives :  162 (   0   ~;   0   |;  21   &; 141   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   22 (   0   :)
+%            Number of symbols     :   22 (   0   :;   0   =)
 %            Number of variables   :   22 (   0 sgn;   0   !;  16   ?;   6   ^)
 %                                         (  22   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   0 pred;    1 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_answer: 'ListOf' @ 'R'] :
-      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_H: '3d.Point',V_c1: 'R',V_c2: 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_answer: ( 'ListOf' @ $real )] :
+      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_H: '3d.Point',V_c1: $real,V_c2: $real] :
         ( ( V_answer
-          = ( 'cons/2' @ V_c1 @ ( 'cons/2' @ V_c2 @ 'nil/0' ) ) )
+          = ( 'cons/2' @ $real @ V_c1 @ ( 'cons/2' @ $real @ V_c2 @ ( 'nil/0' @ $real ) ) ) )
         & ( ( '3d.vec/2' @ V_O @ V_H )
           = ( '3d.v+/2' @ ( '3d.sv*/2' @ V_c1 @ ( '3d.vec/2' @ V_O @ V_A ) ) @ ( '3d.sv*/2' @ V_c2 @ ( '3d.vec/2' @ V_O @ V_B ) ) ) )
         & ( ( '3d.distance/2' @ V_O @ V_A )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.distance/2' @ V_O @ V_B )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.distance/2' @ V_O @ V_C )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.cos-of-angle/1' @ ( '3d.angle/3' @ V_A @ V_O @ V_B ) )
-          = ( '//2' @ 1 @ 2 ) )
+          = ( $quotient @ 1.0 @ 2.0 ) )
         & ( ( '3d.cos-of-angle/1' @ ( '3d.angle/3' @ V_B @ V_O @ V_C ) )
-          = ( '//2' @ 1 @ ( 'sqrt/1' @ 2 ) ) )
+          = ( $quotient @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) )
         & ( ( '3d.cos-of-angle/1' @ ( '3d.angle/3' @ V_C @ V_O @ V_A ) )
-          = ( '//2' @ 1 @ ( 'sqrt/1' @ 2 ) ) )
+          = ( $quotient @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) )
         & ( V_H
           = ( '3d.foot-of-perpendicular-line-from-to/2' @ V_C @ ( '3d.plane1/3' @ V_O @ V_A @ V_B ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_CH: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_CH: $real] :
       ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_H: '3d.Point'] :
         ( ( V_CH
           = ( '3d.distance/2' @ V_C @ V_H ) )
         & ( ( '3d.distance/2' @ V_O @ V_A )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.distance/2' @ V_O @ V_B )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.distance/2' @ V_O @ V_C )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.cos-of-angle/1' @ ( '3d.angle/3' @ V_A @ V_O @ V_B ) )
-          = ( '//2' @ 1 @ 2 ) )
+          = ( $quotient @ 1.0 @ 2.0 ) )
         & ( ( '3d.cos-of-angle/1' @ ( '3d.angle/3' @ V_B @ V_O @ V_C ) )
-          = ( '//2' @ 1 @ ( 'sqrt/1' @ 2 ) ) )
+          = ( $quotient @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) )
         & ( ( '3d.cos-of-angle/1' @ ( '3d.angle/3' @ V_C @ V_O @ V_A ) )
-          = ( '//2' @ 1 @ ( 'sqrt/1' @ 2 ) ) )
+          = ( $quotient @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) )
         & ( V_H
           = ( '3d.foot-of-perpendicular-line-from-to/2' @ V_C @ ( '3d.plane1/3' @ V_O @ V_A @ V_B ) ) ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_V: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_V: $real] :
       ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point'] :
         ( ( V_V
           = ( '3d.volume-of/1' @ ( '3d.tetrahedron/4' @ V_O @ V_A @ V_B @ V_C ) ) )
         & ( ( '3d.distance/2' @ V_O @ V_A )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.distance/2' @ V_O @ V_B )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.distance/2' @ V_O @ V_C )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.cos-of-angle/1' @ ( '3d.angle/3' @ V_A @ V_O @ V_B ) )
-          = ( '//2' @ 1 @ 2 ) )
+          = ( $quotient @ 1.0 @ 2.0 ) )
         & ( ( '3d.cos-of-angle/1' @ ( '3d.angle/3' @ V_B @ V_O @ V_C ) )
-          = ( '//2' @ 1 @ ( 'sqrt/1' @ 2 ) ) )
+          = ( $quotient @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) )
         & ( ( '3d.cos-of-angle/1' @ ( '3d.angle/3' @ V_C @ V_O @ V_A ) )
-          = ( '//2' @ 1 @ ( 'sqrt/1' @ 2 ) ) ) ) )).
+          = ( $quotient @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_answer_dot_0: 'ListOf' @ 'R'] :
+    ^ [V_answer_dot_0: ( 'ListOf' @ $real )] :
       ( V_answer_dot_0
-      = ( 'cons/2' @ ( '//2' @ ( 'sqrt/1' @ 2 ) @ 3 ) @ ( 'cons/2' @ ( '//2' @ ( 'sqrt/1' @ 2 ) @ 3 ) @ 'nil/0' ) ) ) ),
+      = ( 'cons/2' @ $real @ ( $quotient @ ( 'sqrt/1' @ 2.0 ) @ 3.0 ) @ ( 'cons/2' @ $real @ ( $quotient @ ( 'sqrt/1' @ 2.0 ) @ 3.0 ) @ ( 'nil/0' @ $real ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_CH_dot_0: 'R'] :
+    ^ [V_CH_dot_0: $real] :
       ( V_CH_dot_0
-      = ( '//2' @ 1 @ ( 'sqrt/1' @ 3 ) ) ) ),
+      = ( $quotient @ 1.0 @ ( 'sqrt/1' @ 3.0 ) ) ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_V_dot_0: 'R'] :
+    ^ [V_V_dot_0: $real] :
       ( V_V_dot_0
-      = ( '//2' @ 1 @ 12 ) ) ),
+      = ( $quotient @ 1.0 @ 12.0 ) ) ),
     answer_to(p3_question,[])).
+

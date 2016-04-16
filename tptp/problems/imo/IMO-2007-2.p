@@ -18,16 +18,14 @@
 %            Maximal formula depth :   23 (  23 average)
 %            Number of connectives :   60 (   2   ~;   0   |;  14   &;  43   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   0   :)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :    9 (   0 sgn;   8   !;   1   ?;   0   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_G: '2d.Point',V_l: '2d.Shape'] :
@@ -50,3 +48,4 @@ thf(p,conjecture,(
         & ( ( '2d.distance/2' @ V_E @ V_G )
           = ( '2d.distance/2' @ V_E @ V_C ) ) )
      => ( '2d.is-angle-bisector/2' @ V_l @ ( '2d.angle/3' @ V_D @ V_A @ V_B ) ) ) )).
+

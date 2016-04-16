@@ -90,3 +90,16 @@
 
 (def-answer p3 (PLam W (= W (2d.shape-of-cpfun (PLam P (&& (2d.on P (2d.circle (2d.point 0 1) 1)) (! (= P (2d.point 0 2))) (! (= P (2d.origin))) (< (2d.x-coord P) 0)))))))
 
+(def-answer a1 (PLam tRange_z1 (= tRange_z1
+                                (pair (PLam t (&& (< 0 t) (< t 4)))
+                                      (list-of (/ (+ (- (real->complex t)) (* (real->complex (sqrt (.+ (.- (.^ t 2)) (.* 4 t)))) (i))) (real->complex 2))
+                                               (/ (- (- (real->complex t)) (* (real->complex (sqrt (.+ (.- (.^ t 2)) (.* 4 t)))) (i))) (real->complex 2)))))))
+
+(def-answer a2_1 (PLam C (= C (2d.shape-of-cpfun (PLam P (&& (2d.on P (2d.circle (2d.point -1 0) 1)) (! (= P (2d.point -2 0))) (! (= P (2d.origin))) (> (2d.y-coord P) 0)))))))
+
+(def-answer a2_2 (2d.shape-of-cpfun (PLam P (&& (2d.on P (2d.circle (2d.point -1 0) 1)) (! (= P (2d.point -2 0))) (! (= P (2d.origin))) (> (2d.y-coord P) 0)))))
+
+(def-answer a3_1 (PLam W (= W (2d.shape-of-cpfun (PLam P (&& (2d.on P (2d.circle (2d.point 0 1) 1)) (! (= P (2d.point 0 2))) (! (= P (2d.origin))) (< (2d.x-coord P) 0)))))))
+
+(def-answer a3_2 (2d.shape-of-cpfun (PLam P (&& (2d.on P (2d.circle (2d.point 0 1) 1)) (! (= P (2d.point 0 2))) (! (= P (2d.origin))) (< (2d.x-coord P) 0)))))
+

@@ -86,3 +86,8 @@
 
 (def-answer p2_2 (PLam zmin (= zmin 0)))
 
+(def-answer a1 (PLam _ (true)))
+
+(def-answer a2 (PLam max_min (= max_min (list-of (/ (* 2 (sqrt 2)) 3)
+                                                 0))))
+

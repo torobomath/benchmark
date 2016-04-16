@@ -433,19 +433,6 @@
 
 ; 2015-01-06:
 
-
-(axiom
-  def-integer-quot-of
-  (n m)
-  (= (quot-of (integer-division n m))
-     (div n m)))
-
-(axiom
-  def-integer-rem-of
-  (n m)
-  (= (rem-of (integer-division n m))
-     (mod n m)))
-
 (axiom
   def-num-of-digits-eq
   (n m)

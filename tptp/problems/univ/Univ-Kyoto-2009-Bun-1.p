@@ -22,32 +22,32 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   38 (   1 equality;   6 variable)
+%            Number of atoms       :   39 (   1 equality;   6 variable)
 %            Maximal formula depth :   14 (  10 average)
-%            Number of connectives :   34 (   0   ~;   0   |;   3   &;  31   @)
+%            Number of connectives :   35 (   0   ~;   0   |;   3   &;  32   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   15 (   0   :)
+%            Number of symbols     :   15 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   0   !;   1   ?;   2   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   0 pred;    0 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '3d.Point'
     @ ^ [V_p: '3d.Point'] :
       ? [V_k: '3d.Shape'] :
         ( ( '3d.line-type/1' @ V_k )
-        & ( '3d.perpendicular/2' @ V_k @ ( '3d.line/2' @ ( '3d.point/3' @ -3 @ -1 @ 1 ) @ ( '3d.point/3' @ -1 @ 0 @ 0 ) ) )
-        & ( '3d.on/2' @ ( '3d.point/3' @ 2 @ 3 @ 3 ) @ V_k )
-        & ( '3d.intersect/3' @ V_k @ ( '3d.line/2' @ ( '3d.point/3' @ -3 @ -1 @ 1 ) @ ( '3d.point/3' @ -1 @ 0 @ 0 ) ) @ V_p ) ) )).
+        & ( '3d.perpendicular/2' @ V_k @ ( '3d.line/2' @ ( '3d.point/3' @ -3.0 @ -1.0 @ 1.0 ) @ ( '3d.point/3' @ -1.0 @ 0.0 @ 0.0 ) ) )
+        & ( '3d.on/2' @ ( '3d.point/3' @ 2.0 @ 3.0 @ 3.0 ) @ V_k )
+        & ( '3d.intersect/3' @ V_k @ ( '3d.line/2' @ ( '3d.point/3' @ -3.0 @ -1.0 @ 1.0 ) @ ( '3d.point/3' @ -1.0 @ 0.0 @ 0.0 ) ) @ V_p ) ) )).
 
 thf(p1_answer,answer,(
     ^ [V_p_dot_0: '3d.Point'] :
       ( V_p_dot_0
-      = ( '3d.point/3' @ 1 @ 1 @ -1 ) ) ),
+      = ( '3d.point/3' @ 1.0 @ 1.0 @ -1.0 ) ) ),
     answer_to(p1_question,[])).
+

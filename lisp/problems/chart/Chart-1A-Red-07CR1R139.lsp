@@ -20,29 +20,10 @@
         (< 0 v1)
         (< 0 v2)
       )
-      (= v (radius Pv))
+      (= v (radius (vec3d v1 v2 0)))
     ))
   )
 )
 
-(def-directive p1
-  (Find (v)
-    (forall (v1 v2 Bv Pv B0 B1 P0 P1) (->
-      (&&
-        (= Bv (vec3d 0 12 0))
-        (= Pv (vec3d v1 v2 0))
-        (= B0 (vec3d 0 0 0))
-        (= B1 (vec3d 0 (/ 1 5) 0))
-        (= P0 (vec3d 0 0 4))
-        (= P1 (vec3d (/ v1 60) (/ v2 60) 4))
-        (= (/ (sqrt 3) 2) (cos-of-angle (angle (vec->point P1) (vec->point B1) (point (vec-x-coord P1) (vec-y-coord P1) (vec-z-coord B1)))))
-      )
-      (= v (radius Pv))
-    ))
-  )
-)
-
-(def-answer p (PLam v (= v 423)))
-
-(def-answer p1 (PLam v (= v 423)))
+(def-answer p (PLam v (= v (radius (vec3d (* 120 (sqrt 6)) (+ (* 120 (sqrt 6)) 12) 0)))))
 

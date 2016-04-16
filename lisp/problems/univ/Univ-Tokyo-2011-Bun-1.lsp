@@ -47,24 +47,24 @@
                                        (/ 1 2)))))))
 
 (def-directive
-  p2
-  (Find (I_min)
-        (exists (I_set)
-                (&& (minimum I_set I_min)
-                    (= I_set (set-by-def (PLam I
-                                               (exists (a b c d f)
-                                                       (&& (= f (poly-fun (list-of d c b a)))
-                                                           (= (funapp f 1) 1)
-                                                           (= (funapp f -1) -1)
-                                                           (= (integral (Lam x (+ (* b (^ x 2))
-                                                                                  (* c x)
-                                                                                  d))
-                                                                        -1
-                                                                        1)
-                                                              1)
-                                                           (= I (integral (Lam x (^ (funapp (derivative (derivative f)) x) 2))
-                                                                          -1
-                                                                          (/ 1 2))))))))))))
+    p2
+    (Find (I_min)
+                (exists (I_set)
+                                (&& (minimum I_set I_min)
+                                        (= I_set (set-by-def (PLam I
+                                                                                             (exists (a b c d f)
+                                                                                                             (&& (= f (poly-fun (list-of d c b a)))
+                                                                                                                     (= (funapp f 1) 1)
+                                                                                                                     (= (funapp f -1) -1)
+                                                                                                                     (= (integral (Lam x (+ (* b (^ x 2))
+                                                                                                                                                                    (* c x)
+                                                                                                                                                                    d))
+                                                                                                                                                -1
+                                                                                                                                                1)
+                                                                                                                            1)
+                                                                                                                     (= I (integral (Lam x (^ (funapp (derivative (derivative f)) x) 2))
+                                                                                                                                                    -1
+                                                                                                                                                    (/ 1 2))))))))))))
 
 (def-answer p1 (PLam f (&& (= f (poly-fun (list-of (/ 3 4) (/ 5 4) (- (/ 3 4)) (- (/ 1 4)))))
                            (= a (- (/ 1 4)))

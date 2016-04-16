@@ -97,8 +97,10 @@
   )
 )
 
-(def-answer p2_c (PLam c (&& (< (- 1) p) (< p 1)
-        (= c (point p (/ (* p (sqrt (- 1 p))) (sqrt (+ 1 p))) (/ (sqrt (* (- 1 p) (+ 1 (* 2 p)))) (sqrt (+ 1 p))))))))
+(def-answer p2_c (PLam c (&&
+  (< (/ -1 2) p) (< p 1)
+  (= c (point p (/ (* p (sqrt (- 1 p))) (sqrt (+ 1 p))) (/ (sqrt (* (- 1 p) (+ 1 (* 2 p)))) (sqrt (+ 1 p)))))
+)))
 
 (def-directive
   p2_d
@@ -128,9 +130,10 @@
   )
 )
 
-(def-answer p2_d (PLam d (&& (< (- 1) p) (< p 1)
-           (= d (point p (/ (* p (sqrt (- 1 p))) (sqrt (+ 1 p))) (- (/ (sqrt (* (- 1 p) (+ 1 (* 2 p)))) (sqrt (+ 1 p)))))
-))))
+(def-answer p2_d (PLam d (&&
+  (< (/ -1 2) p) (< p 1)
+  (= d (point p (/ (* p (sqrt (- 1 p))) (sqrt (+ 1 p))) (- (/ (sqrt (* (- 1 p) (+ 1 (* 2 p)))) (sqrt (+ 1 p))))))
+)))
 
 (def-directive
   p3
@@ -163,4 +166,16 @@
 )
 
  (def-answer p3 (PLam p (= p (- (/ 1 3)))))
+
+(def-answer a1_1 (PLam _ (true)))
+
+(def-answer a1_2 (PLam b (&& (< (- 1) p) (< p 1)
+           (= b (point p (sqrt (- 1 (^ p 2))) 0)))))
+
+(def-answer a2 (PLam c_d (&&
+  (< (/ -1 2) p) (< p 1)
+  (= c_d (list-of (point p (/ (* p (sqrt (- 1 p))) (sqrt (+ 1 p))) (/ (sqrt (* (- 1 p) (+ 1 (* 2 p)))) (sqrt (+ 1 p))))
+                    (point p (/ (* p (sqrt (- 1 p))) (sqrt (+ 1 p))) (- (/ (sqrt (* (- 1 p) (+ 1 (* 2 p)))) (sqrt (+ 1 p))))))))))
+
+(def-answer a3 (PLam p (= p (- (/ 1 3)))))
 

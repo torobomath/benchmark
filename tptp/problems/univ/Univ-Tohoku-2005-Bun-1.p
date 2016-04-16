@@ -15,44 +15,47 @@
 %% $\vec{x}\cdot\vec{e}$ using $t$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   93 (   6 equality;  34 variable)
-%            Maximal formula depth :   20 (  15 average)
-%            Number of connectives :   79 (   0   ~;   0   |;   9   &;  70   @)
+% Syntax   : Number of formulae    :    3 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :   94 (   6 equality;  20 variable)
+%            Maximal formula depth :   20 (  11 average)
+%            Number of connectives :   80 (   0   ~;   0   |;   9   &;  71   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   19 (   0   :)
-%            Number of variables   :    8 (   0 sgn;   0   !;   4   ?;   2   ^)
+%            Number of symbols     :   20 (   1   :;   0   =)
+%            Number of variables   :    6 (   0 sgn;   0   !;   4   ?;   2   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   1 pred;    4 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('t/0_type',type,(
+    't/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_xe: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_xe: $real] :
       ? [V_a: '2d.Vector',V_b: '2d.Vector',V_e: '2d.Vector',V_x: '2d.Vector'] :
-        ( ( '</2' @ 0 @ V_t )
-        & ( '</2' @ V_t @ ( '//2' @ 1 @ 2 ) )
+        ( ( $less @ 0.0 @ 't/0' )
+        & ( $less @ 't/0' @ ( $quotient @ 1.0 @ 2.0 ) )
         & ( '2d.is-unit-vec/1' @ V_e )
-        & ( ( '2d.v+/2' @ ( '2d.sv*/2' @ ( '-/2' @ 1 @ V_t ) @ V_a ) @ ( '2d.sv*/2' @ V_t @ V_b ) )
+        & ( ( '2d.v+/2' @ ( '2d.sv*/2' @ ( $difference @ 1.0 @ 't/0' ) @ V_a ) @ ( '2d.sv*/2' @ 't/0' @ V_b ) )
           = V_e )
-        & ( ( '2d.sv*/2' @ ( '-/2' @ 1 @ V_t ) @ ( '2d.v+/2' @ V_a @ V_e ) )
-          = ( '2d.sv*/2' @ V_t @ ( '2d.v+/2' @ V_b @ V_e ) ) )
+        & ( ( '2d.sv*/2' @ ( $difference @ 1.0 @ 't/0' ) @ ( '2d.v+/2' @ V_a @ V_e ) )
+          = ( '2d.sv*/2' @ 't/0' @ ( '2d.v+/2' @ V_b @ V_e ) ) )
         & ( ( '2d.inner-prod/2' @ ( '2d.v-/2' @ V_x @ V_a ) @ ( '2d.v-/2' @ V_x @ V_b ) )
-          = 0 )
-        & ( ( '*/2' @ ( '2d.radius/1' @ ( '2d.v-/2' @ V_x @ V_a ) ) @ ( '-/2' @ 1 @ V_t ) )
-          = ( '*/2' @ ( '2d.radius/1' @ ( '2d.v-/2' @ V_x @ V_b ) ) @ V_t ) )
+          = 0.0 )
+        & ( ( $product @ ( '2d.radius/1' @ ( '2d.v-/2' @ V_x @ V_a ) ) @ ( $difference @ 1.0 @ 't/0' ) )
+          = ( $product @ ( '2d.radius/1' @ ( '2d.v-/2' @ V_x @ V_b ) ) @ 't/0' ) )
         & ( V_xe
           = ( '2d.inner-prod/2' @ V_x @ V_e ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_xe_dot_0: 'R'] :
+    ^ [V_xe_dot_0: $real] :
       ( ( V_xe_dot_0
-        = ( '//2' @ ( '*/2' @ 2 @ ( '*/2' @ V_t @ ( '-/2' @ 1 @ V_t ) ) ) @ ( '+/2' @ 1 @ ( '+/2' @ ( '*/2' @ -2 @ V_t ) @ ( '*/2' @ 2 @ ( '^/2' @ V_t @ 2 ) ) ) ) ) )
-      & ( '</2' @ 0 @ V_t )
-      & ( '</2' @ V_t @ ( '//2' @ 1 @ 2 ) ) ) ),
+        = ( $quotient @ ( $product @ 2.0 @ ( $product @ 't/0' @ ( $difference @ 1.0 @ 't/0' ) ) ) @ ( $sum @ 1.0 @ ( $sum @ ( $product @ -2.0 @ 't/0' ) @ ( $product @ 2.0 @ ( '^/2' @ 't/0' @ 2.0 ) ) ) ) ) )
+      & ( $less @ 0.0 @ 't/0' )
+      & ( $less @ 't/0' @ ( $quotient @ 1.0 @ 2.0 ) ) ) ),
     answer_to(p_question,[])).
+

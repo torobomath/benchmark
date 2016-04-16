@@ -28,7 +28,7 @@
 
 (def-directive
   p1_1
-  (Find (OD)
+  (Find (vecOD)
         (exists (O A B C P D E)
                 (&& (is-regular-square O A B C)
                     (= (distance O A) 1)
@@ -37,7 +37,10 @@
                     (= (distance B P) (distance C P))
                     (divide-internally D (seg A P) 1 3)
                     (= E (midpoint-of C P))
-                    (= OD (vec O D))))))
+                    (= vecOD (vec O D))
+                    (= vecOA (vec O A))
+                    (= vecOC (vec O C))
+                    (= vecOP (vec O P))))))
 
 (def-directive
   p1_2
@@ -50,10 +53,13 @@
                     (= (distance B P) (distance C P))
                     (divide-internally D (seg A P) 1 3)
                     (= E (midpoint-of C P))
-                    (= OE (vec O E))))))
+                    (= OE (vec O E))
+                    (= vecOA (vec O A))
+                    (= vecOC (vec O C))
+                    (= vecOP (vec O P))))))
 
 (def-directive
-  p2
+  a2
   (Find (PQ)
         (exists (O A B C P Q)
                 (&& (is-regular-square O A B C)
@@ -61,47 +67,55 @@
                     (= (distance O P) (distance A P))
                     (= (distance A P) (distance B P))
                     (= (distance B P) (distance C P))
+                    (= vecOA (vec O A))
+                    (= vecOC (vec O C))
+                    (= vecOP (vec O P))
                     (divide-internally Q (seg B C) t (- 1 t))
                     (= PQ (vec P Q))))))
 
 (def-directive
-  p3
-  (Find (x)
-        (exists (O A B C P)
-                (&& (is-regular-square O A B C)
-                    (= (distance O A) 1)
-                    (= (distance O P) (distance A P))
-                    (= (distance A P) (distance B P))
-                    (= (distance B P) (distance C P))
-                    (= x (inner-prod (vec O A) (vec O P)))))))
+    a3
+    (Find (x)
+                (exists (O A B C P)
+                                (&& (is-regular-square O A B C)
+                                        (= (distance O A) 1)
+                                        (= (distance O P) (distance A P))
+                                        (= (distance A P) (distance B P))
+                                        (= (distance B P) (distance C P))
+                                        (= x (inner-prod (vec O A) (vec O P)))))))
 
 (def-directive
-  p4
-  (Find (tOP)
-       (exists (O A B C P D E Q PQ ODE t)
-         (&& (= tOP (list-of t (distance O P)))
-       (is-regular-square O A B C)
-       (= (distance O A) 1)
-       (= (distance O P) (distance A P))
-       (= (distance A P) (distance B P))
-       (= (distance B P) (distance C P))
-       (is-square-pyramid P O A B C)
-       (divide-internally D (seg A P) 1 3)
-       (= E (midpoint-of C P))
-       (divide-internally Q (seg B C) t (- 1 t))
-       (= ODE (plane1 O D E))
-       (= PQ (vec P Q))
-       (is-normal-vector-of PQ ODE)))))
+    a4
+    (Find (tOP)
+         (exists (O A B C P D E Q PQ ODE t)
+             (&& (= tOP (list-of t (distance O P)))
+             (is-regular-square O A B C)
+             (= (distance O A) 1)
+             (= (distance O P) (distance A P))
+             (= (distance A P) (distance B P))
+             (= (distance B P) (distance C P))
+             (is-square-pyramid P O A B C)
+             (divide-internally D (seg A P) 1 3)
+             (= E (midpoint-of C P))
+             (divide-internally Q (seg B C) t (- 1 t))
+             (= ODE (plane1 O D E))
+             (= PQ (vec P Q))
+             (is-normal-vector-of PQ ODE)))))
 
-(def-answer p1_1 (PLam OD (= OD (v+ (sv* (/ 3 4) (vec O A)) (sv* (/ 1 4) (vec O P))))))
+(def-answer p1_1 (PLam OD (= OD (v+ (sv* (/ 3 4) vecOA) (sv* (/ 1 4) vecOP)))))
 
-(def-answer p1_2 (PLam OE (= OE (v+ (sv* (/ 1 2) (vec O C)) (sv* (/ 1 2) (vec O P))))))
+(def-answer p1_2 (PLam OE (= OE (v+ (sv* (/ 1 2) vecOC) (sv* (/ 1 2) vecOP)))))
 
-(def-answer p2 (PLam PQ (= PQ (v+ (sv* (- 1 t) (vec O A)) (vec O C) (sv* -1 (vec O P))))))
+(def-answer a2 (PLam PQ (= PQ (v+ (sv* (- 1 t) vecOA) vecOC (sv* -1 vecOP)))))
 
-(def-answer p3 (PLam x (= x (/ 1 2))))
+(def-answer a3 (PLam x (= x (/ 1 2))))
 
-(def-answer p4 (PLam tOP (exists (tOP1 tOP2) (&& (= tOP1 (/ 1 3))
-             (= tOP2 (/ 2 (sqrt 3)))
-                   (= tOP (list-of tOP1 tOP2))))))
+(def-answer a4 (PLam tOP (exists (tOP1 tOP2) (&& (= tOP1 (/ 1 3))
+                         (= tOP2 (/ 2 (sqrt 3)))
+                             (= tOP (list-of tOP1 tOP2))))))
+
+(def-answer a1 (PLam OD_OE (= OD_OE (list-of
+                                      (v+ (sv* (/ 3 4) vecOA) (sv* (/ 1 4) vecOP))
+                                      (v+ (sv* (/ 1 2) vecOC) (sv* (/ 1 2) vecOP))
+                                      ))))
 

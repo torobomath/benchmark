@@ -83,3 +83,27 @@
 
 (def-answer p2_I (PLam minI (= minI (.* 2 (sqrt 2)))))
 
+(def-answer a1_1 (PLam D (= D (2d.set-of-cfun (Lam x (PLam y (&&
+  (.<= 0 x)
+  (.<= 3 (.- (.^ x 2) (.^ y 2)))
+  (|| (= y 0)
+    (&& (.< 0 y)
+      (.<= (.+ (.^ x 2) (.^ y 2)) 5)
+    )
+  )
+)))))))
+
+(def-answer a1_2 (2d.set-of-cfun (Lam x (PLam y (&&
+  (.<= 0 x)
+  (.<= 3 (.- (.^ x 2) (.^ y 2)))
+  (|| (= y 0)
+    (&& (.< 0 y)
+      (.<= (.+ (.^ x 2) (.^ y 2)) 5)
+    )
+  )
+)))))
+
+(def-answer a2
+  (PLam ans (= ans (pair (.* 2 (sqrt 2))
+                         (complex 2 1)))))
+

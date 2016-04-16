@@ -205,15 +205,15 @@
 			 (is-limit-of a (sum-seq s))))
 
 ;seq->ListOf E
-(axiom
- def-list-of-seq-from-to
- (a from to)
- (= (list-from-to a (index from) (index to))
-    (cond ((! (= from to)) (cons (nth-term-of a (index from)) (list-from-to a (index (int.+ from 1)) (index to))))
-	  ((= from to) (nil))
-     )
- )
-)
+;(axiom
+; def-list-of-seq-from-to
+; (a from to)
+; (= (list-from-to a (index from) (index to))
+;    (cond ((! (= from to)) (cons (nth-term-of a (index from)) (list-from-to a (index (int.+ from 1)) (index to))))
+;	  ((= from to) (nil))
+;     )
+; )
+;)
 
 
 

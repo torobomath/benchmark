@@ -19,27 +19,27 @@
 %            Maximal formula depth :   17 (  17 average)
 %            Number of connectives :   57 (   0   ~;   0   |;   5   &;  51   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   0   :)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :    6 (   0 sgn;   6   !;   0   ?;   0   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   1 pred;    2 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_P: '2d.Point',V_h: 'R'] :
+    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_P: '2d.Point',V_h: $real] :
       ( ( ( '2d.is-square/4' @ V_A @ V_B @ V_C @ V_D )
         & ( ( '2d.distance/2' @ V_A @ V_B )
-          = ( '+/2' @ ( '2d.distance/2' @ V_A @ V_D ) @ ( '2d.distance/2' @ V_B @ V_C ) ) )
+          = ( $sum @ ( '2d.distance/2' @ V_A @ V_D ) @ ( '2d.distance/2' @ V_B @ V_C ) ) )
         & ( '2d.point-inside-of/2' @ V_P @ ( '2d.square/4' @ V_A @ V_B @ V_C @ V_D ) )
         & ( V_h
           = ( '2d.point-shape-distance/2' @ V_P @ ( '2d.line/2' @ V_C @ V_D ) ) )
         & ( ( '2d.distance/2' @ V_A @ V_P )
-          = ( '+/2' @ V_h @ ( '2d.distance/2' @ V_A @ V_D ) ) )
+          = ( $sum @ V_h @ ( '2d.distance/2' @ V_A @ V_D ) ) )
         & ( ( '2d.distance/2' @ V_B @ V_P )
-          = ( '+/2' @ V_h @ ( '2d.distance/2' @ V_B @ V_C ) ) ) )
-     => ( '>=/2' @ ( '//2' @ 1 @ ( 'sqrt/1' @ V_h ) ) @ ( '+/2' @ ( '//2' @ 1 @ ( 'sqrt/1' @ ( '2d.distance/2' @ V_A @ V_D ) ) ) @ ( '//2' @ 1 @ ( 'sqrt/1' @ ( '2d.distance/2' @ V_B @ V_C ) ) ) ) ) ) )).
+          = ( $sum @ V_h @ ( '2d.distance/2' @ V_B @ V_C ) ) ) )
+     => ( $greatereq @ ( $quotient @ 1.0 @ ( 'sqrt/1' @ V_h ) ) @ ( $sum @ ( $quotient @ 1.0 @ ( 'sqrt/1' @ ( '2d.distance/2' @ V_A @ V_D ) ) ) @ ( $quotient @ 1.0 @ ( 'sqrt/1' @ ( '2d.distance/2' @ V_B @ V_C ) ) ) ) ) ) )).
+

@@ -10,29 +10,29 @@
 %            Maximal formula depth :   15 (  15 average)
 %            Number of connectives :   41 (   0   ~;   0   |;   4   &;  35   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   10 (   0   :)
+%            Number of symbols     :   10 (   0   :;   0   =)
 %            Number of variables   :    4 (   0 sgn;   4   !;   0   ?;   0   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   1 pred;    2 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
-    ! [V_n: 'Z',V_S: 'Z'] :
-      ( ( ( 'int.is-integer/1' @ V_n )
+    ! [V_n: $int,V_S: $int] :
+      ( ( ( $is_int @ V_n )
         & ( V_S
-          = ( 'int.+/2' @ ( 'int.+/2' @ ( 'int.^/2' @ ( 'int.-/2' @ V_n @ 1 ) @ 3 ) @ ( 'int.^/2' @ V_n @ 3 ) ) @ ( 'int.^/2' @ ( 'int.+/2' @ V_n @ 1 ) @ 3 ) ) )
+          = ( $sum @ ( $sum @ ( 'int.^/2' @ ( $difference @ V_n @ 1 ) @ 3 ) @ ( 'int.^/2' @ V_n @ 3 ) ) @ ( 'int.^/2' @ ( $sum @ V_n @ 1 ) @ 3 ) ) )
         & ( 'int.is-even-number/1' @ V_S ) )
      => ( 'int.is-even-number/1' @ V_n ) ) )).
 
 thf(p2,conjecture,(
-    ! [V_n: 'Z',V_S: 'Z'] :
-      ( ( ( 'int.is-integer/1' @ V_n )
+    ! [V_n: $int,V_S: $int] :
+      ( ( ( $is_int @ V_n )
         & ( 'int.is-even-number/1' @ V_S )
         & ( V_S
-          = ( 'int.+/2' @ ( 'int.+/2' @ ( 'int.^/2' @ ( 'int.-/2' @ V_n @ 1 ) @ 3 ) @ ( 'int.^/2' @ V_n @ 3 ) ) @ ( 'int.^/2' @ ( 'int.+/2' @ V_n @ 1 ) @ 3 ) ) ) )
+          = ( $sum @ ( $sum @ ( 'int.^/2' @ ( $difference @ V_n @ 1 ) @ 3 ) @ ( 'int.^/2' @ V_n @ 3 ) ) @ ( 'int.^/2' @ ( $sum @ V_n @ 1 ) @ 3 ) ) ) )
      => ( 'int.is-divisible-by/2' @ V_S @ 36 ) ) )).
+

@@ -26,26 +26,26 @@
 (namespace 2d)
 
 (def-directive
-  p1_1
+  a1_1
   (Show (tangent (circle (point 1 1) (sqrt 2))
            (line (point 0 -2) (point 1 -1)))))
 
 (def-directive
-  p1_2
+  a1_2
   (Find (P)
   (tangent (circle (point 1 1) (sqrt 2))
      (line (point 0 -2) (point 1 -1))
      P)))
 
 (def-directive
-  p2
+  a2
   (Find (P)
   (on P (intersection (circle (point 1 1) (sqrt 2))
           (shape-of-cpfun (PLam p (= (y-coord p)
                    (- (/ (^ (x-coord p) 2) 4) 1))))))))
 
 (def-directive
-  p3_1
+  a3_1
   (Draw (DE)
   (exists (D A B E)
     (&& (= D (shape-of-cpfun (PLam p (>= (y-coord p)
@@ -59,7 +59,7 @@
         (= DE (intersection D E))))))
 
 (def-directive
-  p3_2
+  a3_2
   (Find (S)
   (exists (D A B E)
     (&& (= D (shape-of-cpfun (PLam p (>= (y-coord p)
@@ -72,16 +72,18 @@
         (= E (union A B))
         (= S (area-of (intersection D E)))))))
 
-(def-answer p1_2 (PLam P (= P (point 2 0))))
+(def-answer a1_1 (PLam _ (true)))
 
-(def-answer p2 (PLam P (= P (point 2 0))))
+(def-answer a1_2 (PLam P (= P (point 2 0))))
 
-(def-answer p3_1 (set-of-cfun (Lam x (PLam y (|| (<= (+ (^ (- x 1) 2) (^ (- y 1) 2)) 2)
+(def-answer a2 (PLam P (= P (point 2 0))))
+
+(def-answer a3_1 (set-of-cfun (Lam x (PLam y (|| (<= (+ (^ (- x 1) 2) (^ (- y 1) 2)) 2)
                 (<= (+ (^ (+ x 1) 2) (^ (- y 1) 2)) 2)
                 (&& (>= y (- (/ (^ x 2) 4) 1) )
               (<= y 0)
               )
                 )))))
 
-(def-answer p3_2 (PLam S (= S (+ (* 2 (Pi)) (/ 20 3)))))
+(def-answer a3_2 (PLam S (= S (+ (* 2 (Pi)) (/ 20 3)))))
 

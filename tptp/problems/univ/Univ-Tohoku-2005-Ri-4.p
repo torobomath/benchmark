@@ -12,50 +12,59 @@
 %% $C_2$ using $a$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   92 (   7 equality;  29 variable)
-%            Maximal formula depth :   19 (  14 average)
-%            Number of connectives :   77 (   1   ~;   0   |;   7   &;  67   @)
+% Syntax   : Number of formulae    :    5 (   0 unit;   3 type;   0 defn)
+%            Number of atoms       :   96 (   7 equality;  24 variable)
+%            Maximal formula depth :   19 (   7 average)
+%            Number of connectives :   81 (   1   ~;   0   |;   7   &;  71   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   30 (   0   :)
-%            Number of variables   :   12 (   3 sgn;   0   !;   4   ?;   4   ^)
+%            Number of symbols     :   33 (   3   :;   0   =)
+%            Number of variables   :    8 (   0 sgn;   0   !;   4   ?;   4   ^)
 %                                         (   8   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   15 (   3 pred;    5 func;    7 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
+
+thf('c/0_type',type,(
+    'c/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_S: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_S: $real] :
       ? [V_C1: '2d.Shape',V_C2: '2d.Shape'] :
-        ( ( '</2' @ V_a @ 0 )
+        ( ( $less @ 'a/0' @ 0.0 )
         & ( V_C1
           = ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x: 'R'] :
-                  ( '+/2' @ ( '*/2' @ V_a @ ( '^/2' @ V_x @ 2 ) ) @ ( '+/2' @ ( '*/2' @ V_b @ V_x ) @ V_c ) ) ) ) )
+              @ ^ [V_x: $real] :
+                  ( $sum @ ( $product @ 'a/0' @ ( '^/2' @ V_x @ 2.0 ) ) @ ( $sum @ ( $product @ 'b/0' @ V_x ) @ 'c/0' ) ) ) ) )
         & ( V_C2
           = ( '2d.shape-of-cpfun/1'
             @ ^ [V_p: '2d.Point'] :
-                ( ( ( '>/2' @ ( '2d.x-coord/1' @ V_p ) @ 0 )
+                ( ( ( $greater @ ( '2d.x-coord/1' @ V_p ) @ 0.0 )
                  => ( ( '2d.y-coord/1' @ V_p )
-                    = ( '+/2' @ ( '^/2' @ ( '2d.x-coord/1' @ V_p ) @ 2 ) @ ( '+/2' @ ( '-/1' @ ( '2d.x-coord/1' @ V_p ) ) @ ( '//2' @ 3 @ 4 ) ) ) ) )
-                & ( ( '<=/2' @ ( '2d.x-coord/1' @ V_p ) @ 0 )
+                    = ( $sum @ ( '^/2' @ ( '2d.x-coord/1' @ V_p ) @ 2.0 ) @ ( $sum @ ( $uminus @ ( '2d.x-coord/1' @ V_p ) ) @ ( $quotient @ 3.0 @ 4.0 ) ) ) ) )
+                & ( ( $lesseq @ ( '2d.x-coord/1' @ V_p ) @ 0.0 )
                  => ( ( '2d.y-coord/1' @ V_p )
-                    = ( '+/2' @ ( '^/2' @ ( '2d.x-coord/1' @ V_p ) @ 2 ) @ ( '+/2' @ ( '*/2' @ 2 @ ( '2d.x-coord/1' @ V_p ) ) @ ( '//2' @ 3 @ 4 ) ) ) ) ) ) ) )
+                    = ( $sum @ ( '^/2' @ ( '2d.x-coord/1' @ V_p ) @ 2.0 ) @ ( $sum @ ( $product @ 2.0 @ ( '2d.x-coord/1' @ V_p ) ) @ ( $quotient @ 3.0 @ 4.0 ) ) ) ) ) ) ) )
         & ? [V_P: '2d.Point',V_Q: '2d.Point'] :
             ( ( V_P != V_Q )
             & ( '2d.tangent/3' @ V_C1 @ V_C2 @ V_P )
             & ( '2d.tangent/3' @ V_C1 @ V_C2 @ V_Q ) )
         & ( V_S
-          = ( '2d.area-of/1' @ ( '2d.shape-enclosed-by/1' @ ( 'cons/2' @ V_C1 @ ( 'cons/2' @ V_C2 @ 'nil/0' ) ) ) ) ) ) )).
+          = ( '2d.area-of/1' @ ( '2d.shape-enclosed-by/1' @ ( 'cons/2' @ '2d.Shape' @ V_C1 @ ( 'cons/2' @ '2d.Shape' @ V_C2 @ ( 'nil/0' @ '2d.Shape' ) ) ) ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_S_dot_0: 'R'] :
+    ^ [V_S_dot_0: $real] :
       ( V_S_dot_0
-      = ( '//2' @ 9 @ ( '*/2' @ 32 @ ( '^/2' @ ( '-/2' @ 1 @ V_a ) @ 2 ) ) ) ) ),
+      = ( $quotient @ 9.0 @ ( $product @ 32.0 @ ( '^/2' @ ( $difference @ 1.0 @ 'a/0' ) @ 2.0 ) ) ) ) ),
     answer_to(p_question,[])).
+

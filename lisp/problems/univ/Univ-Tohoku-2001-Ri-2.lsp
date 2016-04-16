@@ -20,7 +20,7 @@
 (def-directive
   p1
   (Find (ab)
-  (exists (f)
+  (exists (f a b)
     (&&
      (= f (fun (Lam x (/ (- (sqrt (+ 1 (* 2 x))) 1) x))))
      (converge f 0 a)
@@ -30,12 +30,11 @@
 (def-directive
   p2
   (Find (ans)
-  (exists (a b f r123 r132 r213 r231 r312 r321 p12_3 p13_2 p23_1 p123)
+  (exists (a b f f1 f2 f3 r123 r132 r213 r231 r312 r321 p12_3 p13_2 p23_1 p123)
     (&&
      (= f (fun (Lam x (/ (- (sqrt (+ 1 (* 2 x))) 1) x))))
      (converge f 0 a)
      (converge (derivative f) 0 b)
-                 (= ab (list-of a b))
      (= f1 (fun (Lam x (sqrt (+ 1 (* 2 x))))))
      (= f2 (fun (Lam x (+ 1 (+ a x)))))
      (= f3 (fun (Lam x (+ 1 (* a x) (* b (^ x 2))))))

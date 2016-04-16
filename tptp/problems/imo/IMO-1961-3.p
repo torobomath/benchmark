@@ -9,39 +9,42 @@
 %% Solve the equation $\cos^n x - \sin^n x = 1$, where $n$ is a natural number.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   50 (   4 equality;  13 variable)
-%            Maximal formula depth :   13 (  12 average)
-%            Number of connectives :   40 (   0   ~;   2   |;   3   &;  35   @)
+% Syntax   : Number of formulae    :    3 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :   51 (   4 equality;   8 variable)
+%            Maximal formula depth :   13 (   8 average)
+%            Number of connectives :   41 (   0   ~;   2   |;   3   &;  36   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   18 (   0   :)
-%            Number of variables   :    6 (   0 sgn;   0   !;   2   ?;   2   ^)
+%            Number of symbols     :   19 (   1   :;   0   =)
+%            Number of variables   :    4 (   0 sgn;   0   !;   2   ?;   2   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   1 pred;    5 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('n/0_type',type,(
+    'n/0': $int )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
-        ( ( ( '-/2' @ ( '^/2' @ ( 'cos/1' @ V_x ) @ ( 'int->real/1' @ V_n ) ) @ ( '^/2' @ ( 'sin/1' @ V_x ) @ ( 'int->real/1' @ V_n ) ) )
-          = 1 )
-        & ( '>=/2' @ ( 'int->real/1' @ V_n ) @ 1 ) ) )).
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
+        ( ( ( $difference @ ( '^/2' @ ( 'cos/1' @ V_x ) @ ( $to_real @ 'n/0' ) ) @ ( '^/2' @ ( 'sin/1' @ V_x ) @ ( $to_real @ 'n/0' ) ) )
+          = 1.0 )
+        & ( $greatereq @ ( $to_real @ 'n/0' ) @ 1.0 ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_x_dot_0: 'R'] :
-      ( ( ( 'int.is-odd-number/1' @ V_n )
-        & ? [V_m_dot_0: 'Z'] :
+    ^ [V_x_dot_0: $real] :
+      ( ( ( 'int.is-odd-number/1' @ 'n/0' )
+        & ? [V_m_dot_0: $int] :
             ( ( V_x_dot_0
-              = ( '*/2' @ 2 @ ( '*/2' @ ( 'int->real/1' @ V_m_dot_0 ) @ 'Pi/0' ) ) )
+              = ( $product @ 2.0 @ ( $product @ ( $to_real @ V_m_dot_0 ) @ 'Pi/0' ) ) )
             | ( V_x_dot_0
-              = ( '+/2' @ ( '*/2' @ 2 @ ( '*/2' @ ( 'int->real/1' @ V_m_dot_0 ) @ 'Pi/0' ) ) @ ( '//2' @ ( '*/2' @ 3 @ 'Pi/0' ) @ 2 ) ) ) ) )
-      | ( ( 'int.is-even-number/1' @ V_n )
-        & ? [V_m: 'Z'] :
+              = ( $sum @ ( $product @ 2.0 @ ( $product @ ( $to_real @ V_m_dot_0 ) @ 'Pi/0' ) ) @ ( $quotient @ ( $product @ 3.0 @ 'Pi/0' ) @ 2.0 ) ) ) ) )
+      | ( ( 'int.is-even-number/1' @ 'n/0' )
+        & ? [V_m: $int] :
             ( V_x_dot_0
-            = ( '*/2' @ ( 'int->real/1' @ V_m ) @ 'Pi/0' ) ) ) ) ),
+            = ( $product @ ( $to_real @ V_m ) @ 'Pi/0' ) ) ) ) ),
     answer_to(p_question,[])).
+

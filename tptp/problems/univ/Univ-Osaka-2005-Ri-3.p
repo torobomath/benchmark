@@ -12,37 +12,36 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   75 (  11 equality;  31 variable)
+%            Number of atoms       :   76 (  11 equality;  31 variable)
 %            Maximal formula depth :   20 (  13 average)
-%            Number of connectives :   51 (   0   ~;   0   |;   9   &;  42   @)
+%            Number of connectives :   52 (   0   ~;   0   |;   9   &;  43   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   0   :)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :    7 (   0 sgn;   0   !;   5   ?;   2   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   0 pred;    1 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_AE: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_AE: $real] :
       ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_E: '3d.Point'] :
         ( ( ( '3d.distance/2' @ V_A @ V_B )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.distance/2' @ V_A @ V_C )
-          = 2 )
+          = 2.0 )
         & ( ( '3d.distance/2' @ V_A @ V_D )
-          = 3 )
+          = 3.0 )
         & ( ( '3d.rad-of-angle/1' @ ( '3d.angle/3' @ V_B @ V_A @ V_C ) )
-          = ( '//2' @ 'Pi/0' @ 3 ) )
+          = ( $quotient @ 'Pi/0' @ 3.0 ) )
         & ( ( '3d.rad-of-angle/1' @ ( '3d.angle/3' @ V_C @ V_A @ V_D ) )
-          = ( '//2' @ 'Pi/0' @ 3 ) )
+          = ( $quotient @ 'Pi/0' @ 3.0 ) )
         & ( ( '3d.rad-of-angle/1' @ ( '3d.angle/3' @ V_D @ V_A @ V_B ) )
-          = ( '//2' @ 'Pi/0' @ 2 ) )
+          = ( $quotient @ 'Pi/0' @ 2.0 ) )
         & ( ( '3d.distance/2' @ V_E @ V_A )
           = ( '3d.distance/2' @ V_E @ V_B ) )
         & ( ( '3d.distance/2' @ V_E @ V_B )
@@ -53,7 +52,8 @@ thf(p_qustion,question,
           = ( '3d.distance/2' @ V_A @ V_E ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_AE_dot_0: 'R'] :
+    ^ [V_AE_dot_0: $real] :
       ( V_AE_dot_0
-      = ( '//2' @ ( 'sqrt/1' @ 10 ) @ 2 ) ) ),
+      = ( $quotient @ ( 'sqrt/1' @ 10.0 ) @ 2.0 ) ) ),
     answer_to(p_question,[])).
+

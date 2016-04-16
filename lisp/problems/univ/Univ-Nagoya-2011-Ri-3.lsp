@@ -19,7 +19,7 @@
 (namespace 2d)
 
 (def-directive
-  p1
+  a1
   (Find (C)
     (let* ((O (origin)) (A (point 1 0)) (B (point 0 1)))
         (&& (> a 0)
@@ -28,7 +28,7 @@
      )))
 
 (def-directive
-  p2
+  a2_1
   (Find (ab)
     (let* ((O (origin)) (A (point 1 0)) (B (point 0 1)))
         (exists (P a b) (&&
@@ -43,7 +43,7 @@
 )
 
 (def-directive
-  p3
+  a2_2
   (Draw (S)
     (let* ((O (origin)) (A (point 1 0)) (B (point 0 1)))
         (= S (set-of-cfun (Lam a (PLam b (exists (P) (&&
@@ -56,7 +56,7 @@
   )
 )
 
-(def-answer p1 (PLam C (||
+(def-answer a1 (PLam C (||
     (&& (= a 1)
         (= C (shape-of-cpfun (PLam p (= (x-coord p) (/ 1 2)))))
      )
@@ -69,7 +69,7 @@
      )
 )))
 
-(def-answer p2 (PLam ab (exists (a b) (&&
+(def-answer a2_1 (PLam ab (exists (a b) (&&
     (= ab (list-of a b))
     (< 0 b)
     (< 0 a)
@@ -78,7 +78,7 @@
     (<= (- b a) (sqrt 2))
 ))))
 
-(def-answer p3 (set-of-cfun (Lam a (PLam b (&&
+(def-answer a2_2 (set-of-cfun (Lam a (PLam b (&&
     (< 0 b)
     (< 0 a)
     (<= (sqrt 2) (+ a b))

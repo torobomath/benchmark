@@ -13,7 +13,7 @@
 (namespace 2d)
 
 (def-directive
-  p_s_t
+  a_1
   (Find (s_t)
   (exists (C D s t)
     (&&
@@ -29,7 +29,7 @@
      (= s_t (list-of s t))))))
 
 (def-directive
-  pS
+  a_2
   (Find (S)
   (exists (C D s t)
     (&&
@@ -44,7 +44,7 @@
      (! (= s t))
      (= S (area-of (shape-enclosed-by (list-of C s t))))))))
 
-(def-answer p_s_t (PLam s_t (exists (s t) (&&
+(def-answer a_1 (PLam s_t (exists (s t) (&&
   (= s_t (list-of s t))
   (||
     (&&
@@ -56,5 +56,5 @@
     )
   )))))
 
-(def-answer pS (PLam S (= S (/ (sqrt 6) 2))))
+(def-answer a_2 (PLam S (= S (/ (sqrt 6) 2))))
 

@@ -99,5 +99,5 @@
 
 (def-answer p2 (PLam a_b_c (= a_b_c (list-of (v+ q r) (v+ p r) (v+ p q)))))
 
-(def-answer p3 (PLam V_XABC (= V_XABC (* (/ 1 6) (radius p) (radius q) (radius r)))))
+(def-answer p3 (PLam V_XABC (= V_XABC (* (/ 1 6) p_abs q_abs r_abs))))
 

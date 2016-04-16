@@ -11,31 +11,31 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   28 (   2 equality;  11 variable)
-%            Maximal formula depth :   11 (  11 average)
-%            Number of connectives :   24 (   1   ~;   0   |;   2   &;  18   @)
+%            Number of atoms       :   24 (   2 equality;  11 variable)
+%            Maximal formula depth :   10 (  10 average)
+%            Number of connectives :   20 (   1   ~;   0   |;   2   &;  14   @)
 %                                         (   0 <=>;   3  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    7 (   0   :)
+%            Number of symbols     :    6 (   0   :;   0   =)
 %            Number of variables   :    4 (   0 sgn;   3   !;   1   ?;   0   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   2 pred;    1 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ~ ( ? [V_f: 'Z' > 'Z'] :
-          ( ! [V_n_dot_1: 'Z'] :
-              ( ( 'int.</2' @ V_n_dot_1 @ 0 )
-             => ( ( 'LamApp/2' @ V_f @ V_n_dot_1 )
+    ~ ( ? [V_f: ( $int > $int )] :
+          ( ! [V_n_dot_1: $int] :
+              ( ( $less @ V_n_dot_1 @ 0 )
+             => ( ( V_f @ V_n_dot_1 )
                 = 0 ) )
-          & ! [V_n_dot_0: 'Z'] :
-              ( ( 'int.<=/2' @ 0 @ V_n_dot_0 )
-             => ( 'int.<=/2' @ 0 @ ( 'LamApp/2' @ V_f @ V_n_dot_0 ) ) )
-          & ! [V_n: 'Z'] :
-              ( ( 'int.<=/2' @ 0 @ V_n )
-             => ( ( 'LamApp/2' @ V_f @ ( 'LamApp/2' @ V_f @ V_n ) )
-                = ( 'int.+/2' @ V_n @ 1987 ) ) ) ) ) )).
+          & ! [V_n_dot_0: $int] :
+              ( ( $lesseq @ 0 @ V_n_dot_0 )
+             => ( $lesseq @ 0 @ ( V_f @ V_n_dot_0 ) ) )
+          & ! [V_n: $int] :
+              ( ( $lesseq @ 0 @ V_n )
+             => ( ( V_f @ ( V_f @ V_n ) )
+                = ( $sum @ V_n @ 1987 ) ) ) ) ) )).
+

@@ -12,35 +12,35 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   42 (   4 equality;  18 variable)
+%            Number of atoms       :   43 (   4 equality;  18 variable)
 %            Maximal formula depth :   17 (  11 average)
-%            Number of connectives :   32 (   0   ~;   0   |;   3   &;  29   @)
+%            Number of connectives :   33 (   0   ~;   0   |;   3   &;  30   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   15 (   0   :)
+%            Number of symbols     :   15 (   0   :;   0   =)
 %            Number of variables   :    6 (   0 sgn;   0   !;   4   ?;   2   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   0 pred;    2 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_L: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_L: $real] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point'] :
         ( ( '2d.is-square/4' @ V_A @ V_B @ V_C @ V_D )
         & ( ( '2d.area-of/1' @ ( '2d.square/4' @ V_A @ V_B @ V_C @ V_D ) )
-          = 32 )
-        & ( ( '+/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) @ ( '+/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_C @ V_D ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_C ) ) ) )
-          = 16 )
+          = 32.0 )
+        & ( ( $sum @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) @ ( $sum @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_C @ V_D ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_C ) ) ) )
+          = 16.0 )
         & ( V_L
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_D ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_L_dot_0: 'R'] :
+    ^ [V_L_dot_0: $real] :
       ( V_L_dot_0
-      = ( '*/2' @ 8 @ ( 'sqrt/1' @ 2 ) ) ) ),
+      = ( $product @ 8.0 @ ( 'sqrt/1' @ 2.0 ) ) ) ),
     answer_to(p_question,[])).
+

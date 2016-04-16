@@ -6,104 +6,104 @@
 %% GENERATED: 2015-01-07
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  189 (   6 equality;  75 variable)
+%            Number of atoms       :  198 (   6 equality;  75 variable)
 %            Maximal formula depth :   27 (  15 average)
-%            Number of connectives :  171 (   0   ~;   0   |;  45   &; 126   @)
+%            Number of connectives :  180 (   0   ~;   0   |;  45   &; 135   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   16 (   0   :)
+%            Number of symbols     :   16 (   0   :;   0   =)
 %            Number of variables   :   21 (   0 sgn;   0   !;  12   ?;   9   ^)
 %                                         (  21   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   12 (   3 pred;    2 func;    7 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_N: 'Z'] :
-        ( 'is-cardinality-of/2' @ V_N
-        @ ( 'set-by-def/1'
-          @ ^ [V_n: 'Z'] :
-            ? [V_a: 'Z',V_b: 'Z',V_c: 'Z',V_d: 'Z'] :
+    ( 'find/1' @ $int
+    @ ^ [V_N: $int] :
+        ( 'is-cardinality-of/2' @ $int @ V_N
+        @ ( 'set-by-def/1' @ $int
+          @ ^ [V_n: $int] :
+            ? [V_a: $int,V_b: $int,V_c: $int,V_d: $int] :
               ( ( V_n
-                = ( 'int.+/2' @ ( 'int.+/2' @ ( 'int.+/2' @ ( 'int.*/2' @ 1000 @ V_a ) @ ( 'int.*/2' @ V_b @ 100 ) ) @ ( 'int.*/2' @ V_c @ 10 ) ) @ V_d ) )
-              & ( 'int.is-integer/1' @ V_a )
-              & ( 'int.</2' @ 0 @ V_a )
-              & ( 'int.</2' @ V_a @ 10 )
-              & ( 'int.is-integer/1' @ V_b )
-              & ( 'int.<=/2' @ 0 @ V_b )
-              & ( 'int.</2' @ V_b @ 10 )
-              & ( 'int.is-integer/1' @ V_c )
-              & ( 'int.<=/2' @ 0 @ V_c )
-              & ( 'int.</2' @ V_c @ 10 )
-              & ( 'int.is-integer/1' @ V_d )
-              & ( 'int.<=/2' @ 0 @ V_d )
-              & ( 'int.</2' @ V_d @ 10 )
-              & ( 'int.</2' @ V_d @ V_c )
-              & ( 'int.</2' @ V_c @ V_b )
-              & ( 'int.</2' @ V_b @ V_a ) ) ) ) )).
+                = ( $sum @ ( $sum @ ( $sum @ ( $product @ 1000 @ V_a ) @ ( $product @ V_b @ 100 ) ) @ ( $product @ V_c @ 10 ) ) @ V_d ) )
+              & ( $is_int @ V_a )
+              & ( $less @ 0 @ V_a )
+              & ( $less @ V_a @ 10 )
+              & ( $is_int @ V_b )
+              & ( $lesseq @ 0 @ V_b )
+              & ( $less @ V_b @ 10 )
+              & ( $is_int @ V_c )
+              & ( $lesseq @ 0 @ V_c )
+              & ( $less @ V_c @ 10 )
+              & ( $is_int @ V_d )
+              & ( $lesseq @ 0 @ V_d )
+              & ( $less @ V_d @ 10 )
+              & ( $less @ V_d @ V_c )
+              & ( $less @ V_c @ V_b )
+              & ( $less @ V_b @ V_a ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_N: 'Z'] :
-        ( 'is-cardinality-of/2' @ V_N
-        @ ( 'set-by-def/1'
-          @ ^ [V_n: 'Z'] :
-            ? [V_a: 'Z',V_b: 'Z',V_c: 'Z',V_d: 'Z'] :
+    ( 'find/1' @ $int
+    @ ^ [V_N: $int] :
+        ( 'is-cardinality-of/2' @ $int @ V_N
+        @ ( 'set-by-def/1' @ $int
+          @ ^ [V_n: $int] :
+            ? [V_a: $int,V_b: $int,V_c: $int,V_d: $int] :
               ( ( V_n
-                = ( 'int.+/2' @ ( 'int.+/2' @ ( 'int.+/2' @ ( 'int.*/2' @ 1000 @ V_a ) @ ( 'int.*/2' @ V_b @ 100 ) ) @ ( 'int.*/2' @ V_c @ 10 ) ) @ V_d ) )
-              & ( 'int.is-integer/1' @ V_a )
-              & ( 'int.</2' @ 0 @ V_a )
-              & ( 'int.</2' @ V_a @ 10 )
-              & ( 'int.is-integer/1' @ V_b )
-              & ( 'int.<=/2' @ 0 @ V_b )
-              & ( 'int.</2' @ V_b @ 10 )
-              & ( 'int.is-integer/1' @ V_c )
-              & ( 'int.<=/2' @ 0 @ V_c )
-              & ( 'int.</2' @ V_c @ 10 )
-              & ( 'int.is-integer/1' @ V_d )
-              & ( 'int.<=/2' @ 0 @ V_d )
-              & ( 'int.</2' @ V_d @ 10 )
-              & ( 'int.</2' @ V_a @ V_b )
-              & ( 'int.</2' @ V_b @ V_c )
-              & ( 'int.</2' @ V_c @ V_d ) ) ) ) )).
+                = ( $sum @ ( $sum @ ( $sum @ ( $product @ 1000 @ V_a ) @ ( $product @ V_b @ 100 ) ) @ ( $product @ V_c @ 10 ) ) @ V_d ) )
+              & ( $is_int @ V_a )
+              & ( $less @ 0 @ V_a )
+              & ( $less @ V_a @ 10 )
+              & ( $is_int @ V_b )
+              & ( $lesseq @ 0 @ V_b )
+              & ( $less @ V_b @ 10 )
+              & ( $is_int @ V_c )
+              & ( $lesseq @ 0 @ V_c )
+              & ( $less @ V_c @ 10 )
+              & ( $is_int @ V_d )
+              & ( $lesseq @ 0 @ V_d )
+              & ( $less @ V_d @ 10 )
+              & ( $less @ V_a @ V_b )
+              & ( $less @ V_b @ V_c )
+              & ( $less @ V_c @ V_d ) ) ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_N: 'Z'] :
-        ( 'is-cardinality-of/2' @ V_N
-        @ ( 'set-by-def/1'
-          @ ^ [V_n: 'Z'] :
-            ? [V_a: 'Z',V_b: 'Z',V_c: 'Z',V_d: 'Z'] :
+    ( 'find/1' @ $int
+    @ ^ [V_N: $int] :
+        ( 'is-cardinality-of/2' @ $int @ V_N
+        @ ( 'set-by-def/1' @ $int
+          @ ^ [V_n: $int] :
+            ? [V_a: $int,V_b: $int,V_c: $int,V_d: $int] :
               ( ( V_n
-                = ( 'int.+/2' @ ( 'int.+/2' @ ( 'int.+/2' @ ( 'int.*/2' @ 1000 @ V_a ) @ ( 'int.*/2' @ V_b @ 100 ) ) @ ( 'int.*/2' @ V_c @ 10 ) ) @ V_d ) )
-              & ( 'int.is-integer/1' @ V_a )
-              & ( 'int.</2' @ 0 @ V_a )
-              & ( 'int.</2' @ V_a @ 10 )
-              & ( 'int.is-integer/1' @ V_b )
-              & ( 'int.<=/2' @ 0 @ V_b )
-              & ( 'int.</2' @ V_b @ 10 )
-              & ( 'int.is-integer/1' @ V_c )
-              & ( 'int.<=/2' @ 0 @ V_c )
-              & ( 'int.</2' @ V_c @ 10 )
-              & ( 'int.is-integer/1' @ V_d )
-              & ( 'int.<=/2' @ 0 @ V_d )
-              & ( 'int.</2' @ V_d @ 10 )
-              & ( 'int.<=/2' @ V_d @ V_c )
-              & ( 'int.<=/2' @ V_c @ V_b )
-              & ( 'int.<=/2' @ V_b @ V_a ) ) ) ) )).
+                = ( $sum @ ( $sum @ ( $sum @ ( $product @ 1000 @ V_a ) @ ( $product @ V_b @ 100 ) ) @ ( $product @ V_c @ 10 ) ) @ V_d ) )
+              & ( $is_int @ V_a )
+              & ( $less @ 0 @ V_a )
+              & ( $less @ V_a @ 10 )
+              & ( $is_int @ V_b )
+              & ( $lesseq @ 0 @ V_b )
+              & ( $less @ V_b @ 10 )
+              & ( $is_int @ V_c )
+              & ( $lesseq @ 0 @ V_c )
+              & ( $less @ V_c @ 10 )
+              & ( $is_int @ V_d )
+              & ( $lesseq @ 0 @ V_d )
+              & ( $less @ V_d @ 10 )
+              & ( $lesseq @ V_d @ V_c )
+              & ( $lesseq @ V_c @ V_b )
+              & ( $lesseq @ V_b @ V_a ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_N_dot_0: 'Z'] : ( V_N_dot_0 = 210 ) ),
+    ^ [V_N_dot_0: $int] : ( V_N_dot_0 = 210 ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_N_dot_0: 'Z'] : ( V_N_dot_0 = 126 ) ),
+    ^ [V_N_dot_0: $int] : ( V_N_dot_0 = 126 ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_N_dot_0: 'Z'] : ( V_N_dot_0 = 714 ) ),
+    ^ [V_N_dot_0: $int] : ( V_N_dot_0 = 714 ) ),
     answer_to(p3_question,[])).
+

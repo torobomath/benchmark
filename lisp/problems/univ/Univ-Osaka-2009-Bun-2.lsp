@@ -36,28 +36,9 @@
                              (sv* t b))
                           (perpendicular (line A D) (line O B))
                           (perpendicular (line B C) (line O A))
-                          (= AOB (cos-of-angle (angle A O B)))))))
+                          (= AOB (rad-of-angle (angle A O B)))))))
 
-(def-answer p1 (PLam AOB (= AOB (/ 1 2))))
-
-(def-directive
-  p1_1
-  (Find (AOB) (exists (O A B a b t C D)
-                      (&& (is-triangle O A B)
-                          (= O (origin))
-                          (= A (point 3 0))
-                          (= a (vec O A))
-                          (= b (vec O B))
-                          (= t (/ (radius a)
-                                  (* 2 (radius b))))
-                          (divide-internally C (seg O A) 1 2)
-                          (= (vec O D)
-                             (sv* t b))
-                          (perpendicular (line A D) (line O B))
-                          (perpendicular (line B C) (line O A))
-                          (= AOB (cos-of-angle (angle A O B)))))))
-
-(def-answer p1_1 (PLam AOB (= AOB (/ 1 2))))
+(def-answer p1 (PLam AOB (= AOB (* 60 (Degree)))))
 
 (def-directive
   p2
@@ -74,24 +55,6 @@
             (perpendicular (line B C) (line O A))))))
 
 (def-answer p2 (PLam t (= t (/ 3 4))))
-
-(def-directive
-  p2_1
-  (Find (t) (exists (O A B a b C D)
-                      (&& (is-triangle O A B)
-                          (= O (point 1 1))
-                          (= A (point 1 4))
-                          (= a (vec O A))
-                          (= b (vec O B))
-                          (= t (/ (radius a)
-                                  (* 2 (radius b))))
-                          (divide-internally C (seg O A) 1 2)
-                          (= (vec O D)
-                             (sv* t b))
-                          (perpendicular (line A D) (line O B))
-                          (perpendicular (line B C) (line O A))))))
-
-(def-answer p2_1 (PLam t (= t (/ 3 4))))
 
 (def-directive
   p3

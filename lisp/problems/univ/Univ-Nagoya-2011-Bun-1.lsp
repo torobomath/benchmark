@@ -18,13 +18,13 @@
 
 (def-directive
   p1
-  (Find (C)
+  (Draw (C)
   (= C (graph-of (poly-fun (list-of 0 0 -1 1))))))
 
 (def-directive
   p2
   (Find (l)
-  (exists (p q t) (&&
+  (exists (p q) (&&
     (< (x-coord p) (x-coord q))
     (= l (line p q))
     (on (point (/ 3 2) 0) l)
@@ -36,7 +36,7 @@
   (Find (c)
   (= c (cardinality-of (set-by-def (PLam x (= (- (^ x 3) (^ x 2)) (* p (- x (/ 3 2))))))))))
 
-(def-answer p1 (PLam C (= C (graph-of (poly-fun (list-of 0 0 -1 1))))))
+(def-answer p1 (graph-of (poly-fun (list-of 0 0 -1 1))))
 
 (def-answer p2 (PLam l (||
   (= l (line (point 0 0) (point 1 0)))

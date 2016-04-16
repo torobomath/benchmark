@@ -11,58 +11,64 @@
 %% Find the minimum value of $x+y$ in the region $D$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   98 (   6 equality;  37 variable)
-%            Maximal formula depth :   16 (  14 average)
-%            Number of connectives :   84 (   0   ~;   3   |;  14   &;  67   @)
+% Syntax   : Number of formulae    :    4 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :  100 (   6 equality;  18 variable)
+%            Maximal formula depth :   16 (   8 average)
+%            Number of connectives :   86 (   0   ~;   3   |;  14   &;  69   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   19 (   0   :)
-%            Number of variables   :   11 (   2 sgn;   0   !;   3   ?;   4   ^)
+%            Number of symbols     :   21 (   2   :;   0   =)
+%            Number of variables   :    7 (   0 sgn;   0   !;   3   ?;   4   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   2 pred;    3 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_m: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_m: $real] :
       ? [V_D: '2d.Shape'] :
         ( ( V_D
           = ( '2d.shape-of-cpfun/1'
             @ ^ [V_p: '2d.Point'] :
-                ( ( '>=/2' @ ( '+/2' @ ( '2d.x-coord/1' @ V_p ) @ ( '*/2' @ 3 @ ( '2d.y-coord/1' @ V_p ) ) ) @ V_a )
-                & ( '>=/2' @ ( '+/2' @ ( '*/2' @ 3 @ ( '2d.x-coord/1' @ V_p ) ) @ ( '2d.y-coord/1' @ V_p ) ) @ V_b )
-                & ( '>=/2' @ ( '2d.x-coord/1' @ V_p ) @ 0 )
-                & ( '>=/2' @ ( '2d.y-coord/1' @ V_p ) @ 0 ) ) ) )
+                ( ( $greatereq @ ( $sum @ ( '2d.x-coord/1' @ V_p ) @ ( $product @ 3.0 @ ( '2d.y-coord/1' @ V_p ) ) ) @ 'a/0' )
+                & ( $greatereq @ ( $sum @ ( $product @ 3.0 @ ( '2d.x-coord/1' @ V_p ) ) @ ( '2d.y-coord/1' @ V_p ) ) @ 'b/0' )
+                & ( $greatereq @ ( '2d.x-coord/1' @ V_p ) @ 0.0 )
+                & ( $greatereq @ ( '2d.y-coord/1' @ V_p ) @ 0.0 ) ) ) )
         & ( 'minimum/2'
-          @ ( 'set-by-def/1'
-            @ ^ [V_z: 'R'] :
-              ? [V_x: 'R',V_y: 'R'] :
+          @ ( 'set-by-def/1' @ $real
+            @ ^ [V_z: $real] :
+              ? [V_x: $real,V_y: $real] :
                 ( ( V_z
-                  = ( '+/2' @ V_x @ V_y ) )
+                  = ( $sum @ V_x @ V_y ) )
                 & ( '2d.on/2' @ ( '2d.point/2' @ V_x @ V_y ) @ V_D ) ) )
           @ V_m ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_m_dot_0: 'R'] :
-      ( ( ( '<=/2' @ 0 @ V_a )
-        & ( '<=/2' @ ( '//2' @ V_a @ 3 ) @ V_b )
-        & ( '<=/2' @ V_b @ ( '*/2' @ 3 @ V_a ) )
+    ^ [V_m_dot_0: $real] :
+      ( ( ( $lesseq @ 0.0 @ 'a/0' )
+        & ( $lesseq @ ( $quotient @ 'a/0' @ 3.0 ) @ 'b/0' )
+        & ( $lesseq @ 'b/0' @ ( $product @ 3.0 @ 'a/0' ) )
         & ( V_m_dot_0
-          = ( '//2' @ ( '+/2' @ V_a @ V_b ) @ 4 ) ) )
-      | ( ( '<=/2' @ 0 @ V_a )
-        & ( '<=/2' @ V_b @ ( '//2' @ V_a @ 3 ) )
+          = ( $quotient @ ( $sum @ 'a/0' @ 'b/0' ) @ 4.0 ) ) )
+      | ( ( $lesseq @ 0.0 @ 'a/0' )
+        & ( $lesseq @ 'b/0' @ ( $quotient @ 'a/0' @ 3.0 ) )
         & ( V_m_dot_0
-          = ( '//2' @ V_a @ 3 ) ) )
-      | ( ( '<=/2' @ 0 @ V_b )
-        & ( '<=/2' @ ( '*/2' @ 3 @ V_a ) @ V_b )
+          = ( $quotient @ 'a/0' @ 3.0 ) ) )
+      | ( ( $lesseq @ 0.0 @ 'b/0' )
+        & ( $lesseq @ ( $product @ 3.0 @ 'a/0' ) @ 'b/0' )
         & ( V_m_dot_0
-          = ( '//2' @ V_b @ 3 ) ) )
-      | ( ( '<=/2' @ V_a @ 0 )
-        & ( '<=/2' @ V_b @ 0 )
-        & ( V_m_dot_0 = 0 ) ) ) ),
+          = ( $quotient @ 'b/0' @ 3.0 ) ) )
+      | ( ( $lesseq @ 'a/0' @ 0.0 )
+        & ( $lesseq @ 'b/0' @ 0.0 )
+        & ( V_m_dot_0 = 0.0 ) ) ) ),
     answer_to(p_question,[])).
+

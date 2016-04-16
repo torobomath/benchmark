@@ -17,7 +17,7 @@
 (namespace 3d)
 
 (def-directive p1
-  (Find (M)
+  (Find (M) (&& (< 0 a)
         (exists (A1 B1 C1 D1
                  A2 B2 C2 D2)
                 (&& (= A1 (point a 0 0))
@@ -32,18 +32,18 @@
                                                (exists (X Y)
                                                        (&& (on X (seg A1 C1))
                                                            (on Y (seg B2 D2))
-                                                           (= p (midpoint-of X Y)))))))))))
+                                                           (= p (midpoint-of X Y))))))))))))
 
 (def-answer
   p1
-  (PLam M (= M (set-of-cfun (Lam x (Lam y (PLam z (&& (= z (/ a 2))
+  (PLam M (&& (< 0 a) (= M (set-of-cfun (Lam x (Lam y (PLam z (&& (= z (/ a 2))
                                                       (<= (* (/ 1 2) a) (+ x y))
                                                       (<= (+ x y) (* (/ 3 2) a))
                                                       (<= (* (- (/ 1 2)) a) (- x y))
-                                                      (<= (- x y) (* (/ 1 2) a))))))))))
+                                                      (<= (- x y) (* (/ 1 2) a)))))))))))
 
 (def-directive p2
-  (Find (M)
+  (Find (M) (&& (< 0 a)
         (exists (A1 B1 C1 D1
                  A2 B2 C2 D2)
                 (&& (= A1 (point a 0 0))
@@ -59,13 +59,13 @@
                                                        (&& (on X (seg A1 C1))
                                                            (on Y (seg B2 D2))
                                                            (= (length-of (seg p Y))
-                                                              (* 2 (length-of (seg X p)))))))))))))
+                                                              (* 2 (length-of (seg X p))))))))))))))
 
 (def-answer
   p2
-  (PLam M (= M (set-of-cfun (Lam x (Lam y (PLam z (&& (= z (/ a 3))
+  (PLam M (&& (< 0 a) (= M (set-of-cfun (Lam x (Lam y (PLam z (&& (= z (/ a 3))
                                                       (<= (* (/ 1 3) a) (+ x y))
                                                       (<= (+ x y) (* (/ 5 3) a))
                                                       (<= (* (- (/ 1 3)) a) (- x y))
-                                                      (<= (- x y) (* (/ 1 3) a))))))))))
+                                                      (<= (- x y) (* (/ 1 3) a)))))))))))
 

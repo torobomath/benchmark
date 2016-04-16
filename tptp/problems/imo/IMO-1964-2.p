@@ -16,18 +16,18 @@
 %            Maximal formula depth :   15 (  15 average)
 %            Number of connectives :   40 (   0   ~;   0   |;   0   &;  39   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    9 (   0   :)
+%            Number of symbols     :    9 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   3   !;   0   ?;   0   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   1 pred;    3 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_a: 'R',V_b: 'R',V_c: 'R'] :
+    ! [V_a: $real,V_b: $real,V_c: $real] :
       ( ( 'are-triangle-edges/3' @ V_a @ V_b @ V_c )
-     => ( '<=/2' @ ( '+/2' @ ( '*/2' @ ( '^/2' @ V_a @ 2 ) @ ( '-/2' @ ( '+/2' @ V_b @ V_c ) @ V_a ) ) @ ( '+/2' @ ( '*/2' @ ( '^/2' @ V_b @ 2 ) @ ( '-/2' @ ( '+/2' @ V_a @ V_c ) @ V_b ) ) @ ( '*/2' @ ( '^/2' @ V_c @ 2 ) @ ( '-/2' @ ( '+/2' @ V_b @ V_a ) @ V_c ) ) ) ) @ ( '*/2' @ 3 @ ( '*/2' @ V_a @ ( '*/2' @ V_b @ V_c ) ) ) ) ) )).
+     => ( $lesseq @ ( $sum @ ( $product @ ( '^/2' @ V_a @ 2.0 ) @ ( $difference @ ( $sum @ V_b @ V_c ) @ V_a ) ) @ ( $sum @ ( $product @ ( '^/2' @ V_b @ 2.0 ) @ ( $difference @ ( $sum @ V_a @ V_c ) @ V_b ) ) @ ( $product @ ( '^/2' @ V_c @ 2.0 ) @ ( $difference @ ( $sum @ V_b @ V_a ) @ V_c ) ) ) ) @ ( $product @ 3.0 @ ( $product @ V_a @ ( $product @ V_b @ V_c ) ) ) ) ) )).
+

@@ -6,13 +6,16 @@
 ;;# DONT_EXPORT: translated to $o in the TPTP THF
 (def-type Bool)
 
-;;@ Integers
+;; Integers
+;;# DONT_EXPORT: $int
 (def-type Z)
 
-;;@ Rational numbers
+;; Rational numbers
+;;# DONT_EXPORT: $rat
 (def-type Q)
 
-;;@ Real numbers
+;; Real numbers
+;;# DONT_EXPORT: $real
 (def-type R)
 
 ;;@ Character strings
@@ -40,10 +43,12 @@
 ;;------------------------------------------------------------------------------
 ;; Propositional constants
 ;;------------------------------------------------------------------------------
-;;@ propositional constant True
+;; propositional constant True
+;;# DONT_EXPORT: $true in THF
 (def-pred true :: => Bool)
 
-;;@ propositional constant False
+;; propositional constant False
+;;# DONT_EXPORT: $false in THF
 (def-pred false :: => Bool)
 
 ;;@-----------------------------------------------------------------------------
@@ -78,18 +83,6 @@
 
 ;;@ trivially true for any Var
 (def-pred is-var :: Var => Bool)
-
-;;@-----------------------------------------------------------------------------
-
-;;------------------------------------------------------------------------------
-;;------------------------------------------------------------------------------
-;;# DONT_EXPORT
-(def-pred comma :: (Unit -> Bool) -> (Unit -> Bool) => Bool)
-
-;;@ 1-place predicate that is always true:
-;;@ anything(x) <-> true
-(def-pred anything :: a => Bool)
-
 
 ;;@-----------------------------------------------------------------------------
 ;;@ constants
@@ -359,6 +352,9 @@
 ;;@ elem(a, set) <-> a is an element of set
 (def-pred elem :: a -> (SetOf a) => Bool)
 
+;;@ image(fun, set) <-> image of set by fun
+(def-fun image :: (a -> b) -> (SetOf a) => (SetOf b))
+
 ;;@ trivially true for any SetOf a
 (def-pred is-set :: (SetOf a) => Bool)
 
@@ -399,27 +395,6 @@
 ;;@ is-list-subset-of(list, set) <-> all members in list are an element of set
 (def-pred is-list-subset-of :: (ListOf a) -> (SetOf a) => Bool)
 
-;;------------------------------------------------------------------------------
-;; for NLP: intentional interpretation of variable names
-;;------------------------------------------------------------------------------
-;;# DONT_EXPORT: Polymorphic intent set of type a
-(def-type (IntentSetOf a))
-
-;;# DONT_EXPORT
-(def-fun intent-set :: a -> (a -> Bool) => (IntentSetOf a))
-
-;;# DONT_EXPORT
-(def-fun setify :: (IntentSetOf a) => (SetOf a))
-
-;;# DONT_EXPORT
-(def-fun extent-of :: (IntentSetOf a) => a)
-
-;;------------------------------------------------------------------------------
-;; for NLP: same as comma
-;;------------------------------------------------------------------------------
-;;# DONT_EXPORT
-(def-fun icomma :: (IntentSetOf a) -> (IntentSetOf a) => (IntentSetOf a))
-
 ;;@------------------------------------------------------------------------------
 ;;@ if/cond/pcond
 ;;@------------------------------------------------------------------------------
@@ -438,10 +413,11 @@
 ;;       ...
 ;;       (&& (! f1) (! f2) .. fn (pred .. tn ..)))
 ;;------------------------------------------------------------------------------
-;;@ cond([<cond1,a1>, ..., <condn,an>]) = a1 if cond1 holds, a2 if cond1 does not hold 
-;;@ and cond2 holds, ..., and an if cond1,...,condn-1 do not hold and condn holds
-;;@ a predicate containing cond([<cond1,a1>, ..., <condn,an>]) is evaluated to false 
-;;@ if none of cond1, ..., condn holds
+;; cond([<cond1,a1>, ..., <condn,an>]) = a1 if cond1 holds, a2 if cond1 does not hold 
+;; and cond2 holds, ..., and an if cond1,...,condn-1 do not hold and condn holds
+;; a predicate containing cond([<cond1,a1>, ..., <condn,an>]) is evaluated to false 
+;; if none of cond1, ..., condn holds
+;;# DONT_EXPORT
 (def-fun cond :: (ListOf (Pair (Unit -> Bool) a)) => a)
 
 ;;------------------------------------------------------------------------------
@@ -454,10 +430,11 @@
 ;;      ...
 ;;      (&& (! f1) .. (! fn-1) fn fn'))
 ;;------------------------------------------------------------------------------
-;;@ pcond([<cond1,p1>, ..., <condn,pn>]) <-> p1 if cond1 holds, p2 if cond1 does not 
-;;@ hold and cond2 holds, ..., and pn if cond1,...,condn-1 do not hold and condn holds
-;;@ pcond([<cond1,a1>, ..., <condn,an>]) is evaluated to false if none of cond1, ..., 
-;;@ condn holds
+;; pcond([<cond1,p1>, ..., <condn,pn>]) <-> p1 if cond1 holds, p2 if cond1 does not 
+;; hold and cond2 holds, ..., and pn if cond1,...,condn-1 do not hold and condn holds
+;; pcond([<cond1,a1>, ..., <condn,an>]) is evaluated to false if none of cond1, ..., 
+;; condn holds
+;;# DONT_EXPORT
 (def-pred pcond :: (ListOf (Pair (Unit -> Bool) (Unit -> Bool))) => Bool)
 
 ;;------------------------------------------------------------------------------
@@ -474,41 +451,39 @@
 ;;     v1 = val11 & ... & v_n = val_n2 & phi(t(val11, ..., val_n2)),
 ;;     ... ]
 ;;------------------------------------------------------------------------------
+;;# DONT_EXPORT
 (def-fun choice1 :: (Pair Z (ListOf (Pair Z a))) -> (a -> b) => b)
 
+;;# DONT_EXPORT
 (def-fun choice2 :: (Pair Z (ListOf (Pair Z a))) -> 
                     (Pair Z (ListOf (Pair Z b))) -> (a -> b -> c) => c)
 
+;;# DONT_EXPORT
 (def-fun choice3 :: (Pair Z (ListOf (Pair Z a))) -> 
                     (Pair Z (ListOf (Pair Z b))) ->
                     (Pair Z (ListOf (Pair Z c))) -> (a -> b -> c -> d) => d)
 
+;;# DONT_EXPORT
 (def-fun choice4 :: (Pair Z (ListOf (Pair Z a))) -> 
                     (Pair Z (ListOf (Pair Z b))) ->
                     (Pair Z (ListOf (Pair Z c))) ->
                     (Pair Z (ListOf (Pair Z d))) -> (a -> b -> c -> d -> e) => e)
-;(def-fun choice1 :: (Pair Z (ListOf a)) -> (a -> b) => b)
-;(def-fun choice2 :: (Pair Z (ListOf a)) -> 
-;                    (Pair Z (ListOf b)) -> (a -> b -> c) => c)
-;(def-fun choice3 :: (Pair Z (ListOf a)) -> 
-;                    (Pair Z (ListOf b)) ->
-;                    (Pair Z (ListOf c)) -> (a -> b -> c -> d) => d)
-;(def-fun choice4 :: (Pair Z (ListOf a)) -> 
-;                    (Pair Z (ListOf b)) ->
-;                    (Pair Z (ListOf c)) ->
-;                    (Pair Z (ListOf d)) -> (a -> b -> c -> d -> e) => e)
 
 ;;------------------------------------------------------------------------------
 ;;             (PLam x f(x)))
 ;;             (Lam x (PLam y f(x, y))))
 ;;   ...
 ;;------------------------------------------------------------------------------
+;;# DONT_EXPORT
 (def-pred pchoice1 :: (Pair Z (ListOf a)) -> (a -> Bool) => Bool)
+;;# DONT_EXPORT
 (def-pred pchoice2 :: (Pair Z (ListOf a)) -> 
                       (Pair Z (ListOf b)) -> (a -> b -> Bool) => Bool)
+;;# DONT_EXPORT
 (def-pred pchoice3 :: (Pair Z (ListOf a)) -> 
                       (Pair Z (ListOf b)) ->
                       (Pair Z (ListOf c)) -> (a -> b -> c -> Bool) => Bool)
+;;# DONT_EXPORT
 (def-pred pchoice4 :: (Pair Z (ListOf a)) -> 
                       (Pair Z (ListOf b)) ->
                       (Pair Z (ListOf c)) ->
@@ -557,26 +532,33 @@
 (define orig-abs abs)
 
 ;(define orig^ ^)
-;;@ a + b = the sum of a and b in real numbers
+;; a + b = the sum of a and b in real numbers
+;;# DONT_EXPORT: $sum
 (def-fun +  :: R -> R => R)
 
-;;@ a - b = the difference of a and b in real numbers
+;; a - b = the difference of a and b in real numbers
+;;# DONT_EXPORT: $difference
 (def-fun -  :: R -> R => R)
 
-;;@ - a = the negation of a in real numbers
+;; - a = the negation of a in real numbers
+;;# DONT_EXPORT: $uminus
 (def-fun -  :: R => R)
 
-;;@ a * b = the product of a and b in real numbers
+;; a * b = the product of a and b in real numbers
+;;# DONT_EXPORT: $product
 (def-fun *  :: R -> R => R)
 
-;;@ a / b = the quotient of a and b in real numbers
+;; a / b = the quotient of a and b in real numbers
+;;# DONT_EXPORT: $quotient
 (def-fun /  :: R -> R => R)
 
 ;;@ a ^ b = the power of a to b in real numbers
+;;@ effective only when a >= 0
 (def-fun ^  :: R -> R => R)
 
 
 ;;@ sqrt(a) = the positive square root of a
+;;@ effective only when a >= 0
 (def-fun sqrt :: R => R)
 
 ;;@ abs(a) = the absolute value of a
@@ -601,16 +583,20 @@
 ;;@ is-abs-of(x, a) <-> x is the absolute value of a
 (def-pred is-abs-of :: R -> R => Bool)
 
-;;@ a <= b <-> a is less than or equal to b
+;; a <= b <-> a is less than or equal to b
+;;# DONT_EXPORT: $lesseq
 (def-pred <= :: R -> R => Bool)
 
-;;@ a < b <-> a is less than b
+;; a < b <-> a is less than b
+;;# DONT_EXPORT: $less
 (def-pred <  :: R -> R => Bool)
 
-;;@ a >= b <-> a is greater than or equal to b
+;; a >= b <-> a is greater than or equal to b
+;;# DONT_EXPORT: $greatereq
 (def-pred >= :: R -> R => Bool)
 
-;;@ a > b <-> a is greater than b
+;; a > b <-> a is greater than b
+;;# DONT_EXPORT: $greater
 (def-pred >  :: R -> R => Bool)
 
 ;;@ are-triangle-edges(x,y,z) <-> x, y, z satisfy the triangle inequality
@@ -649,6 +635,24 @@
 ;;@ atctan(a) = the arctangent of a
 (def-fun arctan :: R => R)
 
+;;@ cosh(a) = the hyperbolic cosine of a
+(def-fun cosh :: R => R)
+
+;;@ sinh(a) = the hyperbolic sine of a
+(def-fun sinh :: R => R)
+
+;;@ tanh(a) = the hyperbolic tangent of a
+(def-fun tanh :: R => R)
+
+;;@ arccosh(a) = the archyperbolic cosine of a
+(def-fun arccosh :: R => R)
+
+;;@ arcsinh(a) = the archyperbolic sine of a
+(def-fun arcsinh :: R => R)
+
+;;@ arctanh(a) = the archyperbolic tangent of a
+(def-fun arctanh :: R => R)
+
 ;;@------------------------------------------------------------------------------
 ;;@ Exponential and logarithm
 ;;@------------------------------------------------------------------------------
@@ -664,10 +668,12 @@
 ;;@------------------------------------------------------------------------------
 ;;@ Integrality
 ;;@------------------------------------------------------------------------------
-;;@ floor(a) = the maximum integer not greater than a
+;; floor(a) = the maximum integer not greater than a
+;;# DONT_EXPORT: $floor
 (def-fun floor :: R => R)
 
-;;@ ceil(a) = the minimum integer not less than a
+;; ceil(a) = the minimum integer not less than a
+;;# DONT_EXPORT: $ceiling
 (def-fun ceil :: R => R)
 
 ;;@ is-floor-of(n,a) = n is the maximum integer not greater than a
@@ -680,7 +686,13 @@
 ;;@ is-someint(a) <-> a is an integer
 (def-pred is-someint :: R => Bool)
 
-;;@ is-rationa(a) <-> a is a rational number
+;; alias of is-someint
+;; is-integer(a) <-> a is an integer
+;;# DONT_EXPORT: $is_int
+(def-pred is-integer :: R => Bool)
+
+;; is-rationa(a) <-> a is a rational number
+;;# DONT_EXPORT: $is_rat
 (def-pred is-rational :: R => Bool)
 
 ;;@ is-irrational(a) <-> a is an irrational number
@@ -692,7 +704,8 @@
 ;;@ trivially true for any real number
 (def-pred real-number  :: R => Bool)
 
-;;@ int->real(x) = x of the type of R
+;; int->real(x) = x of the type of R
+;;# DONT_EXPORT: $to_real
 (def-fun int->real :: Z => R)
 
 ;;@ list-int->real([a1,...,an]) = the list [a1,...,an] of which members have the type R
@@ -1136,6 +1149,9 @@
 ;;@ hold(prop(^ [_: unit] P)) <-> P
 (def-pred hold :: Prop => Bool)
 
+;;@ hold-open(prop(^ [_: unit] P)) <-> P
+(def-fun hold-open :: Prop => Bool)
+
 ;;@ trivially true for any Prop
 (def-pred is-proposition :: Prop => Bool)
 
@@ -1159,7 +1175,18 @@
 (def-fun coordinate-of :: R => R) 
 
 ;;------------------------------------------------------------------------------
-;; Problem type (only for language processing; do not appear in the semantic representation)
+;; Ratio
 ;;------------------------------------------------------------------------------
-(def-type Problem)
-(def-fun problem :: => Problem)
+;;@ Ratio between two or more real numbers
+(def-type Ratio)
+
+;;@ ratio([a,b,..,c]) = a : b : .. : c
+(def-fun ratio :: (ListOf R) => Ratio)
+
+;;@------------------------------------------------------------------------------
+;;@ Derivative sign chart
+;;@------------------------------------------------------------------------------
+;; TODO: implementation
+(def-type DerivSignChart)
+(def-fun deriv-sign-chart-of :: R2R => DerivSignChart)
+

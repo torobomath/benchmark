@@ -18,25 +18,27 @@
 %% the square base.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  231 (  13 equality; 105 variable)
-%            Maximal formula depth :   31 (  20 average)
-%            Number of connectives :  201 (   0   ~;   0   |;  36   &; 165   @)
+% Syntax   : Number of formulae    :    5 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  233 (  13 equality;  99 variable)
+%            Maximal formula depth :   31 (  17 average)
+%            Number of connectives :  203 (   0   ~;   0   |;  36   &; 167   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   32 (   0   :)
-%            Number of variables   :   22 (   2 sgn;   0   !;  14   ?;   4   ^)
+%            Number of symbols     :   33 (   1   :;   0   =)
+%            Number of variables   :   18 (   0 sgn;   0   !;  14   ?;   4   ^)
 %                                         (  18   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   12 (   1 pred;    3 func;    8 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_h: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_h: $real] :
       ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_E: '3d.Point',V_F: '3d.Shape',V_V: '3d.Shape'] :
         ( ( '3d.square-pyramid-type/1' @ V_V )
         & ( '3d.is-regular-square/1' @ ( '3d.base-of/1' @ V_V ) )
@@ -49,7 +51,7 @@ thf(p1_qustion,question,
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_E @ V_D ) )
           = ( '3d.length-of/1' @ ( '3d.seg/2' @ V_E @ V_A ) ) )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_A @ V_B ) )
-          = V_a )
+          = 'a/0' )
         & ( '3d.sphere-type/1' @ V_F )
         & ( '3d.on/2' @ ( '3d.center-of/1' @ V_F ) @ ( '3d.inner-part-of/1' @ ( '3d.base-of/1' @ V_V ) ) )
         & ( '3d.tangent/2' @ V_F @ ( '3d.seg/2' @ V_A @ V_B ) )
@@ -64,10 +66,10 @@ thf(p1_qustion,question,
           = ( '3d.height-of/1' @ V_V ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_volume: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_volume: $real] :
       ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_E: '3d.Point',V_F: '3d.Shape',V_V: '3d.Shape'] :
-        ( ( '</2' @ 0 @ V_a )
+        ( ( $less @ 0.0 @ 'a/0' )
         & ( '3d.square-pyramid-type/1' @ V_V )
         & ( '3d.is-regular-square/1' @ ( '3d.base-of/1' @ V_V ) )
         & ( ( '3d.length-of/1' @ ( '3d.seg/2' @ V_E @ V_A ) )
@@ -92,15 +94,16 @@ thf(p2_qustion,question,
           = ( '3d.volume-of/1' @ ( '3d.intersection/2' @ V_V @ V_F ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_h_dot_0: 'R'] :
-      ( ( '</2' @ 0 @ V_a )
+    ^ [V_h_dot_0: $real] :
+      ( ( $less @ 0.0 @ 'a/0' )
       & ( V_h_dot_0
-        = ( '*/2' @ ( '//2' @ ( 'sqrt/1' @ 2 ) @ 2 ) @ V_a ) ) ) ),
+        = ( $product @ ( $quotient @ ( 'sqrt/1' @ 2.0 ) @ 2.0 ) @ 'a/0' ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_volume_dot_0: 'R'] :
-      ( ( '</2' @ 0 @ V_a )
+    ^ [V_volume_dot_0: $real] :
+      ( ( $less @ 0.0 @ 'a/0' )
       & ( V_volume_dot_0
-        = ( '*/2' @ ( '-/2' @ ( '//2' @ ( '*/2' @ 7 @ ( 'sqrt/1' @ 6 ) ) @ 54 ) @ ( '//2' @ 1 @ 4 ) ) @ ( '*/2' @ 'Pi/0' @ ( '^/2' @ V_a @ 3 ) ) ) ) ) ),
+        = ( $product @ ( $difference @ ( $quotient @ ( $product @ 7.0 @ ( 'sqrt/1' @ 6.0 ) ) @ 54.0 ) @ ( $quotient @ 1.0 @ 4.0 ) ) @ ( $product @ 'Pi/0' @ ( '^/2' @ 'a/0' @ 3.0 ) ) ) ) ) ),
     answer_to(p2_question,[])).
+

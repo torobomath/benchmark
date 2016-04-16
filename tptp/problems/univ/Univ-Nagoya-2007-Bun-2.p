@@ -18,96 +18,102 @@
 %% $l_1$, $l_2$, and $C$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    7 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  333 (  12 equality;  68 variable)
-%            Maximal formula depth :   30 (  17 average)
-%            Number of connectives :  305 (   1   ~;   1   |;  19   &; 283   @)
+% Syntax   : Number of formulae    :    9 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :  415 (  12 equality;  52 variable)
+%            Maximal formula depth :   30 (  14 average)
+%            Number of connectives :  387 (   1   ~;   1   |;  19   &; 365   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   28 (   0   :)
-%            Number of variables   :   34 (   1 sgn;   3   !;  19   ?;   6   ^)
+%            Number of symbols     :   30 (   2   :;   0   =)
+%            Number of variables   :   28 (   0 sgn;   3   !;  19   ?;   6   ^)
 %                                         (  28   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   13 (   1 pred;    3 func;    9 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
-thf(p1_qustion,question,
-    ( 'Find/1'
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('t/0_type',type,(
+    't/0': $real )).
+
+thf(a1_qustion,question,
+    ( 'find/1' @ '2d.Shape'
     @ ^ [V_l: '2d.Shape'] :
         ( ( '2d.line-type/1' @ V_l )
-        & ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ 'nil/0' ) ) ) ) ) @ V_l @ ( '2d.point/2' @ V_t @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ ( '^/2' @ V_t @ 2 ) ) ) ) ) )).
+        & ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l @ ( '2d.point/2' @ 't/0' @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ ( '^/2' @ 't/0' @ 2.0 ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ls: 'ListOf' @ 'R'] :
-      ? [V_l1: '2d.Shape',V_l1c: 'R',V_l1m: 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_ls: ( 'ListOf' @ $real )] :
+      ? [V_l1: '2d.Shape',V_l1c: $real,V_l1m: $real] :
         ( ( V_ls
-          = ( 'cons/2' @ V_l1c @ ( 'cons/2' @ V_l1m @ 'nil/0' ) ) )
+          = ( 'cons/2' @ $real @ V_l1c @ ( 'cons/2' @ $real @ V_l1m @ ( 'nil/0' @ $real ) ) ) )
         & ( V_l1
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ V_l1c @ ( 'cons/2' @ V_l1m @ 'nil/0' ) ) ) ) )
-        & ( '>/2' @ V_a @ 0 )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ V_l1c @ ( 'cons/2' @ $real @ V_l1m @ ( 'nil/0' @ $real ) ) ) ) ) )
+        & ( $greater @ 'a/0' @ 0.0 )
         & ? [V_P2_dot_0: '2d.Point'] :
-            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ 'nil/0' ) ) ) ) ) @ V_l1 @ V_P2_dot_0 )
+            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l1 @ V_P2_dot_0 )
         & ? [V_P2: '2d.Point'] :
-            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '-/1' @ ( '^/2' @ V_a @ 2 ) ) @ ( 'cons/2' @ ( '*/2' @ 2 @ V_a ) @ ( 'cons/2' @ ( '-/1' @ 1 ) @ 'nil/0' ) ) ) ) ) @ V_l1 @ V_P2 ) ) )).
+            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $uminus @ ( '^/2' @ 'a/0' @ 2.0 ) ) @ ( 'cons/2' @ $real @ ( $product @ 2.0 @ 'a/0' ) @ ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l1 @ V_P2 ) ) )).
 
 thf(p2s,conjecture,(
-    ! [V_l1: '2d.Shape',V_l2: '2d.Shape',V_a: 'R'] :
+    ! [V_l1: '2d.Shape',V_l2: '2d.Shape',V_a: $real] :
       ( ( ( V_l1
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ 'nil/0' ) ) ) )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'nil/0' @ $real ) ) ) ) )
         & ( V_l2
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '*/2' @ ( '//2' @ -8 @ 9 ) @ ( '^/2' @ V_a @ 2 ) ) @ ( 'cons/2' @ ( '*/2' @ ( '//2' @ 4 @ 3 ) @ V_a ) @ 'nil/0' ) ) ) ) )
-        & ( '>/2' @ V_a @ 0 ) )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $product @ ( $quotient @ -8.0 @ 9.0 ) @ ( '^/2' @ V_a @ 2.0 ) ) @ ( 'cons/2' @ $real @ ( $product @ ( $quotient @ 4.0 @ 3.0 ) @ V_a ) @ ( 'nil/0' @ $real ) ) ) ) ) )
+        & ( $greater @ V_a @ 0.0 ) )
      => ( ? [V_P2_dot_2: '2d.Point'] :
-            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ 'nil/0' ) ) ) ) ) @ V_l1 @ V_P2_dot_2 )
+            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l1 @ V_P2_dot_2 )
         & ? [V_P2_dot_1: '2d.Point'] :
-            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '-/1' @ ( '^/2' @ V_a @ 2 ) ) @ ( 'cons/2' @ ( '*/2' @ 2 @ V_a ) @ ( 'cons/2' @ ( '-/1' @ 1 ) @ 'nil/0' ) ) ) ) ) @ V_l1 @ V_P2_dot_1 )
+            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $uminus @ ( '^/2' @ V_a @ 2.0 ) ) @ ( 'cons/2' @ $real @ ( $product @ 2.0 @ V_a ) @ ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l1 @ V_P2_dot_1 )
         & ? [V_P2_dot_0: '2d.Point'] :
-            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ 'nil/0' ) ) ) ) ) @ V_l2 @ V_P2_dot_0 )
+            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l2 @ V_P2_dot_0 )
         & ? [V_P2: '2d.Point'] :
-            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '-/1' @ ( '^/2' @ V_a @ 2 ) ) @ ( 'cons/2' @ ( '*/2' @ 2 @ V_a ) @ ( 'cons/2' @ ( '-/1' @ 1 ) @ 'nil/0' ) ) ) ) ) @ V_l2 @ V_P2 ) ) ) )).
+            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $uminus @ ( '^/2' @ V_a @ 2.0 ) ) @ ( 'cons/2' @ $real @ ( $product @ 2.0 @ V_a ) @ ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l2 @ V_P2 ) ) ) )).
 
-thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ans: 'R'] :
-      ? [V_l1: '2d.Shape',V_l2: '2d.Shape',V_l1m: 'R',V_l1c: 'R',V_l2m: 'R',V_l2c: 'R'] :
-        ( ( '>/2' @ V_a @ 0 )
+thf(a3_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_ans: $real] :
+      ? [V_l1: '2d.Shape',V_l2: '2d.Shape',V_l1m: $real,V_l1c: $real,V_l2m: $real,V_l2c: $real] :
+        ( ( $greater @ 'a/0' @ 0.0 )
         & ( V_l1 != V_l2 )
         & ( V_l1
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ V_l1c @ ( 'cons/2' @ V_l1m @ 'nil/0' ) ) ) ) )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ V_l1c @ ( 'cons/2' @ $real @ V_l1m @ ( 'nil/0' @ $real ) ) ) ) ) )
         & ( V_l2
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ V_l2c @ ( 'cons/2' @ V_l2m @ 'nil/0' ) ) ) ) )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ V_l2c @ ( 'cons/2' @ $real @ V_l2m @ ( 'nil/0' @ $real ) ) ) ) ) )
         & ? [V_P2_dot_2: '2d.Point'] :
-            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ 'nil/0' ) ) ) ) ) @ V_l1 @ V_P2_dot_2 )
+            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l1 @ V_P2_dot_2 )
         & ? [V_P2_dot_1: '2d.Point'] :
-            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '-/1' @ ( '^/2' @ V_a @ 2 ) ) @ ( 'cons/2' @ ( '*/2' @ 2 @ V_a ) @ ( 'cons/2' @ ( '-/1' @ 1 ) @ 'nil/0' ) ) ) ) ) @ V_l1 @ V_P2_dot_1 )
+            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $uminus @ ( '^/2' @ 'a/0' @ 2.0 ) ) @ ( 'cons/2' @ $real @ ( $product @ 2.0 @ 'a/0' ) @ ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l1 @ V_P2_dot_1 )
         & ? [V_P2_dot_0: '2d.Point'] :
-            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ 'nil/0' ) ) ) ) ) @ V_l2 @ V_P2_dot_0 )
+            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l2 @ V_P2_dot_0 )
         & ? [V_P2: '2d.Point'] :
-            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '-/1' @ ( '^/2' @ V_a @ 2 ) ) @ ( 'cons/2' @ ( '*/2' @ 2 @ V_a ) @ ( 'cons/2' @ ( '-/1' @ 1 ) @ 'nil/0' ) ) ) ) ) @ V_l2 @ V_P2 )
+            ( '2d.tangent/3' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $uminus @ ( '^/2' @ 'a/0' @ 2.0 ) ) @ ( 'cons/2' @ $real @ ( $product @ 2.0 @ 'a/0' ) @ ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_l2 @ V_P2 )
         & ( V_ans
-          = ( '2d.area-of/1' @ ( '2d.shape-enclosed-by/1' @ ( 'cons/2' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ 'nil/0' ) ) ) ) ) @ ( 'cons/2' @ V_l1 @ ( 'cons/2' @ V_l2 @ 'nil/0' ) ) ) ) ) ) ) )).
+          = ( '2d.area-of/1' @ ( '2d.shape-enclosed-by/1' @ ( 'cons/2' @ '2d.Shape' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ ( 'cons/2' @ '2d.Shape' @ V_l1 @ ( 'cons/2' @ '2d.Shape' @ V_l2 @ ( 'nil/0' @ '2d.Shape' ) ) ) ) ) ) ) ) )).
 
-thf(p1_answer,answer,(
+thf(a1_answer,answer,(
     ^ [V_l_dot_0: '2d.Shape'] :
       ( V_l_dot_0
-      = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '-/1' @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ ( '^/2' @ V_t @ 2 ) ) ) @ ( 'cons/2' @ V_t @ 'nil/0' ) ) ) ) ) ),
-    answer_to(p1_question,[])).
+      = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $uminus @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ ( '^/2' @ 't/0' @ 2.0 ) ) ) @ ( 'cons/2' @ $real @ 't/0' @ ( 'nil/0' @ $real ) ) ) ) ) ) ),
+    answer_to(a1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_ls_dot_0: 'ListOf' @ 'R'] :
-      ( ( '>/2' @ V_a @ 0 )
+    ^ [V_ls_dot_0: ( 'ListOf' @ $real )] :
+      ( ( $greater @ 'a/0' @ 0.0 )
       & ( ( V_ls_dot_0
-          = ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ 'nil/0' ) ) )
+          = ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'nil/0' @ $real ) ) ) )
         | ( V_ls_dot_0
-          = ( 'cons/2' @ ( '*/2' @ ( '//2' @ 4 @ 3 ) @ V_a ) @ ( 'cons/2' @ ( '-/1' @ ( '*/2' @ ( '//2' @ 8 @ 9 ) @ ( '^/2' @ V_a @ 2 ) ) ) @ 'nil/0' ) ) ) ) ) ),
+          = ( 'cons/2' @ $real @ ( $uminus @ ( $product @ ( $quotient @ 8.0 @ 9.0 ) @ ( '^/2' @ 'a/0' @ 2.0 ) ) ) @ ( 'cons/2' @ $real @ ( $product @ ( $quotient @ 4.0 @ 3.0 ) @ 'a/0' ) @ ( 'nil/0' @ $real ) ) ) ) ) ) ),
     answer_to(p2_question,[])).
 
-thf(p3_answer,answer,(
-    ^ [V_ans_dot_0: 'R'] :
+thf(a3_answer,answer,(
+    ^ [V_ans_dot_0: $real] :
       ( V_ans_dot_0
-      = ( '*/2' @ ( '//2' @ 8 @ 81 ) @ ( '^/2' @ V_a @ 3 ) ) ) ),
-    answer_to(p3_question,[])).
+      = ( $product @ ( $quotient @ 8.0 @ 81.0 ) @ ( '^/2' @ 'a/0' @ 3.0 ) ) ) ),
+    answer_to(a3_question,[])).
+

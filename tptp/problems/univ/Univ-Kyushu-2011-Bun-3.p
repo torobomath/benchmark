@@ -21,27 +21,26 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  118 (  12 equality;  53 variable)
+%            Number of atoms       :  119 (  12 equality;  53 variable)
 %            Maximal formula depth :   18 (  13 average)
-%            Number of connectives :   90 (   0   ~;   0   |;   9   &;  79   @)
+%            Number of connectives :   91 (   0   ~;   0   |;   9   &;  80   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   22 (   0   :)
-%            Number of variables   :   18 (   1 sgn;  11   !;   5   ?;   2   ^)
-%                                         (  18   :;   0  !>;   0  ?*)
+%            Number of symbols     :   21 (   0   :;   0   =)
+%            Number of variables   :   16 (   0 sgn;   9   !;   5   ?;   2   ^)
+%                                         (  16   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   0 pred;    3 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_O: '2d.Point',V_M: '2d.Point'] :
       ( ( ( '2d.is-right/1' @ ( '2d.angle/3' @ V_B @ V_A @ V_C ) )
         & ( ( '2d.distance/2' @ V_B @ V_C )
-          = 2 )
-        & ( ( '2d.v-/2' @ ( '2d.sv*/2' @ 4 @ ( '2d.vec/2' @ V_O @ V_A ) ) @ ( '2d.v+/2' @ ( '2d.vec/2' @ V_O @ V_B ) @ ( '2d.vec/2' @ V_O @ V_C ) ) )
+          = 2.0 )
+        & ( ( '2d.v-/2' @ ( '2d.sv*/2' @ 4.0 @ ( '2d.vec/2' @ V_O @ V_A ) ) @ ( '2d.v+/2' @ ( '2d.vec/2' @ V_O @ V_B ) @ ( '2d.vec/2' @ V_O @ V_C ) ) )
           = '2d.zero-vector/0' )
         & ( V_M
           = ( '2d.midpoint-of/2' @ V_B @ V_C ) ) )
@@ -49,29 +48,30 @@ thf(p1,conjecture,(
         = ( '2d.midpoint-of/2' @ V_O @ V_M ) ) ) )).
 
 thf(p2,conjecture,(
-    ! [Tv4: $tType,V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_O: '2d.Point',V_M: Tv4] :
+    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_O: '2d.Point'] :
       ( ( ( '2d.is-right/1' @ ( '2d.angle/3' @ V_B @ V_A @ V_C ) )
         & ( ( '2d.distance/2' @ V_B @ V_C )
-          = 2 )
-        & ( ( '2d.v-/2' @ ( '2d.sv*/2' @ 4 @ ( '2d.vec/2' @ V_O @ V_A ) ) @ ( '2d.v+/2' @ ( '2d.vec/2' @ V_O @ V_B ) @ ( '2d.vec/2' @ V_O @ V_C ) ) )
+          = 2.0 )
+        & ( ( '2d.v-/2' @ ( '2d.sv*/2' @ 4.0 @ ( '2d.vec/2' @ V_O @ V_A ) ) @ ( '2d.v+/2' @ ( '2d.vec/2' @ V_O @ V_B ) @ ( '2d.vec/2' @ V_O @ V_C ) ) )
           = '2d.zero-vector/0' ) )
-     => ( ( '+/2' @ ( '2d.distance^2/2' @ V_O @ V_B ) @ ( '2d.distance^2/2' @ V_O @ V_C ) )
-        = 10 ) ) )).
+     => ( ( $sum @ ( '2d.distance^2/2' @ V_O @ V_B ) @ ( '2d.distance^2/2' @ V_O @ V_C ) )
+        = 10.0 ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_OP: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_OP: $real] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_O: '2d.Point',V_P: '2d.Point'] :
         ( ( '2d.is-right/1' @ ( '2d.angle/3' @ V_B @ V_A @ V_C ) )
         & ( ( '2d.distance/2' @ V_B @ V_C )
-          = 2 )
-        & ( ( '2d.v-/2' @ ( '2d.sv*/2' @ 4 @ ( '2d.vec/2' @ V_O @ V_A ) ) @ ( '2d.v+/2' @ ( '2d.vec/2' @ V_O @ V_B ) @ ( '2d.vec/2' @ V_O @ V_C ) ) )
+          = 2.0 )
+        & ( ( '2d.v-/2' @ ( '2d.sv*/2' @ 4.0 @ ( '2d.vec/2' @ V_O @ V_A ) ) @ ( '2d.v+/2' @ ( '2d.vec/2' @ V_O @ V_B ) @ ( '2d.vec/2' @ V_O @ V_C ) ) )
           = '2d.zero-vector/0' )
-        & ( ( '-/2' @ ( '*/2' @ 4 @ ( '2d.distance^2/2' @ V_P @ V_A ) ) @ ( '+/2' @ ( '2d.distance^2/2' @ V_P @ V_B ) @ ( '2d.distance^2/2' @ V_P @ V_C ) ) )
-          = -4 )
+        & ( ( $difference @ ( $product @ 4.0 @ ( '2d.distance^2/2' @ V_P @ V_A ) ) @ ( $sum @ ( '2d.distance^2/2' @ V_P @ V_B ) @ ( '2d.distance^2/2' @ V_P @ V_C ) ) )
+          = -4.0 )
         & ( V_OP
           = ( '2d.distance/2' @ V_O @ V_P ) ) ) )).
 
 thf(p3_answer,answer,(
-    ^ [V_OP_dot_0: 'R'] : ( V_OP_dot_0 = 1 ) ),
+    ^ [V_OP_dot_0: $real] : ( V_OP_dot_0 = 1.0 ) ),
     answer_to(p3_question,[])).
+

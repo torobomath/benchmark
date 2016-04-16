@@ -18,24 +18,23 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    3 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  113 (  11 equality;  52 variable)
+%            Number of atoms       :  114 (  11 equality;  52 variable)
 %            Maximal formula depth :   19 (  14 average)
-%            Number of connectives :   88 (   0   ~;   0   |;  14   &;  73   @)
+%            Number of connectives :   89 (   0   ~;   0   |;  14   &;  74   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   22 (   0   :)
+%            Number of symbols     :   22 (   0   :;   0   =)
 %            Number of variables   :   11 (   0 sgn;   5   !;   4   ?;   2   ^)
 %                                         (  11   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   1 pred;    2 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_sintheta: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_sintheta: $real] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point'] :
         ( ( '2d.is-triangle/3' @ V_A @ V_B @ V_C )
         & ( '2d.is-right/1' @ ( '2d.angle/3' @ V_A @ V_C @ V_B ) )
@@ -43,33 +42,34 @@ thf(p1_qustion,question,
         & ( ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_D @ V_A @ V_B ) )
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_D @ V_A @ V_C ) ) )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_D ) )
-          = 5 )
+          = 5.0 )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_D @ V_C ) )
-          = 3 )
+          = 3.0 )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_C @ V_A ) )
-          = 4 )
+          = 4.0 )
         & ( V_sintheta
           = ( '2d.sin-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_A @ V_C ) ) ) ) )).
 
 thf(p2,conjecture,(
-    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_theta: 'R'] :
+    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_theta: $real] :
       ( ( ( '2d.is-triangle/3' @ V_A @ V_B @ V_C )
         & ( '2d.is-right/1' @ ( '2d.angle/3' @ V_A @ V_C @ V_B ) )
         & ( '2d.on/2' @ V_D @ ( '2d.line/2' @ V_B @ V_C ) )
         & ( ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_D @ V_A @ V_B ) )
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_D @ V_A @ V_C ) ) )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_D ) )
-          = 5 )
+          = 5.0 )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_D @ V_C ) )
-          = 3 )
+          = 3.0 )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_C @ V_A ) )
-          = 4 )
+          = 4.0 )
         & ( V_theta
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_A @ V_C ) ) ) )
-     => ( '</2' @ V_theta @ ( '//2' @ ( '*/2' @ 5 @ 'Pi/0' ) @ 12 ) ) ) )).
+     => ( $less @ V_theta @ ( $quotient @ ( $product @ 5.0 @ 'Pi/0' ) @ 12.0 ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_sintheta_dot_0: 'R'] :
+    ^ [V_sintheta_dot_0: $real] :
       ( V_sintheta_dot_0
-      = ( '//2' @ 24 @ 25 ) ) ),
+      = ( $quotient @ 24.0 @ 25.0 ) ) ),
     answer_to(p1_question,[])).
+

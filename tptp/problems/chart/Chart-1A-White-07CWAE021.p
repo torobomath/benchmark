@@ -6,32 +6,32 @@
 %% GENERATED: 2015-01-08
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   23 (   1 equality;   7 variable)
+%            Number of atoms       :   25 (   1 equality;   7 variable)
 %            Maximal formula depth :   14 (   8 average)
-%            Number of connectives :   19 (   0   ~;   0   |;   3   &;  16   @)
+%            Number of connectives :   21 (   0   ~;   0   |;   3   &;  18   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   14 (   0   :)
+%            Number of symbols     :   14 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   0   !;   0   ?;   3   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   2 pred;    3 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_n: 'Z'] :
+    ( 'find/1' @ $int
+    @ ^ [V_n: $int] :
         ( 'int.is-cardinality-of/2' @ V_n
-        @ ( 'set-by-def/1'
-          @ ^ [V_m: 'Z'] :
+        @ ( 'set-by-def/1' @ $int
+          @ ^ [V_m: $int] :
               ( ( 'int.is-natural-number/1' @ V_m )
-              & ( 'int.<=/2' @ 10 @ V_m )
-              & ( 'int.</2' @ V_m @ 100 )
-              & ( 'int.is-even-number/1' @ ( 'int.*/2' @ ( 'int.div/2' @ V_m @ 10 ) @ ( 'int.mod/2' @ V_m @ 10 ) ) ) ) ) ) )).
+              & ( $lesseq @ 10 @ V_m )
+              & ( $less @ V_m @ 100 )
+              & ( 'int.is-even-number/1' @ ( $product @ ( $quotient_f @ V_m @ 10 ) @ ( $remainder_f @ V_m @ 10 ) ) ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_n_dot_0: 'Z'] : ( V_n_dot_0 = 65 ) ),
+    ^ [V_n_dot_0: $int] : ( V_n_dot_0 = 65 ) ),
     answer_to(p_question,[])).
+

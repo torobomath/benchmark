@@ -17,48 +17,34 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  140 (   0 equality;  81 variable)
-%            Maximal formula depth :   26 (  26 average)
-%            Number of connectives :  139 (   0   ~;   0   |;  20   &; 116   @)
-%                                         (   0 <=>;   3  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%            Number of atoms       :   82 (   0 equality;  44 variable)
+%            Maximal formula depth :   25 (  25 average)
+%            Number of connectives :   81 (   0   ~;   0   |;  10   &;  69   @)
+%                                         (   1 <=>;   1  =>;   0  <=;   0 <~>)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   11 (   0   :)
-%            Number of variables   :   16 (   0 sgn;   4   !;  12   ?;   0   ^)
-%                                         (  16   :;   0  !>;   0  ?*)
+%            Number of symbols     :   11 (   0   :;   0   =)
+%            Number of variables   :   10 (   0 sgn;   4   !;   6   ?;   0   ^)
+%                                         (  10   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
     ! [V_P: '2d.Point',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point'] :
       ( ( ( '2d.is-acute-triangle/3' @ V_A @ V_B @ V_C )
         & ( '2d.point-inside-of/2' @ V_P @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) )
-     => ( ( ( '2d.is-incenter-of/2' @ V_P @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) )
-         => ? [V_Ap: '2d.Point',V_Bp: '2d.Point',V_Cp: '2d.Point'] :
-              ( ? [V_ra: 'R',V_rb: 'R',V_rc: 'R'] :
-                  ( ( '2d.on/2' @ V_B @ ( '2d.circle/2' @ V_Ap @ V_ra ) )
-                  & ( '2d.on/2' @ V_C @ ( '2d.circle/2' @ V_Ap @ V_ra ) )
-                  & ( '2d.on/2' @ V_P @ ( '2d.circle/2' @ V_Ap @ V_ra ) )
-                  & ( '2d.on/2' @ V_C @ ( '2d.circle/2' @ V_Bp @ V_rb ) )
-                  & ( '2d.on/2' @ V_A @ ( '2d.circle/2' @ V_Bp @ V_rb ) )
-                  & ( '2d.on/2' @ V_P @ ( '2d.circle/2' @ V_Bp @ V_rb ) )
-                  & ( '2d.on/2' @ V_A @ ( '2d.circle/2' @ V_Cp @ V_rc ) )
-                  & ( '2d.on/2' @ V_B @ ( '2d.circle/2' @ V_Cp @ V_rc ) )
-                  & ( '2d.on/2' @ V_P @ ( '2d.circle/2' @ V_Cp @ V_rc ) ) )
-              & ( '2d.concircular/1' @ ( 'cons/2' @ V_A @ ( 'cons/2' @ V_B @ ( 'cons/2' @ V_C @ ( 'cons/2' @ V_Ap @ ( 'cons/2' @ V_Bp @ ( 'cons/2' @ V_Cp @ 'nil/0' ) ) ) ) ) ) ) ) )
-        & ( ? [V_Ap_dot_0: '2d.Point',V_Bp_dot_0: '2d.Point',V_Cp_dot_0: '2d.Point'] :
-              ( ? [V_ra_dot_0: 'R',V_rb_dot_0: 'R',V_rc_dot_0: 'R'] :
-                  ( ( '2d.on/2' @ V_B @ ( '2d.circle/2' @ V_Ap_dot_0 @ V_ra_dot_0 ) )
-                  & ( '2d.on/2' @ V_C @ ( '2d.circle/2' @ V_Ap_dot_0 @ V_ra_dot_0 ) )
-                  & ( '2d.on/2' @ V_P @ ( '2d.circle/2' @ V_Ap_dot_0 @ V_ra_dot_0 ) )
-                  & ( '2d.on/2' @ V_C @ ( '2d.circle/2' @ V_Bp_dot_0 @ V_rb_dot_0 ) )
-                  & ( '2d.on/2' @ V_A @ ( '2d.circle/2' @ V_Bp_dot_0 @ V_rb_dot_0 ) )
-                  & ( '2d.on/2' @ V_P @ ( '2d.circle/2' @ V_Bp_dot_0 @ V_rb_dot_0 ) )
-                  & ( '2d.on/2' @ V_A @ ( '2d.circle/2' @ V_Cp_dot_0 @ V_rc_dot_0 ) )
-                  & ( '2d.on/2' @ V_B @ ( '2d.circle/2' @ V_Cp_dot_0 @ V_rc_dot_0 ) )
-                  & ( '2d.on/2' @ V_P @ ( '2d.circle/2' @ V_Cp_dot_0 @ V_rc_dot_0 ) ) )
-              & ( '2d.concircular/1' @ ( 'cons/2' @ V_A @ ( 'cons/2' @ V_B @ ( 'cons/2' @ V_C @ ( 'cons/2' @ V_Ap_dot_0 @ ( 'cons/2' @ V_Bp_dot_0 @ ( 'cons/2' @ V_Cp_dot_0 @ 'nil/0' ) ) ) ) ) ) ) )
-         => ( '2d.is-incenter-of/2' @ V_P @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) ) ) ) )).
+     => ( ( '2d.is-incenter-of/2' @ V_P @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) )
+      <=> ? [V_Ap: '2d.Point',V_Bp: '2d.Point',V_Cp: '2d.Point'] :
+            ( ? [V_ra: $real,V_rb: $real,V_rc: $real] :
+                ( ( '2d.on/2' @ V_B @ ( '2d.circle/2' @ V_Ap @ V_ra ) )
+                & ( '2d.on/2' @ V_C @ ( '2d.circle/2' @ V_Ap @ V_ra ) )
+                & ( '2d.on/2' @ V_P @ ( '2d.circle/2' @ V_Ap @ V_ra ) )
+                & ( '2d.on/2' @ V_C @ ( '2d.circle/2' @ V_Bp @ V_rb ) )
+                & ( '2d.on/2' @ V_A @ ( '2d.circle/2' @ V_Bp @ V_rb ) )
+                & ( '2d.on/2' @ V_P @ ( '2d.circle/2' @ V_Bp @ V_rb ) )
+                & ( '2d.on/2' @ V_A @ ( '2d.circle/2' @ V_Cp @ V_rc ) )
+                & ( '2d.on/2' @ V_B @ ( '2d.circle/2' @ V_Cp @ V_rc ) )
+                & ( '2d.on/2' @ V_P @ ( '2d.circle/2' @ V_Cp @ V_rc ) ) )
+            & ( '2d.concircular/1' @ ( 'cons/2' @ '2d.Point' @ V_A @ ( 'cons/2' @ '2d.Point' @ V_B @ ( 'cons/2' @ '2d.Point' @ V_C @ ( 'cons/2' @ '2d.Point' @ V_Ap @ ( 'cons/2' @ '2d.Point' @ V_Bp @ ( 'cons/2' @ '2d.Point' @ V_Cp @ ( 'nil/0' @ '2d.Point' ) ) ) ) ) ) ) ) ) ) ) )).
+

@@ -24,7 +24,7 @@
 (namespace 2d)
 
 (def-directive
-  p1
+  a1
   (Find (P)
     (forall (a b l l1 l2)
       (->
@@ -37,7 +37,7 @@
         )))))
 
 (def-directive
-  p2
+  a2
   (Find (ab)
     (exists (a b)
       (&& (= ab (list-of a b))
@@ -53,7 +53,7 @@
           ))))))
 
 (def-directive
-  p3
+  a3_1
   (Find (ab)
     (exists (a b)
       (&& (= ab (list-of a b))
@@ -70,9 +70,9 @@
             (point-inside-of (point 1 1) T)
           ))))))
 
-(def-answer p1 (PLam P (= P (point 2 2))))
+(def-answer a1 (PLam P (= P (point 2 2))))
 
-(def-answer p2 (PLam ab (exists (a b)
+(def-answer a2 (PLam ab (exists (a b)
         (&& (= ab (list-of a b))
             (! (= a 1))
             (! (= b 1))
@@ -80,9 +80,13 @@
             )
 )))
 
-(def-answer p3 (PLam ab (exists (a b)
+(def-answer a3_1 (PLam ab (exists (a b)
         (&& (= ab (list-of a b))
             (< (* (+ a 1) (- a 1) (+ b 1) (- b 1)) 0)
          )
 )))
+
+(def-answer a3_2 (set-of-cfun (Lam a (PLam b
+            (< (* (+ a 1) (- a 1) (+ b 1) (- b 1)) 0)
+         ))))
 

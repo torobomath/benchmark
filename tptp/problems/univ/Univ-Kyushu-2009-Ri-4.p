@@ -24,32 +24,31 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    5 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  255 (  42 equality;  91 variable)
-%            Maximal formula depth :   26 (  17 average)
-%            Number of connectives :  173 (   5   ~;   1   |;  32   &; 131   @)
+%            Number of atoms       :  230 (  40 equality;  81 variable)
+%            Maximal formula depth :   17 (  15 average)
+%            Number of connectives :  150 (   5   ~;   1   |;  30   &; 110   @)
 %                                         (   0 <=>;   4  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   23 (   0   :)
-%            Number of variables   :   26 (   0 sgn;  14   !;  10   ?;   2   ^)
-%                                         (  26   :;   0  !>;   0  ?*)
+%            Number of symbols     :   20 (   0   :;   0   =)
+%            Number of variables   :   21 (   0 sgn;  14   !;   5   ?;   2   ^)
+%                                         (  21   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   0 pred;    2 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
     ! [V_X: '2d.Vector',V_Y: '2d.Vector',V_Z: '2d.Vector',V_A: '2d.Matrix'] :
       ( ( ( V_X
-          = ( '2d.vec/2' @ ( '2d.point/2' @ 1 @ 0 ) @ ( '2d.point/2' @ 0 @ 0 ) ) )
+          = ( '2d.vec/2' @ ( '2d.point/2' @ 1.0 @ 0.0 ) @ ( '2d.point/2' @ 0.0 @ 0.0 ) ) )
         & ( V_Y != V_X )
         & ( ( '2d.radius/1' @ V_X )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.radius/1' @ V_Y )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.radius/1' @ V_Z )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.mv*/2' @ V_A @ V_X )
           = V_Y )
         & ( ( '2d.mv*/2' @ V_A @ V_Y )
@@ -57,29 +56,29 @@ thf(p1,conjecture,(
         & ( ( '2d.mv*/2' @ V_A @ V_Z )
           = V_X ) )
      => ( V_Y
-       != ( '2d.sv*/2' @ -1 @ V_X ) ) ) )).
+       != ( '2d.sv*/2' @ -1.0 @ V_X ) ) ) )).
 
 thf(p2,conjecture,(
     ! [V_X: '2d.Vector',V_Y: '2d.Vector',V_Z: '2d.Vector',V_A: '2d.Matrix'] :
       ( ( ( V_X
-          = ( '2d.vec/2' @ ( '2d.point/2' @ 1 @ 0 ) @ ( '2d.point/2' @ 0 @ 0 ) ) )
+          = ( '2d.vec/2' @ ( '2d.point/2' @ 1.0 @ 0.0 ) @ ( '2d.point/2' @ 0.0 @ 0.0 ) ) )
         & ( V_Y != V_X )
         & ( ( '2d.radius/1' @ V_X )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.radius/1' @ V_Y )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.radius/1' @ V_Z )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.mv*/2' @ V_A @ V_X )
           = V_Y )
         & ( ( '2d.mv*/2' @ V_A @ V_Y )
           = V_Z )
         & ( ( '2d.mv*/2' @ V_A @ V_Z )
           = V_X ) )
-     => ? [V_s: 'R',V_t: 'R'] :
+     => ? [V_s: $real,V_t: $real] :
           ( ( V_Z
             = ( '2d.v+/2' @ ( '2d.sv*/2' @ V_s @ V_X ) @ ( '2d.sv*/2' @ V_t @ V_Y ) ) )
-          & ! [V_u: 'R',V_v: 'R'] :
+          & ! [V_u: $real,V_v: $real] :
               ( ( V_Z
                 = ( '2d.v+/2' @ ( '2d.sv*/2' @ V_u @ V_X ) @ ( '2d.sv*/2' @ V_v @ V_Y ) ) )
              => ( ( V_u = V_s )
@@ -88,14 +87,14 @@ thf(p2,conjecture,(
 thf(p3,conjecture,(
     ! [V_X: '2d.Vector',V_Y: '2d.Vector',V_Z: '2d.Vector',V_A: '2d.Matrix'] :
       ( ( ( V_X
-          = ( '2d.vec/2' @ ( '2d.point/2' @ 1 @ 0 ) @ ( '2d.point/2' @ 0 @ 0 ) ) )
+          = ( '2d.vec/2' @ ( '2d.point/2' @ 1.0 @ 0.0 ) @ ( '2d.point/2' @ 0.0 @ 0.0 ) ) )
         & ( V_Y != V_X )
         & ( ( '2d.radius/1' @ V_X )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.radius/1' @ V_Y )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.radius/1' @ V_Z )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.mv*/2' @ V_A @ V_X )
           = V_Y )
         & ( ( '2d.mv*/2' @ V_A @ V_Y )
@@ -106,33 +105,30 @@ thf(p3,conjecture,(
         = ( '2d.v+/2' @ V_X @ ( '2d.v+/2' @ V_Y @ V_Z ) ) ) ) )).
 
 thf(p4_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_Als: 'ListOf' @ 'R'] :
-      ? [V_X: '2d.Vector',V_Y: '2d.Vector',V_Z: '2d.Vector',V_A: '2d.Matrix',V_A11: 'R',V_A12: 'R',V_A21: 'R',V_A22: 'R'] :
-        ( ( V_A
-          = ( '2d.matrix/4' @ V_A11 @ V_A12 @ V_A21 @ V_A22 ) )
-        & ( V_X
-          = ( '2d.vec/2' @ ( '2d.point/2' @ 1 @ 0 ) @ ( '2d.point/2' @ 0 @ 0 ) ) )
+    ( 'find/1' @ '2d.Matrix'
+    @ ^ [V_A: '2d.Matrix'] :
+      ? [V_X: '2d.Vector',V_Y: '2d.Vector',V_Z: '2d.Vector'] :
+        ( ( V_X
+          = ( '2d.vec/2' @ ( '2d.point/2' @ 1.0 @ 0.0 ) @ ( '2d.point/2' @ 0.0 @ 0.0 ) ) )
         & ( V_Y != V_X )
         & ( ( '2d.radius/1' @ V_X )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.radius/1' @ V_Y )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.radius/1' @ V_Z )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.mv*/2' @ V_A @ V_X )
           = V_Y )
         & ( ( '2d.mv*/2' @ V_A @ V_Y )
           = V_Z )
         & ( ( '2d.mv*/2' @ V_A @ V_Z )
-          = V_X )
-        & ( V_Als
-          = ( 'cons/2' @ V_A11 @ ( 'cons/2' @ V_A12 @ ( 'cons/2' @ V_A21 @ ( 'cons/2' @ V_A22 @ 'nil/0' ) ) ) ) ) ) )).
+          = V_X ) ) )).
 
 thf(p4_answer,answer,(
-    ^ [V_Als_dot_0: 'ListOf' @ 'R'] :
-      ( ( V_Als_dot_0
-        = ( 'cons/2' @ ( '//2' @ -1 @ 2 ) @ ( 'cons/2' @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) @ ( 'cons/2' @ ( '//2' @ ( '-/1' @ ( 'sqrt/1' @ 3 ) ) @ 2 ) @ ( 'cons/2' @ ( '//2' @ -1 @ 2 ) @ 'nil/0' ) ) ) ) )
-      | ( V_Als_dot_0
-        = ( 'cons/2' @ ( '//2' @ -1 @ 2 ) @ ( 'cons/2' @ ( '-/1' @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) ) @ ( 'cons/2' @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) @ ( 'cons/2' @ ( '//2' @ -1 @ 2 ) @ 'nil/0' ) ) ) ) ) ) ),
+    ^ [V_A_dot_0: '2d.Matrix'] :
+      ( ( V_A_dot_0
+        = ( '2d.matrix/4' @ ( $quotient @ -1.0 @ 2.0 ) @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) @ ( $quotient @ ( $uminus @ ( 'sqrt/1' @ 3.0 ) ) @ 2.0 ) @ ( $quotient @ -1.0 @ 2.0 ) ) )
+      | ( V_A_dot_0
+        = ( '2d.matrix/4' @ ( $quotient @ -1.0 @ 2.0 ) @ ( $uminus @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) ) @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) @ ( $quotient @ -1.0 @ 2.0 ) ) ) ) ),
     answer_to(p4_question,[])).
+

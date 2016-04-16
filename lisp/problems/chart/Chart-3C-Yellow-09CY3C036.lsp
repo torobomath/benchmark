@@ -9,7 +9,7 @@
 
 (def-directive p
   (Find (S)
-  (exists (C1 C2 L)
+  (exists (C1)
     (&&
      (= C1 (set-of-cfun (Lam x (PLam y (&& (>= y (/ 1 (+ 1 x)))
                    (<= y (exp x))

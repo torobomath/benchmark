@@ -15,7 +15,7 @@
 
 (def-directive p
   (Find (c)
-  (maximum (set-by-def (PLam x
+  (minimum (set-by-def (PLam x
            (exists (a b v w)
              (&& (< 0 a)
                            (< 0 b)

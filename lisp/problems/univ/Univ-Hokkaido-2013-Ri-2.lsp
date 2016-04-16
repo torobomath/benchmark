@@ -104,3 +104,10 @@
 
 (def-answer p3 (PLam c (= c (- (sqrt 3) 2))))
 
+(def-answer a1 (PLam A_C (= A (list-of (matrix 0 1 1 0)
+                                       (matrix (- (/ 1 2)) (- (/ (sqrt 3) 2)) (/ (sqrt 3) 2) (- (/ 1 2)))))))
+
+(def-answer a2 (PLam B (= B (matrix (/ (- 1 (^ c 2)) (+ 1 (^ c 2))) (/ (* 2 c) (+ 1 (^ c 2))) (/ (* 2 c) (+ 1 (^ c 2))) (/ (- (^ c 2) 1) (+ 1 (^ c 2)))))))
+
+(def-answer a3 (PLam c (= c (- (sqrt 3) 2))))
+

@@ -14,8 +14,8 @@
 (namespace 2d)
 
 (def-directive
-  p_1
-  (Find (E)
+  a_1
+  (Draw (E)
         (exists (D)
           (&& (= D (shape-of-cpfun (PLam p (&& (<= -1 (y-coord p))
                        (<= (y-coord p) 1)))))
@@ -26,7 +26,7 @@
                          (inside-of C D))))))))))
 
 (def-directive
-  p_2
+  a_2
   (Find (S)
         (exists (D E)
                 (&& (= D (shape-of-cpfun (PLam p (&& (<= -1 (y-coord p))
@@ -38,9 +38,9 @@
                                                              (inside-of C D))))))
                     (= S (area-of E))))))
 
-(def-answer p_1 (PLam E (= E (shape-of-cpfun (PLam P (&& (! (= P (origin)))
-               (<= (- (* (/ 1 2) (^ (x-coord P) 2)) (/ 1 2)) (y-coord P))
-               (<= (y-coord P) (+ (- (* (/ 1 2) (^ (x-coord P) 2))) (/ 1 2)))))))))
+(def-answer a_1 (shape-of-cpfun (PLam P (&& (! (= P (origin)))
+                                            (<= (- (* (/ 1 2) (^ (x-coord P) 2)) (/ 1 2)) (y-coord P))
+                                            (<= (y-coord P) (+ (- (* (/ 1 2) (^ (x-coord P) 2))) (/ 1 2)))))))
 
-(def-answer p_2 (PLam S (= S (/ 4 3))))
+(def-answer a_2 (PLam S (= S (/ 4 3))))
 

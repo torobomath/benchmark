@@ -15,32 +15,49 @@
 %% is least.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  114 (  12 equality;  67 variable)
-%            Maximal formula depth :   30 (  22 average)
+% Syntax   : Number of formulae    :    8 (   0 unit;   6 type;   0 defn)
+%            Number of atoms       :  114 (  12 equality;  55 variable)
+%            Maximal formula depth :   29 (   7 average)
 %            Number of connectives :   88 (   0   ~;   0   |;  15   &;  73   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   16 (   0   :)
-%            Number of variables   :   28 (  12 sgn;   0   !;  12   ?;   4   ^)
+%            Number of symbols     :   21 (   6   :;   0   =)
+%            Number of variables   :   16 (   0 sgn;   0   !;  12   ?;   4   ^)
 %                                         (  16   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    2 (   0 pred;    2 func;    0 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('Ax/0_type',type,(
+    'Ax/0': $real )).
+
+thf('Ay/0_type',type,(
+    'Ay/0': $real )).
+
+thf('Bx/0_type',type,(
+    'Bx/0': $real )).
+
+thf('By/0_type',type,(
+    'By/0': $real )).
+
+thf('Cx/0_type',type,(
+    'Cx/0': $real )).
+
+thf('Cy/0_type',type,(
+    'Cy/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Point'
     @ ^ [V_P: '2d.Point'] :
-      ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_f: '2d.Point' > 'R',V_min: 'R'] :
+      ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_f: ( '2d.Point' > $real ),V_min: $real] :
         ( ( V_A
-          = ( '2d.point/2' @ V_Ax @ V_Ay ) )
+          = ( '2d.point/2' @ 'Ax/0' @ 'Ay/0' ) )
         & ( V_B
-          = ( '2d.point/2' @ V_Bx @ V_By ) )
+          = ( '2d.point/2' @ 'Bx/0' @ 'By/0' ) )
         & ( V_C
-          = ( '2d.point/2' @ V_Cx @ V_Cy ) )
+          = ( '2d.point/2' @ 'Cx/0' @ 'Cy/0' ) )
         & ( '2d.is-triangle/3' @ V_A @ V_B @ V_C )
         & ( V_D
           = ( '2d.foot-of-perpendicular-line-from-to/2' @ V_P @ ( '2d.line/2' @ V_B @ V_C ) ) )
@@ -50,28 +67,29 @@ thf(p_qustion,question,
           = ( '2d.foot-of-perpendicular-line-from-to/2' @ V_P @ ( '2d.line/2' @ V_A @ V_B ) ) )
         & ( V_f
           = ( ^ [V_p: '2d.Point'] :
-                ( '+/2' @ ( '//2' @ ( '2d.distance/2' @ V_B @ V_C ) @ ( '2d.distance/2' @ V_p @ V_D ) ) @ ( '+/2' @ ( '//2' @ ( '2d.distance/2' @ V_C @ V_A ) @ ( '2d.distance/2' @ V_p @ V_E ) ) @ ( '//2' @ ( '2d.distance/2' @ V_A @ V_B ) @ ( '2d.distance/2' @ V_p @ V_F ) ) ) ) ) )
+                ( $sum @ ( $quotient @ ( '2d.distance/2' @ V_B @ V_C ) @ ( '2d.distance/2' @ V_p @ V_D ) ) @ ( $sum @ ( $quotient @ ( '2d.distance/2' @ V_C @ V_A ) @ ( '2d.distance/2' @ V_p @ V_E ) ) @ ( $quotient @ ( '2d.distance/2' @ V_A @ V_B ) @ ( '2d.distance/2' @ V_p @ V_F ) ) ) ) ) )
         & ( '2d.is-triangle/3' @ V_A @ V_B @ V_C )
         & ( '2d.point-inside-of/2' @ V_P @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) )
         & ( V_min
-          = ( 'LamApp/2' @ V_f @ V_P ) )
+          = ( V_f @ V_P ) )
         & ( 'minimum/2'
-          @ ( 'set-by-def/1'
-            @ ^ [V_var: 'R'] :
+          @ ( 'set-by-def/1' @ $real
+            @ ^ [V_var: $real] :
               ? [V_q: '2d.Point'] :
                 ( V_var
-                = ( 'LamApp/2' @ V_f @ V_q ) ) )
+                = ( V_f @ V_q ) ) )
           @ V_min ) ) )).
 
 thf(p_answer,answer,(
     ^ [V_P_dot_0: '2d.Point'] :
     ? [V_A_dot_0: '2d.Point',V_B_dot_0: '2d.Point',V_C_dot_0: '2d.Point'] :
       ( ( V_A_dot_0
-        = ( '2d.point/2' @ V_Ax @ V_Ay ) )
+        = ( '2d.point/2' @ 'Ax/0' @ 'Ay/0' ) )
       & ( V_B_dot_0
-        = ( '2d.point/2' @ V_Bx @ V_By ) )
+        = ( '2d.point/2' @ 'Bx/0' @ 'By/0' ) )
       & ( V_C_dot_0
-        = ( '2d.point/2' @ V_Cx @ V_Cy ) )
+        = ( '2d.point/2' @ 'Cx/0' @ 'Cy/0' ) )
       & ( '2d.is-triangle/3' @ V_A_dot_0 @ V_B_dot_0 @ V_C_dot_0 )
       & ( '2d.is-incenter-of/2' @ V_P_dot_0 @ ( '2d.triangle/3' @ V_A_dot_0 @ V_B_dot_0 @ V_C_dot_0 ) ) ) ),
     answer_to(p_question,[])).
+

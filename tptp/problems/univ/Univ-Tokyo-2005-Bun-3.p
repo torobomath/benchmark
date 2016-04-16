@@ -11,34 +11,34 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   52 (   2 equality;  12 variable)
+%            Number of atoms       :   53 (   2 equality;  12 variable)
 %            Maximal formula depth :   16 (  12 average)
-%            Number of connectives :   46 (   0   ~;   0   |;   4   &;  42   @)
+%            Number of connectives :   47 (   0   ~;   0   |;   4   &;  43   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   15 (   0   :)
+%            Number of symbols     :   15 (   0   :;   0   =)
 %            Number of variables   :    4 (   0 sgn;   0   !;   2   ?;   2   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   12 (   1 pred;    5 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
-      ? [V_s: 'R',V_t: 'R'] :
-        ( ( 1
-          = ( '+/2' @ ( '^/2' @ V_s @ 2 ) @ ( '^/2' @ V_t @ 2 ) ) )
-        & ( 0
-          = ( '+/2' @ ( '^/2' @ V_x @ 4 ) @ ( '+/2' @ ( '*/2' @ -2 @ ( '*/2' @ ( '+/2' @ V_s @ V_t ) @ ( '^/2' @ V_x @ 2 ) ) ) @ ( '^/2' @ ( '-/2' @ V_s @ V_t ) @ 2 ) ) ) )
-        & ( '<=/2' @ 0 @ V_s )
-        & ( '<=/2' @ 0 @ V_t ) ) )).
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
+      ? [V_s: $real,V_t: $real] :
+        ( ( 1.0
+          = ( $sum @ ( '^/2' @ V_s @ 2.0 ) @ ( '^/2' @ V_t @ 2.0 ) ) )
+        & ( 0.0
+          = ( $sum @ ( '^/2' @ V_x @ 4.0 ) @ ( $sum @ ( $product @ -2.0 @ ( $product @ ( $sum @ V_s @ V_t ) @ ( '^/2' @ V_x @ 2.0 ) ) ) @ ( '^/2' @ ( $difference @ V_s @ V_t ) @ 2.0 ) ) ) )
+        & ( $lesseq @ 0.0 @ V_s )
+        & ( $lesseq @ 0.0 @ V_t ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_x_dot_0: 'R'] :
-      ( ( '<=/2' @ ( '-/1' @ ( '^/2' @ 2 @ ( '//2' @ 3 @ 4 ) ) ) @ V_x_dot_0 )
-      & ( '<=/2' @ V_x_dot_0 @ ( '^/2' @ 2 @ ( '//2' @ 3 @ 4 ) ) ) ) ),
+    ^ [V_x_dot_0: $real] :
+      ( ( $lesseq @ ( $uminus @ ( '^/2' @ 2.0 @ ( $quotient @ 3.0 @ 4.0 ) ) ) @ V_x_dot_0 )
+      & ( $lesseq @ V_x_dot_0 @ ( '^/2' @ 2.0 @ ( $quotient @ 3.0 @ 4.0 ) ) ) ) ),
     answer_to(p_question,[])).
+

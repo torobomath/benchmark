@@ -1,4 +1,4 @@
-%% DOMAIN:    Vectors
+%% DOMAIN:    DUP
 %% THEORY:    RCF
 %% SOURCE:    Tohoku University, 2003, Humanities Course, Problem 2
 %% AUTHOR:    Yiyang Zhan
@@ -18,67 +18,67 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  139 (  13 equality;  68 variable)
-%            Maximal formula depth :   22 (  15 average)
-%            Number of connectives :  112 (   1   ~;   1   |;  16   &;  94   @)
+%            Number of atoms       :  148 (  13 equality;  68 variable)
+%            Maximal formula depth :   23 (  16 average)
+%            Number of connectives :  121 (   1   ~;   1   |;  16   &; 103   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   22 (   0   :)
+%            Number of symbols     :   22 (   0   :;   0   =)
 %            Number of variables   :   22 (   0 sgn;   0   !;  18   ?;   4   ^)
 %                                         (  22   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   0 pred;    3 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_mn: 'R'] :
-      ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_m: 'R',V_n: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_mn: $real] :
+      ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_m: $real,V_n: $real] :
         ( ( ( '2d.distance/2' @ V_A @ V_B )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.distance/2' @ V_A @ V_C )
-          = 2 )
+          = 2.0 )
         & ( ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_A @ V_C ) )
-          = ( '//2' @ 'Pi/0' @ 3 ) )
+          = ( $quotient @ 'Pi/0' @ 3.0 ) )
         & ( '2d.divide-internally/4' @ V_D @ ( '2d.seg/2' @ V_B @ V_C ) @ V_m @ V_n )
         & ( '2d.divide-internally/4' @ V_E @ ( '2d.seg/2' @ V_C @ V_A ) @ V_m @ V_n )
         & ( '2d.divide-internally/4' @ V_F @ ( '2d.seg/2' @ V_A @ V_B ) @ V_m @ V_n )
         & ( '2d.perpendicular/2' @ ( '2d.line/2' @ V_D @ V_E ) @ ( '2d.line/2' @ V_E @ V_F ) )
         & ( V_mn
-          = ( '//2' @ V_m @ V_n ) ) ) )).
+          = ( $quotient @ V_m @ V_n ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_mn: 'ListOf' @ 'R'] :
-      ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_m: 'R',V_n: 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_mn: ( 'ListOf' @ $real )] :
+      ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_m: $real,V_n: $real] :
         ( ( ( '2d.distance/2' @ V_A @ V_B )
-          = 1 )
+          = 1.0 )
         & ( ( '2d.distance/2' @ V_A @ V_C )
-          = 2 )
+          = 2.0 )
         & ( ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_A @ V_C ) )
-          = ( '//2' @ 'Pi/0' @ 3 ) )
+          = ( $quotient @ 'Pi/0' @ 3.0 ) )
         & ( '2d.divide-internally/4' @ V_D @ ( '2d.seg/2' @ V_B @ V_C ) @ V_m @ V_n )
         & ( '2d.divide-internally/4' @ V_E @ ( '2d.seg/2' @ V_C @ V_A ) @ V_m @ V_n )
         & ( '2d.divide-internally/4' @ V_F @ ( '2d.seg/2' @ V_A @ V_B ) @ V_m @ V_n )
         & ( '2d.perpendicular/2' @ ( '2d.line/2' @ V_A @ V_D ) @ ( '2d.line/2' @ V_E @ V_F ) )
         & ( V_mn
-          = ( 'cons/2' @ V_m @ ( 'cons/2' @ V_n @ 'nil/0' ) ) ) ) )).
+          = ( 'cons/2' @ $real @ V_m @ ( 'cons/2' @ $real @ V_n @ ( 'nil/0' @ $real ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_mn_dot_0: 'R'] :
-      ( ( V_mn_dot_0 = 3 )
-      | ( V_mn_dot_0 = 1 ) ) ),
+    ^ [V_mn_dot_0: $real] :
+      ( ( V_mn_dot_0 = 3.0 )
+      | ( V_mn_dot_0 = 1.0 ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_mn_dot_0: 'ListOf' @ 'R'] :
-    ? [V_m_dot_0: 'R',V_n_dot_0: 'R'] :
+    ^ [V_mn_dot_0: ( 'ListOf' @ $real )] :
+    ? [V_m_dot_0: $real,V_n_dot_0: $real] :
       ( ( V_mn_dot_0
-        = ( 'cons/2' @ V_m_dot_0 @ ( 'cons/2' @ V_n_dot_0 @ 'nil/0' ) ) )
-      & ( 0 != V_m_dot_0 )
-      & ( 0
-        = ( '-/2' @ ( '-/2' @ ( '^/2' @ V_m_dot_0 @ 2 ) @ ( '*/2' @ 3 @ ( '*/2' @ V_m_dot_0 @ V_n_dot_0 ) ) ) @ ( '^/2' @ V_n_dot_0 @ 2 ) ) ) ) ),
+        = ( 'cons/2' @ $real @ V_m_dot_0 @ ( 'cons/2' @ $real @ V_n_dot_0 @ ( 'nil/0' @ $real ) ) ) )
+      & ( 0.0 != V_m_dot_0 )
+      & ( 0.0
+        = ( $difference @ ( $difference @ ( '^/2' @ V_m_dot_0 @ 2.0 ) @ ( $product @ 3.0 @ ( $product @ V_m_dot_0 @ V_n_dot_0 ) ) ) @ ( '^/2' @ V_n_dot_0 @ 2.0 ) ) ) ) ),
     answer_to(p2_question,[])).
+

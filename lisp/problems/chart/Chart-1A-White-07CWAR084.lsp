@@ -9,7 +9,7 @@
 
 (def-directive p
   (Find (min)
-    (forall (A B C D P) (->
+    (forall (A B C D) (->
       (&&
         (= A (point 0 0))
         (= B (point 2 0))

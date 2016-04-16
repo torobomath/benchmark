@@ -24,7 +24,8 @@
 (def-directive p1
   (Show
    (forall (A B M C D E F K1 K2 P Q N)
-     (-> (&& (on M (seg A B)) (! (= M A)) (! (= M B))
+     (-> (&& (! (= A B))
+       (on M (seg A B)) (! (= M A)) (! (= M B))
        (is-regular-square A M C D)
        (is-regular-square M B E F)
        (vec-same-direction (vec M C) (vec M F))
@@ -55,8 +56,8 @@
                       (vec-same-direction (vec M C) (vec M F))
                       (circle-type K1)
                       (circle-type K2)
-                      (is-inscribed-in (polygon (list-of A M C D)) K1)
-                      (is-inscribed-in (polygon (list-of B M F E)) K2)
+          (is-inscribed-in (square A M C D) K1)
+          (is-inscribed-in (square B M F E) K2)
                       (= P (center-of K1))
                       (= Q (center-of K2))
                       (intersect K1 K2 N)

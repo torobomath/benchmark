@@ -21,16 +21,14 @@
 %            Maximal formula depth :   29 (  29 average)
 %            Number of connectives :   68 (   0   ~;   0   |;  10   &;  57   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   12 (   0   :)
+%            Number of symbols     :   12 (   0   :;   0   =)
 %            Number of variables   :   12 (   0 sgn;  12   !;   0   ?;   0   ^)
 %                                         (  12   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_E: '2d.Shape',V_J: '2d.Point',V_M: '2d.Point',V_K: '2d.Point',V_L: '2d.Point',V_F: '2d.Point',V_G: '2d.Point',V_S: '2d.Point',V_T: '2d.Point'] :
@@ -48,3 +46,4 @@ thf(p,conjecture,(
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_A @ V_G ) @ ( '2d.line/2' @ V_B @ V_C ) @ V_T ) )
      => ( V_M
         = ( '2d.seg-midpoint-of/1' @ ( '2d.seg/2' @ V_S @ V_T ) ) ) ) )).
+

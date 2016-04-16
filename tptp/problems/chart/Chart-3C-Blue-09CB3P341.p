@@ -6,53 +6,53 @@
 %% GENERATED: 2015-01-01
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   62 (   8 equality;  21 variable)
+%            Number of atoms       :   64 (   8 equality;  21 variable)
 %            Maximal formula depth :   14 (  11 average)
-%            Number of connectives :   42 (   0   ~;   0   |;   6   &;  36   @)
+%            Number of connectives :   44 (   0   ~;   0   |;   6   &;  38   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   16 (   0   :)
+%            Number of symbols     :   16 (   0   :;   0   =)
 %            Number of variables   :   11 (   0 sgn;   0   !;   3   ?;   8   ^)
 %                                         (  11   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   1 pred;    2 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Draw/1'
+    ( 'draw/1' @ '2d.Shape'
     @ ^ [V_f: '2d.Shape'] :
         ( V_f
         = ( '2d.set-of-cfun/1'
-          @ ^ [V_x: 'R',V_y: 'R'] :
+          @ ^ [V_x: $real,V_y: $real] :
               ( ( V_y
-                = ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_x @ 3 ) ) @ ( 'sqrt/1' @ V_x ) ) )
-              & ( '<=/2' @ 0 @ V_x ) ) ) ) )).
+                = ( $product @ ( 'abs/1' @ ( $difference @ V_x @ 3.0 ) ) @ ( 'sqrt/1' @ V_x ) ) )
+              & ( $lesseq @ 0.0 @ V_x ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_alpha: 'R'] :
-      ? [V_f: 'R' > 'R',V_S1: 'R',V_S2: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_alpha: $real] :
+      ? [V_f: ( $real > $real ),V_S1: $real,V_S2: $real] :
         ( ( V_f
-          = ( ^ [V_x: 'R'] :
-                ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_x @ 3 ) ) @ ( 'sqrt/1' @ V_x ) ) ) )
+          = ( ^ [V_x: $real] :
+                ( $product @ ( 'abs/1' @ ( $difference @ V_x @ 3.0 ) ) @ ( 'sqrt/1' @ V_x ) ) ) )
         & ( V_S1
-          = ( 'integral/3' @ V_f @ 0 @ 3 ) )
+          = ( 'integral/3' @ V_f @ 0.0 @ 3.0 ) )
         & ( V_S2
-          = ( 'integral/3' @ V_f @ 3 @ V_alpha ) )
+          = ( 'integral/3' @ V_f @ 3.0 @ V_alpha ) )
         & ( V_S1 = V_S2 ) ) )).
 
 thf(p1_answer,answer,
     ( '2d.set-of-cfun/1'
-    @ ^ [V_x_dot_0: 'R',V_y_dot_0: 'R'] :
-        ( ( ( '^/2' @ V_y_dot_0 @ 2 )
-          = ( '*/2' @ ( '^/2' @ ( '-/2' @ V_x_dot_0 @ 3 ) @ 2 ) @ V_x_dot_0 ) )
-        & ( '<=/2' @ 0 @ V_y_dot_0 )
-        & ( '<=/2' @ 0 @ V_x_dot_0 ) ) ),
+    @ ^ [V_x_dot_0: $real,V_y_dot_0: $real] :
+        ( ( ( '^/2' @ V_y_dot_0 @ 2.0 )
+          = ( $product @ ( '^/2' @ ( $difference @ V_x_dot_0 @ 3.0 ) @ 2.0 ) @ V_x_dot_0 ) )
+        & ( $lesseq @ 0.0 @ V_y_dot_0 )
+        & ( $lesseq @ 0.0 @ V_x_dot_0 ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_alpha_dot_0: 'R'] : ( V_alpha_dot_0 = 5 ) ),
+    ^ [V_alpha_dot_0: $real] : ( V_alpha_dot_0 = 5.0 ) ),
     answer_to(p2_question,[])).
+

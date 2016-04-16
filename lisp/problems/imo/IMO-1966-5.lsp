@@ -15,26 +15,21 @@
 ;; </PROBLEM-TEXT>
 
 (def-directive p
-  (Find (xs)
+  (Find (xs) (&& (pairwise-distinct (list-of A1 A2 A3 A4))
   (exists (X1 X2 X3 X4)
     (&& (= xs (list-of X1 X2 X3 X4))
         (= (+ (* (abs (- A1 A2)) X2) (* (abs (- A1 A3)) X3) (* (abs (- A1 A4)) X4)) 1)
         (= (+ (* (abs (- A2 A1)) X1) (* (abs (- A2 A3)) X3) (* (abs (- A2 A4)) X4)) 1)
         (= (+ (* (abs (- A3 A2)) X2) (* (abs (- A3 A1)) X1) (* (abs (- A3 A4)) X4)) 1)
         (= (+ (* (abs (- A4 A2)) X2) (* (abs (- A4 A3)) X3) (* (abs (- A4 A1)) X1)) 1)
-      (! (= A1 A2))
-      (! (= A1 A3))
-      (! (= A1 A4))
-      (! (= A2 A3))
-      (! (= A2 A4))
-      (! (= A3 A4))
-        )
     )
   )
-  )
+  ))
+)
 
-(def-answer p (PLam xs (= xs (list-of (/ 1 (- A1 A4))
-                                      0
-                                      0
-                                      (/ 1 (- A1 A4))))))
+(def-answer p (PLam xs (&& (pairwise-distinct (list-of A1 A2 A3 A4))
+                           (= xs (list-of (/ 1 (- A1 A4))
+                                          0
+                                          0
+                                          (/ 1 (- A1 A4)))))))
 

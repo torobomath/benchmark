@@ -25,7 +25,7 @@
                         (on W (seg B C))
                         (! (= W B))
                         (! (= W C))
-                        (= M (foot-of-perpendicular-line-from-to A (line B C)))
+                        (= M (foot-of-perpendicular-line-from-to B (line A C)))
                         (= N (foot-of-perpendicular-line-from-to C (line A B)))
                         (circle-type w1)
                         (is-inscribed-in (triangle B W N) w1)

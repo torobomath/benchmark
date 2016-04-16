@@ -20,45 +20,44 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    3 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  173 (  14 equality;  84 variable)
+%            Number of atoms       :  182 (  14 equality;  84 variable)
 %            Maximal formula depth :   36 (  21 average)
-%            Number of connectives :  145 (   0   ~;   0   |;  21   &; 123   @)
+%            Number of connectives :  154 (   0   ~;   0   |;  21   &; 132   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   28 (   0   :)
+%            Number of symbols     :   28 (   0   :;   0   =)
 %            Number of variables   :   28 (   0 sgn;   8   !;  17   ?;   3   ^)
 %                                         (  28   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   1 pred;    2 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
-    ! [V_O: '2d.Point',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_x: 'R',V_y: 'R'] :
+    ! [V_O: '2d.Point',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_x: $real,V_y: $real] :
       ( ( ( '2d.is-triangle/3' @ V_O @ V_A @ V_B )
-        & ( '2d.divide-internally/4' @ V_C @ ( '2d.seg/2' @ V_A @ V_B ) @ 1 @ 2 )
-        & ( '>=/2' @ V_x @ 1 )
+        & ( '2d.divide-internally/4' @ V_C @ ( '2d.seg/2' @ V_A @ V_B ) @ 1.0 @ 2.0 )
+        & ( $greatereq @ V_x @ 1.0 )
         & ( ( '2d.vec/2' @ V_O @ V_D )
           = ( '2d.sv*/2' @ V_x @ ( '2d.vec/2' @ V_O @ V_A ) ) )
         & ( '2d.on/2' @ V_E @ ( '2d.intersection/2' @ ( '2d.line/2' @ V_C @ V_D ) @ ( '2d.line/2' @ V_O @ V_B ) ) )
         & ( ( '2d.vec/2' @ V_O @ V_E )
           = ( '2d.sv*/2' @ V_y @ ( '2d.vec/2' @ V_O @ V_B ) ) ) )
-     => ( ( '+/2' @ ( '//2' @ 2 @ V_x ) @ ( '//2' @ 1 @ V_y ) )
-        = 3 ) ) )).
+     => ( ( $sum @ ( $quotient @ 2.0 @ V_x ) @ ( $quotient @ 1.0 @ V_y ) )
+        = 3.0 ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_Ux: 'ListOf' @ 'R'] :
-      ? [V_U_set: 'SetOf' @ 'R',V_U_max: 'R',V_x_opt: 'R',V_O: '2d.Point',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_S: 'R',V_T: 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_Ux: ( 'ListOf' @ $real )] :
+      ? [V_U_set: ( 'SetOf' @ $real ),V_U_max: $real,V_x_opt: $real,V_O: '2d.Point',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_S: $real,V_T: $real] :
         ( ( 'maximum/2' @ V_U_set @ V_U_max )
         & ( V_U_set
-          = ( 'set-by-def/1'
-            @ ^ [V_U: 'R'] :
-              ? [V_C_dot_0: '2d.Point',V_D_dot_0: '2d.Point',V_E_dot_0: '2d.Point',V_x: 'R',V_S_dot_0: 'R',V_T_dot_0: 'R'] :
-                ( ( '2d.divide-internally/4' @ V_C_dot_0 @ ( '2d.seg/2' @ V_A @ V_B ) @ 1 @ 2 )
-                & ( '>=/2' @ V_x @ 1 )
+          = ( 'set-by-def/1' @ $real
+            @ ^ [V_U: $real] :
+              ? [V_C_dot_0: '2d.Point',V_D_dot_0: '2d.Point',V_E_dot_0: '2d.Point',V_x: $real,V_S_dot_0: $real,V_T_dot_0: $real] :
+                ( ( '2d.divide-internally/4' @ V_C_dot_0 @ ( '2d.seg/2' @ V_A @ V_B ) @ 1.0 @ 2.0 )
+                & ( $greatereq @ V_x @ 1.0 )
                 & ( ( '2d.vec/2' @ V_O @ V_D_dot_0 )
                   = ( '2d.sv*/2' @ V_x @ ( '2d.vec/2' @ V_O @ V_A ) ) )
                 & ( '2d.on/2' @ V_E_dot_0 @ ( '2d.intersection/2' @ ( '2d.line/2' @ V_C_dot_0 @ V_D_dot_0 ) @ ( '2d.line/2' @ V_O @ V_B ) ) )
@@ -67,10 +66,10 @@ thf(p2_qustion,question,
                 & ( V_T_dot_0
                   = ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_O @ V_D_dot_0 @ V_E_dot_0 ) ) )
                 & ( V_U
-                  = ( '//2' @ V_S_dot_0 @ V_T_dot_0 ) ) ) ) )
+                  = ( $quotient @ V_S_dot_0 @ V_T_dot_0 ) ) ) ) )
         & ( '2d.is-triangle/3' @ V_O @ V_A @ V_B )
-        & ( '2d.divide-internally/4' @ V_C @ ( '2d.seg/2' @ V_A @ V_B ) @ 1 @ 2 )
-        & ( '>=/2' @ V_x_opt @ 1 )
+        & ( '2d.divide-internally/4' @ V_C @ ( '2d.seg/2' @ V_A @ V_B ) @ 1.0 @ 2.0 )
+        & ( $greatereq @ V_x_opt @ 1.0 )
         & ( ( '2d.vec/2' @ V_O @ V_D )
           = ( '2d.sv*/2' @ V_x_opt @ ( '2d.vec/2' @ V_O @ V_A ) ) )
         & ( '2d.on/2' @ V_E @ ( '2d.intersection/2' @ ( '2d.line/2' @ V_C @ V_D ) @ ( '2d.line/2' @ V_O @ V_B ) ) )
@@ -79,12 +78,13 @@ thf(p2_qustion,question,
         & ( V_T
           = ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_O @ V_D @ V_E ) ) )
         & ( V_U_max
-          = ( '//2' @ V_S @ V_T ) )
+          = ( $quotient @ V_S @ V_T ) )
         & ( V_Ux
-          = ( 'cons/2' @ V_U_max @ ( 'cons/2' @ V_x_opt @ 'nil/0' ) ) ) ) )).
+          = ( 'cons/2' @ $real @ V_U_max @ ( 'cons/2' @ $real @ V_x_opt @ ( 'nil/0' @ $real ) ) ) ) ) )).
 
 thf(p2_answer,answer,(
-    ^ [V_Ux_dot_0: 'ListOf' @ 'R'] :
+    ^ [V_Ux_dot_0: ( 'ListOf' @ $real )] :
       ( V_Ux_dot_0
-      = ( 'cons/2' @ ( '//2' @ 9 @ 8 ) @ ( 'cons/2' @ ( '//2' @ 4 @ 3 ) @ 'nil/0' ) ) ) ),
+      = ( 'cons/2' @ $real @ ( $quotient @ 9.0 @ 8.0 ) @ ( 'cons/2' @ $real @ ( $quotient @ 4.0 @ 3.0 ) @ ( 'nil/0' @ $real ) ) ) ) ),
     answer_to(p2_question,[])).
+

@@ -56,8 +56,8 @@
                     (minimum I_set I_min)
                     (= fmin (poly-fun (list-of c_opt 0 a_opt)))
                     (forall (x) (->
-                      (&& (<= 0 x) (<= x 1))
-                      (>= (funapp fmin x) (^ (+ x 1) 2))))
+                                  (&& (<= 0 x) (<= x 1))
+                                  (>= (funapp fmin x) (^ (+ x 1) 2))))
                     (= I_set (set-by-def (PLam I (exists (a c f)
                                                          (&& (= f (poly-fun (list-of c 0 a)))
                                                              (forall (x)

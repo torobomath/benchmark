@@ -27,7 +27,7 @@
   )
 )
 
-(def-answer p (PLam answer (&&
+(def-answer p (PLam answer (exists (Q R) (&&
   (= answer (list-of Q R))
   (forall (S T) (->
     (&& (line-symmetry P S (line O X))
@@ -37,5 +37,5 @@
       (intersect (line S T) (line O Y) R)
     )
   ))
-)))
+))))
 

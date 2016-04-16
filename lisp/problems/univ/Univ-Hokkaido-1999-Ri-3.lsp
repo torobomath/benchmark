@@ -106,3 +106,10 @@
 
 (def-answer p3 (PLam S (= S (sqrt 3))))
 
+(def-answer a1 (PLam R (= R (point (+ (- (* (/ 1 2) a)) (* (/ (sqrt 3) 2) b)) (+ (* (/ (sqrt 3) 2) a) (* (/ 1 2) b))))))
+
+(def-answer a2 (PLam C (= C (2d.circle (point 0 0) (sqrt (/ 4 3))))))
+
+(def-answer a3 (PLam S_P (= S_P (pair (sqrt 3)
+                                      (point (/ 1 (sqrt 3)) -1)))))
+

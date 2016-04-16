@@ -12,25 +12,24 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   21 (   4 equality;   6 variable)
+%            Number of atoms       :   22 (   4 equality;   6 variable)
 %            Maximal formula depth :   11 (   7 average)
-%            Number of connectives :   11 (   0   ~;   0   |;   2   &;   9   @)
+%            Number of connectives :   12 (   0   ~;   0   |;   2   &;  10   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    7 (   0   :)
+%            Number of symbols     :    7 (   0   :;   0   =)
 %            Number of variables   :    4 (   0 sgn;   0   !;   2   ?;   2   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    2 (   0 pred;    0 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_n: 'Z'] :
-      ? [V_A: 'Z',V_B: 'Z'] :
+    ( 'find/1' @ $int
+    @ ^ [V_n: $int] :
+      ? [V_A: $int,V_B: $int] :
         ( ( V_A
           = ( 'int.sum/1' @ ( 'int.int2decimal/1' @ ( 'int.^/2' @ 4444 @ 4444 ) ) ) )
         & ( V_B
@@ -39,5 +38,6 @@ thf(p_qustion,question,
           = ( 'int.sum/1' @ ( 'int.int2decimal/1' @ V_B ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_n_dot_0: 'Z'] : ( V_n_dot_0 = 7 ) ),
+    ^ [V_n_dot_0: $int] : ( V_n_dot_0 = 7 ) ),
     answer_to(p_question,[])).
+

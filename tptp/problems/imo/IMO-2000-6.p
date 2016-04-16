@@ -14,20 +14,18 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  124 (   7 equality;  71 variable)
-%            Maximal formula depth :   41 (  41 average)
-%            Number of connectives :  109 (   0   ~;   0   |;  20   &;  88   @)
+%            Number of atoms       :  133 (   7 equality;  71 variable)
+%            Maximal formula depth :   42 (  42 average)
+%            Number of connectives :  118 (   0   ~;   0   |;  20   &;  97   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   16 (   0   :)
+%            Number of symbols     :   16 (   0   :;   0   =)
 %            Number of variables   :   17 (   0 sgn;  17   !;   0   ?;   0   ^)
 %                                         (  17   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A1: '2d.Point',V_A2: '2d.Point',V_A3: '2d.Point',V_K1: '2d.Point',V_K2: '2d.Point',V_K3: '2d.Point',V_L1: '2d.Point',V_L2: '2d.Point',V_L3: '2d.Point',V_P: '2d.Point',V_l1: '2d.Shape',V_l2: '2d.Shape',V_l3: '2d.Shape',V_B1: '2d.Point',V_B2: '2d.Point',V_B3: '2d.Point',V_C: '2d.Shape'] :
@@ -53,10 +51,11 @@ thf(p,conjecture,(
         & ( '2d.line-symmetry-shapes/3' @ ( '2d.line/2' @ V_K2 @ V_K3 ) @ V_l1 @ ( '2d.line/2' @ V_L2 @ V_L3 ) )
         & ( '2d.line-symmetry-shapes/3' @ ( '2d.line/2' @ V_K3 @ V_K1 ) @ V_l2 @ ( '2d.line/2' @ V_L3 @ V_L1 ) )
         & ( '2d.line-symmetry-shapes/3' @ ( '2d.line/2' @ V_K1 @ V_K2 ) @ V_l3 @ ( '2d.line/2' @ V_L1 @ V_L2 ) )
-        & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ V_l2 @ ( 'cons/2' @ V_l3 @ 'nil/0' ) ) @ V_B1 )
-        & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ V_l3 @ ( 'cons/2' @ V_l1 @ 'nil/0' ) ) @ V_B2 )
-        & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ V_l1 @ ( 'cons/2' @ V_l2 @ 'nil/0' ) ) @ V_B3 ) )
+        & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ V_l2 @ ( 'cons/2' @ '2d.Shape' @ V_l3 @ ( 'nil/0' @ '2d.Shape' ) ) ) @ V_B1 )
+        & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ V_l3 @ ( 'cons/2' @ '2d.Shape' @ V_l1 @ ( 'nil/0' @ '2d.Shape' ) ) ) @ V_B2 )
+        & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ V_l1 @ ( 'cons/2' @ '2d.Shape' @ V_l2 @ ( 'nil/0' @ '2d.Shape' ) ) ) @ V_B3 ) )
      => ( ( '2d.is-triangle/3' @ V_B1 @ V_B2 @ V_B3 )
         & ( '2d.on/2' @ V_B1 @ V_C )
         & ( '2d.on/2' @ V_B2 @ V_C )
         & ( '2d.on/2' @ V_B3 @ V_C ) ) ) )).
+

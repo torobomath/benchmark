@@ -146,6 +146,9 @@
 ;;@ is-regular-tetrahedron(a,b,c,d) <-> four points a, b, c, d form a regular tetrahedron
 (def-pred is-regular-tetrahedron :: Point -> Point -> Point -> Point => Bool)
 
+;;@ is-regular-tetrahedron(S) <-> Shape S is a regular tetrahedron
+(def-pred is-regular-tetrahedron :: Shape => Bool)
+
 ;;@ octahedron(p,a,b,c,d,q) = the octahedron p-abcd-q
 (def-fun octahedron :: Point -> Point -> Point -> Point -> Point -> Point => Shape)
 
@@ -154,6 +157,9 @@
 
 ;;@ is-regular-octahedron(p,a,b,c,d,q) <-> six points p, a, b, c, d, q form a regular octahedron p-abcd-q
 (def-pred is-regular-octahedron :: Point -> Point -> Point -> Point -> Point -> Point => Bool)
+
+;;@ is-regular-octahedron(S) <-> Shape S is a regular octahedron
+(def-pred is-regular-octahedron :: Shape => Bool)
 
 ;;@ is-parallelopiped(a,b,c,d,e,f,g,h) <-> eight points a, b, c, d, e, f, g, h form a parallelopiped abcd-efgh
 (def-pred is-parallelopiped ::
@@ -251,6 +257,8 @@
 
 ;;@ line3d(a,b,c,d,e,f) = the line (x,y,z) = t(a,b,c) + (d,e,f)
 (def-fun line3d :: R -> R -> R -> R -> R -> R => Shape)
+(def-pred line3d-type :: Shape => Bool)
+(non-degen-cond line3d 6 line3d-type)
 
 (def-fun import-2d-point :: 2d.Point => Point)
 
@@ -261,48 +269,83 @@
 ;;@ effective only if shape2 is a line
 (def-fun solid-of-revolution :: Shape -> Shape => Shape)
 
+;;@ central-axis-of(shape) = the central axis of shape (as a line, not segment)
+(def-fun central-axis-of :: Shape => Shape)
+
 ;;@ plane-symmetry(p,q,plane) <-> p and q are symmetric with respect to plane
 (def-pred plane-symmetry :: Point -> Point -> Shape => Bool)
 
 ;; typing triggers
 ;;@ sphere-type(shape) <-> shape is a sphere
 (def-pred sphere-type :: Shape => Bool)
+(non-degen-cond sphere 2 sphere-type)
 
 ;;@ plane-type(shape) <-> shape is a plane
 (def-pred plane-type :: Shape => Bool)
+(non-degen-cond plane 4 plane-type)
+(non-degen-cond plane 1 plane-type)
+
+;;@ plane1-type(shape) <-> shape is a plane
+(def-pred plane1-type :: Shape => Bool)
+(non-degen-cond plane1 3 plane1-type)
+
+;;@ plane2-type(shape) <-> shape is a plane
+(def-pred plane2-type :: Shape => Bool)
+(non-degen-cond plane2 2 plane2-type)
+(non-degen-cond plane2 1 plane2-type)
 
 ;;@ tetrahedron-type(shape) <-> shape is a tetrahedron
 (def-pred tetrahedron-type :: Shape => Bool)
+(non-degen-cond tetrahedron 4 tetrahedron-type)
 
 ;;@ cuboid-type(shape) <-> shape is a cuboid
 (def-pred cuboid-type :: Shape => Bool)
+(non-degen-cond cuboid 8 cuboid-type)
 
 ;;@ cube-type(shape) <-> shape is a cube
 (def-pred cube-type :: Shape => Bool)
+(non-degen-cond cube 8 cube-type)
+
+;;@ octahedron-type(shape) <-> shape is a octahedron
+(def-pred octahedron-type :: Shape => Bool)
+(non-degen-cond octahedron 6 octahedron-type)
 
 ;;@ square-pyramid-type(shape) <-> shape is a square pyramid
 (def-pred square-pyramid-type :: Shape => Bool)
+(non-degen-cond square-pyramid 5 square-pyramid-type)
 
 ;;@ circle-type(shape) <-> shape is a circle
 (def-pred circle-type :: Shape => Bool)
+(non-degen-cond circle 3 circle-type)
 
 ;;@ disk-type(shape) <-> shape is a disk
 (def-pred disk-type :: Shape => Bool)
+(non-degen-cond disk 3 disk-type)
 
 ;;@ arc-type(shape) <-> shape is an arc
 (def-pred arc-type :: Shape => Bool)
+(non-degen-cond arc 4 arc-type)
 
 ;;@ circular-sector-type(shape) <-> shape is a circular sector
 (def-pred circular-sector-type :: Shape => Bool)
+(non-degen-cond circular-sector 4 circular-sector-type)
 
 ;;@ cone-type(shape) <-> shape is a cone
 (def-pred cone-type :: Shape => Bool)
+(non-degen-cond cone 2 cone-type)
 
 ;;@ right-cone-type(shape) <-> shape is a right-cone
 (def-pred right-cone-type :: Shape => Bool)
+(non-degen-cond right-cone 2 right-cone-type)
 
 ;;@ cylinder-type(shape) <-> shape is a cylinder
 (def-pred cylinder-type :: Shape => Bool)
+(non-degen-cond cylinder 2 cylinder-type)
 
 ;;@ pyramid-type(shape) <-> shape is a pyramid
 (def-pred pyramid-type :: Shape => Bool)
+(non-degen-cond pyramid 2 pyramid-type)
+
+;;@ prism-type(shape) <-> shape is a prism
+(def-pred prism-type :: Shape => Bool)
+(non-degen-cond prism 2 prism-type)

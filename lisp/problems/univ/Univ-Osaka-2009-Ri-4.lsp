@@ -52,22 +52,3 @@
            (* (/ 1 2) (+ (distance O A)
              (distance O B))))))))
 
-(def-directive
-  p2_1
-  (Show (forall (O A B M a b P Q)
-          (-> (&& (= O (origin))
-            (= A (point 1 0))
-            (is-triangle O A B)
-            (= M (midpoint-of A B))
-            (= a (sv* (/ 1 (distance O A)) (vec O A)))
-            (= b (sv* (/ 1 (distance O B)) (vec O B)))
-            (= (inner-prod a (vec O P))
-         (- (inner-prod b (vec O P))))
-            (> (inner-prod a (vec O P)) 0)
-            (perpendicular (line O P) (line A Q))
-            (on Q (line O P))
-            )
-        (= (distance M Q)
-           (* (/ 1 2) (+ (distance O A)
-             (distance O B))))))))
-

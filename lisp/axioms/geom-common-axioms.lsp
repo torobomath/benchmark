@@ -123,6 +123,11 @@
     (<-> (is-unit-vec v)
              (= 1 (radius^2 v))))
 
+(axiom
+ def-vec-unary-minus
+ (v)
+ (= (v- v)
+    (sv* -1 v)))
 
 ; Vec -> Line => Bool
 (axiom
@@ -502,6 +507,8 @@
 					 (= a (angle D A B))
 					 (= a (angle B A D)))))
 
+;; TODO: are-interior-angles
+
 ;; is-angle-bisector :: Line -> Angle => Bool
 (axiom
 	def_is_angle_bisector
@@ -611,7 +618,7 @@
     (= (end-points-of (arc c p q))
        (list-of p q)))
 
-;; Shape -> Shpae
+;; Shape -> Shape
 (axiom
     def_seg_extension_of_line
     (p q)
@@ -2714,6 +2721,13 @@
     (P Q)
     (&& (= S (seg P Q))
             (! (= P Q))))
+
+(def-typing-trigger
+   (angle-type a)
+   (P Q R)
+   (&& (= a (angle P Q R))
+       (! (= P Q))
+       (! (= R Q))))
 
 (def-typing-trigger
   (triangle-type T)

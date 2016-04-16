@@ -5,69 +5,72 @@
 %% AUTHOR:    Munehiro Kobayashi
 %% GENERATED: 2015-01-01
 
-% Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  155 (   9 equality;  33 variable)
-%            Maximal formula depth :   19 (  16 average)
-%            Number of connectives :  135 (   0   ~;   0   |;   6   &; 129   @)
+% Syntax   : Number of formulae    :    5 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  158 (   9 equality;  31 variable)
+%            Maximal formula depth :   18 (  13 average)
+%            Number of connectives :  138 (   0   ~;   0   |;   6   &; 132   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    6 (   6   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   24 (   0   :)
-%            Number of variables   :   20 (   2 sgn;   0   !;   6   ?;  12   ^)
+%            Number of symbols     :   25 (   1   :;   0   =)
+%            Number of variables   :   18 (   0 sgn;   0   !;   6   ?;  12   ^)
 %                                         (  18   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   11 (   0 pred;    6 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('n/0_type',type,(
+    'n/0': $int )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_answer: 'ListOf' @ 'R'] :
-      ? [V_f1: 'R' > 'R',V_f2: 'R' > 'R',V_S: 'Z' > 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_answer: ( 'ListOf' @ $real )] :
+      ? [V_f1: ( $real > $real ),V_f2: ( $real > $real ),V_S: ( $int > $real )] :
         ( ( V_f1
-          = ( ^ [V_x_dot_1: 'R'] :
-                ( 'exp/1' @ ( '-/1' @ V_x_dot_1 ) ) ) )
+          = ( ^ [V_x_dot_1: $real] :
+                ( 'exp/1' @ ( $uminus @ V_x_dot_1 ) ) ) )
         & ( V_f2
-          = ( ^ [V_x_dot_0: 'R'] :
-                ( '*/2' @ ( 'exp/1' @ ( '-/1' @ V_x_dot_0 ) ) @ ( 'abs/1' @ ( 'cos/1' @ V_x_dot_0 ) ) ) ) )
+          = ( ^ [V_x_dot_0: $real] :
+                ( $product @ ( 'exp/1' @ ( $uminus @ V_x_dot_0 ) ) @ ( 'abs/1' @ ( 'cos/1' @ V_x_dot_0 ) ) ) ) )
         & ( V_S
-          = ( ^ [V_n_dot_0: 'Z'] :
+          = ( ^ [V_n_dot_0: $int] :
                 ( 'integral/3'
-                @ ^ [V_x: 'R'] :
-                    ( '-/2' @ ( 'LamApp/2' @ V_f1 @ V_x ) @ ( 'LamApp/2' @ V_f2 @ V_x ) )
-                @ ( '*/2' @ ( '-/2' @ ( 'int->real/1' @ V_n_dot_0 ) @ 1 ) @ 'Pi/0' )
-                @ ( '*/2' @ ( 'int->real/1' @ V_n_dot_0 ) @ 'Pi/0' ) ) ) )
+                @ ^ [V_x: $real] :
+                    ( $difference @ ( V_f1 @ V_x ) @ ( V_f2 @ V_x ) )
+                @ ( $product @ ( $difference @ ( $to_real @ V_n_dot_0 ) @ 1.0 ) @ 'Pi/0' )
+                @ ( $product @ ( $to_real @ V_n_dot_0 ) @ 'Pi/0' ) ) ) )
         & ( V_answer
-          = ( 'cons/2' @ ( 'LamApp/2' @ V_S @ 1 ) @ ( 'cons/2' @ ( 'LamApp/2' @ V_S @ V_n ) @ 'nil/0' ) ) ) ) )).
+          = ( 'cons/2' @ $real @ ( V_S @ 1 ) @ ( 'cons/2' @ $real @ ( V_S @ 'n/0' ) @ ( 'nil/0' @ $real ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_lim: 'R'] :
-      ? [V_f1: 'R' > 'R',V_f2: 'R' > 'R',V_S: 'Z' > 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_lim: $real] :
+      ? [V_f1: ( $real > $real ),V_f2: ( $real > $real ),V_S: ( $int > $real )] :
         ( ( V_f1
-          = ( ^ [V_x_dot_1: 'R'] :
-                ( 'exp/1' @ ( '-/1' @ V_x_dot_1 ) ) ) )
+          = ( ^ [V_x_dot_1: $real] :
+                ( 'exp/1' @ ( $uminus @ V_x_dot_1 ) ) ) )
         & ( V_f2
-          = ( ^ [V_x_dot_0: 'R'] :
-                ( '*/2' @ ( 'exp/1' @ ( '-/1' @ V_x_dot_0 ) ) @ ( 'abs/1' @ ( 'cos/1' @ V_x_dot_0 ) ) ) ) )
+          = ( ^ [V_x_dot_0: $real] :
+                ( $product @ ( 'exp/1' @ ( $uminus @ V_x_dot_0 ) ) @ ( 'abs/1' @ ( 'cos/1' @ V_x_dot_0 ) ) ) ) )
         & ( V_S
-          = ( ^ [V_n: 'Z'] :
+          = ( ^ [V_n: $int] :
                 ( 'integral/3'
-                @ ^ [V_x: 'R'] :
-                    ( '-/2' @ ( 'LamApp/2' @ V_f1 @ V_x ) @ ( 'LamApp/2' @ V_f2 @ V_x ) )
-                @ ( '*/2' @ ( '-/2' @ ( 'int->real/1' @ V_n ) @ 1 ) @ 'Pi/0' )
-                @ ( '*/2' @ ( 'int->real/1' @ V_n ) @ 'Pi/0' ) ) ) )
+                @ ^ [V_x: $real] :
+                    ( $difference @ ( V_f1 @ V_x ) @ ( V_f2 @ V_x ) )
+                @ ( $product @ ( $difference @ ( $to_real @ V_n ) @ 1.0 ) @ 'Pi/0' )
+                @ ( $product @ ( $to_real @ V_n ) @ 'Pi/0' ) ) ) )
         & ( 'seq.is-infinite-sum-of/2' @ V_lim @ ( 'seq.seq/1' @ V_S ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_answer_dot_0: 'ListOf' @ 'R'] :
+    ^ [V_answer_dot_0: ( 'ListOf' @ $real )] :
       ( V_answer_dot_0
-      = ( 'cons/2' @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ ( '+/2' @ ( '+/2' @ 1 @ ( '*/2' @ -2 @ ( 'exp/1' @ ( '//2' @ ( '-/1' @ 'Pi/0' ) @ 2 ) ) ) ) @ ( '-/1' @ ( 'exp/1' @ ( '-/1' @ 'Pi/0' ) ) ) ) ) @ ( 'cons/2' @ ( '*/2' @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ ( 'exp/1' @ ( '*/2' @ ( '-/1' @ ( '-/2' @ ( 'int->real/1' @ V_n ) @ 1 ) ) @ 'Pi/0' ) ) ) @ ( '+/2' @ ( '+/2' @ 1 @ ( '*/2' @ -2 @ ( 'exp/1' @ ( '-/1' @ ( '//2' @ 'Pi/0' @ 2 ) ) ) ) ) @ ( '-/1' @ ( 'exp/1' @ ( '-/1' @ 'Pi/0' ) ) ) ) ) @ 'nil/0' ) ) ) ),
+      = ( 'cons/2' @ $real @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ ( $sum @ ( $sum @ 1.0 @ ( $product @ -2.0 @ ( 'exp/1' @ ( $quotient @ ( $uminus @ 'Pi/0' ) @ 2.0 ) ) ) ) @ ( $uminus @ ( 'exp/1' @ ( $uminus @ 'Pi/0' ) ) ) ) ) @ ( 'cons/2' @ $real @ ( $product @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'exp/1' @ ( $product @ ( $uminus @ ( $difference @ ( $to_real @ 'n/0' ) @ 1.0 ) ) @ 'Pi/0' ) ) ) @ ( $sum @ ( $sum @ 1.0 @ ( $product @ -2.0 @ ( 'exp/1' @ ( $uminus @ ( $quotient @ 'Pi/0' @ 2.0 ) ) ) ) ) @ ( $uminus @ ( 'exp/1' @ ( $uminus @ 'Pi/0' ) ) ) ) ) @ ( 'nil/0' @ $real ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_lim_dot_0: 'R'] :
+    ^ [V_lim_dot_0: $real] :
       ( V_lim_dot_0
-      = ( '//2' @ ( '+/2' @ ( '+/2' @ ( 'exp/1' @ 'Pi/0' ) @ ( '*/2' @ -2 @ ( 'exp/1' @ ( '//2' @ 'Pi/0' @ 2 ) ) ) ) @ -1 ) @ ( '+/2' @ ( '*/2' @ 2 @ ( 'exp/1' @ 'Pi/0' ) ) @ -1 ) ) ) ),
+      = ( $quotient @ ( $sum @ ( $sum @ ( 'exp/1' @ 'Pi/0' ) @ ( $product @ -2.0 @ ( 'exp/1' @ ( $quotient @ 'Pi/0' @ 2.0 ) ) ) ) @ -1.0 ) @ ( $sum @ ( $product @ 2.0 @ ( 'exp/1' @ 'Pi/0' ) ) @ -1.0 ) ) ) ),
     answer_to(p2_question,[])).
+

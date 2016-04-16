@@ -10,57 +10,63 @@
 %% minimum value of $z=x^2+y^2-2 a x-2 b y$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  211 (   6 equality;  52 variable)
-%            Maximal formula depth :   20 (  20 average)
-%            Number of connectives :  197 (   0   ~;   5   |;  13   &; 179   @)
+% Syntax   : Number of formulae    :    4 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :  213 (   6 equality;  15 variable)
+%            Maximal formula depth :   20 (  11 average)
+%            Number of connectives :  199 (   0   ~;   5   |;  13   &; 181   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   24 (   0   :)
-%            Number of variables   :    9 (   2 sgn;   0   !;   2   ?;   3   ^)
+%            Number of symbols     :   26 (   2   :;   0   =)
+%            Number of variables   :    5 (   0 sgn;   0   !;   2   ?;   3   ^)
 %                                         (   5   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   18 (   2 pred;    5 func;   11 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_m: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_m: $real] :
         ( 'minimum/2'
-        @ ( 'set-by-def/1'
-          @ ^ [V_z: 'R'] :
-            ? [V_x: 'R',V_y: 'R'] :
-              ( ( '<=/2' @ ( '+/2' @ ( '^/2' @ V_x @ 2 ) @ ( '^/2' @ V_y @ 2 ) ) @ 25 )
-              & ( '<=/2' @ ( '+/2' @ ( '*/2' @ 2 @ V_x ) @ V_y ) @ 5 )
+        @ ( 'set-by-def/1' @ $real
+          @ ^ [V_z: $real] :
+            ? [V_x: $real,V_y: $real] :
+              ( ( $lesseq @ ( $sum @ ( '^/2' @ V_x @ 2.0 ) @ ( '^/2' @ V_y @ 2.0 ) ) @ 25.0 )
+              & ( $lesseq @ ( $sum @ ( $product @ 2.0 @ V_x ) @ V_y ) @ 5.0 )
               & ( V_z
-                = ( '+/2' @ ( '^/2' @ V_x @ 2 ) @ ( '+/2' @ ( '^/2' @ V_y @ 2 ) @ ( '+/2' @ ( '-/1' @ ( '*/2' @ 2 @ ( '*/2' @ V_a @ V_x ) ) ) @ ( '-/1' @ ( '*/2' @ 2 @ ( '*/2' @ V_b @ V_y ) ) ) ) ) ) ) ) )
+                = ( $sum @ ( '^/2' @ V_x @ 2.0 ) @ ( $sum @ ( '^/2' @ V_y @ 2.0 ) @ ( $sum @ ( $uminus @ ( $product @ 2.0 @ ( $product @ 'a/0' @ V_x ) ) ) @ ( $uminus @ ( $product @ 2.0 @ ( $product @ 'b/0' @ V_y ) ) ) ) ) ) ) ) )
         @ V_m ) )).
 
 thf(p_answer,answer,(
-    ^ [V_m_dot_0: 'R'] :
-      ( ( ( '<=/2' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ ( '^/2' @ V_b @ 2 ) ) @ 25 )
-        & ( '<=/2' @ V_b @ ( '-/2' @ 5 @ ( '*/2' @ 2 @ V_a ) ) )
+    ^ [V_m_dot_0: $real] :
+      ( ( ( $lesseq @ ( $sum @ ( '^/2' @ 'a/0' @ 2.0 ) @ ( '^/2' @ 'b/0' @ 2.0 ) ) @ 25.0 )
+        & ( $lesseq @ 'b/0' @ ( $difference @ 5.0 @ ( $product @ 2.0 @ 'a/0' ) ) )
         & ( V_m_dot_0
-          = ( '-/1' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ ( '^/2' @ V_b @ 2 ) ) ) ) )
-      | ( ( '>=/2' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ ( '^/2' @ V_b @ 2 ) ) @ 25 )
-        & ( ( '<=/2' @ V_a @ 0 )
-          | ( '<=/2' @ V_b @ ( '*/2' @ ( '-/1' @ ( '//2' @ 3 @ 4 ) ) @ V_a ) ) )
+          = ( $uminus @ ( $sum @ ( '^/2' @ 'a/0' @ 2.0 ) @ ( '^/2' @ 'b/0' @ 2.0 ) ) ) ) )
+      | ( ( $greatereq @ ( $sum @ ( '^/2' @ 'a/0' @ 2.0 ) @ ( '^/2' @ 'b/0' @ 2.0 ) ) @ 25.0 )
+        & ( ( $lesseq @ 'a/0' @ 0.0 )
+          | ( $lesseq @ 'b/0' @ ( $product @ ( $uminus @ ( $quotient @ 3.0 @ 4.0 ) ) @ 'a/0' ) ) )
         & ( V_m_dot_0
-          = ( '-/2' @ 25 @ ( '*/2' @ 10 @ ( 'sqrt/1' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ ( '^/2' @ V_b @ 2 ) ) ) ) ) ) )
-      | ( ( '>=/2' @ V_b @ ( '-/2' @ 5 @ ( '*/2' @ 2 @ V_a ) ) )
-        & ( '<=/2' @ V_b @ ( '+/2' @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ V_a ) @ 5 ) )
-        & ( '>=/2' @ V_b @ ( '-/2' @ 5 @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ V_a ) ) )
+          = ( $difference @ 25.0 @ ( $product @ 10.0 @ ( 'sqrt/1' @ ( $sum @ ( '^/2' @ 'a/0' @ 2.0 ) @ ( '^/2' @ 'b/0' @ 2.0 ) ) ) ) ) ) )
+      | ( ( $greatereq @ 'b/0' @ ( $difference @ 5.0 @ ( $product @ 2.0 @ 'a/0' ) ) )
+        & ( $lesseq @ 'b/0' @ ( $sum @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ 'a/0' ) @ 5.0 ) )
+        & ( $greatereq @ 'b/0' @ ( $difference @ 5.0 @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ 'a/0' ) ) )
         & ( V_m_dot_0
-          = ( '*/2' @ ( '//2' @ 1 @ 5 ) @ ( '+/2' @ ( '-/1' @ ( '^/2' @ V_a @ 2 ) ) @ ( '+/2' @ ( '-/1' @ ( '*/2' @ 4 @ ( '^/2' @ V_b @ 2 ) ) ) @ ( '+/2' @ ( '*/2' @ 4 @ ( '*/2' @ V_a @ V_b ) ) @ ( '+/2' @ ( '-/1' @ ( '*/2' @ 20 @ V_a ) ) @ ( '+/2' @ ( '-/1' @ ( '*/2' @ 10 @ V_b ) ) @ 25 ) ) ) ) ) ) ) )
-      | ( ( '>=/2' @ V_a @ 0 )
-        & ( '>=/2' @ V_b @ ( '+/2' @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ V_a ) @ 5 ) )
+          = ( $product @ ( $quotient @ 1.0 @ 5.0 ) @ ( $sum @ ( $uminus @ ( '^/2' @ 'a/0' @ 2.0 ) ) @ ( $sum @ ( $uminus @ ( $product @ 4.0 @ ( '^/2' @ 'b/0' @ 2.0 ) ) ) @ ( $sum @ ( $product @ 4.0 @ ( $product @ 'a/0' @ 'b/0' ) ) @ ( $sum @ ( $uminus @ ( $product @ 20.0 @ 'a/0' ) ) @ ( $sum @ ( $uminus @ ( $product @ 10.0 @ 'b/0' ) ) @ 25.0 ) ) ) ) ) ) ) )
+      | ( ( $greatereq @ 'a/0' @ 0.0 )
+        & ( $greatereq @ 'b/0' @ ( $sum @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ 'a/0' ) @ 5.0 ) )
         & ( V_m_dot_0
-          = ( '-/2' @ 25 @ ( '*/2' @ 10 @ V_b ) ) ) )
-      | ( ( '>=/2' @ V_b @ ( '*/2' @ ( '-/1' @ ( '//2' @ 3 @ 4 ) ) @ V_a ) )
-        & ( '<=/2' @ V_b @ ( '-/2' @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ V_a ) @ 5 ) )
+          = ( $difference @ 25.0 @ ( $product @ 10.0 @ 'b/0' ) ) ) )
+      | ( ( $greatereq @ 'b/0' @ ( $product @ ( $uminus @ ( $quotient @ 3.0 @ 4.0 ) ) @ 'a/0' ) )
+        & ( $lesseq @ 'b/0' @ ( $difference @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ 'a/0' ) @ 5.0 ) )
         & ( V_m_dot_0
-          = ( '+/2' @ 25 @ ( '+/2' @ ( '-/1' @ ( '*/2' @ 8 @ V_a ) ) @ ( '*/2' @ 6 @ V_b ) ) ) ) ) ) ),
+          = ( $sum @ 25.0 @ ( $sum @ ( $uminus @ ( $product @ 8.0 @ 'a/0' ) ) @ ( $product @ 6.0 @ 'b/0' ) ) ) ) ) ) ),
     answer_to(p_question,[])).
+

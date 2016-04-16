@@ -21,14 +21,14 @@
 (namespace 2d)
 
 (def-directive
-  p1
+  a1
   (Find (l)
   (let* ((C (graph-of (poly-fun (list-of 0 0 (/ 1 2))))))
     (&& (line-type l)
         (tangent C l (point t (* (/ 1 2) (^ t 2))))))))
 
 (def-answer
-  p1
+  a1
   (PLam l (= l (graph-of (poly-fun (list-of (- (* (/ 1 2) (^ t 2))) t))))))
 
 (def-directive
@@ -49,8 +49,14 @@
   p2
   (PLam ls (&& (> a 0)
       (|| (= ls (list-of 0 0))
-      (= ls (list-of (* (/ 4 3) a) (- (* (/ 8 9) (^ a 2)))))
+      (= ls (list-of (- (* (/ 8 9) (^ a 2))) (* (/ 4 3) a)))
       ))))
+
+(def-answer
+  a2
+  (PLam l1_l2 (&& (> a 0)
+                  (= l1_l2 (list-of (x-axis)
+                                    (graph-of (poly-fun (list-of (- (* (/ 8 9) (^ a 2))) (* (/ 4 3) a)))))))))
 
 (def-directive
   p2s
@@ -71,7 +77,7 @@
         (exists (P2) (tangent D l2 P2))))))))
 
 (def-directive
-  p3
+  a3
   (Find (ans)
   (let* ((C (graph-of (poly-fun (list-of 0 0 (/ 1 2)))))
          (D (graph-of (poly-fun (list-of (- (^ a 2)) (* 2 a) (- 1)))))
@@ -88,6 +94,6 @@
           (= ans (area-of (shape-enclosed-by (list-of C l1 l2)))))))))
 
 (def-answer
-  p3
+  a3
   (PLam ans (= ans (* (/ 8 81) (^ a 3)))))
 

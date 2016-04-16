@@ -30,5 +30,8 @@
                                       (= PQ (distance P Q))))))
           minPQ)))
 
-(def-answer p (PLam minPQ (= minPQ (* (sqrt 2) (- c (/ 1 4))))))
+(def-answer p (PLam minPQ (&&
+  (< (/ 1 4) c)
+  (= minPQ (* (sqrt 2) (- c (/ 1 4))))
+)))
 

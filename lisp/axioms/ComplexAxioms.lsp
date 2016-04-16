@@ -54,18 +54,17 @@
 
 (axiom
   def_arg
-	(x y)
-	(= (arg (complex x y))
-	   (if (> x 0)
-	       (.arctan (./ y x))
-	     (if (< x 0)
-		 (.+ (.arctan (./ y x)) (Pi))
-	       (if (> y 0)
-		   (./ (Pi) 2)
-		 (if (< y 0)
-		     (./ (.* 3 (Pi)) 2)
-		   0))))
-	   ))
+  (x y)
+  (= (arg (complex x y))
+     (if (> x 0)
+       (.arctan (./ y x))
+       (if (< x 0)
+         (.+ (.arctan (./ y x)) (Pi))
+         (if (> y 0)
+           (./ (Pi) 2)
+           (if (< y 0)
+             (./ (.* 3 (Pi)) 2)
+             0))))))
 
 ;; real->complex :: R => Complex)
 (axiom
@@ -118,7 +117,7 @@
 (axiom
  def_complex_sum_nil
  ()
- (= (sum (nil)) 0))
+ (= (sum (nil)) (complex 0 0)))
 
 (axiom
  def_complex_sum_cons
@@ -130,7 +129,7 @@
 (axiom
  def_complex_product_nil
  ()
- (= (product (nil)) 1))
+ (= (product (nil)) (complex 1 0)))
 
 (axiom
  def_complex_product_cons
@@ -174,6 +173,25 @@
      (* (complex a1 a2) 
         (^ (complex a1 a2) 5))))
 
+(axiom
+  complex_pow7
+  (a1 a2)
+  (= (^ (complex a1 a2) 7)
+     (* (complex a1 a2) 
+        (^ (complex a1 a2) 6))))
+(axiom
+  complex_pow8
+  (a1 a2)
+  (= (^ (complex a1 a2) 8)
+     (* (complex a1 a2) 
+        (^ (complex a1 a2) 7))))
+(axiom
+  complex_pow9
+  (a1 a2)
+  (= (^ (complex a1 a2) 9)
+     (* (complex a1 a2) 
+        (^ (complex a1 a2) 8))))
+
 ;; absolute value
 (axiom
   complex_abs
@@ -210,6 +228,24 @@
   (f g)
   (<-> (= (equation f) (equation g))
        (= f g)))
+
+(axiom
+  def_quad_equation_eq
+  (a1 b1 c1 a2 b2 c2)
+  (<-> (= (quad-equation c1 b1 a1)
+          (quad-equation c2 b2 a2))
+       (exists (k)
+          (&& (= c1 (.* k c2))
+              (= b1 (.* k b2))
+              (= a1 (.* k a2))))))
+
+(axiom
+  def_quad_equation_general_equation_eq
+  (a b c f)
+  (<-> (= (quad-equation c b a) (equation f))
+       (= f (Lam x (+ (* (real->complex a) (^ x 2))
+                      (* (real->complex b) x)
+                      (real->complex c))))))
 
 ; is-solution-of :: Complex -> Equation => Bool)
 (axiom
@@ -294,12 +330,38 @@
                            (! (real-number x)))))))
 
 ; is-second-order-equation :: Equation => Bool)
+;(axiom
+;    def_second_order_eq_complex
+;    (f)
+;    (is-second-order-equation (equation f)))
+
+;(axiom
+;    def_second_order_eq_complex_quad_eq
+;    (a b c)
+;    (is-quad-equation (quad-equation c b a)))
+
+(def-typing-trigger
+   (is-quad-equation eq)
+   (a b c)
+   (&& (= eq (quad-equation c b a))
+       (! (= a 0))))
+
+;;------------------------------------------------------------------------------
+;; C -> C Functions
+;;------------------------------------------------------------------------------
 (axiom
-    def_second_order_eq_complex
-    (f)
-    (is-second-order-equation (equation f)))
+  def-complex-is-function
+  (f)
+  (is-function f))
 
 (axiom
-    def_second_order_eq_complex_quad_eq
-    (a b c)
-    (is-second-order-equation (quad-equation c b a)))
+  def-is-complex-constant-function
+  (f)
+  (<-> (is-constant-func f)
+       (exists (y)
+               (forall (x) (= (funapp f x) y)))))
+(axiom
+  def-complex-funapp
+  (f x)
+  (= (funapp (fun f) x)
+     (LamApp f x)))

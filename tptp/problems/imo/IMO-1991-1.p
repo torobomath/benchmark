@@ -20,16 +20,15 @@
 %            Maximal formula depth :   20 (  20 average)
 %            Number of connectives :  102 (   0   ~;   0   |;   8   &;  93   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   17 (   0   :)
+%            Number of symbols     :   17 (   0   :;   0   =)
 %            Number of variables   :    7 (   0 sgn;   7   !;   0   ?;   0   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   2 pred;    2 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_I: '2d.Point',V_A0: '2d.Point',V_B0: '2d.Point',V_C0: '2d.Point'] :
@@ -41,5 +40,6 @@ thf(p,conjecture,(
         & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_A @ V_A0 ) @ ( '2d.angle/3' @ V_C @ V_A @ V_B ) )
         & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_B @ V_B0 ) @ ( '2d.angle/3' @ V_A @ V_B @ V_C ) )
         & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_C @ V_C0 ) @ ( '2d.angle/3' @ V_B @ V_C @ V_A ) ) )
-     => ( ( '</2' @ ( '//2' @ 1 @ 4 ) @ ( '//2' @ ( '*/2' @ ( '2d.distance/2' @ V_A @ V_I ) @ ( '*/2' @ ( '2d.distance/2' @ V_B @ V_I ) @ ( '2d.distance/2' @ V_C @ V_I ) ) ) @ ( '*/2' @ ( '2d.distance/2' @ V_A @ V_A0 ) @ ( '*/2' @ ( '2d.distance/2' @ V_B @ V_B0 ) @ ( '2d.distance/2' @ V_C @ V_C0 ) ) ) ) )
-        & ( '<=/2' @ ( '//2' @ ( '*/2' @ ( '2d.distance/2' @ V_A @ V_I ) @ ( '*/2' @ ( '2d.distance/2' @ V_B @ V_I ) @ ( '2d.distance/2' @ V_C @ V_I ) ) ) @ ( '*/2' @ ( '2d.distance/2' @ V_A @ V_A0 ) @ ( '*/2' @ ( '2d.distance/2' @ V_B @ V_B0 ) @ ( '2d.distance/2' @ V_C @ V_C0 ) ) ) ) @ ( '//2' @ 8 @ 27 ) ) ) ) )).
+     => ( ( $less @ ( $quotient @ 1.0 @ 4.0 ) @ ( $quotient @ ( $product @ ( '2d.distance/2' @ V_A @ V_I ) @ ( $product @ ( '2d.distance/2' @ V_B @ V_I ) @ ( '2d.distance/2' @ V_C @ V_I ) ) ) @ ( $product @ ( '2d.distance/2' @ V_A @ V_A0 ) @ ( $product @ ( '2d.distance/2' @ V_B @ V_B0 ) @ ( '2d.distance/2' @ V_C @ V_C0 ) ) ) ) )
+        & ( $lesseq @ ( $quotient @ ( $product @ ( '2d.distance/2' @ V_A @ V_I ) @ ( $product @ ( '2d.distance/2' @ V_B @ V_I ) @ ( '2d.distance/2' @ V_C @ V_I ) ) ) @ ( $product @ ( '2d.distance/2' @ V_A @ V_A0 ) @ ( $product @ ( '2d.distance/2' @ V_B @ V_B0 ) @ ( '2d.distance/2' @ V_C @ V_C0 ) ) ) ) @ ( $quotient @ 8.0 @ 27.0 ) ) ) ) )).
+

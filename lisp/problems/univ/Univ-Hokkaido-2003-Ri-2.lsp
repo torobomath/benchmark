@@ -18,7 +18,7 @@
 
 (def-directive
   p1
-  (Find (P)
+  (Draw (P)
         (= P (2d.shape-of-cpfun (PLam p (exists (z)
                   (&& (= p (complex->point z))
                 (real-number (+ (/ (complex 1 0)
@@ -28,7 +28,7 @@
 
 (def-directive
   p2
-  (Find (w_set)
+  (Draw (w_set)
         (exists (P)
                 (&& (= P (2d.shape-of-cpfun (PLam p (exists (z)
                                                          (&& (= p (complex->point z))
@@ -42,7 +42,7 @@
                                                                          (- z (i))))
                                                                  (= p (complex->point w)))))))))))
 
-(def-answer p1 (PLam P (= P (2d.shape-of-cpfun (PLam p (&& (|| (2d.on p (2d.circle (2d.origin) 1)) (2d.on p (2d.x-axis))) (! (= p (2d.point 0 1))) (! (= p (2d.point 0 -1)))) )))))
+(def-answer p1 (2d.shape-of-cpfun (PLam p (&& (|| (2d.on p (2d.circle (2d.origin) 1)) (2d.on p (2d.x-axis))) (! (= p (2d.point 0 1))) (! (= p (2d.point 0 -1)))) )))
 
-(def-answer p2 (PLam w_set (= w_set (2d.shape-of-cpfun (PLam P (&& (|| (2d.on P (2d.circle (2d.origin) 1)) (2d.on P (2d.y-axis))) (! (= P (2d.origin))) (! (= P (2d.point 1 0)))))))))
+(def-answer p2 (2d.shape-of-cpfun (PLam P (&& (|| (2d.on P (2d.circle (2d.origin) 1)) (2d.on P (2d.y-axis))) (! (= P (2d.origin))) (! (= P (2d.point 1 0)))))))
 

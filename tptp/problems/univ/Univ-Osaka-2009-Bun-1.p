@@ -21,34 +21,39 @@
 %% such that $l_1$ is orthogonal to $l_2$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  184 (  16 equality;  85 variable)
-%            Maximal formula depth :   23 (  14 average)
-%            Number of connectives :  153 (   5   ~;   1   |;  27   &; 120   @)
+% Syntax   : Number of formulae    :    8 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :  194 (  16 equality;  76 variable)
+%            Maximal formula depth :   23 (  11 average)
+%            Number of connectives :  163 (   5   ~;   1   |;  27   &; 130   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   29 (   0   :)
-%            Number of variables   :   31 (   0 sgn;   0   !;  19   ?;   9   ^)
+%            Number of symbols     :   31 (   2   :;   0   =)
+%            Number of variables   :   28 (   0 sgn;   0   !;  19   ?;   9   ^)
 %                                         (  28   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   13 (   3 pred;    4 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('k/0_type',type,(
+    'k/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
       ? [V_C: '2d.Shape',V_A: '2d.Point',V_l1: '2d.Shape',V_B: '2d.Point'] :
-        ( ( V_a != 0 )
+        ( ( 'a/0' != 0.0 )
         & ( V_C
           = ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x_dot_0: 'R'] :
-                  ( '-/2' @ ( '^/2' @ V_x_dot_0 @ 3 ) @ ( '*/2' @ V_k @ V_x_dot_0 ) ) ) ) )
+              @ ^ [V_x_dot_0: $real] :
+                  ( $difference @ ( '^/2' @ V_x_dot_0 @ 3.0 ) @ ( $product @ 'k/0' @ V_x_dot_0 ) ) ) ) )
         & ( V_A
-          = ( '2d.point/2' @ V_a @ ( '-/2' @ ( '^/2' @ V_a @ 3 ) @ ( '*/2' @ V_k @ V_a ) ) ) )
+          = ( '2d.point/2' @ 'a/0' @ ( $difference @ ( '^/2' @ 'a/0' @ 3.0 ) @ ( $product @ 'k/0' @ 'a/0' ) ) ) )
         & ( '2d.line-type/1' @ V_l1 )
         & ( '2d.tangent/3' @ V_l1 @ V_C @ V_A )
         & ( V_B != V_A )
@@ -57,19 +62,19 @@ thf(p1_qustion,question,
           = ( '2d.x-coord/1' @ V_B ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ak: 'ListOf' @ 'R'] :
-      ? [V_a: 'R',V_k: 'R',V_C: '2d.Shape',V_A: '2d.Point',V_l1: '2d.Shape',V_B: '2d.Point',V_l2: '2d.Shape'] :
-        ( ( V_a != 0 )
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_ak: ( 'ListOf' @ $real )] :
+      ? [V_a: $real,V_k: $real,V_C: '2d.Shape',V_A: '2d.Point',V_l1: '2d.Shape',V_B: '2d.Point',V_l2: '2d.Shape'] :
+        ( ( V_a != 0.0 )
         & ( V_ak
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_k @ 'nil/0' ) ) )
+          = ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ V_k @ ( 'nil/0' @ $real ) ) ) )
         & ( V_C
           = ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x: 'R'] :
-                  ( '-/2' @ ( '^/2' @ V_x @ 3 ) @ ( '*/2' @ V_k @ V_x ) ) ) ) )
+              @ ^ [V_x: $real] :
+                  ( $difference @ ( '^/2' @ V_x @ 3.0 ) @ ( $product @ V_k @ V_x ) ) ) ) )
         & ( V_A
-          = ( '2d.point/2' @ V_a @ ( '-/2' @ ( '^/2' @ V_a @ 3 ) @ ( '*/2' @ V_k @ V_a ) ) ) )
+          = ( '2d.point/2' @ V_a @ ( $difference @ ( '^/2' @ V_a @ 3.0 ) @ ( $product @ V_k @ V_a ) ) ) )
         & ( '2d.line-type/1' @ V_l1 )
         & ( '2d.tangent/3' @ V_l1 @ V_C @ V_A )
         & ( V_B != V_A )
@@ -79,16 +84,16 @@ thf(p2_qustion,question,
         & ( '2d.perpendicular/2' @ V_l1 @ V_l2 ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_k: 'R'] :
-      ? [V_a: 'R',V_C: '2d.Shape',V_A: '2d.Point',V_l1: '2d.Shape',V_B: '2d.Point',V_l2: '2d.Shape'] :
+    ( 'find/1' @ $real
+    @ ^ [V_k: $real] :
+      ? [V_a: $real,V_C: '2d.Shape',V_A: '2d.Point',V_l1: '2d.Shape',V_B: '2d.Point',V_l2: '2d.Shape'] :
         ( ( V_C
           = ( '2d.graph-of/1'
             @ ( 'fun/1'
-              @ ^ [V_x: 'R'] :
-                  ( '-/2' @ ( '^/2' @ V_x @ 3 ) @ ( '*/2' @ V_k @ V_x ) ) ) ) )
+              @ ^ [V_x: $real] :
+                  ( $difference @ ( '^/2' @ V_x @ 3.0 ) @ ( $product @ V_k @ V_x ) ) ) ) )
         & ( V_A
-          = ( '2d.point/2' @ V_a @ ( '-/2' @ ( '^/2' @ V_a @ 3 ) @ ( '*/2' @ V_k @ V_a ) ) ) )
+          = ( '2d.point/2' @ V_a @ ( $difference @ ( '^/2' @ V_a @ 3.0 ) @ ( $product @ V_k @ V_a ) ) ) )
         & ( '2d.line-type/1' @ V_l1 )
         & ( '2d.tangent/3' @ V_l1 @ V_C @ V_A )
         & ( V_B != V_A )
@@ -98,23 +103,24 @@ thf(p3_qustion,question,
         & ( '2d.perpendicular/2' @ V_l1 @ V_l2 ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_x_dot_1: 'R'] :
-      ( ( ( '>/2' @ V_a @ 0 )
-        | ( '</2' @ V_a @ 0 ) )
+    ^ [V_x_dot_1: $real] :
+      ( ( ( $greater @ 'a/0' @ 0.0 )
+        | ( $less @ 'a/0' @ 0.0 ) )
       & ( V_x_dot_1
-        = ( '*/2' @ ( '-/1' @ 2 ) @ V_a ) ) ) ),
+        = ( $product @ ( $uminus @ 2.0 ) @ 'a/0' ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_ak_dot_0: 'ListOf' @ 'R'] :
-    ? [V_a_dot_0: 'R',V_k_dot_0: 'R'] :
+    ^ [V_ak_dot_0: ( 'ListOf' @ $real )] :
+    ? [V_a_dot_0: $real,V_k_dot_0: $real] :
       ( ( V_ak_dot_0
-        = ( 'cons/2' @ V_a_dot_0 @ ( 'cons/2' @ V_k_dot_0 @ 'nil/0' ) ) )
-      & ( ( '*/2' @ ( '-/2' @ ( '*/2' @ 3 @ ( '^/2' @ V_a_dot_0 @ 2 ) ) @ V_k_dot_0 ) @ ( '-/2' @ ( '*/2' @ 12 @ ( '^/2' @ V_a_dot_0 @ 2 ) ) @ V_k_dot_0 ) )
-        = -1 ) ) ),
+        = ( 'cons/2' @ $real @ V_a_dot_0 @ ( 'cons/2' @ $real @ V_k_dot_0 @ ( 'nil/0' @ $real ) ) ) )
+      & ( ( $product @ ( $difference @ ( $product @ 3.0 @ ( '^/2' @ V_a_dot_0 @ 2.0 ) ) @ V_k_dot_0 ) @ ( $difference @ ( $product @ 12.0 @ ( '^/2' @ V_a_dot_0 @ 2.0 ) ) @ V_k_dot_0 ) )
+        = -1.0 ) ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_k_dot_0: 'R'] :
-      ( '>=/2' @ V_k_dot_0 @ ( '//2' @ 4 @ 3 ) ) ),
+    ^ [V_k_dot_0: $real] :
+      ( $greatereq @ V_k_dot_0 @ ( $quotient @ 4.0 @ 3.0 ) ) ),
     answer_to(p3_question,[])).
+

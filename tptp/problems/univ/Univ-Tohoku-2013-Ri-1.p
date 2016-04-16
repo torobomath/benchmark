@@ -18,52 +18,55 @@
 %% $g(x)= 0$ have common solutions.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  140 (   6 equality;  38 variable)
-%            Maximal formula depth :   22 (  13 average)
-%            Number of connectives :  126 (   0   ~;   1   |;   5   &; 120   @)
+% Syntax   : Number of formulae    :    5 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  194 (   6 equality;  36 variable)
+%            Maximal formula depth :   23 (  11 average)
+%            Number of connectives :  180 (   0   ~;   1   |;   5   &; 174   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   15 (   0   :)
-%            Number of variables   :   19 (   2 sgn;   0   !;  13   ?;   4   ^)
+%            Number of symbols     :   16 (   1   :;   0   =)
+%            Number of variables   :   17 (   0 sgn;   0   !;  13   ?;   4   ^)
 %                                         (  17   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   0 pred;    2 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('k/0_type',type,(
+    'k/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_gc: 'ListOf' @ 'R'] :
-      ? [V_c0: 'R',V_c1: 'R',V_c2: 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_gc: ( 'ListOf' @ $real )] :
+      ? [V_c0: $real,V_c1: $real,V_c2: $real] :
         ( ( V_gc
-          = ( 'cons/2' @ V_c0 @ ( 'cons/2' @ V_c1 @ ( 'cons/2' @ V_c2 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) )
-        & ? [V_alpha: 'R',V_beta: 'R',V_gamma: 'R'] :
-            ( ( 'are-solutions-of/2' @ ( 'cons/2' @ V_alpha @ ( 'cons/2' @ V_beta @ ( 'cons/2' @ V_gamma @ 'nil/0' ) ) ) @ ( 'poly-equation/1' @ ( 'cons/2' @ ( '-/1' @ 1 ) @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '-/1' @ V_k ) @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) )
-            & ( 'are-solutions-of/2' @ ( 'cons/2' @ ( '*/2' @ V_alpha @ V_beta ) @ ( 'cons/2' @ ( '*/2' @ V_beta @ V_gamma ) @ ( 'cons/2' @ ( '*/2' @ V_gamma @ V_alpha ) @ 'nil/0' ) ) ) @ ( 'poly-equation/1' @ V_gc ) ) ) ) )).
+          = ( 'cons/2' @ $real @ V_c0 @ ( 'cons/2' @ $real @ V_c1 @ ( 'cons/2' @ $real @ V_c2 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) )
+        & ? [V_alpha: $real,V_beta: $real,V_gamma: $real] :
+            ( ( 'are-solutions-of/2' @ ( 'cons/2' @ $real @ V_alpha @ ( 'cons/2' @ $real @ V_beta @ ( 'cons/2' @ $real @ V_gamma @ ( 'nil/0' @ $real ) ) ) ) @ ( 'poly-equation/1' @ ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $uminus @ 'k/0' ) @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) )
+            & ( 'are-solutions-of/2' @ ( 'cons/2' @ $real @ ( $product @ V_alpha @ V_beta ) @ ( 'cons/2' @ $real @ ( $product @ V_beta @ V_gamma ) @ ( 'cons/2' @ $real @ ( $product @ V_gamma @ V_alpha ) @ ( 'nil/0' @ $real ) ) ) ) @ ( 'poly-equation/1' @ V_gc ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_k: 'R'] :
-      ? [V_c0: 'R',V_c1: 'R',V_c2: 'R',V_alpha: 'R',V_beta: 'R',V_gamma: 'R'] :
-        ( ( 'are-solutions-of/2' @ ( 'cons/2' @ V_alpha @ ( 'cons/2' @ V_beta @ ( 'cons/2' @ V_gamma @ 'nil/0' ) ) ) @ ( 'poly-equation/1' @ ( 'cons/2' @ ( '-/1' @ 1 ) @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '-/1' @ V_k ) @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) )
-        & ( 'are-solutions-of/2' @ ( 'cons/2' @ ( '*/2' @ V_alpha @ V_beta ) @ ( 'cons/2' @ ( '*/2' @ V_beta @ V_gamma ) @ ( 'cons/2' @ ( '*/2' @ V_gamma @ V_alpha ) @ 'nil/0' ) ) ) @ ( 'poly-equation/1' @ ( 'cons/2' @ V_c0 @ ( 'cons/2' @ V_c1 @ ( 'cons/2' @ V_c2 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) )
-        & ? [V_x: 'R'] :
-            ( ( ( 'funapp/2' @ ( 'poly-fun/1' @ ( 'cons/2' @ ( '-/1' @ 1 ) @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '-/1' @ V_k ) @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) @ V_x )
-              = 0 )
-            & ( ( 'funapp/2' @ ( 'poly-fun/1' @ ( 'cons/2' @ V_c0 @ ( 'cons/2' @ V_c1 @ ( 'cons/2' @ V_c2 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) @ V_x )
-              = 0 ) ) ) )).
+    ( 'find/1' @ $real
+    @ ^ [V_k: $real] :
+      ? [V_c0: $real,V_c1: $real,V_c2: $real,V_alpha: $real,V_beta: $real,V_gamma: $real] :
+        ( ( 'are-solutions-of/2' @ ( 'cons/2' @ $real @ V_alpha @ ( 'cons/2' @ $real @ V_beta @ ( 'cons/2' @ $real @ V_gamma @ ( 'nil/0' @ $real ) ) ) ) @ ( 'poly-equation/1' @ ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $uminus @ V_k ) @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) )
+        & ( 'are-solutions-of/2' @ ( 'cons/2' @ $real @ ( $product @ V_alpha @ V_beta ) @ ( 'cons/2' @ $real @ ( $product @ V_beta @ V_gamma ) @ ( 'cons/2' @ $real @ ( $product @ V_gamma @ V_alpha ) @ ( 'nil/0' @ $real ) ) ) ) @ ( 'poly-equation/1' @ ( 'cons/2' @ $real @ V_c0 @ ( 'cons/2' @ $real @ V_c1 @ ( 'cons/2' @ $real @ V_c2 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) )
+        & ? [V_x: $real] :
+            ( ( ( 'funapp/2' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $uminus @ V_k ) @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_x )
+              = 0.0 )
+            & ( ( 'funapp/2' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ V_c0 @ ( 'cons/2' @ $real @ V_c1 @ ( 'cons/2' @ $real @ V_c2 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_x )
+              = 0.0 ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_gc_dot_0: 'ListOf' @ 'R'] :
+    ^ [V_gc_dot_0: ( 'ListOf' @ $real )] :
       ( V_gc_dot_0
-      = ( 'cons/2' @ -1 @ ( 'cons/2' @ V_k @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) ),
+      = ( 'cons/2' @ $real @ -1.0 @ ( 'cons/2' @ $real @ 'k/0' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_k_dot_0: 'R'] :
-      ( ( V_k_dot_0 = 0 )
-      | ( V_k_dot_0 = -2 ) ) ),
+    ^ [V_k_dot_0: $real] :
+      ( ( V_k_dot_0 = 0.0 )
+      | ( V_k_dot_0 = -2.0 ) ) ),
     answer_to(p2_question,[])).
+

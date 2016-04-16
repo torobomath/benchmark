@@ -111,3 +111,10 @@
 
 (def-answer p2_2 (PLam P (= P (point (/ -1 2) (/ 1 2)))))
 
+(def-answer a1_1 (PLam xmax (= xmax 3)))
+
+(def-answer a1_2 (shape-of-cpfun (PLam P (&& (<= (/ -1 2) (x-coord P)) (<= (x-coord P) (/ 1 2)) (! (= (x-coord P) 0)) (= (x-coord P) (y-coord P))))))
+
+(def-answer a2 (PLam OQ_min_P (= OQ_min_P (pair (/ (sqrt 2) 2)
+                                                (point (/ -1 2) (/ 1 2))))))
+

@@ -167,3 +167,10 @@
   (p q)
   (= (succedent-of (impl p q))
      q))
+
+;; TORIAEZU
+(axiom
+  def-hold-open
+  (p)
+  (<-> (hold-open (prop p))
+       (PLamApp p (_))))

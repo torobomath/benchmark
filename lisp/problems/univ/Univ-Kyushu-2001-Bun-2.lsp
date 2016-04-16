@@ -51,21 +51,7 @@
         (forall (x)
           (! (line-symmetry-shape G (line (point x 0) (point x 1)))))))))
 
-(def-directive
-  p4_1
-  (Show
-    (exists (G)
-      (&&
-        (= G (graph-of (poly-fun (list-of c b a 1))))
-        (forall (l)
-          (-> (&&
-                (line-type l)
-                (parallel (y-axis) l))
-              (! (line-symmetry-shape G l))))))))
-
 (def-answer p1 (PLam P (= P (point (- (* 2 p) X) (- (* 2 q) Y)))))
 
 (def-answer p3 (PLam R (= R (point (- (* 2 p) X) Y))))
-
-(def-answer p3_1 (PLam R (= R (point (- (* 2 p) X) Y))))
 

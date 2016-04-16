@@ -24,29 +24,36 @@
 
 (def-directive p
   (Find (answer)
-       (exists (L C M)
-      (&& (= L (x-axis))
-              (= C (circle (point 0 r) r))
-              (< 0 r)
-              (= M (point Mx 0))
-              (= answer (shape-of-cpfun (PLam P
-                                              (exists (Q R)
-                                                      (&& (on Q L)
-                                                          (on R L)
-                                                          (= M (midpoint-of Q R))
-                                                          (is-triangle P Q R)
-                                                          (is-inscribed-in C (triangle P Q R)))))))))))
-
-(def-answer p (PLam answer (exists (L O lp U Q) (&&
+  (&& (< 0 r)
+      (exists (L C M) (&&
+    (= L (x-axis))
     (= C (circle (point 0 r) r))
-  (= answer (half-line U Q))
-  (= L (x-axis))
-  (= O (point 0 r))
-  (line-symmetry O U L)
-  (on U lp)
-  (parallel (line O (point Mx 0)) lp)
-  (line-type lp)
-  (on Q lp)
-  (> (y-coord Q) (y-coord U))
-))))
+    (< 0 r)
+    (= M (point Mx 0))
+    (= answer (shape-of-cpfun (PLam P (exists (Q R) (&&
+      (on Q L)
+      (on R L)
+      (= M (midpoint-of Q R))
+      (is-triangle P Q R)
+      (is-inscribed-in C (triangle P Q R))
+    )))))
+      ))
+  )
+))
+
+(def-answer p (PLam answer (&&
+  (< 0 r)
+  (exists (C L lp M X Y Z U) (&&
+    (= C (circle (point 0 r) r))
+    (= answer (shape-of-cpfun (PLam p (on p (inner-part-of (half-line Z U))))))
+    (= L (x-axis))
+    (tangent L C X)
+    (is-diameter-of (seg X Z) C)
+    (= M (point Mx 0))
+    (on Y L)
+    (point-symmetry X Y M)
+    (= lp (line Y Z))
+    (point-symmetry Y U Z)
+  ))
+)))
 

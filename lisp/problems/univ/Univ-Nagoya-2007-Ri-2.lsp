@@ -33,7 +33,7 @@
   p2
   (Find (l)
   (let* ((f (Lam x (+ (* 2 (^ x 3)) (- (* 3 (^ x 2))) 1))))
-    (exists (alpha gamma)
+    (exists (a alpha gamma)
       (&& (= (LamApp f alpha) a)
           (= (LamApp f beta) a)
           (= (LamApp f gamma) a)
@@ -44,7 +44,11 @@
 
 (def-answer
   p2
-  (PLam l (= l (sqrt (+ (- (* 3 (^ beta 2))) (* 3 beta) (/ 9 4))))))
+  (PLam l (&&
+    (< 0 beta) (< beta 1)
+    (= l (sqrt (+ (- (* 3 (^ beta 2))) (* 3 beta) (/ 9 4))))
+  ))
+)
 
 (def-directive
   p3

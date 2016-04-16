@@ -94,3 +94,10 @@
 
 (def-answer p2_1 (PLam x (= x (/ 1 (sqrt 3)))))
 
+(def-answer a1 (PLam z (&& (<= 0 x) (<= x 2)
+         (= z (+ (* 2 (sqrt 3) (^ x 2)) (* -4 x) (* 2 (sqrt 3)) 4)))))
+
+(def-answer a2_1 (PLam x (= x (/ 1 (sqrt 3)))))
+
+(def-answer a2_2 (PLam zmin (= zmin (+ (/ 4 (sqrt 3)) 4))))
+

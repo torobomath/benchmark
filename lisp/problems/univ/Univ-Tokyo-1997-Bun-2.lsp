@@ -59,7 +59,7 @@
                    (= B2 (point 0 b2))
                    (is-equilateral-triangle A2 B2 C2)
                    (on C2 (1st-quadrant))
-                   (inside-of (triangle A2 B2 C2) D2)))))
+                   (inside-of (triangle A2 B2 C2) D)))))
            S_max)))))
 
 (def-answer p1 (PLam ab (exists (a b) (&& (= ab (list-of a b))

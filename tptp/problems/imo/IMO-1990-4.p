@@ -15,27 +15,27 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   23 (   1 equality;  11 variable)
+%            Number of atoms       :   20 (   1 equality;  11 variable)
 %            Maximal formula depth :   10 (  10 average)
-%            Number of connectives :   20 (   0   ~;   0   |;   3   &;  16   @)
+%            Number of connectives :   17 (   0   ~;   0   |;   3   &;  13   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    7 (   0   :)
+%            Number of symbols     :    6 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   2   !;   1   ?;   0   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   2 pred;    2 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ? [V_f: 'R' > 'R'] :
-    ! [V_x: 'R',V_y: 'R'] :
-      ( ( ( 'is-rational/1' @ V_x )
-        & ( 'is-rational/1' @ V_y )
-        & ( '</2' @ 0 @ V_x )
-        & ( '</2' @ 0 @ V_y ) )
-     => ( ( 'LamApp/2' @ V_f @ ( '*/2' @ V_x @ ( 'LamApp/2' @ V_f @ V_y ) ) )
-        = ( '//2' @ ( 'LamApp/2' @ V_f @ V_x ) @ V_y ) ) ) )).
+    ? [V_f: ( $real > $real )] :
+    ! [V_x: $real,V_y: $real] :
+      ( ( ( $is_rat @ V_x )
+        & ( $is_rat @ V_y )
+        & ( $less @ 0.0 @ V_x )
+        & ( $less @ 0.0 @ V_y ) )
+     => ( ( V_f @ ( $product @ V_x @ ( V_f @ V_y ) ) )
+        = ( $quotient @ ( V_f @ V_x ) @ V_y ) ) ) )).
+

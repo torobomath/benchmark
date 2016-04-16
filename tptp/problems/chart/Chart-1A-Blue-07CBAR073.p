@@ -5,59 +5,68 @@
 %% AUTHOR:    Munehiro Kobayashi
 %% GENERATED: 2015-01-07
 
-% Syntax   : Number of formulae    :    3 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   93 (   8 equality;  33 variable)
-%            Maximal formula depth :   17 (  14 average)
-%            Number of connectives :   79 (   3   ~;   0   |;  17   &;  58   @)
+% Syntax   : Number of formulae    :    6 (   0 unit;   3 type;   0 defn)
+%            Number of atoms       :  101 (   8 equality;  16 variable)
+%            Maximal formula depth :   17 (   8 average)
+%            Number of connectives :   87 (   3   ~;   0   |;  17   &;  66   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   17 (   0   :)
-%            Number of variables   :   11 (   0 sgn;   1   !;   2   ?;   2   ^)
+%            Number of symbols     :   20 (   3   :;   0   =)
+%            Number of variables   :    5 (   0 sgn;   1   !;   2   ?;   2   ^)
 %                                         (   5   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   3 pred;    3 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $int )).
+
+thf('b/0_type',type,(
+    'b/0': $int )).
+
+thf('n/0_type',type,(
+    'n/0': $int )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_answer: 'ListOf' @ 'Z'] :
-        ( ( 'int.is-prime/1' @ V_n )
-        & ( 'int.</2' @ 2 @ V_n )
-        & ( 'int.is-integer/1' @ V_a )
-        & ( 'int.is-integer/1' @ V_b )
-        & ( 'int.<=/2' @ 0 @ V_b )
-        & ( 'int.<=/2' @ 0 @ V_a )
-        & ( V_n
-          = ( 'int.-/2' @ ( 'int.^/2' @ V_a @ 2 ) @ ( 'int.^/2' @ V_b @ 2 ) ) )
+    ( 'find/1' @ ( 'ListOf' @ $int )
+    @ ^ [V_answer: ( 'ListOf' @ $int )] :
+        ( ( 'int.is-prime/1' @ 'n/0' )
+        & ( $less @ 2 @ 'n/0' )
+        & ( $is_int @ 'a/0' )
+        & ( $is_int @ 'b/0' )
+        & ( $lesseq @ 0 @ 'b/0' )
+        & ( $lesseq @ 0 @ 'a/0' )
+        & ( 'n/0'
+          = ( $difference @ ( 'int.^/2' @ 'a/0' @ 2 ) @ ( 'int.^/2' @ 'b/0' @ 2 ) ) )
         & ( V_answer
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ 'nil/0' ) ) ) ) )).
+          = ( 'cons/2' @ $int @ 'a/0' @ ( 'cons/2' @ $int @ 'b/0' @ ( 'nil/0' @ $int ) ) ) ) ) )).
 
 thf(p2,conjecture,(
-    ! [V_n: 'Z'] :
+    ! [V_n: $int] :
       ( ( ( 'int.is-odd-number/1' @ V_n )
         & ~ ( 'int.is-prime/1' @ V_n )
-        & ( 'int.<=/2' @ 2 @ V_n ) )
-     => ? [V_a: 'Z',V_b: 'Z'] :
-          ( ( 'int.is-integer/1' @ V_a )
-          & ( 'int.is-integer/1' @ V_b )
-          & ( 'int.<=/2' @ 0 @ V_b )
-          & ( 'int.<=/2' @ 0 @ V_a )
+        & ( $lesseq @ 2 @ V_n ) )
+     => ? [V_a: $int,V_b: $int] :
+          ( ( $is_int @ V_a )
+          & ( $is_int @ V_b )
+          & ( $lesseq @ 0 @ V_b )
+          & ( $lesseq @ 0 @ V_a )
           & ( V_n
-            = ( 'int.-/2' @ ( 'int.^/2' @ V_a @ 2 ) @ ( 'int.^/2' @ V_b @ 2 ) ) )
+            = ( $difference @ ( 'int.^/2' @ V_a @ 2 ) @ ( 'int.^/2' @ V_b @ 2 ) ) )
           & ( V_a
-           != ( 'int.div/2' @ ( 'int.+/2' @ V_n @ 1 ) @ 2 ) )
+           != ( $quotient_f @ ( $sum @ V_n @ 1 ) @ 2 ) )
           & ( V_b
-           != ( 'int.div/2' @ ( 'int.-/2' @ V_n @ 1 ) @ 2 ) ) ) ) )).
+           != ( $quotient_f @ ( $difference @ V_n @ 1 ) @ 2 ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_answer_dot_0: 'ListOf' @ 'Z'] :
+    ^ [V_answer_dot_0: ( 'ListOf' @ $int )] :
       ( ( V_answer_dot_0
-        = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ 'nil/0' ) ) )
-      & ( V_a
-        = ( 'int.div/2' @ ( 'int.+/2' @ V_n @ 1 ) @ 2 ) )
-      & ( V_b
-        = ( 'int.div/2' @ ( 'int.-/2' @ V_n @ 1 ) @ 2 ) ) ) ),
+        = ( 'cons/2' @ $int @ 'a/0' @ ( 'cons/2' @ $int @ 'b/0' @ ( 'nil/0' @ $int ) ) ) )
+      & ( 'a/0'
+        = ( $quotient_f @ ( $sum @ 'n/0' @ 1 ) @ 2 ) )
+      & ( 'b/0'
+        = ( $quotient_f @ ( $difference @ 'n/0' @ 1 ) @ 2 ) ) ) ),
     answer_to(p1_question,[])).
+

@@ -16,16 +16,15 @@
 %            Maximal formula depth :   18 (  18 average)
 %            Number of connectives :   59 (   0   ~;   0   |;   6   &;  52   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   10 (   0   :)
+%            Number of symbols     :   10 (   0   :;   0   =)
 %            Number of variables   :    7 (   0 sgn;   7   !;   0   ?;   0   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    2 (   1 pred;    1 func;    0 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_K: '3d.Shape',V_Kc: '3d.Point',V_P: '3d.Point'] :
@@ -37,4 +36,5 @@ thf(p,conjecture,(
         & ( '3d.on/2' @ V_D @ V_K )
         & ( V_Kc
           = ( '3d.center-of/1' @ V_K ) ) )
-     => ( '</2' @ ( '+/2' @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_Kc @ V_A ) ) @ ( '+/2' @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_Kc @ V_B ) ) @ ( '+/2' @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_Kc @ V_C ) ) @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_Kc @ V_D ) ) ) ) ) @ ( '+/2' @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_P @ V_A ) ) @ ( '+/2' @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_P @ V_B ) ) @ ( '+/2' @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_P @ V_C ) ) @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_P @ V_D ) ) ) ) ) ) ) )).
+     => ( $less @ ( $sum @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_Kc @ V_A ) ) @ ( $sum @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_Kc @ V_B ) ) @ ( $sum @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_Kc @ V_C ) ) @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_Kc @ V_D ) ) ) ) ) @ ( $sum @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_P @ V_A ) ) @ ( $sum @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_P @ V_B ) ) @ ( $sum @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_P @ V_C ) ) @ ( '3d.length-of/1' @ ( '3d.seg/2' @ V_P @ V_D ) ) ) ) ) ) ) )).
+

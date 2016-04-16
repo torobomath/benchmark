@@ -19,19 +19,18 @@
 %            Maximal formula depth :   41 (  41 average)
 %            Number of connectives :   80 (   0   ~;   0   |;  19   &;  60   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   0   :)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :   16 (   0 sgn;  16   !;   0   ?;   0   ^)
 %                                         (  16   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    2 (   0 pred;    2 func;    0 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_M: '2d.Point',V_r1: 'R',V_r2: 'R',V_K1: '2d.Shape',V_K2: '2d.Shape',V_rho1: 'R',V_rho2: 'R',V_K3: '2d.Shape',V_K4: '2d.Shape',V_r: 'R',V_rho: 'R',V_K5: '2d.Shape',V_K6: '2d.Shape'] :
+    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_M: '2d.Point',V_r1: $real,V_r2: $real,V_K1: '2d.Shape',V_K2: '2d.Shape',V_rho1: $real,V_rho2: $real,V_K3: '2d.Shape',V_K4: '2d.Shape',V_r: $real,V_rho: $real,V_K5: '2d.Shape',V_K6: '2d.Shape'] :
       ( ( ( '2d.is-triangle/3' @ V_A @ V_B @ V_C )
         & ( '2d.on/2' @ V_M @ ( '2d.seg/2' @ V_A @ V_B ) )
         & ( '2d.circle-type/1' @ V_K1 )
@@ -58,5 +57,6 @@ thf(p,conjecture,(
           = V_r )
         & ( ( '2d.radius-of/1' @ V_K6 )
           = V_rho ) )
-     => ( ( '*/2' @ ( '//2' @ V_r1 @ V_rho1 ) @ ( '//2' @ V_r2 @ V_rho2 ) )
-        = ( '//2' @ V_r @ V_rho ) ) ) )).
+     => ( ( $product @ ( $quotient @ V_r1 @ V_rho1 ) @ ( $quotient @ V_r2 @ V_rho2 ) )
+        = ( $quotient @ V_r @ V_rho ) ) ) )).
+

@@ -16,63 +16,66 @@
 %% surface $S$ around the $x$ axis.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  100 (   9 equality;  32 variable)
-%            Maximal formula depth :   21 (  14 average)
-%            Number of connectives :   78 (   0   ~;   0   |;  11   &;  67   @)
+% Syntax   : Number of formulae    :    5 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  102 (   9 equality;  21 variable)
+%            Maximal formula depth :   21 (  12 average)
+%            Number of connectives :   80 (   0   ~;   0   |;  11   &;  69   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   25 (   0   :)
-%            Number of variables   :   13 (   0 sgn;   0   !;   6   ?;   5   ^)
+%            Number of symbols     :   26 (   1   :;   0   =)
+%            Number of variables   :   11 (   0 sgn;   0   !;   6   ?;   5   ^)
 %                                         (  11   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   10 (   1 pred;    4 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('u/0_type',type,(
+    'u/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
       ? [V_P: '3d.Point',V_Q: '3d.Point'] :
         ( ( V_P
-          = ( '3d.point/3' @ V_u @ V_u @ 0 ) )
+          = ( '3d.point/3' @ 'u/0' @ 'u/0' @ 0.0 ) )
         & ( V_Q
-          = ( '3d.point/3' @ V_u @ 0 @ ( 'sqrt/1' @ ( '-/2' @ 1 @ ( '^/2' @ V_u @ 2 ) ) ) ) )
-        & ( '<=/2' @ 0 @ V_u )
-        & ( '<=/2' @ V_u @ 1 )
+          = ( '3d.point/3' @ 'u/0' @ 0.0 @ ( 'sqrt/1' @ ( $difference @ 1.0 @ ( '^/2' @ 'u/0' @ 2.0 ) ) ) ) )
+        & ( $lesseq @ 0.0 @ 'u/0' )
+        & ( $lesseq @ 'u/0' @ 1.0 )
         & ( V_x
-          = ( '3d.point-shape-distance/2' @ ( '3d.point/3' @ V_u @ 0 @ 0 ) @ ( '3d.line/2' @ V_P @ V_Q ) ) ) ) )).
+          = ( '3d.point-shape-distance/2' @ ( '3d.point/3' @ 'u/0' @ 0.0 @ 0.0 ) @ ( '3d.line/2' @ V_P @ V_Q ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_V: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_V: $real] :
       ? [V_S: '3d.Shape'] :
         ( ( V_S
           = ( '3d.shape-of-cpfun/1'
             @ ^ [V_p: '3d.Point'] :
-              ? [V_u: 'R',V_P: '3d.Point',V_Q: '3d.Point'] :
-                ( ( '<=/2' @ 0 @ V_u )
-                & ( '<=/2' @ V_u @ 1 )
+              ? [V_u: $real,V_P: '3d.Point',V_Q: '3d.Point'] :
+                ( ( $lesseq @ 0.0 @ V_u )
+                & ( $lesseq @ V_u @ 1.0 )
                 & ( V_P
-                  = ( '3d.point/3' @ V_u @ V_u @ 0 ) )
+                  = ( '3d.point/3' @ V_u @ V_u @ 0.0 ) )
                 & ( V_Q
-                  = ( '3d.point/3' @ V_u @ 0 @ ( 'sqrt/1' @ ( '-/2' @ 1 @ ( '^/2' @ V_u @ 2 ) ) ) ) )
+                  = ( '3d.point/3' @ V_u @ 0.0 @ ( 'sqrt/1' @ ( $difference @ 1.0 @ ( '^/2' @ V_u @ 2.0 ) ) ) ) )
                 & ( '3d.on/2' @ V_p @ ( '3d.line/2' @ V_P @ V_Q ) ) ) ) )
         & ( V_V
           = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ V_S @ '3d.x-axis/0' ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_x_dot_0: 'R'] :
-      ( ( '<=/2' @ 0 @ V_u )
-      & ( '<=/2' @ V_u @ 1 )
+    ^ [V_x_dot_0: $real] :
+      ( ( $lesseq @ 0.0 @ 'u/0' )
+      & ( $lesseq @ 'u/0' @ 1.0 )
       & ( V_x_dot_0
-        = ( '*/2' @ V_u @ ( 'sqrt/1' @ ( '-/2' @ 1 @ ( '^/2' @ V_u @ 2 ) ) ) ) ) ) ),
+        = ( $product @ 'u/0' @ ( 'sqrt/1' @ ( $difference @ 1.0 @ ( '^/2' @ 'u/0' @ 2.0 ) ) ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_V_dot_0: 'R'] :
+    ^ [V_V_dot_0: $real] :
       ( V_V_dot_0
-      = ( '*/2' @ ( '+/2' @ ( '//2' @ ( 'sqrt/1' @ 2 ) @ 3 ) @ ( '//2' @ 1 @ 5 ) ) @ 'Pi/0' ) ) ),
+      = ( $product @ ( $sum @ ( $quotient @ ( 'sqrt/1' @ 2.0 ) @ 3.0 ) @ ( $quotient @ 1.0 @ 5.0 ) ) @ 'Pi/0' ) ) ),
     answer_to(p2_question,[])).
+

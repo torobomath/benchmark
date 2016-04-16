@@ -6,24 +6,23 @@
 %% GENERATED: 2015-01-07
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  117 (   9 equality;  57 variable)
+%            Number of atoms       :  119 (   9 equality;  57 variable)
 %            Maximal formula depth :   27 (  13 average)
-%            Number of connectives :   95 (   0   ~;   0   |;  16   &;  79   @)
+%            Number of connectives :   97 (   0   ~;   0   |;  16   &;  81   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   21 (   0   :)
+%            Number of symbols     :   21 (   0   :;   0   =)
 %            Number of variables   :   15 (   0 sgn;   0   !;  11   ?;   4   ^)
 %                                         (  15   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   0 pred;    1 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_theta: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_theta: $real] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_P: '2d.Point',V_Q: '2d.Point',V_Cir: '2d.Shape'] :
         ( ( '2d.circle-type/1' @ V_Cir )
         & ( '2d.is-square/4' @ V_A @ V_B @ V_C @ V_D )
@@ -35,21 +34,21 @@ thf(p1_qustion,question,
         & ( '2d.on/2' @ V_D @ V_Cir )
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_A @ V_B ) @ ( '2d.line/2' @ V_D @ V_C ) @ V_Q )
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_A @ V_D ) @ ( '2d.line/2' @ V_B @ V_C ) @ V_P )
-        & ( ( '*/2' @ 35 @ 'Degree/0' )
+        & ( ( $product @ 35.0 @ 'Degree/0' )
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_A @ V_Q @ V_D ) ) )
-        & ( ( '*/2' @ 25 @ 'Degree/0' )
+        & ( ( $product @ 25.0 @ 'Degree/0' )
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_A @ V_P @ V_B ) ) )
         & ( V_theta
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_C @ V_D ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_theta: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_theta: $real] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point'] :
         ( ( '2d.is-square/4' @ V_A @ V_B @ V_C @ V_D )
-        & ( ( '*/2' @ 90 @ 'Degree/0' )
+        & ( ( $product @ 90.0 @ 'Degree/0' )
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_A @ V_D ) ) )
-        & ( ( '*/2' @ 90 @ 'Degree/0' )
+        & ( ( $product @ 90.0 @ 'Degree/0' )
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_C @ V_D ) ) )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_C ) )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_C @ V_D ) ) )
@@ -57,13 +56,14 @@ thf(p2_qustion,question,
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_C @ V_A @ V_D ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_theta_dot_0: 'R'] :
+    ^ [V_theta_dot_0: $real] :
       ( V_theta_dot_0
-      = ( '*/2' @ 60 @ 'Degree/0' ) ) ),
+      = ( $product @ 60.0 @ 'Degree/0' ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_theta_dot_0: 'R'] :
+    ^ [V_theta_dot_0: $real] :
       ( V_theta_dot_0
-      = ( '*/2' @ 45 @ 'Degree/0' ) ) ),
+      = ( $product @ 45.0 @ 'Degree/0' ) ) ),
     answer_to(p2_question,[])).
+

@@ -90,3 +90,11 @@
 
 (def-answer p3 (PLam y_min (= y_min (/ 3 4))))
 
+(def-answer a1 (PLam b (= b (+ (* (/ 1 2) (^ a 2)) 2))))
+
+(def-answer a2_1 (PLam D (= D (shape-of-cpfun (PLam P (<= (y-coord P) (+ (^ (x-coord P) 2) 1)))))))
+
+(def-answer a2_2 (shape-of-cpfun (PLam P (<= (y-coord P) (+ (^ (x-coord P) 2) 1)))))
+
+(def-answer a3 (PLam y_min (= y_min (/ 3 4))))
+

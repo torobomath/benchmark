@@ -15,33 +15,33 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  138 (   2 equality;  25 variable)
+%            Number of atoms       :  145 (   2 equality;  25 variable)
 %            Maximal formula depth :   27 (  16 average)
-%            Number of connectives :  132 (   0   ~;   0   |;   3   &; 129   @)
+%            Number of connectives :  139 (   0   ~;   0   |;   3   &; 136   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   23 (   0   :)
+%            Number of symbols     :   24 (   0   :;   0   =)
 %            Number of variables   :    8 (   0 sgn;   0   !;   6   ?;   2   ^)
 %                                         (   8   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   1 pred;    1 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_r: 'R'] :
-      ? [V_p1: 'R',V_p2: 'R',V_d1: 'R',V_d2: 'R',V_q1: 'R',V_q2: 'R'] :
-        ( ( '</2' @ 0 @ V_d2 )
-        & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ ( '2d.line/2' @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.vec2d/2' @ 1 @ 0 ) @ ( '2d.vec2d/2' @ V_d1 @ V_d2 ) ) ) @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.sv*/2' @ ( '//2' @ 1 @ 2 ) @ ( '2d.vec/2' @ '2d.origin/0' @ '2d.origin/0' ) ) @ ( '2d.sv*/2' @ ( '//2' @ 1 @ 2 ) @ ( '2d.vec/2' @ '2d.origin/0' @ ( '2d.vec->point/1' @ ( '2d.vec2d/2' @ 1 @ 0 ) ) ) ) ) ) ) @ ( 'cons/2' @ ( '2d.line/2' @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.sv*/2' @ ( '//2' @ 1 @ 3 ) @ ( '2d.vec/2' @ '2d.origin/0' @ ( '2d.vec->point/1' @ ( '2d.vec2d/2' @ 1 @ 0 ) ) ) ) @ ( '2d.sv*/2' @ ( '//2' @ 2 @ 3 ) @ ( '2d.vec/2' @ '2d.origin/0' @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.vec2d/2' @ 1 @ 0 ) @ ( '2d.vec2d/2' @ V_d1 @ V_d2 ) ) ) ) ) ) ) @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.sv*/2' @ ( '//2' @ 1 @ 4 ) @ ( '2d.vec/2' @ '2d.origin/0' @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.vec2d/2' @ 1 @ 0 ) @ ( '2d.vec2d/2' @ V_d1 @ V_d2 ) ) ) ) ) @ ( '2d.sv*/2' @ ( '//2' @ 3 @ 4 ) @ ( '2d.vec/2' @ '2d.origin/0' @ ( '2d.vec->point/1' @ ( '2d.vec2d/2' @ V_d1 @ V_d2 ) ) ) ) ) ) ) @ 'nil/0' ) ) @ ( '2d.point/2' @ V_p1 @ V_p2 ) )
-        & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ ( '2d.line/2' @ '2d.origin/0' @ ( '2d.point/2' @ V_p1 @ V_p2 ) ) @ ( 'cons/2' @ ( '2d.line/2' @ ( '2d.vec->point/1' @ ( '2d.vec2d/2' @ 1 @ 0 ) ) @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.vec2d/2' @ 1 @ 0 ) @ ( '2d.vec2d/2' @ V_d1 @ V_d2 ) ) ) ) @ 'nil/0' ) ) @ ( '2d.point/2' @ V_q1 @ V_q2 ) )
+    ( 'find/1' @ $real
+    @ ^ [V_r: $real] :
+      ? [V_p1: $real,V_p2: $real,V_d1: $real,V_d2: $real,V_q1: $real,V_q2: $real] :
+        ( ( $less @ 0.0 @ V_d2 )
+        & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ ( '2d.line/2' @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.vec2d/2' @ 1.0 @ 0.0 ) @ ( '2d.vec2d/2' @ V_d1 @ V_d2 ) ) ) @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.sv*/2' @ ( $quotient @ 1.0 @ 2.0 ) @ ( '2d.vec/2' @ '2d.origin/0' @ '2d.origin/0' ) ) @ ( '2d.sv*/2' @ ( $quotient @ 1.0 @ 2.0 ) @ ( '2d.vec/2' @ '2d.origin/0' @ ( '2d.vec->point/1' @ ( '2d.vec2d/2' @ 1.0 @ 0.0 ) ) ) ) ) ) ) @ ( 'cons/2' @ '2d.Shape' @ ( '2d.line/2' @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.sv*/2' @ ( $quotient @ 1.0 @ 3.0 ) @ ( '2d.vec/2' @ '2d.origin/0' @ ( '2d.vec->point/1' @ ( '2d.vec2d/2' @ 1.0 @ 0.0 ) ) ) ) @ ( '2d.sv*/2' @ ( $quotient @ 2.0 @ 3.0 ) @ ( '2d.vec/2' @ '2d.origin/0' @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.vec2d/2' @ 1.0 @ 0.0 ) @ ( '2d.vec2d/2' @ V_d1 @ V_d2 ) ) ) ) ) ) ) @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.sv*/2' @ ( $quotient @ 1.0 @ 4.0 ) @ ( '2d.vec/2' @ '2d.origin/0' @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.vec2d/2' @ 1.0 @ 0.0 ) @ ( '2d.vec2d/2' @ V_d1 @ V_d2 ) ) ) ) ) @ ( '2d.sv*/2' @ ( $quotient @ 3.0 @ 4.0 ) @ ( '2d.vec/2' @ '2d.origin/0' @ ( '2d.vec->point/1' @ ( '2d.vec2d/2' @ V_d1 @ V_d2 ) ) ) ) ) ) ) @ ( 'nil/0' @ '2d.Shape' ) ) ) @ ( '2d.point/2' @ V_p1 @ V_p2 ) )
+        & ( '2d.lines-intersect-at/2' @ ( 'cons/2' @ '2d.Shape' @ ( '2d.line/2' @ '2d.origin/0' @ ( '2d.point/2' @ V_p1 @ V_p2 ) ) @ ( 'cons/2' @ '2d.Shape' @ ( '2d.line/2' @ ( '2d.vec->point/1' @ ( '2d.vec2d/2' @ 1.0 @ 0.0 ) ) @ ( '2d.vec->point/1' @ ( '2d.v+/2' @ ( '2d.vec2d/2' @ 1.0 @ 0.0 ) @ ( '2d.vec2d/2' @ V_d1 @ V_d2 ) ) ) ) @ ( 'nil/0' @ '2d.Shape' ) ) ) @ ( '2d.point/2' @ V_q1 @ V_q2 ) )
         & ( V_r
-          = ( 'sqrt/1' @ ( '//2' @ ( '2d.distance^2/2' @ ( '2d.point/2' @ V_p1 @ V_p2 ) @ ( '2d.point/2' @ V_q1 @ V_q2 ) ) @ ( '2d.distance^2/2' @ '2d.origin/0' @ ( '2d.point/2' @ V_p1 @ V_p2 ) ) ) ) ) ) )).
+          = ( 'sqrt/1' @ ( $quotient @ ( '2d.distance^2/2' @ ( '2d.point/2' @ V_p1 @ V_p2 ) @ ( '2d.point/2' @ V_q1 @ V_q2 ) ) @ ( '2d.distance^2/2' @ '2d.origin/0' @ ( '2d.point/2' @ V_p1 @ V_p2 ) ) ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_r_dot_0: 'R'] :
+    ^ [V_r_dot_0: $real] :
       ( V_r_dot_0
-      = ( '//2' @ 3 @ 19 ) ) ),
+      = ( $quotient @ 3.0 @ 19.0 ) ) ),
     answer_to(p_question,[])).
+

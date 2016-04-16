@@ -11,38 +11,41 @@
 %% around the $y$ axis.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   52 (   3 equality;  12 variable)
-%            Maximal formula depth :   19 (  14 average)
-%            Number of connectives :   44 (   0   ~;   0   |;   4   &;  40   @)
+% Syntax   : Number of formulae    :    3 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :   53 (   3 equality;   8 variable)
+%            Maximal formula depth :   19 (  10 average)
+%            Number of connectives :   45 (   0   ~;   0   |;   4   &;  41   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   23 (   0   :)
-%            Number of variables   :    6 (   1 sgn;   0   !;   1   ?;   3   ^)
+%            Number of symbols     :   24 (   1   :;   0   =)
+%            Number of variables   :    4 (   0 sgn;   0   !;   1   ?;   3   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   2 pred;    3 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_V: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_V: $real] :
       ? [V_D: '3d.Shape'] :
-        ( ( '</2' @ 0 @ V_a )
-        & ( '</2' @ V_a @ ( '//2' @ 1 @ 4 ) )
+        ( ( $less @ 0.0 @ 'a/0' )
+        & ( $less @ 'a/0' @ ( $quotient @ 1.0 @ 4.0 ) )
         & ( V_D
           = ( '3d.shape-of-cpfun/1'
             @ ^ [V_p: '3d.Point'] :
                 ( ( '3d.on/2' @ V_p @ '3d.xy-plane/0' )
-                & ( '<=/2' @ ( '^/2' @ ( '3d.y-coord/1' @ V_p ) @ 2 ) @ ( '-/2' @ ( '*/2' @ ( '^/2' @ ( '3d.x-coord/1' @ V_p ) @ 2 ) @ ( '-/2' @ 1 @ ( '^/2' @ ( '3d.x-coord/1' @ V_p ) @ 2 ) ) ) @ V_a ) ) ) ) )
+                & ( $lesseq @ ( '^/2' @ ( '3d.y-coord/1' @ V_p ) @ 2.0 ) @ ( $difference @ ( $product @ ( '^/2' @ ( '3d.x-coord/1' @ V_p ) @ 2.0 ) @ ( $difference @ 1.0 @ ( '^/2' @ ( '3d.x-coord/1' @ V_p ) @ 2.0 ) ) ) @ 'a/0' ) ) ) ) )
         & ( V_V
           = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ V_D @ '3d.y-axis/0' ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_V_dot_0: 'R'] :
+    ^ [V_V_dot_0: $real] :
       ( V_V_dot_0
-      = ( '*/2' @ ( '//2' @ ( '-/2' @ 1 @ ( '*/2' @ 4 @ V_a ) ) @ 4 ) @ ( '^/2' @ 'Pi/0' @ 2 ) ) ) ),
+      = ( $product @ ( $quotient @ ( $difference @ 1.0 @ ( $product @ 4.0 @ 'a/0' ) ) @ 4.0 ) @ ( '^/2' @ 'Pi/0' @ 2.0 ) ) ) ),
     answer_to(p_question,[])).
+

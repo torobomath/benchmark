@@ -14,45 +14,53 @@
 %% where $a_1$, $a_2$, $a_3$, $a_4$ are four different real numbers.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  137 (  12 equality;  58 variable)
-%            Maximal formula depth :   21 (  16 average)
-%            Number of connectives :  119 (   6   ~;   0   |;  10   &; 103   @)
+% Syntax   : Number of formulae    :    6 (   0 unit;   4 type;   0 defn)
+%            Number of atoms       :  163 (   6 equality;  18 variable)
+%            Maximal formula depth :   21 (   7 average)
+%            Number of connectives :  151 (   0   ~;   0   |;   6   &; 145   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   12 (   0   :)
-%            Number of variables   :   12 (   0 sgn;   0   !;   4   ?;   2   ^)
+%            Number of symbols     :   17 (   4   :;   0   =)
+%            Number of variables   :    6 (   0 sgn;   0   !;   4   ?;   2   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   0 pred;    4 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('A1/0_type',type,(
+    'A1/0': $real )).
+
+thf('A2/0_type',type,(
+    'A2/0': $real )).
+
+thf('A3/0_type',type,(
+    'A3/0': $real )).
+
+thf('A4/0_type',type,(
+    'A4/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_xs: 'ListOf' @ 'R'] :
-      ? [V_X1: 'R',V_X2: 'R',V_X3: 'R',V_X4: 'R'] :
-        ( ( V_xs
-          = ( 'cons/2' @ V_X1 @ ( 'cons/2' @ V_X2 @ ( 'cons/2' @ V_X3 @ ( 'cons/2' @ V_X4 @ 'nil/0' ) ) ) ) )
-        & ( ( '+/2' @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A1 @ V_A2 ) ) @ V_X2 ) @ ( '+/2' @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A1 @ V_A3 ) ) @ V_X3 ) @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A1 @ V_A4 ) ) @ V_X4 ) ) )
-          = 1 )
-        & ( ( '+/2' @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A2 @ V_A1 ) ) @ V_X1 ) @ ( '+/2' @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A2 @ V_A3 ) ) @ V_X3 ) @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A2 @ V_A4 ) ) @ V_X4 ) ) )
-          = 1 )
-        & ( ( '+/2' @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A3 @ V_A2 ) ) @ V_X2 ) @ ( '+/2' @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A3 @ V_A1 ) ) @ V_X1 ) @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A3 @ V_A4 ) ) @ V_X4 ) ) )
-          = 1 )
-        & ( ( '+/2' @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A4 @ V_A2 ) ) @ V_X2 ) @ ( '+/2' @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A4 @ V_A3 ) ) @ V_X3 ) @ ( '*/2' @ ( 'abs/1' @ ( '-/2' @ V_A4 @ V_A1 ) ) @ V_X1 ) ) )
-          = 1 )
-        & ( V_A1 != V_A2 )
-        & ( V_A1 != V_A3 )
-        & ( V_A1 != V_A4 )
-        & ( V_A2 != V_A3 )
-        & ( V_A2 != V_A4 )
-        & ( V_A3 != V_A4 ) ) )).
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_xs: ( 'ListOf' @ $real )] :
+        ( ( 'pairwise-distinct/1' @ $real @ ( 'cons/2' @ $real @ 'A1/0' @ ( 'cons/2' @ $real @ 'A2/0' @ ( 'cons/2' @ $real @ 'A3/0' @ ( 'cons/2' @ $real @ 'A4/0' @ ( 'nil/0' @ $real ) ) ) ) ) )
+        & ? [V_X1: $real,V_X2: $real,V_X3: $real,V_X4: $real] :
+            ( ( V_xs
+              = ( 'cons/2' @ $real @ V_X1 @ ( 'cons/2' @ $real @ V_X2 @ ( 'cons/2' @ $real @ V_X3 @ ( 'cons/2' @ $real @ V_X4 @ ( 'nil/0' @ $real ) ) ) ) ) )
+            & ( ( $sum @ ( $product @ ( 'abs/1' @ ( $difference @ 'A1/0' @ 'A2/0' ) ) @ V_X2 ) @ ( $sum @ ( $product @ ( 'abs/1' @ ( $difference @ 'A1/0' @ 'A3/0' ) ) @ V_X3 ) @ ( $product @ ( 'abs/1' @ ( $difference @ 'A1/0' @ 'A4/0' ) ) @ V_X4 ) ) )
+              = 1.0 )
+            & ( ( $sum @ ( $product @ ( 'abs/1' @ ( $difference @ 'A2/0' @ 'A1/0' ) ) @ V_X1 ) @ ( $sum @ ( $product @ ( 'abs/1' @ ( $difference @ 'A2/0' @ 'A3/0' ) ) @ V_X3 ) @ ( $product @ ( 'abs/1' @ ( $difference @ 'A2/0' @ 'A4/0' ) ) @ V_X4 ) ) )
+              = 1.0 )
+            & ( ( $sum @ ( $product @ ( 'abs/1' @ ( $difference @ 'A3/0' @ 'A2/0' ) ) @ V_X2 ) @ ( $sum @ ( $product @ ( 'abs/1' @ ( $difference @ 'A3/0' @ 'A1/0' ) ) @ V_X1 ) @ ( $product @ ( 'abs/1' @ ( $difference @ 'A3/0' @ 'A4/0' ) ) @ V_X4 ) ) )
+              = 1.0 )
+            & ( ( $sum @ ( $product @ ( 'abs/1' @ ( $difference @ 'A4/0' @ 'A2/0' ) ) @ V_X2 ) @ ( $sum @ ( $product @ ( 'abs/1' @ ( $difference @ 'A4/0' @ 'A3/0' ) ) @ V_X3 ) @ ( $product @ ( 'abs/1' @ ( $difference @ 'A4/0' @ 'A1/0' ) ) @ V_X1 ) ) )
+              = 1.0 ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_xs_dot_0: 'ListOf' @ 'R'] :
-      ( V_xs_dot_0
-      = ( 'cons/2' @ ( '//2' @ 1 @ ( '-/2' @ V_A1 @ V_A4 ) ) @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ 1 @ ( '-/2' @ V_A1 @ V_A4 ) ) @ 'nil/0' ) ) ) ) ) ),
+    ^ [V_xs_dot_0: ( 'ListOf' @ $real )] :
+      ( ( 'pairwise-distinct/1' @ $real @ ( 'cons/2' @ $real @ 'A1/0' @ ( 'cons/2' @ $real @ 'A2/0' @ ( 'cons/2' @ $real @ 'A3/0' @ ( 'cons/2' @ $real @ 'A4/0' @ ( 'nil/0' @ $real ) ) ) ) ) )
+      & ( V_xs_dot_0
+        = ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ ( $difference @ 'A1/0' @ 'A4/0' ) ) @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ ( $difference @ 'A1/0' @ 'A4/0' ) ) @ ( 'nil/0' @ $real ) ) ) ) ) ) ) ),
     answer_to(p_question,[])).
+

@@ -36,7 +36,7 @@
 
 (def-directive p3
   (Find (cosB)
-    (forall (A B C t) (->
+    (forall (A B C) (->
       (&& (is-triangle A B C)
         (= (distance C A) (* 2 (distance A B)))
         (= (/ (sqrt 3) 2) (cos-of-angle (angle B C A)))

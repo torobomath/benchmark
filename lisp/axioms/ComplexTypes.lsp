@@ -104,8 +104,20 @@
 ;;@ are-complex-solutions-of(list, phi) <-> list enumerates all complex solutions of which imaginary part are not 0 of phi
 (def-pred are-complex-solutions-of :: (ListOf Complex) -> Equation => Bool)
 
-;;@ is-second-order-equation(phi) <-> phi is a quadrtic equation
-(def-pred is-second-order-equation :: Equation => Bool)
+;;@ is-quad-equation(phi) <-> phi is a quadrtic equation
+(def-pred is-quad-equation :: Equation => Bool)
+(non-degen-cond quad-equation 3 is-quad-equation)
+
+;;@-----------------------------------------------------------------------------
+;;@ C -> C functions
+;;@-----------------------------------------------------------------------------
+;;@ Function from C to C
+(def-type C2C)
+
+(def-fun fun :: (Complex -> Complex) => C2C)
+(def-pred is-function :: C2C => Bool)
+(def-pred is-constant-func :: C2C => Bool)
+(def-fun funapp :: C2C -> Complex => Complex)
 
 ;;@-----------------------------------------------------------------------------
 
@@ -118,3 +130,10 @@
   (a b)
   (= (complex->point (complex a b))
      (2d.point a b)))
+
+(def-fun point->complex :: 2d.Point => Complex)
+(axiom
+  def-point->complex
+  (a b)
+  (= (point->complex (2d.point a b))
+     (complex a b)))

@@ -31,8 +31,7 @@
   p2
   (Find (rx)
   (exists (a b r)
-    (&& (= ab (list-of a b))
-        (= r (+ (real->complex 1) (* (real->complex (sqrt 3)) (i))))
+    (&& (= r (+ (real->complex 1) (* (real->complex (sqrt 3)) (i))))
         (= (+ (^ r 4) (* (real->complex a) (^ r 3)) (* (real->complex b) (^ r 2)) (* (real->complex (.- (.* 8 (.+ (sqrt 3) 1)))) r) (complex 16 0)) (complex 0 0))
         (! (= r rx))
         (= (+ (^ rx 4) (* (real->complex a) (^ rx 3)) (* (real->complex b) (^ rx 2)) (* (real->complex (.- (.* 8 (.+ (sqrt 3) 1)))) rx) (complex 16 0)) (complex 0 0))

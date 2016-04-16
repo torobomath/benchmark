@@ -72,3 +72,10 @@
 
 (def-answer p2_max (PLam max (= max (/ (* 2 (sqrt 2)) 3))))
 
+(def-answer a1 (PLam c (|| (= c (point (- (/ (sqrt 2) 2)) 0))
+      (= c (point (- (/ (sqrt 2) 2)) 2))
+)))
+
+(def-answer a2 (PLam max_min (= max_min (list-of (/ (* 2 (sqrt 2)) 3)
+                                                 0))))
+

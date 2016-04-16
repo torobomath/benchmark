@@ -81,3 +81,8 @@
 
 (def-answer p2 (PLam V (= V (- (* (/ 1 3) (Pi)) (* (/ (sqrt 3) 18) (^ (Pi) 2))))))
 
+(def-answer a1 (PLam D_r (= D_r (pair (point (/ 1 3) (/ (sqrt 3) 3))
+                                      (/ 1 3)))))
+
+(def-answer a2 (PLam V (= V (- (* (/ 1 3) (Pi)) (* (/ (sqrt 3) 18) (^ (Pi) 2))))))
+

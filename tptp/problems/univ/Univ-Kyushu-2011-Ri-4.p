@@ -19,45 +19,44 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  157 (  16 equality;  60 variable)
+%            Number of atoms       :  160 (  16 equality;  60 variable)
 %            Maximal formula depth :   31 (  15 average)
-%            Number of connectives :  119 (   0   ~;   0   |;  28   &;  91   @)
+%            Number of connectives :  122 (   0   ~;   0   |;  28   &;  94   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :)
+%            Number of symbols     :   20 (   0   :;   0   =)
 %            Number of variables   :   24 (   0 sgn;   0   !;  18   ?;   6   ^)
 %                                         (  24   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   0 pred;    1 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '3d.Point'
     @ ^ [V_D: '3d.Point'] :
-      ? [V_r: 'R',V_S: '3d.Shape'] :
+      ? [V_r: $real,V_S: '3d.Shape'] :
         ( ( V_S
           = ( '3d.sphere/2' @ V_D @ V_r ) )
         & ( '3d.on/2' @ '3d.origin/0' @ V_S )
-        & ( '3d.on/2' @ ( '3d.point/3' @ 0 @ 2 @ 3 ) @ V_S )
-        & ( '3d.on/2' @ ( '3d.point/3' @ 1 @ 0 @ 3 ) @ V_S )
-        & ( '3d.on/2' @ ( '3d.point/3' @ 1 @ 2 @ 0 ) @ V_S ) ) )).
+        & ( '3d.on/2' @ ( '3d.point/3' @ 0.0 @ 2.0 @ 3.0 ) @ V_S )
+        & ( '3d.on/2' @ ( '3d.point/3' @ 1.0 @ 0.0 @ 3.0 ) @ V_S )
+        & ( '3d.on/2' @ ( '3d.point/3' @ 1.0 @ 2.0 @ 0.0 ) @ V_S ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_DF: 'R'] :
-      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_r: 'R',V_S: '3d.Shape',V_ABC: '3d.Shape',V_F: '3d.Point'] :
+    ( 'find/1' @ $real
+    @ ^ [V_DF: $real] :
+      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_r: $real,V_S: '3d.Shape',V_ABC: '3d.Shape',V_F: '3d.Point'] :
         ( ( V_S
           = ( '3d.sphere/2' @ V_D @ V_r ) )
         & ( V_O = '3d.origin/0' )
         & ( V_A
-          = ( '3d.point/3' @ 0 @ 2 @ 3 ) )
+          = ( '3d.point/3' @ 0.0 @ 2.0 @ 3.0 ) )
         & ( V_B
-          = ( '3d.point/3' @ 1 @ 0 @ 3 ) )
+          = ( '3d.point/3' @ 1.0 @ 0.0 @ 3.0 ) )
         & ( V_C
-          = ( '3d.point/3' @ 1 @ 2 @ 0 ) )
+          = ( '3d.point/3' @ 1.0 @ 2.0 @ 0.0 ) )
         & ( '3d.on/2' @ V_O @ V_S )
         & ( '3d.on/2' @ V_A @ V_S )
         & ( '3d.on/2' @ V_B @ V_S )
@@ -72,18 +71,18 @@ thf(p2_qustion,question,
           = ( '3d.distance/2' @ V_D @ V_F ) ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_V: 'R'] :
-      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_r: 'R',V_S: '3d.Shape'] :
+    ( 'find/1' @ $real
+    @ ^ [V_V: $real] :
+      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_r: $real,V_S: '3d.Shape'] :
         ( ( V_S
           = ( '3d.sphere/2' @ V_D @ V_r ) )
         & ( V_O = '3d.origin/0' )
         & ( V_A
-          = ( '3d.point/3' @ 0 @ 2 @ 3 ) )
+          = ( '3d.point/3' @ 0.0 @ 2.0 @ 3.0 ) )
         & ( V_B
-          = ( '3d.point/3' @ 1 @ 0 @ 3 ) )
+          = ( '3d.point/3' @ 1.0 @ 0.0 @ 3.0 ) )
         & ( V_C
-          = ( '3d.point/3' @ 1 @ 2 @ 0 ) )
+          = ( '3d.point/3' @ 1.0 @ 2.0 @ 0.0 ) )
         & ( '3d.on/2' @ V_O @ V_S )
         & ( '3d.on/2' @ V_A @ V_S )
         & ( '3d.on/2' @ V_B @ V_S )
@@ -94,17 +93,18 @@ thf(p3_qustion,question,
 thf(p1_answer,answer,(
     ^ [V_D_dot_0: '3d.Point'] :
       ( V_D_dot_0
-      = ( '3d.point/3' @ ( '//2' @ 1 @ 2 ) @ 1 @ ( '//2' @ 3 @ 2 ) ) ) ),
+      = ( '3d.point/3' @ ( $quotient @ 1.0 @ 2.0 ) @ 1.0 @ ( $quotient @ 3.0 @ 2.0 ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_DF_dot_0: 'R'] :
+    ^ [V_DF_dot_0: $real] :
       ( V_DF_dot_0
-      = ( '//2' @ 3 @ 7 ) ) ),
+      = ( $quotient @ 3.0 @ 7.0 ) ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_V_dot_0: 'R'] :
+    ^ [V_V_dot_0: $real] :
       ( V_V_dot_0
-      = ( '//2' @ 1 @ 2 ) ) ),
+      = ( $quotient @ 1.0 @ 2.0 ) ) ),
     answer_to(p3_question,[])).
+

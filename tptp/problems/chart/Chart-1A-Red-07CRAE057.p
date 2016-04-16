@@ -5,36 +5,41 @@
 %% AUTHOR:    Takuya Matsuzaki
 %% GENERATED: 2015-01-07
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   55 (   5 equality;  29 variable)
-%            Maximal formula depth :   25 (  16 average)
-%            Number of connectives :   43 (   0   ~;   0   |;   7   &;  36   @)
+% Syntax   : Number of formulae    :    4 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :   57 (   5 equality;  24 variable)
+%            Maximal formula depth :   25 (   9 average)
+%            Number of connectives :   45 (   0   ~;   0   |;   7   &;  38   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   17 (   0   :)
-%            Number of variables   :   13 (   3 sgn;   0   !;   6   ?;   3   ^)
+%            Number of symbols     :   19 (   2   :;   0   =)
+%            Number of variables   :    9 (   0 sgn;   0   !;   6   ?;   3   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    2 (   0 pred;    2 func;    0 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_PC: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_PC: $real] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_P: '2d.Point',V_g: '2d.Shape'] :
         ( ( '2d.line-type/1' @ V_g )
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_A @ V_B ) @ V_g @ V_C )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) )
-          = V_a )
+          = 'a/0' )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_C ) )
-          = V_b )
+          = 'b/0' )
         & ( '2d.on/2' @ V_P @ V_g )
         & ( 'maximum/2'
-          @ ( 'set-by-def/1'
-            @ ^ [V_angleAPB: 'R'] :
+          @ ( 'set-by-def/1' @ $real
+            @ ^ [V_angleAPB: $real] :
               ? [V_P_dot_0: '2d.Point'] :
                 ( ( '2d.on/2' @ V_P_dot_0 @ V_g )
                 & ( V_angleAPB
@@ -44,7 +49,8 @@ thf(p_qustion,question,
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_C ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_PC_dot_0: 'R'] :
+    ^ [V_PC_dot_0: $real] :
       ( V_PC_dot_0
-      = ( 'sqrt/1' @ ( '*/2' @ V_b @ ( '+/2' @ V_b @ V_a ) ) ) ) ),
+      = ( 'sqrt/1' @ ( $product @ 'b/0' @ ( $sum @ 'b/0' @ 'a/0' ) ) ) ) ),
     answer_to(p_question,[])).
+

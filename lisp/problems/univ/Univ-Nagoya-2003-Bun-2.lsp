@@ -23,7 +23,7 @@
 (def-directive
   p1
   (Find (l)
-  (exists (m P C l2) (&&
+  (exists (P C l2) (&&
     (line-type l2)
     (line-type l)
     (= C (graph-of (poly-fun (list-of 0 0 a))))
@@ -94,4 +94,16 @@
   ))))
 
 (def-answer p3 (PLam ans (= ans -1)))
+
+(def-answer
+  a1 (PLam l (&&
+  (< 0 a) (! (= p 0))
+    (= l (shape-of-cpfun (PLam P
+      (= (y-coord P)
+         (+ (* (- (/ 1 (* 2 a p))) (x-coord P))
+      (/ 1 (* 2 a))
+      (* a (^ p 2))))))))))
+
+(def-answer a2 (PLam ans (= ans (pair (/ 4 (* 3 (^ a 2)))
+                                      -1))))
 

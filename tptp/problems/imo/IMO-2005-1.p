@@ -13,20 +13,18 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   98 (   5 equality;  53 variable)
-%            Maximal formula depth :   28 (  28 average)
-%            Number of connectives :   87 (   0   ~;   0   |;  12   &;  74   @)
+%            Number of atoms       :  109 (   5 equality;  53 variable)
+%            Maximal formula depth :   29 (  29 average)
+%            Number of connectives :   98 (   0   ~;   0   |;  12   &;  85   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   11 (   0   :)
+%            Number of symbols     :   12 (   0   :;   0   =)
 %            Number of variables   :    9 (   0 sgn;   9   !;   0   ?;   0   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_A1: '2d.Point',V_A2: '2d.Point',V_B1: '2d.Point',V_B2: '2d.Point',V_C1: '2d.Point',V_C2: '2d.Point'] :
@@ -37,7 +35,7 @@ thf(p,conjecture,(
         & ( '2d.on/2' @ V_B2 @ ( '2d.seg/2' @ V_C @ V_A ) )
         & ( '2d.on/2' @ V_C1 @ ( '2d.seg/2' @ V_A @ V_B ) )
         & ( '2d.on/2' @ V_C2 @ ( '2d.seg/2' @ V_A @ V_B ) )
-        & ( '2d.is-convex-shape/1' @ ( '2d.polygon/1' @ ( 'cons/2' @ V_A1 @ ( 'cons/2' @ V_A2 @ ( 'cons/2' @ V_B1 @ ( 'cons/2' @ V_B2 @ ( 'cons/2' @ V_C1 @ ( 'cons/2' @ V_C2 @ 'nil/0' ) ) ) ) ) ) ) )
+        & ( '2d.is-convex-shape/1' @ ( '2d.polygon/1' @ ( 'cons/2' @ '2d.Point' @ V_A1 @ ( 'cons/2' @ '2d.Point' @ V_A2 @ ( 'cons/2' @ '2d.Point' @ V_B1 @ ( 'cons/2' @ '2d.Point' @ V_B2 @ ( 'cons/2' @ '2d.Point' @ V_C1 @ ( 'cons/2' @ '2d.Point' @ V_C2 @ ( 'nil/0' @ '2d.Point' ) ) ) ) ) ) ) ) )
         & ( ( '2d.distance/2' @ V_A1 @ V_A2 )
           = ( '2d.distance/2' @ V_A2 @ V_B1 ) )
         & ( ( '2d.distance/2' @ V_A2 @ V_B1 )
@@ -48,4 +46,5 @@ thf(p,conjecture,(
           = ( '2d.distance/2' @ V_C2 @ V_A1 ) )
         & ( ( '2d.distance/2' @ V_C2 @ V_A1 )
           = ( '2d.distance/2' @ V_A1 @ V_A2 ) ) )
-     => ( '2d.lines-intersect-at-one/1' @ ( 'cons/2' @ ( '2d.line/2' @ V_A1 @ V_B2 ) @ ( 'cons/2' @ ( '2d.line/2' @ V_B1 @ V_C2 ) @ ( 'cons/2' @ ( '2d.line/2' @ V_C1 @ V_A2 ) @ 'nil/0' ) ) ) ) ) )).
+     => ( '2d.lines-intersect-at-one/1' @ ( 'cons/2' @ '2d.Shape' @ ( '2d.line/2' @ V_A1 @ V_B2 ) @ ( 'cons/2' @ '2d.Shape' @ ( '2d.line/2' @ V_B1 @ V_C2 ) @ ( 'cons/2' @ '2d.Shape' @ ( '2d.line/2' @ V_C1 @ V_A2 ) @ ( 'nil/0' @ '2d.Shape' ) ) ) ) ) ) )).
+

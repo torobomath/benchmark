@@ -33,5 +33,29 @@
                     (on q (intersection C l))
                     (! (= p q))))))
 
+(def-directive
+  p2
+  (Find (S)
+        (exists (C l p q)
+                (&& (= C (graph-of (fun (Lam x (^ x 2)))))
+                    (= l (graph-of (fun (Lam x (+ x k)))))
+                    (< -2 (x-coord p))
+                    (< (x-coord p) 2)
+                    (< -2 (x-coord q))
+                    (< (x-coord q) 2)
+                    (on p (intersection C l))
+                    (on q (intersection C l))
+                    (! (= p q))
+                    (= S (area-of (shape-enclosed-by (list-of C l
+                                                              (set-of-cfun (Lam x (PLam y (= x -2))))
+                                                              (set-of-cfun (Lam x (PLam y (= x 2))))))))))))
+
 (def-answer p1 (PLam k (&& (< (- (/ 1 4)) k) (< k 2))))
+
+(def-answer p2 (PLam S (&& (< (- (/ 1 4)) k)
+                           (< k 2)
+                           (= S (+ (/ 16 3)
+                                   (- (* 4 k))
+                                   (* (/ 1 3)
+                                      (sqrt (^ (+ 1 (* 4 k)) 3))))))))
 

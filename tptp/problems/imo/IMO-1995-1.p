@@ -15,20 +15,18 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  105 (   4 equality;  62 variable)
+%            Number of atoms       :  109 (   4 equality;  62 variable)
 %            Maximal formula depth :   38 (  38 average)
-%            Number of connectives :  103 (   7   ~;   0   |;  19   &;  76   @)
+%            Number of connectives :  107 (   7   ~;   0   |;  19   &;  80   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   12 (   0   :)
+%            Number of symbols     :   12 (   0   :;   0   =)
 %            Number of variables   :   12 (   0 sgn;  12   !;   0   ?;   0   ^)
 %                                         (  12   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_S1: '2d.Shape',V_S2: '2d.Shape',V_X: '2d.Point',V_Y: '2d.Point',V_Z: '2d.Point',V_P: '2d.Point',V_M: '2d.Point',V_N: '2d.Point'] :
@@ -52,4 +50,5 @@ thf(p,conjecture,(
         & ( V_N != V_B )
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_C @ V_P ) @ V_S1 @ V_M )
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_B @ V_P ) @ V_S2 @ V_N ) )
-     => ( '2d.lines-intersect-at-one/1' @ ( 'cons/2' @ ( '2d.line/2' @ V_A @ V_M ) @ ( 'cons/2' @ ( '2d.line/2' @ V_D @ V_N ) @ ( 'cons/2' @ ( '2d.line/2' @ V_X @ V_Y ) @ 'nil/0' ) ) ) ) ) )).
+     => ( '2d.lines-intersect-at-one/1' @ ( 'cons/2' @ '2d.Shape' @ ( '2d.line/2' @ V_A @ V_M ) @ ( 'cons/2' @ '2d.Shape' @ ( '2d.line/2' @ V_D @ V_N ) @ ( 'cons/2' @ '2d.Shape' @ ( '2d.line/2' @ V_X @ V_Y ) @ ( 'nil/0' @ '2d.Shape' ) ) ) ) ) ) )).
+

@@ -3,6 +3,18 @@
 ;; SOURCE:    The University of Tokyo, 2014, Science Course, Problem 6
 ;; AUTHOR:    Hidenao Iwane
 ;; GENERATED: 2014-04-01
+;;
+;; <PROBLEM-TEXT>
+;; Let $O$ be the origin of the coordinate plane.
+;; The point $P$ moves on the segment $y = \sqrt{3}x$ ($0 \le x \le 2$)
+;; and the point $Q$ moves on the segment $y = -\sqrt{3}x$ ($-2 \le x \le 0)
+;; so that the sum of the lengths of the segments $OP$ and $OQ$ is 6.
+;; Let $D$ be the region that the segment $PQ$ pass through.
+;; (1) Let $s$ be a real number satisfying $0 \le s \le 2$.
+;; Find the range of $t$ such that the point $(s, t)$ is in the region $D$.
+;; (2) Draw the region $D$.
+;;
+;; </PROBLEM-TEXT>
 
 (namespace 2d)
 

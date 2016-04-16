@@ -19,7 +19,7 @@
 (namespace 2d)
 
 (def-directive
-  p1
+  a1
   (Find (S)
     (exists (P C l Q R)
       (&&
@@ -39,7 +39,9 @@
   )
 )
 
-(def-answer p1 (PLam S (&& (= S (/ (* (sqrt (* 2 a)) (- 1 a)) (+ (^ a 2) 1)))
+(def-answer a1 (PLam S (&& (= S (/ (* (sqrt (* 2 a)) (- 1 a)) (+ (^ a 2) 1)))
          (< 0 a)
          (< a 1))))
+
+(def-answer a2 (PLam a (= a (- 2 (sqrt 3)))))
 

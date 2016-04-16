@@ -26,33 +26,38 @@
 %% ${\alpha}$ plane.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    7 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  369 (  28 equality; 168 variable)
-%            Maximal formula depth :   36 (  23 average)
-%            Number of connectives :  310 (   2   ~;   0   |;  59   &; 248   @)
+% Syntax   : Number of formulae    :    9 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :  380 (  28 equality; 112 variable)
+%            Maximal formula depth :   36 (  18 average)
+%            Number of connectives :  321 (   2   ~;   0   |;  59   &; 259   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   38 (   0   :)
-%            Number of variables   :   48 (   0 sgn;   2   !;  27   ?;   7   ^)
+%            Number of symbols     :   40 (   2   :;   0   =)
+%            Number of variables   :   36 (   0 sgn;   2   !;  27   ?;   7   ^)
 %                                         (  36   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   2 pred;    4 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
-thf(p1_1,conjecture,(
-    ! [V_a: 'R',V_b: 'R'] :
-      ( ( ( '</2' @ 0 @ V_a )
-        & ( '</2' @ 0 @ V_b ) )
-     => ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_alpha: '3d.Shape',V_S: '3d.Shape',V_r: 'R'] :
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
+
+thf(a1_1,conjecture,(
+    ! [V_a: $real,V_b: $real] :
+      ( ( ( $less @ 0.0 @ V_a )
+        & ( $less @ 0.0 @ V_b ) )
+     => ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_alpha: '3d.Shape',V_S: '3d.Shape',V_r: $real] :
           ( ( V_A
-            = ( '3d.point/3' @ V_a @ ( '-/1' @ V_a ) @ V_b ) )
+            = ( '3d.point/3' @ V_a @ ( $uminus @ V_a ) @ V_b ) )
           & ( V_B
-            = ( '3d.point/3' @ ( '-/1' @ V_a ) @ V_a @ V_b ) )
+            = ( '3d.point/3' @ ( $uminus @ V_a ) @ V_a @ V_b ) )
           & ( V_C
-            = ( '3d.point/3' @ V_a @ V_a @ ( '-/1' @ V_b ) ) )
+            = ( '3d.point/3' @ V_a @ V_a @ ( $uminus @ V_b ) ) )
           & ( '3d.plane-type/1' @ V_alpha )
           & ( '3d.on/2' @ V_A @ V_alpha )
           & ( '3d.on/2' @ V_B @ V_alpha )
@@ -65,39 +70,39 @@ thf(p1_1,conjecture,(
           & ( V_D
             = ( '3d.midpoint-of/2' @ V_A @ V_B ) )
           & ( ( '3d.inner-prod/2' @ ( '3d.vec/2' @ V_D @ V_C ) @ ( '3d.vec/2' @ V_A @ V_B ) )
-            = 0 )
+            = 0.0 )
           & ( ( '3d.inner-prod/2' @ ( '3d.vec/2' @ V_D @ '3d.origin/0' ) @ ( '3d.vec/2' @ V_A @ V_B ) )
-            = 0 ) ) ) )).
+            = 0.0 ) ) ) )).
 
-thf(p1_2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ABC: 'R'] :
+thf(a1_2_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_ABC: $real] :
       ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point'] :
-        ( ( '</2' @ 0 @ V_a )
-        & ( '</2' @ 0 @ V_b )
+        ( ( $less @ 0.0 @ 'a/0' )
+        & ( $less @ 0.0 @ 'b/0' )
         & ( V_A
-          = ( '3d.point/3' @ V_a @ ( '-/1' @ V_a ) @ V_b ) )
+          = ( '3d.point/3' @ 'a/0' @ ( $uminus @ 'a/0' ) @ 'b/0' ) )
         & ( V_B
-          = ( '3d.point/3' @ ( '-/1' @ V_a ) @ V_a @ V_b ) )
+          = ( '3d.point/3' @ ( $uminus @ 'a/0' ) @ 'a/0' @ 'b/0' ) )
         & ( V_C
-          = ( '3d.point/3' @ V_a @ V_a @ ( '-/1' @ V_b ) ) )
+          = ( '3d.point/3' @ 'a/0' @ 'a/0' @ ( $uminus @ 'b/0' ) ) )
         & ( V_ABC
           = ( '3d.area-of/1' @ ( '3d.triangle/3' @ V_A @ V_B @ V_C ) ) ) ) )).
 
-thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ans: 'ListOf' @ 'R'] :
-      ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_alpha: '3d.Shape',V_S: '3d.Shape',V_r: 'R',V_H: '3d.Point',V_sintheta: 'R',V_OH: 'R'] :
-        ( ( '</2' @ 0 @ V_a )
-        & ( '</2' @ 0 @ V_b )
+thf(a2_qustion,question,
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_ans: ( 'ListOf' @ $real )] :
+      ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point',V_alpha: '3d.Shape',V_S: '3d.Shape',V_r: $real,V_H: '3d.Point',V_sintheta: $real,V_OH: $real] :
+        ( ( $less @ 0.0 @ 'a/0' )
+        & ( $less @ 0.0 @ 'b/0' )
         & ( V_ans
-          = ( 'cons/2' @ V_sintheta @ ( 'cons/2' @ V_OH @ 'nil/0' ) ) )
+          = ( 'cons/2' @ $real @ V_sintheta @ ( 'cons/2' @ $real @ V_OH @ ( 'nil/0' @ $real ) ) ) )
         & ( V_A
-          = ( '3d.point/3' @ V_a @ ( '-/1' @ V_a ) @ V_b ) )
+          = ( '3d.point/3' @ 'a/0' @ ( $uminus @ 'a/0' ) @ 'b/0' ) )
         & ( V_B
-          = ( '3d.point/3' @ ( '-/1' @ V_a ) @ V_a @ V_b ) )
+          = ( '3d.point/3' @ ( $uminus @ 'a/0' ) @ 'a/0' @ 'b/0' ) )
         & ( V_C
-          = ( '3d.point/3' @ V_a @ V_a @ ( '-/1' @ V_b ) ) )
+          = ( '3d.point/3' @ 'a/0' @ 'a/0' @ ( $uminus @ 'b/0' ) ) )
         & ( '3d.plane-type/1' @ V_alpha )
         & ( '3d.on/2' @ V_A @ V_alpha )
         & ( '3d.on/2' @ V_B @ V_alpha )
@@ -117,18 +122,18 @@ thf(p2_qustion,question,
         & ( V_OH
           = ( '3d.length-of/1' @ ( '3d.seg/2' @ '3d.origin/0' @ V_H ) ) ) ) )).
 
-thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_maxV: 'R'] :
-      ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_alpha: '3d.Shape',V_S: '3d.Shape',V_r: 'R'] :
-        ( ( '</2' @ 0 @ V_a )
-        & ( '</2' @ 0 @ V_b )
+thf(a3_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_maxV: $real] :
+      ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_alpha: '3d.Shape',V_S: '3d.Shape',V_r: $real] :
+        ( ( $less @ 0.0 @ 'a/0' )
+        & ( $less @ 0.0 @ 'b/0' )
         & ( V_A
-          = ( '3d.point/3' @ V_a @ ( '-/1' @ V_a ) @ V_b ) )
+          = ( '3d.point/3' @ 'a/0' @ ( $uminus @ 'a/0' ) @ 'b/0' ) )
         & ( V_B
-          = ( '3d.point/3' @ ( '-/1' @ V_a ) @ V_a @ V_b ) )
+          = ( '3d.point/3' @ ( $uminus @ 'a/0' ) @ 'a/0' @ 'b/0' ) )
         & ( V_C
-          = ( '3d.point/3' @ V_a @ V_a @ ( '-/1' @ V_b ) ) )
+          = ( '3d.point/3' @ 'a/0' @ 'a/0' @ ( $uminus @ 'b/0' ) ) )
         & ( '3d.plane-type/1' @ V_alpha )
         & ( '3d.on/2' @ V_A @ V_alpha )
         & ( '3d.on/2' @ V_B @ V_alpha )
@@ -139,8 +144,8 @@ thf(p3_qustion,question,
         & ( '3d.on/2' @ V_B @ V_S )
         & ( '3d.on/2' @ V_C @ V_S )
         & ( 'maximum/2'
-          @ ( 'set-by-def/1'
-            @ ^ [V_V: 'R'] :
+          @ ( 'set-by-def/1' @ $real
+            @ ^ [V_V: $real] :
               ? [V_P: '3d.Point'] :
                 ( ( '3d.on/2' @ V_P @ V_S )
                 & ~ ( '3d.on/2' @ V_P @ V_alpha )
@@ -148,26 +153,27 @@ thf(p3_qustion,question,
                   = ( '3d.volume-of/1' @ ( '3d.tetrahedron/4' @ V_A @ V_B @ V_C @ V_P ) ) ) ) )
           @ V_maxV ) ) )).
 
-thf(p1_2_answer,answer,(
-    ^ [V_ABC_dot_0: 'R'] :
-      ( ( '>/2' @ V_a @ 0 )
-      & ( '>/2' @ V_b @ 0 )
+thf(a1_2_answer,answer,(
+    ^ [V_ABC_dot_0: $real] :
+      ( ( $greater @ 'a/0' @ 0.0 )
+      & ( $greater @ 'b/0' @ 0.0 )
       & ( V_ABC_dot_0
-        = ( '*/2' @ 2 @ ( '*/2' @ V_a @ ( 'sqrt/1' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ ( '*/2' @ 2 @ ( '^/2' @ V_b @ 2 ) ) ) ) ) ) ) ) ),
-    answer_to(p1_2_question,[])).
+        = ( $product @ 2.0 @ ( $product @ 'a/0' @ ( 'sqrt/1' @ ( $sum @ ( '^/2' @ 'a/0' @ 2.0 ) @ ( $product @ 2.0 @ ( '^/2' @ 'b/0' @ 2.0 ) ) ) ) ) ) ) ) ),
+    answer_to(a1_2_question,[])).
 
-thf(p2_answer,answer,(
-    ^ [V_ans_dot_0: 'ListOf' @ 'R'] :
-      ( ( '>/2' @ V_a @ 0 )
-      & ( '>/2' @ V_b @ 0 )
+thf(a2_answer,answer,(
+    ^ [V_ans_dot_0: ( 'ListOf' @ $real )] :
+      ( ( $greater @ 'a/0' @ 0.0 )
+      & ( $greater @ 'b/0' @ 0.0 )
       & ( V_ans_dot_0
-        = ( 'cons/2' @ ( '//2' @ V_a @ ( 'sqrt/1' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ ( '*/2' @ 2 @ ( '^/2' @ V_b @ 2 ) ) ) ) ) @ ( 'cons/2' @ ( '//2' @ ( '*/2' @ V_a @ V_b ) @ ( 'sqrt/1' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ ( '*/2' @ 2 @ ( '^/2' @ V_b @ 2 ) ) ) ) ) @ 'nil/0' ) ) ) ) ),
-    answer_to(p2_question,[])).
+        = ( 'cons/2' @ $real @ ( $quotient @ 'a/0' @ ( 'sqrt/1' @ ( $sum @ ( '^/2' @ 'a/0' @ 2.0 ) @ ( $product @ 2.0 @ ( '^/2' @ 'b/0' @ 2.0 ) ) ) ) ) @ ( 'cons/2' @ $real @ ( $quotient @ ( $product @ 'a/0' @ 'b/0' ) @ ( 'sqrt/1' @ ( $sum @ ( '^/2' @ 'a/0' @ 2.0 ) @ ( $product @ 2.0 @ ( '^/2' @ 'b/0' @ 2.0 ) ) ) ) ) @ ( 'nil/0' @ $real ) ) ) ) ) ),
+    answer_to(a2_question,[])).
 
-thf(p3_answer,answer,(
-    ^ [V_maxV_dot_0: 'R'] :
-      ( ( '>/2' @ V_a @ 0 )
-      & ( '>/2' @ V_b @ 0 )
+thf(a3_answer,answer,(
+    ^ [V_maxV_dot_0: $real] :
+      ( ( $greater @ 'a/0' @ 0.0 )
+      & ( $greater @ 'b/0' @ 0.0 )
       & ( V_maxV_dot_0
-        = ( '*/2' @ ( '//2' @ 2 @ 3 ) @ ( '*/2' @ V_a @ ( '+/2' @ ( 'sqrt/1' @ ( '*/2' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ ( '*/2' @ 2 @ ( '^/2' @ V_b @ 2 ) ) ) @ ( '+/2' @ ( '*/2' @ 2 @ ( '^/2' @ V_a @ 2 ) ) @ ( '^/2' @ V_b @ 2 ) ) ) ) @ ( '*/2' @ V_a @ V_b ) ) ) ) ) ) ),
-    answer_to(p3_question,[])).
+        = ( $product @ ( $quotient @ 2.0 @ 3.0 ) @ ( $product @ 'a/0' @ ( $sum @ ( 'sqrt/1' @ ( $product @ ( $sum @ ( '^/2' @ 'a/0' @ 2.0 ) @ ( $product @ 2.0 @ ( '^/2' @ 'b/0' @ 2.0 ) ) ) @ ( $sum @ ( $product @ 2.0 @ ( '^/2' @ 'a/0' @ 2.0 ) ) @ ( '^/2' @ 'b/0' @ 2.0 ) ) ) ) @ ( $product @ 'a/0' @ 'b/0' ) ) ) ) ) ) ),
+    answer_to(a3_question,[])).
+

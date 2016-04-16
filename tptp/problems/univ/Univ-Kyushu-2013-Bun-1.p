@@ -24,84 +24,113 @@
 %% find the value of $t$ and the length of the segment $OP$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :   10 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  343 (  37 equality; 174 variable)
-%            Maximal formula depth :   29 (  15 average)
-%            Number of connectives :  261 (   0   ~;   0   |;  39   &; 222   @)
+% Syntax   : Number of formulae    :   14 (   0 unit;   4 type;   0 defn)
+%            Number of atoms       :  386 (  46 equality; 175 variable)
+%            Maximal formula depth :   29 (  12 average)
+%            Number of connectives :  286 (   0   ~;   0   |;  48   &; 238   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   28 (   0   :)
-%            Number of variables   :   60 (   8 sgn;   0   !;  38   ?;  10   ^)
+%            Number of symbols     :   32 (   4   :;   0   =)
+%            Number of variables   :   48 (   0 sgn;   0   !;  38   ?;  10   ^)
 %                                         (  48   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   0 pred;    2 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('t/0_type',type,(
+    't/0': $real )).
+
+thf('vecOA/0_type',type,(
+    'vecOA/0': '3d.Vector' )).
+
+thf('vecOC/0_type',type,(
+    'vecOC/0': '3d.Vector' )).
+
+thf('vecOP/0_type',type,(
+    'vecOP/0': '3d.Vector' )).
 
 thf(p1_1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_OD: '3d.Vector'] :
-      ? [V_O_dot_0: '3d.Point',V_A_dot_0: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_P_dot_0: '3d.Point',V_D: '3d.Point',V_E: '3d.Point'] :
-        ( ( '3d.is-regular-square/4' @ V_O_dot_0 @ V_A_dot_0 @ V_B @ V_C )
-        & ( ( '3d.distance/2' @ V_O_dot_0 @ V_A_dot_0 )
-          = 1 )
-        & ( ( '3d.distance/2' @ V_O_dot_0 @ V_P_dot_0 )
-          = ( '3d.distance/2' @ V_A_dot_0 @ V_P_dot_0 ) )
-        & ( ( '3d.distance/2' @ V_A_dot_0 @ V_P_dot_0 )
-          = ( '3d.distance/2' @ V_B @ V_P_dot_0 ) )
-        & ( ( '3d.distance/2' @ V_B @ V_P_dot_0 )
-          = ( '3d.distance/2' @ V_C @ V_P_dot_0 ) )
-        & ( '3d.divide-internally/4' @ V_D @ ( '3d.seg/2' @ V_A_dot_0 @ V_P_dot_0 ) @ 1 @ 3 )
+    ( 'find/1' @ '3d.Vector'
+    @ ^ [V_vecOD: '3d.Vector'] :
+      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_P: '3d.Point',V_D: '3d.Point',V_E: '3d.Point'] :
+        ( ( '3d.is-regular-square/4' @ V_O @ V_A @ V_B @ V_C )
+        & ( ( '3d.distance/2' @ V_O @ V_A )
+          = 1.0 )
+        & ( ( '3d.distance/2' @ V_O @ V_P )
+          = ( '3d.distance/2' @ V_A @ V_P ) )
+        & ( ( '3d.distance/2' @ V_A @ V_P )
+          = ( '3d.distance/2' @ V_B @ V_P ) )
+        & ( ( '3d.distance/2' @ V_B @ V_P )
+          = ( '3d.distance/2' @ V_C @ V_P ) )
+        & ( '3d.divide-internally/4' @ V_D @ ( '3d.seg/2' @ V_A @ V_P ) @ 1.0 @ 3.0 )
         & ( V_E
-          = ( '3d.midpoint-of/2' @ V_C @ V_P_dot_0 ) )
-        & ( V_OD
-          = ( '3d.vec/2' @ V_O_dot_0 @ V_D ) ) ) )).
+          = ( '3d.midpoint-of/2' @ V_C @ V_P ) )
+        & ( V_vecOD
+          = ( '3d.vec/2' @ V_O @ V_D ) )
+        & ( 'vecOA/0'
+          = ( '3d.vec/2' @ V_O @ V_A ) )
+        & ( 'vecOC/0'
+          = ( '3d.vec/2' @ V_O @ V_C ) )
+        & ( 'vecOP/0'
+          = ( '3d.vec/2' @ V_O @ V_P ) ) ) )).
 
 thf(p1_2_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '3d.Vector'
     @ ^ [V_OE: '3d.Vector'] :
-      ? [V_O_dot_0: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C_dot_0: '3d.Point',V_P_dot_0: '3d.Point',V_D: '3d.Point',V_E: '3d.Point'] :
-        ( ( '3d.is-regular-square/4' @ V_O_dot_0 @ V_A @ V_B @ V_C_dot_0 )
-        & ( ( '3d.distance/2' @ V_O_dot_0 @ V_A )
-          = 1 )
-        & ( ( '3d.distance/2' @ V_O_dot_0 @ V_P_dot_0 )
-          = ( '3d.distance/2' @ V_A @ V_P_dot_0 ) )
-        & ( ( '3d.distance/2' @ V_A @ V_P_dot_0 )
-          = ( '3d.distance/2' @ V_B @ V_P_dot_0 ) )
-        & ( ( '3d.distance/2' @ V_B @ V_P_dot_0 )
-          = ( '3d.distance/2' @ V_C_dot_0 @ V_P_dot_0 ) )
-        & ( '3d.divide-internally/4' @ V_D @ ( '3d.seg/2' @ V_A @ V_P_dot_0 ) @ 1 @ 3 )
+      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_P: '3d.Point',V_D: '3d.Point',V_E: '3d.Point'] :
+        ( ( '3d.is-regular-square/4' @ V_O @ V_A @ V_B @ V_C )
+        & ( ( '3d.distance/2' @ V_O @ V_A )
+          = 1.0 )
+        & ( ( '3d.distance/2' @ V_O @ V_P )
+          = ( '3d.distance/2' @ V_A @ V_P ) )
+        & ( ( '3d.distance/2' @ V_A @ V_P )
+          = ( '3d.distance/2' @ V_B @ V_P ) )
+        & ( ( '3d.distance/2' @ V_B @ V_P )
+          = ( '3d.distance/2' @ V_C @ V_P ) )
+        & ( '3d.divide-internally/4' @ V_D @ ( '3d.seg/2' @ V_A @ V_P ) @ 1.0 @ 3.0 )
         & ( V_E
-          = ( '3d.midpoint-of/2' @ V_C_dot_0 @ V_P_dot_0 ) )
+          = ( '3d.midpoint-of/2' @ V_C @ V_P ) )
         & ( V_OE
-          = ( '3d.vec/2' @ V_O_dot_0 @ V_E ) ) ) )).
+          = ( '3d.vec/2' @ V_O @ V_E ) )
+        & ( 'vecOA/0'
+          = ( '3d.vec/2' @ V_O @ V_A ) )
+        & ( 'vecOC/0'
+          = ( '3d.vec/2' @ V_O @ V_C ) )
+        & ( 'vecOP/0'
+          = ( '3d.vec/2' @ V_O @ V_P ) ) ) )).
 
-thf(p2_qustion,question,
-    ( 'Find/1'
+thf(a2_qustion,question,
+    ( 'find/1' @ '3d.Vector'
     @ ^ [V_PQ: '3d.Vector'] :
-      ? [V_O_dot_0: '3d.Point',V_A_dot_0: '3d.Point',V_B: '3d.Point',V_C_dot_0: '3d.Point',V_P_dot_0: '3d.Point',V_Q: '3d.Point'] :
-        ( ( '3d.is-regular-square/4' @ V_O_dot_0 @ V_A_dot_0 @ V_B @ V_C_dot_0 )
-        & ( ( '3d.distance/2' @ V_O_dot_0 @ V_A_dot_0 )
-          = 1 )
-        & ( ( '3d.distance/2' @ V_O_dot_0 @ V_P_dot_0 )
-          = ( '3d.distance/2' @ V_A_dot_0 @ V_P_dot_0 ) )
-        & ( ( '3d.distance/2' @ V_A_dot_0 @ V_P_dot_0 )
-          = ( '3d.distance/2' @ V_B @ V_P_dot_0 ) )
-        & ( ( '3d.distance/2' @ V_B @ V_P_dot_0 )
-          = ( '3d.distance/2' @ V_C_dot_0 @ V_P_dot_0 ) )
-        & ( '3d.divide-internally/4' @ V_Q @ ( '3d.seg/2' @ V_B @ V_C_dot_0 ) @ V_t @ ( '-/2' @ 1 @ V_t ) )
+      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_P: '3d.Point',V_Q: '3d.Point'] :
+        ( ( '3d.is-regular-square/4' @ V_O @ V_A @ V_B @ V_C )
+        & ( ( '3d.distance/2' @ V_O @ V_A )
+          = 1.0 )
+        & ( ( '3d.distance/2' @ V_O @ V_P )
+          = ( '3d.distance/2' @ V_A @ V_P ) )
+        & ( ( '3d.distance/2' @ V_A @ V_P )
+          = ( '3d.distance/2' @ V_B @ V_P ) )
+        & ( ( '3d.distance/2' @ V_B @ V_P )
+          = ( '3d.distance/2' @ V_C @ V_P ) )
+        & ( 'vecOA/0'
+          = ( '3d.vec/2' @ V_O @ V_A ) )
+        & ( 'vecOC/0'
+          = ( '3d.vec/2' @ V_O @ V_C ) )
+        & ( 'vecOP/0'
+          = ( '3d.vec/2' @ V_O @ V_P ) )
+        & ( '3d.divide-internally/4' @ V_Q @ ( '3d.seg/2' @ V_B @ V_C ) @ 't/0' @ ( $difference @ 1.0 @ 't/0' ) )
         & ( V_PQ
-          = ( '3d.vec/2' @ V_P_dot_0 @ V_Q ) ) ) )).
+          = ( '3d.vec/2' @ V_P @ V_Q ) ) ) )).
 
-thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
+thf(a3_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
       ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_P: '3d.Point'] :
         ( ( '3d.is-regular-square/4' @ V_O @ V_A @ V_B @ V_C )
         & ( ( '3d.distance/2' @ V_O @ V_A )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.distance/2' @ V_O @ V_P )
           = ( '3d.distance/2' @ V_A @ V_P ) )
         & ( ( '3d.distance/2' @ V_A @ V_P )
@@ -111,15 +140,15 @@ thf(p3_qustion,question,
         & ( V_x
           = ( '3d.inner-prod/2' @ ( '3d.vec/2' @ V_O @ V_A ) @ ( '3d.vec/2' @ V_O @ V_P ) ) ) ) )).
 
-thf(p4_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_tOP: 'ListOf' @ 'R'] :
-      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_P: '3d.Point',V_D: '3d.Point',V_E: '3d.Point',V_Q: '3d.Point',V_PQ: '3d.Vector',V_ODE: '3d.Shape',V_t: 'R'] :
+thf(a4_qustion,question,
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_tOP: ( 'ListOf' @ $real )] :
+      ? [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_P: '3d.Point',V_D: '3d.Point',V_E: '3d.Point',V_Q: '3d.Point',V_PQ: '3d.Vector',V_ODE: '3d.Shape',V_t: $real] :
         ( ( V_tOP
-          = ( 'cons/2' @ V_t @ ( 'cons/2' @ ( '3d.distance/2' @ V_O @ V_P ) @ 'nil/0' ) ) )
+          = ( 'cons/2' @ $real @ V_t @ ( 'cons/2' @ $real @ ( '3d.distance/2' @ V_O @ V_P ) @ ( 'nil/0' @ $real ) ) ) )
         & ( '3d.is-regular-square/4' @ V_O @ V_A @ V_B @ V_C )
         & ( ( '3d.distance/2' @ V_O @ V_A )
-          = 1 )
+          = 1.0 )
         & ( ( '3d.distance/2' @ V_O @ V_P )
           = ( '3d.distance/2' @ V_A @ V_P ) )
         & ( ( '3d.distance/2' @ V_A @ V_P )
@@ -127,10 +156,10 @@ thf(p4_qustion,question,
         & ( ( '3d.distance/2' @ V_B @ V_P )
           = ( '3d.distance/2' @ V_C @ V_P ) )
         & ( '3d.is-square-pyramid/5' @ V_P @ V_O @ V_A @ V_B @ V_C )
-        & ( '3d.divide-internally/4' @ V_D @ ( '3d.seg/2' @ V_A @ V_P ) @ 1 @ 3 )
+        & ( '3d.divide-internally/4' @ V_D @ ( '3d.seg/2' @ V_A @ V_P ) @ 1.0 @ 3.0 )
         & ( V_E
           = ( '3d.midpoint-of/2' @ V_C @ V_P ) )
-        & ( '3d.divide-internally/4' @ V_Q @ ( '3d.seg/2' @ V_B @ V_C ) @ V_t @ ( '-/2' @ 1 @ V_t ) )
+        & ( '3d.divide-internally/4' @ V_Q @ ( '3d.seg/2' @ V_B @ V_C ) @ V_t @ ( $difference @ 1.0 @ V_t ) )
         & ( V_ODE
           = ( '3d.plane1/3' @ V_O @ V_D @ V_E ) )
         & ( V_PQ
@@ -138,36 +167,37 @@ thf(p4_qustion,question,
         & ( '3d.is-normal-vector-of/2' @ V_PQ @ V_ODE ) ) )).
 
 thf(p1_1_answer,answer,(
-    ^ [V_OD_dot_0: '3d.Vector'] :
-      ( V_OD_dot_0
-      = ( '3d.v+/2' @ ( '3d.sv*/2' @ ( '//2' @ 3 @ 4 ) @ ( '3d.vec/2' @ V_O @ V_A ) ) @ ( '3d.sv*/2' @ ( '//2' @ 1 @ 4 ) @ ( '3d.vec/2' @ V_O @ V_P ) ) ) ) ),
+    ^ [V_OD: '3d.Vector'] :
+      ( V_OD
+      = ( '3d.v+/2' @ ( '3d.sv*/2' @ ( $quotient @ 3.0 @ 4.0 ) @ 'vecOA/0' ) @ ( '3d.sv*/2' @ ( $quotient @ 1.0 @ 4.0 ) @ 'vecOP/0' ) ) ) ),
     answer_to(p1_1_question,[])).
 
 thf(p1_2_answer,answer,(
     ^ [V_OE_dot_0: '3d.Vector'] :
       ( V_OE_dot_0
-      = ( '3d.v+/2' @ ( '3d.sv*/2' @ ( '//2' @ 1 @ 2 ) @ ( '3d.vec/2' @ V_O @ V_C ) ) @ ( '3d.sv*/2' @ ( '//2' @ 1 @ 2 ) @ ( '3d.vec/2' @ V_O @ V_P ) ) ) ) ),
+      = ( '3d.v+/2' @ ( '3d.sv*/2' @ ( $quotient @ 1.0 @ 2.0 ) @ 'vecOC/0' ) @ ( '3d.sv*/2' @ ( $quotient @ 1.0 @ 2.0 ) @ 'vecOP/0' ) ) ) ),
     answer_to(p1_2_question,[])).
 
-thf(p2_answer,answer,(
+thf(a2_answer,answer,(
     ^ [V_PQ_dot_0: '3d.Vector'] :
       ( V_PQ_dot_0
-      = ( '3d.v+/2' @ ( '3d.sv*/2' @ ( '-/2' @ 1 @ V_t ) @ ( '3d.vec/2' @ V_O @ V_A ) ) @ ( '3d.v+/2' @ ( '3d.vec/2' @ V_O @ V_C ) @ ( '3d.sv*/2' @ -1 @ ( '3d.vec/2' @ V_O @ V_P ) ) ) ) ) ),
-    answer_to(p2_question,[])).
+      = ( '3d.v+/2' @ ( '3d.sv*/2' @ ( $difference @ 1.0 @ 't/0' ) @ 'vecOA/0' ) @ ( '3d.v+/2' @ 'vecOC/0' @ ( '3d.sv*/2' @ -1.0 @ 'vecOP/0' ) ) ) ) ),
+    answer_to(a2_question,[])).
 
-thf(p3_answer,answer,(
-    ^ [V_x_dot_0: 'R'] :
+thf(a3_answer,answer,(
+    ^ [V_x_dot_0: $real] :
       ( V_x_dot_0
-      = ( '//2' @ 1 @ 2 ) ) ),
-    answer_to(p3_question,[])).
+      = ( $quotient @ 1.0 @ 2.0 ) ) ),
+    answer_to(a3_question,[])).
 
-thf(p4_answer,answer,(
-    ^ [V_tOP_dot_0: 'ListOf' @ 'R'] :
-    ? [V_tOP1: 'R',V_tOP2: 'R'] :
+thf(a4_answer,answer,(
+    ^ [V_tOP_dot_0: ( 'ListOf' @ $real )] :
+    ? [V_tOP1: $real,V_tOP2: $real] :
       ( ( V_tOP1
-        = ( '//2' @ 1 @ 3 ) )
+        = ( $quotient @ 1.0 @ 3.0 ) )
       & ( V_tOP2
-        = ( '//2' @ 2 @ ( 'sqrt/1' @ 3 ) ) )
+        = ( $quotient @ 2.0 @ ( 'sqrt/1' @ 3.0 ) ) )
       & ( V_tOP_dot_0
-        = ( 'cons/2' @ V_tOP1 @ ( 'cons/2' @ V_tOP2 @ 'nil/0' ) ) ) ) ),
-    answer_to(p4_question,[])).
+        = ( 'cons/2' @ $real @ V_tOP1 @ ( 'cons/2' @ $real @ V_tOP2 @ ( 'nil/0' @ $real ) ) ) ) ) ),
+    answer_to(a4_question,[])).
+

@@ -46,17 +46,6 @@
 ;;@ Complex Numbers
 ;;@
 ;;@-----------------------------------------------------------------------------
-;(def-alias Point Complex)
-;(include "axioms/geom-common-head.lsp")
-;(include "axioms/geom-common-axioms.lsp")
-;(def-fun point :: R -> R => Point)
-;(axiom
-;  def-point-on-complex-plane
-;  (x y)
-;  (= (point x y) (complex x y)))
-;(include "axioms/geom-2d-head.lsp")
-;(include "axioms/geom-2d-axioms.lsp")
-
 (import "axioms/ComplexTypes.lsp")
 
 ;;@-----------------------------------------------------------------------------
@@ -76,16 +65,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (import "axioms/DirSegAxioms.lsp")
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; restore original definitions
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;(define + orig+)
-;(define - orig-)
-;(define * orig*)
-;(define / orig/)
-;(define sqrt orig-sqrt)
 
 (default-namespace)
 

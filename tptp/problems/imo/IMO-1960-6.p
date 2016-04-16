@@ -18,23 +18,22 @@
 %%@ NOTE: the answer to p2_2 is used
 
 % Syntax   : Number of formulae    :    5 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  135 (  15 equality;  57 variable)
+%            Number of atoms       :  138 (  15 equality;  57 variable)
 %            Maximal formula depth :   24 (  15 average)
-%            Number of connectives :  101 (   1   ~;   0   |;  27   &;  72   @)
+%            Number of connectives :  104 (   1   ~;   0   |;  27   &;  75   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   29 (   0   :)
+%            Number of symbols     :   29 (   0   :;   0   =)
 %            Number of variables   :   21 (   0 sgn;   5   !;  11   ?;   5   ^)
 %                                         (  21   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   1 pred;    2 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
-    ! [V_Cn: '3d.Shape',V_Sp: '3d.Shape',V_Cl: '3d.Shape',V_V1: 'R',V_V2: 'R'] :
+    ! [V_Cn: '3d.Shape',V_Sp: '3d.Shape',V_Cl: '3d.Shape',V_V1: $real,V_V2: $real] :
       ( ( ( '3d.right-cone-type/1' @ V_Cn )
         & ( '3d.sphere-type/1' @ V_Sp )
         & ( '3d.cylinder-type/1' @ V_Cl )
@@ -49,12 +48,12 @@ thf(p1,conjecture,(
      => ( V_V1 != V_V2 ) ) )).
 
 thf(p2_1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_min_k: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_min_k: $real] :
         ( 'minimum/2'
-        @ ( 'set-by-def/1'
-          @ ^ [V_k: 'R'] :
-            ? [V_Cn: '3d.Shape',V_Sp: '3d.Shape',V_Cl: '3d.Shape',V_V1: 'R',V_V2: 'R'] :
+        @ ( 'set-by-def/1' @ $real
+          @ ^ [V_k: $real] :
+            ? [V_Cn: '3d.Shape',V_Sp: '3d.Shape',V_Cl: '3d.Shape',V_V1: $real,V_V2: $real] :
               ( ( '3d.right-cone-type/1' @ V_Cn )
               & ( '3d.sphere-type/1' @ V_Sp )
               & ( '3d.cylinder-type/1' @ V_Cl )
@@ -67,13 +66,13 @@ thf(p2_1_qustion,question,
               & ( V_V2
                 = ( '3d.volume-of/1' @ V_Cl ) )
               & ( V_V1
-                = ( '*/2' @ V_k @ V_V2 ) ) ) )
+                = ( $product @ V_k @ V_V2 ) ) ) )
         @ V_min_k ) )).
 
 thf(p2_2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_theta: 'R'] :
-      ? [V_Cn: '3d.Shape',V_Sp: '3d.Shape',V_Cl: '3d.Shape',V_V1: 'R',V_V2: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_theta: $real] :
+      ? [V_Cn: '3d.Shape',V_Sp: '3d.Shape',V_Cl: '3d.Shape',V_V1: $real,V_V2: $real] :
         ( ( '3d.right-cone-type/1' @ V_Cn )
         & ( '3d.sphere-type/1' @ V_Sp )
         & ( '3d.cylinder-type/1' @ V_Cl )
@@ -86,22 +85,23 @@ thf(p2_2_qustion,question,
         & ( V_V2
           = ( '3d.volume-of/1' @ V_Cl ) )
         & ( V_V1
-          = ( '*/2' @ ( '//2' @ 4 @ 3 ) @ V_V2 ) )
+          = ( $product @ ( $quotient @ 4.0 @ 3.0 ) @ V_V2 ) )
         & ? [V_P: '3d.Point'] :
             ( ( '3d.on/2' @ V_P @ ( '3d.boundary-of/1' @ ( '3d.base-of/1' @ V_Cn ) ) )
             & ( V_theta
               = ( '3d.rad-of-angle/1' @ ( '3d.angle/3' @ V_P @ ( '3d.vertice-of/1' @ V_Cn ) @ ( '3d.center-of/1' @ ( '3d.base-of/1' @ V_Cn ) ) ) ) ) ) ) )).
 
 thf(p2_1_answer,answer,(
-    ^ [V_min_k_dot_0: 'R'] :
+    ^ [V_min_k_dot_0: $real] :
       ( V_min_k_dot_0
-      = ( '//2' @ 4 @ 3 ) ) ),
+      = ( $quotient @ 4.0 @ 3.0 ) ) ),
     answer_to(p2_1_question,[])).
 
 thf(p2_2_answer,answer,(
-    ^ [V_theta_dot_0: 'R'] :
-      ( ( '</2' @ 0 @ V_theta_dot_0 )
-      & ( '</2' @ V_theta_dot_0 @ ( '//2' @ 'Pi/0' @ 2 ) )
+    ^ [V_theta_dot_0: $real] :
+      ( ( $less @ 0.0 @ V_theta_dot_0 )
+      & ( $less @ V_theta_dot_0 @ ( $quotient @ 'Pi/0' @ 2.0 ) )
       & ( ( 'sin/1' @ V_theta_dot_0 )
-        = ( '//2' @ 1 @ 3 ) ) ) ),
+        = ( $quotient @ 1.0 @ 3.0 ) ) ) ),
     answer_to(p2_2_question,[])).
+

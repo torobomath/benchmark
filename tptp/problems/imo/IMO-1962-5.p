@@ -12,32 +12,48 @@
 %% thus obtained.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  132 (   7 equality;  81 variable)
-%            Maximal formula depth :   27 (  24 average)
-%            Number of connectives :  116 (   0   ~;   0   |;  23   &;  93   @)
+% Syntax   : Number of formulae    :    8 (   0 unit;   6 type;   0 defn)
+%            Number of atoms       :  133 (   7 equality;  69 variable)
+%            Maximal formula depth :   27 (   8 average)
+%            Number of connectives :  117 (   0   ~;   0   |;  23   &;  94   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :)
-%            Number of variables   :   26 (  12 sgn;   0   !;  12   ?;   2   ^)
+%            Number of symbols     :   27 (   6   :;   0   =)
+%            Number of variables   :   14 (   0 sgn;   0   !;  12   ?;   2   ^)
 %                                         (  14   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('Ax/0_type',type,(
+    'Ax/0': $real )).
+
+thf('Ay/0_type',type,(
+    'Ay/0': $real )).
+
+thf('Bx/0_type',type,(
+    'Bx/0': $real )).
+
+thf('By/0_type',type,(
+    'By/0': $real )).
+
+thf('Cx/0_type',type,(
+    'Cx/0': $real )).
+
+thf('Cy/0_type',type,(
+    'Cy/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Point'
     @ ^ [V_D: '2d.Point'] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_K: '2d.Shape',V_K2: '2d.Shape'] :
         ( ( V_A
-          = ( '2d.point/2' @ V_Ax @ V_Ay ) )
+          = ( '2d.point/2' @ 'Ax/0' @ 'Ay/0' ) )
         & ( V_B
-          = ( '2d.point/2' @ V_Bx @ V_By ) )
+          = ( '2d.point/2' @ 'Bx/0' @ 'By/0' ) )
         & ( V_C
-          = ( '2d.point/2' @ V_Cx @ V_Cy ) )
+          = ( '2d.point/2' @ 'Cx/0' @ 'Cy/0' ) )
         & ( '2d.is-triangle/3' @ V_A @ V_B @ V_C )
         & ( '2d.circle-type/1' @ V_K )
         & ( '2d.is-inscribed-in/2' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) @ V_K )
@@ -50,11 +66,11 @@ thf(p_answer,answer,(
     ^ [V_D_dot_0: '2d.Point'] :
     ? [V_A_dot_0: '2d.Point',V_B_dot_0: '2d.Point',V_C_dot_0: '2d.Point',V_I: '2d.Point',V_E: '2d.Point',V_K_dot_0: '2d.Shape',V_O: '2d.Point'] :
       ( ( V_A_dot_0
-        = ( '2d.point/2' @ V_Ax @ V_Ay ) )
+        = ( '2d.point/2' @ 'Ax/0' @ 'Ay/0' ) )
       & ( V_B_dot_0
-        = ( '2d.point/2' @ V_Bx @ V_By ) )
+        = ( '2d.point/2' @ 'Bx/0' @ 'By/0' ) )
       & ( V_C_dot_0
-        = ( '2d.point/2' @ V_Cx @ V_Cy ) )
+        = ( '2d.point/2' @ 'Cx/0' @ 'Cy/0' ) )
       & ( '2d.is-triangle/3' @ V_A_dot_0 @ V_B_dot_0 @ V_C_dot_0 )
       & ( '2d.circle-type/1' @ V_K_dot_0 )
       & ( '2d.is-inscribed-in/2' @ ( '2d.triangle/3' @ V_A_dot_0 @ V_B_dot_0 @ V_C_dot_0 ) @ V_K_dot_0 )
@@ -69,3 +85,4 @@ thf(p_answer,answer,(
       & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_A_dot_0 @ V_I ) @ ( '2d.angle/3' @ V_D_dot_0 @ V_A_dot_0 @ V_B_dot_0 ) )
       & ( '2d.on/2' @ V_D_dot_0 @ V_K_dot_0 ) ) ),
     answer_to(p_question,[])).
+

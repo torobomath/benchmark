@@ -214,3 +214,15 @@
 
 (def-answer p4 (PLam tmin (= tmin 2)))
 
+(def-answer a1 (PLam cosT (&&
+  (< 0 t)
+  (= cosT (/ t (sqrt (+ 4 (^ t 2))))))))
+
+(def-answer a2 (PLam l3 (&&
+  (< 0 t)
+  (= l3 (line (point 0 1) (point 1 (+ (/ (- (^ t 2) 4) (* 4 t)) 1)))))))
+
+(def-answer a3 (PLam _ (true)))
+
+(def-answer a4 (PLam tmin (= tmin 2)))
+

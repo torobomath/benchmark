@@ -71,6 +71,9 @@
 ;;@ v-sum(list) = the sum of vectors in list
 (def-fun v-sum :: (ListOf Vector) => Vector) 
 
+;;@ v-(u) = -1 * u
+(def-fun v-  :: Vector => Vector)
+
 ;;@ v-(u,v) = the difference of vectors u and v
 (def-fun v-  :: Vector -> Vector => Vector)
 
@@ -165,6 +168,11 @@
 ;;@ angle constructor
 (def-ctor angle :: Point -> Point -> Point => Angle)
 
+;;@ non-degenerated condition:
+;;@ (angle-type (angle P Q R)) <=> P != Q & Q != R
+(def-pred angle-type :: Angle => Bool)
+(non-degen-cond angle 3 angle-type)
+
 ;;@ cos-of-angle(a) = the cosine of the degree of a
 (def-fun cos-of-angle :: Angle => R)
 
@@ -199,6 +207,9 @@
 ;;@ is-interior-angle(a,shape) <-> a is an interior angle of shape
 ;;@ effective only if shape is a triangle or a square
 (def-pred is-interior-angle :: Angle -> Shape => Bool)
+
+;;@ are-interior-angles(angles,shape) <-> angles are the interior angles of shape
+(def-pred are-interior-angles :: (ListOf Angle) -> Shape => Bool)
 
 ;;@ is-angle-bisector(line, a) <-> line is the angle bisector of a
 (def-pred is-angle-bisector :: Line -> Angle => Bool)
@@ -704,7 +715,7 @@
 ;;@ effective only if shape is a triangle
 (def-pred is-interior-angle-of :: R -> Shape => Bool)
 
-;;@ are-interior-angles-of(list) <-> list enumerates all the degrees in radian of interior angles of shape
+;;@ are-interior-angles-of(list,shape) <-> list enumerates all the degrees in radian of interior angles of shape
 ;;@ effective only if shape is a triangle
 (def-pred are-interior-angles-of :: (ListOf R) -> Shape => Bool)
 
@@ -766,15 +777,19 @@
 ;; typing triggers
 ;;@ line-type(shape) <-> shape is a line
 (def-pred line-type :: Shape => Bool)
+(non-degen-cond line 2 line-type)
 
 ;;@ half-line-type(shape) <-> shape is a half line
 (def-pred half-line-type :: Shape => Bool)
+(non-degen-cond half-line 2 half-line-type)
 
 ;;@ segment-type(shape) <-> shape is a segment
 (def-pred segment-type :: Shape => Bool)
+(non-degen-cond seg 2 segment-type)
 
 ;;@ triangle-type(shape) <-> shape is a triangle
 (def-pred triangle-type :: Shape => Bool)
+(non-degen-cond triangle 3 triangle-type)
 
 ;;@ equilateral-triangle-type(shape) <-> shape is an equilateral triangle
 (def-pred equilateral-triangle-type :: Shape => Bool)
@@ -793,6 +808,7 @@
 
 ;;@ square-type(shape) <-> shape is a square
 (def-pred square-type :: Shape => Bool)
+(non-degen-cond square 4 square-type)
 
 ;;@ rectangle-type(shape) <-> shape is a rectangle
 (def-pred rectangle-type :: Shape => Bool)
@@ -817,6 +833,7 @@
 
 ;;@ polygon-type(shape) <-> shape is a polygon
 (def-pred polygon-type :: Shape => Bool)
+(non-degen-cond polygon 1 polygon-type)
 
 ;;@-------------------------------------------
 ;;@ Axis of coordinates (as a special object)

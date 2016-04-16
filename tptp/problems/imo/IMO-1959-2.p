@@ -13,54 +13,54 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   92 (   5 equality;  18 variable)
+%            Number of atoms       :   95 (   5 equality;  18 variable)
 %            Maximal formula depth :   14 (  10 average)
-%            Number of connectives :   76 (   0   ~;   0   |;   4   &;  72   @)
+%            Number of connectives :   79 (   0   ~;   0   |;   4   &;  75   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   12 (   0   :)
+%            Number of symbols     :   14 (   0   :;   0   =)
 %            Number of variables   :    6 (   1 sgn;   0   !;   0   ?;   6   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   11 (   1 pred;    4 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
-        ( ( '<=/2' @ 0 @ V_x )
-        & ( ( '+/2' @ ( 'sqrt/1' @ ( '+/2' @ V_x @ ( 'sqrt/1' @ ( '-/2' @ ( '*/2' @ 2 @ V_x ) @ 1 ) ) ) ) @ ( 'sqrt/1' @ ( '-/2' @ V_x @ ( 'sqrt/1' @ ( '-/2' @ ( '*/2' @ 2 @ V_x ) @ 1 ) ) ) ) )
-          = ( 'sqrt/1' @ 2 ) ) ) )).
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
+        ( ( $lesseq @ 0.0 @ V_x )
+        & ( ( $sum @ ( 'sqrt/1' @ ( $sum @ V_x @ ( 'sqrt/1' @ ( $difference @ ( $product @ 2.0 @ V_x ) @ 1.0 ) ) ) ) @ ( 'sqrt/1' @ ( $difference @ V_x @ ( 'sqrt/1' @ ( $difference @ ( $product @ 2.0 @ V_x ) @ 1.0 ) ) ) ) )
+          = ( 'sqrt/1' @ 2.0 ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
-        ( ( '<=/2' @ 0 @ V_x )
-        & ( ( '+/2' @ ( 'sqrt/1' @ ( '+/2' @ V_x @ ( 'sqrt/1' @ ( '-/2' @ ( '*/2' @ 2 @ V_x ) @ 1 ) ) ) ) @ ( 'sqrt/1' @ ( '-/2' @ V_x @ ( 'sqrt/1' @ ( '-/2' @ ( '*/2' @ 2 @ V_x ) @ 1 ) ) ) ) )
-          = 1 ) ) )).
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
+        ( ( $lesseq @ 0.0 @ V_x )
+        & ( ( $sum @ ( 'sqrt/1' @ ( $sum @ V_x @ ( 'sqrt/1' @ ( $difference @ ( $product @ 2.0 @ V_x ) @ 1.0 ) ) ) ) @ ( 'sqrt/1' @ ( $difference @ V_x @ ( 'sqrt/1' @ ( $difference @ ( $product @ 2.0 @ V_x ) @ 1.0 ) ) ) ) )
+          = 1.0 ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
-        ( ( '<=/2' @ 0 @ V_x )
-        & ( ( '+/2' @ ( 'sqrt/1' @ ( '+/2' @ V_x @ ( 'sqrt/1' @ ( '-/2' @ ( '*/2' @ 2 @ V_x ) @ 1 ) ) ) ) @ ( 'sqrt/1' @ ( '-/2' @ V_x @ ( 'sqrt/1' @ ( '-/2' @ ( '*/2' @ 2 @ V_x ) @ 1 ) ) ) ) )
-          = 2 ) ) )).
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
+        ( ( $lesseq @ 0.0 @ V_x )
+        & ( ( $sum @ ( 'sqrt/1' @ ( $sum @ V_x @ ( 'sqrt/1' @ ( $difference @ ( $product @ 2.0 @ V_x ) @ 1.0 ) ) ) ) @ ( 'sqrt/1' @ ( $difference @ V_x @ ( 'sqrt/1' @ ( $difference @ ( $product @ 2.0 @ V_x ) @ 1.0 ) ) ) ) )
+          = 2.0 ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_x_dot_0: 'R'] :
-      ( ( '<=/2' @ ( '//2' @ 1 @ 2 ) @ V_x_dot_0 )
-      & ( '<=/2' @ V_x_dot_0 @ 1 ) ) ),
+    ^ [V_x_dot_0: $real] :
+      ( ( $lesseq @ ( $quotient @ 1.0 @ 2.0 ) @ V_x_dot_0 )
+      & ( $lesseq @ V_x_dot_0 @ 1.0 ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_x_dot_0: 'R'] : ( 0 = 1 ) ),
+    ^ [V_x_dot_0: $real] : ( 0 = 1 ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_x_dot_0: 'R'] :
+    ^ [V_x_dot_0: $real] :
       ( V_x_dot_0
-      = ( '//2' @ 3 @ 2 ) ) ),
+      = ( $quotient @ 3.0 @ 2.0 ) ) ),
     answer_to(p3_question,[])).
+

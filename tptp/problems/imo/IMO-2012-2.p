@@ -16,31 +16,31 @@
 %            Maximal formula depth :   16 (  16 average)
 %            Number of connectives :   39 (   0   ~;   0   |;   3   &;  34   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   18 (   0   :)
+%            Number of symbols     :   19 (   0   :;   0   =)
 %            Number of variables   :    4 (   0 sgn;   3   !;   0   ?;   1   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   11 (   4 pred;    2 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_n: 'Z',V_a: 'seq.Seq'] :
-      ( ( ( 'int.>=/2' @ V_n @ 3 )
-        & ! [V_k: 'Z'] :
-            ( ( ( 'int.<=/2' @ 2 @ V_k )
-              & ( 'int.<=/2' @ V_k @ V_n ) )
-           => ( '</2' @ 0 @ ( 'seq.nth-term-of/2' @ V_a @ ( 'seq.index/1' @ V_k ) ) ) )
+    ! [V_n: $int,V_a: 'seq.Seq'] :
+      ( ( ( $greatereq @ V_n @ 3 )
+        & ! [V_k: $int] :
+            ( ( ( $lesseq @ 2 @ V_k )
+              & ( $lesseq @ V_k @ V_n ) )
+           => ( $less @ 0.0 @ ( 'seq.nth-term-of/2' @ V_a @ ( 'seq.index/1' @ V_k ) ) ) )
         & ( ( 'seq.prod-from-to/3' @ V_a @ ( 'seq.index/1' @ 2 ) @ ( 'seq.index/1' @ V_n ) )
-          = 1 ) )
-     => ( '>/2'
+          = 1.0 ) )
+     => ( $greater
         @ ( 'seq.prod-from-to/3'
           @ ( 'seq.seq/1'
-            @ ^ [V_k_dot_0: 'Z'] :
-                ( '^/2' @ ( '+/2' @ 1 @ ( 'seq.nth-term-of/2' @ V_a @ ( 'seq.index/1' @ V_k_dot_0 ) ) ) @ 2 ) )
+            @ ^ [V_k_dot_0: $int] :
+                ( '^/2' @ ( $sum @ 1.0 @ ( 'seq.nth-term-of/2' @ V_a @ ( 'seq.index/1' @ V_k_dot_0 ) ) ) @ 2.0 ) )
           @ ( 'seq.index/1' @ 2 )
           @ ( 'seq.index/1' @ V_n ) )
-        @ ( 'int->real/1' @ ( 'int.^/2' @ V_n @ V_n ) ) ) ) )).
+        @ ( $to_real @ ( 'int.^/2' @ V_n @ V_n ) ) ) ) )).
+

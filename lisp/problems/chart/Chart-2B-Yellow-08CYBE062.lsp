@@ -13,8 +13,9 @@
       (= D (midpoint-of A B))
       (= E (midpoint-of B C))
       (= F (internally-dividing-point A C s))
-      (= a (vec2d a1 a2))
-      (= b (vec2d b1 b2))
+      (= a_a (inner-prod a a))
+      (= a_b (inner-prod a b))
+      (= b_b (inner-prod b b))
       (< 0 s) (< s 1)
       (is-triangle A B C)
       (is-acute (angle B A C))
@@ -45,9 +46,13 @@
 
 (def-answer p1 (PLam s
   (exists (a b) (&&
-    (= a (vec2d a1 a2))
-    (= b (vec2d b1 b2))
-    (= s (/ (+ (radius^2 a) (inner-prod a b)) (* 2 (+ (radius^2 b) (inner-prod a b)))))
+    (< 0 a_a) (< 0 a_b) (< 0 b_b)
+    (< (^ a_b 2) (* a_a b_b))
+    (< (- a_a (* 2 b_b)) a_b) (< a_b (* 2 b_b))
+    (= a_a (inner-prod a a))
+    (= a_b (inner-prod a b))
+    (= b_b (inner-prod b b))
+    (= s (/ (+ a_a a_b) (* 2 (+ b_b a_b))))
   ))
 ))
 

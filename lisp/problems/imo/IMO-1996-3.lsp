@@ -33,9 +33,10 @@
                           (exists (ns e)
                                   (&& (>= e 2)
                                       (= (list-len ns) e)
+                                      (all (PLam x (>= x 0)) ns)
                                       (forall (k) (-> (< k 0) (= (LamApp f k) 0)))
                                       (forall (k) (-> (>= k 0)
                                                       (= (LamApp f k)
                                                          (* e (+ (div k e)
-                                                                 (nth (mod n e) ns)))))))))))
+                                                                 (nth (mod k e) ns)))))))))))
 

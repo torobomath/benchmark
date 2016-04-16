@@ -18,28 +18,30 @@
 %% $PR\ge PQ$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  160 (  10 equality;  74 variable)
-%            Maximal formula depth :   33 (  20 average)
-%            Number of connectives :  141 (   5   ~;   1   |;  38   &;  97   @)
+% Syntax   : Number of formulae    :    5 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  170 (  10 equality;  71 variable)
+%            Maximal formula depth :   33 (  17 average)
+%            Number of connectives :  151 (   5   ~;   1   |;  38   &; 107   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   25 (   0   :)
-%            Number of variables   :   20 (   1 sgn;   0   !;  14   ?;   4   ^)
+%            Number of symbols     :   26 (   1   :;   0   =)
+%            Number of variables   :   18 (   0 sgn;   0   !;  14   ?;   4   ^)
 %                                         (  18   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   1 pred;    4 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('x/0_type',type,(
+    'x/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_y: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_y: $real] :
       ? [V_l1: '2d.Shape',V_l2: '2d.Shape',V_l3: '2d.Shape',V_C: '2d.Shape',V_P: '2d.Point',V_Q: '2d.Point',V_R: '2d.Point'] :
         ( ( V_C
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ 'nil/0' ) ) ) ) ) )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) )
         & ( '2d.line-type/1' @ V_l1 )
         & ( '2d.line-type/1' @ V_l2 )
         & ( '2d.line-type/1' @ V_l3 )
@@ -58,14 +60,14 @@ thf(p1_qustion,question,
         & ( '2d.on/2' @ V_R @ V_l1 )
         & ( '2d.on/2' @ V_R @ V_l3 )
         & ( V_R
-          = ( '2d.point/2' @ V_x @ V_y ) ) ) )).
+          = ( '2d.point/2' @ 'x/0' @ V_y ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_x: $real] :
       ? [V_l1: '2d.Shape',V_l2: '2d.Shape',V_l3: '2d.Shape',V_C: '2d.Shape',V_P: '2d.Point',V_Q: '2d.Point',V_R: '2d.Point'] :
         ( ( V_C
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ 'nil/0' ) ) ) ) ) )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) )
         & ( '2d.line-type/1' @ V_l1 )
         & ( '2d.line-type/1' @ V_l2 )
         & ( '2d.line-type/1' @ V_l3 )
@@ -83,19 +85,20 @@ thf(p2_qustion,question,
         & ( '2d.tangent/3' @ V_C @ V_l3 @ V_Q )
         & ( '2d.on/2' @ V_R @ V_l1 )
         & ( '2d.on/2' @ V_R @ V_l3 )
-        & ( '>=/2' @ ( '2d.distance/2' @ V_P @ V_R ) @ ( '2d.distance/2' @ V_P @ V_Q ) )
+        & ( $greatereq @ ( '2d.distance/2' @ V_P @ V_R ) @ ( '2d.distance/2' @ V_P @ V_Q ) )
         & ( V_x
           = ( '2d.x-coord/1' @ V_P ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_y_dot_0: 'R'] :
-      ( ( V_x != 0 )
+    ^ [V_y_dot_0: $real] :
+      ( ( 'x/0' != 0.0 )
       & ( V_y_dot_0
-        = ( '-/1' @ ( '+/2' @ ( '//2' @ 1 @ ( '*/2' @ 2 @ ( '^/2' @ V_x @ 2 ) ) ) @ 1 ) ) ) ) ),
+        = ( $uminus @ ( $sum @ ( $quotient @ 1.0 @ ( $product @ 2.0 @ ( '^/2' @ 'x/0' @ 2.0 ) ) ) @ 1.0 ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_x_dot_0: 'R'] :
-      ( ( '>=/2' @ V_x_dot_0 @ 2 )
-      | ( '>=/2' @ ( '-/1' @ 2 ) @ V_x_dot_0 ) ) ),
+    ^ [V_x_dot_0: $real] :
+      ( ( $greatereq @ V_x_dot_0 @ 2.0 )
+      | ( $greatereq @ ( $uminus @ 2.0 ) @ V_x_dot_0 ) ) ),
     answer_to(p2_question,[])).
+

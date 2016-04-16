@@ -68,3 +68,9 @@
 
 (def-answer p2 (PLam S (= S (- (/ 43 3) (* 20 (ln 2))))))
 
+(def-answer a_1 (PLam xy (= xy (list-of
+                                 (PLam x (&& (<= 0 x) (<= x 1)))
+                                 (PLam y (&& (<= 0 y) (<= y (- (* 6 (sqrt 3)) 9))))))))
+
+(def-answer a_2 (PLam S (= S (- (/ 43 3) (* 20 (ln 2))))))
+

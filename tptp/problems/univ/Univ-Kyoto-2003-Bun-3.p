@@ -17,16 +17,14 @@
 %            Maximal formula depth :   17 (  17 average)
 %            Number of connectives :   57 (   0   ~;   0   |;   6   &;  50   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    7 (   0   :)
+%            Number of symbols     :    7 (   0   :;   0   =)
 %            Number of variables   :    4 (   0 sgn;   4   !;   0   ?;   0   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_O: '3d.Point',V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point'] :
@@ -41,3 +39,4 @@ thf(p,conjecture,(
         & ( ( '3d.area-of/1' @ ( '3d.triangle/3' @ V_O @ V_C @ V_A ) )
           = ( '3d.area-of/1' @ ( '3d.triangle/3' @ V_A @ V_B @ V_C ) ) ) )
      => ( '3d.is-regular-tetrahedron/4' @ V_O @ V_A @ V_B @ V_C ) ) )).
+

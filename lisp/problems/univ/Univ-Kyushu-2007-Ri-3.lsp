@@ -29,7 +29,7 @@
 (namespace 3d)
 
 (def-directive
-  p1_1
+  a1_1
   (Show
     (forall (a b)
       (-> (&& (< 0 a) (< 0 b))
@@ -51,7 +51,7 @@
         (= (inner-prod (vec D (origin)) (vec A B)) 0)))))))
 
 (def-directive
-  p1_2
+  a1_2
   (Find (ABC)
   (exists (A B C)
     (&&
@@ -63,7 +63,7 @@
       (= ABC (area-of (triangle A B C)))))))
 
 (def-directive
-  p2
+  a2
   (Find (ans)
   (exists (A B C D alpha S r H sintheta OH)
     (&&
@@ -89,7 +89,7 @@
       (= OH (length-of (seg (origin) H)))))))
 
 (def-directive
-  p3
+  a3
   (Find (maxV)
   (exists (A B C alpha S r)
     (&&
@@ -112,15 +112,17 @@
                (! (on P alpha))
                (= V (volume-of (tetrahedron A B C P))))))) maxV)))))
 
-(def-answer p1_2 (PLam ABC (&& (> a 0) (> b 0)
+(def-answer a1_1 (PLam _ (true)))
+
+(def-answer a1_2 (PLam ABC (&& (> a 0) (> b 0)
              (= ABC (* 2 a (sqrt (+ (^ a 2) (* 2 (^ b 2)))))))))
 
-(def-answer p2 (PLam ans (&&
+(def-answer a2 (PLam ans (&&
     (> a 0) (> b 0)
     (= ans (list-of (/ a (sqrt (+ (^ a 2) (* 2 (^ b 2))))) (/ (* a b) (sqrt (+ (^ a 2) (* 2 (^ b 2)))))))
 )))
 
-(def-answer p3 (PLam maxV (&&
+(def-answer a3 (PLam maxV (&&
     (> a 0) (> b 0)
     (= maxV (* (/ 2 3) a (+ (sqrt (* (+ (^ a 2) (* 2 (^ b 2))) (+ (* 2 (^ a 2)) (^ b 2)))) (* a b))))
 )))

@@ -96,3 +96,7 @@
 
 (def-answer p2V2 (PLam volume2 (= volume2 (+ (/ (* (sqrt 2) (Pi)) 8) (- (* (/ 5 12) (sqrt 2))) (/ 2 3)))))
 
+(def-answer a1 (PLam S (= S (- (/ (sqrt (- 1 (^ t 2))) (sqrt 2)) (/ 1 4)))))
+
+(def-answer a2 (PLam volume (= volume (+ (/ (* (sqrt 2) (Pi)) 8) (- (* (/ 5 12) (sqrt 2))) (/ 2 3)))))
+

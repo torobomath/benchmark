@@ -17,32 +17,32 @@
 %            Maximal formula depth :   26 (  26 average)
 %            Number of connectives :   52 (   0   ~;   0   |;   7   &;  44   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   14 (   0   :)
+%            Number of symbols     :   14 (   0   :;   0   =)
 %            Number of variables   :    9 (   0 sgn;   9   !;   0   ?;   0   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   0 pred;    3 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_a: 'R',V_b: 'R',V_c: 'R',V_alpha: 'R',V_beta: 'R',V_gamma: 'R'] :
+    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_a: $real,V_b: $real,V_c: $real,V_alpha: $real,V_beta: $real,V_gamma: $real] :
       ( ( ( '2d.is-triangle/3' @ V_A @ V_B @ V_C )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) )
-          = V_a )
+          = V_c )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_C ) )
           = V_b )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_C @ V_B ) )
-          = V_c )
+          = V_a )
         & ( ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_A @ V_C @ V_B ) )
-          = V_alpha )
+          = V_gamma )
         & ( ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_A @ V_B @ V_C ) )
           = V_beta )
         & ( ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_C @ V_A @ V_B ) )
-          = V_gamma )
-        & ( ( '+/2' @ V_a @ V_b )
-          = ( '*/2' @ ( 'tan/1' @ ( '*/2' @ ( '//2' @ 1 @ 2 ) @ V_gamma ) ) @ ( '+/2' @ ( '*/2' @ V_a @ ( 'tan/1' @ V_alpha ) ) @ ( '*/2' @ V_b @ ( 'tan/1' @ V_beta ) ) ) ) ) )
+          = V_alpha )
+        & ( ( $sum @ V_a @ V_b )
+          = ( $product @ ( 'tan/1' @ ( $product @ ( $quotient @ 1.0 @ 2.0 ) @ V_gamma ) ) @ ( $sum @ ( $product @ V_a @ ( 'tan/1' @ V_alpha ) ) @ ( $product @ V_b @ ( 'tan/1' @ V_beta ) ) ) ) ) )
      => ( '2d.is-isosceles-triangle/3' @ V_A @ V_B @ V_C ) ) )).
+

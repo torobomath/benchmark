@@ -17,32 +17,49 @@
 %% ¥end{flushleft}
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  190 (  17 equality; 100 variable)
-%            Maximal formula depth :   32 (  21 average)
-%            Number of connectives :  156 (   4   ~;   2   |;  32   &; 118   @)
+% Syntax   : Number of formulae    :   10 (   0 unit;   6 type;   0 defn)
+%            Number of atoms       :  192 (  17 equality;  73 variable)
+%            Maximal formula depth :   32 (  10 average)
+%            Number of connectives :  158 (   4   ~;   2   |;  32   &; 120   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   22 (   0   :)
-%            Number of variables   :   35 (   8 sgn;   0   !;  14   ?;   5   ^)
+%            Number of symbols     :   28 (   6   :;   0   =)
+%            Number of variables   :   19 (   0 sgn;   0   !;  14   ?;   5   ^)
 %                                         (  19   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   1 pred;    3 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('Ox/0_type',type,(
+    'Ox/0': $real )).
+
+thf('Oy/0_type',type,(
+    'Oy/0': $real )).
+
+thf('Px/0_type',type,(
+    'Px/0': $real )).
+
+thf('Py/0_type',type,(
+    'Py/0': $real )).
+
+thf('R/0_type',type,(
+    'R/0': $real )).
+
+thf('r/0_type',type,(
+    'r/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_s: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_s: $real] :
       ? [V_O: '2d.Point',V_K1: '2d.Shape',V_K2: '2d.Shape',V_P: '2d.Point',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point'] :
         ( ( V_K1
-          = ( '2d.circle/2' @ V_O @ V_R ) )
+          = ( '2d.circle/2' @ V_O @ 'R/0' ) )
         & ( V_K2
-          = ( '2d.circle/2' @ V_O @ V_r ) )
-        & ( '>/2' @ V_r @ 0 )
-        & ( '>/2' @ V_R @ V_r )
+          = ( '2d.circle/2' @ V_O @ 'r/0' ) )
+        & ( $greater @ 'r/0' @ 0.0 )
+        & ( $greater @ 'R/0' @ 'r/0' )
         & ( '2d.on/2' @ V_P @ V_K2 )
         & ( '2d.on/2' @ V_B @ V_K1 )
         & ( '2d.on/2' @ V_C @ V_K1 )
@@ -54,25 +71,25 @@ thf(p1_qustion,question,
           | ( ( '2d.on/2' @ V_O @ ( '2d.line/2' @ V_B @ V_P ) )
             & ( V_A = V_P ) ) )
         & ( V_s
-          = ( '+/2' @ ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_C ) ) @ 2 ) @ ( '+/2' @ ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_C ) ) @ 2 ) @ ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_A ) ) @ 2 ) ) ) ) ) )).
+          = ( $sum @ ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_C ) ) @ 2.0 ) @ ( $sum @ ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_C ) ) @ 2.0 ) @ ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_A ) ) @ 2.0 ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Shape'
     @ ^ [V_fU: '2d.Shape'] :
         ( V_fU
         = ( '2d.shape-of-cpfun/1'
           @ ^ [V_U: '2d.Point'] :
             ? [V_O: '2d.Point',V_K1: '2d.Shape',V_K2: '2d.Shape',V_P: '2d.Point',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point'] :
               ( ( V_O
-                = ( '2d.point/2' @ V_Ox @ V_Oy ) )
+                = ( '2d.point/2' @ 'Ox/0' @ 'Oy/0' ) )
               & ( V_P
-                = ( '2d.point/2' @ V_Px @ V_Py ) )
+                = ( '2d.point/2' @ 'Px/0' @ 'Py/0' ) )
               & ( V_K1
-                = ( '2d.circle/2' @ V_O @ V_R ) )
+                = ( '2d.circle/2' @ V_O @ 'R/0' ) )
               & ( V_K2
-                = ( '2d.circle/2' @ V_O @ V_r ) )
-              & ( '>/2' @ V_r @ 0 )
-              & ( '>/2' @ V_R @ V_r )
+                = ( '2d.circle/2' @ V_O @ 'r/0' ) )
+              & ( $greater @ 'r/0' @ 0.0 )
+              & ( $greater @ 'R/0' @ 'r/0' )
               & ( '2d.on/2' @ V_P @ V_K2 )
               & ( '2d.on/2' @ V_B @ V_K1 )
               & ( '2d.on/2' @ V_C @ V_K1 )
@@ -87,17 +104,18 @@ thf(p2_qustion,question,
                 = ( '2d.midpoint-of/2' @ V_A @ V_B ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_s_dot_0: 'R'] :
-      ( ( '>/2' @ V_R @ V_r )
-      & ( '>/2' @ V_r @ 0 )
+    ^ [V_s_dot_0: $real] :
+      ( ( $greater @ 'R/0' @ 'r/0' )
+      & ( $greater @ 'r/0' @ 0.0 )
       & ( V_s_dot_0
-        = ( '+/2' @ ( '*/2' @ 6 @ ( '^/2' @ V_R @ 2 ) ) @ ( '*/2' @ 2 @ ( '^/2' @ V_r @ 2 ) ) ) ) ) ),
+        = ( $sum @ ( $product @ 6.0 @ ( '^/2' @ 'R/0' @ 2.0 ) ) @ ( $product @ 2.0 @ ( '^/2' @ 'r/0' @ 2.0 ) ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
     ^ [V_fU_dot_0: '2d.Shape'] :
-      ( ( '>/2' @ V_R @ V_r )
-      & ( '>/2' @ V_r @ 0 )
+      ( ( $greater @ 'R/0' @ 'r/0' )
+      & ( $greater @ 'r/0' @ 0.0 )
       & ( V_fU_dot_0
-        = ( '2d.circle/2' @ ( '2d.midpoint-of/2' @ ( '2d.point/2' @ V_Ox @ V_Oy ) @ ( '2d.point/2' @ V_Px @ V_Py ) ) @ ( '//2' @ V_R @ 2 ) ) ) ) ),
+        = ( '2d.circle/2' @ ( '2d.midpoint-of/2' @ ( '2d.point/2' @ 'Ox/0' @ 'Oy/0' ) @ ( '2d.point/2' @ 'Px/0' @ 'Py/0' ) ) @ ( $quotient @ 'R/0' @ 2.0 ) ) ) ) ),
     answer_to(p2_question,[])).
+

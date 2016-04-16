@@ -10,24 +10,24 @@
 %            Maximal formula depth :   16 (  16 average)
 %            Number of connectives :   29 (   0   ~;   0   |;   6   &;  22   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    5 (   0   :)
+%            Number of symbols     :    5 (   0   :;   0   =)
 %            Number of variables   :    3 (   0 sgn;   3   !;   0   ?;   0   ^)
 %                                         (   3   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    2 (   0 pred;    2 func;    0 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_a: 'Z',V_b: 'Z',V_c: 'Z'] :
+    ! [V_a: $int,V_b: $int,V_c: $int] :
       ( ( ( 'int.is-natural-number/1' @ V_a )
         & ( 'int.is-natural-number/1' @ V_b )
         & ( 'int.is-natural-number/1' @ V_c )
-        & ( 'int.is-even-number/1' @ ( 'int.+/2' @ ( 'int.+/2' @ V_a @ V_b ) @ V_c ) )
-        & ( 'int.is-even-number/1' @ ( 'int.+/2' @ ( 'int.+/2' @ ( 'int.*/2' @ V_a @ V_b ) @ ( 'int.*/2' @ V_b @ V_c ) ) @ ( 'int.*/2' @ V_c @ V_a ) ) ) )
+        & ( 'int.is-even-number/1' @ ( $sum @ ( $sum @ V_a @ V_b ) @ V_c ) )
+        & ( 'int.is-even-number/1' @ ( $sum @ ( $sum @ ( $product @ V_a @ V_b ) @ ( $product @ V_b @ V_c ) ) @ ( $product @ V_c @ V_a ) ) ) )
      => ( ( 'int.is-even-number/1' @ V_a )
         & ( 'int.is-even-number/1' @ V_b )
         & ( 'int.is-even-number/1' @ V_c ) ) ) )).
+

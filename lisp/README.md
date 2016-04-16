@@ -66,7 +66,7 @@ Example:
     (def-fun sum :: (ListOf R) => R) ;; summation of all elements in a list
     (def-pred even :: Z => Bool) ;; determine if a given number is even
     (def-pred member :: a -> (ListOf a) => Bool) ;; determine if the object of the first parameter is in the list of the second parameter
-
+                                                 
 
 ## 2.3 Defining Functions and Predicates (Axioms)
 Functions and predicated are defined with `axiom` macro.
@@ -119,7 +119,7 @@ Their namespace is determined by one that is effective
 at the point of their definition.
 
 Namespace `xyz` is effective right after a `(namespace xyz)`
-declaration in a file and right before the next `(namespace ..)`
+declaration in a file and right before the next `(namespace ..)` 
 declaration.
 
 Outside of any namespace (i.e., before any `(namespace ..)`
@@ -135,7 +135,7 @@ the namespace prefix.
 Hence `(+ 1 2)` in the `int` namespace refers `int.+`, not
 the `+ :: R -> R => R` as in the default namespace.
 
-When one needs to use a function `f` defined outside of
+When one needs to use a function `f` defined outside of 
 the currently effective namespace, one can refer to it
 by adding prefix to that symbol.
 Thus one can use the addition function for `int` inside
@@ -222,7 +222,7 @@ Example:
     (def-directive
        p1
        (Find (x) (= (+ x 1) 0)))
-
+    
     (def-answer
        p1
        (PLam x (= x -1)))
@@ -238,10 +238,10 @@ Answers for `Find` directives on non-number types, e.g., `Shape`, can be defined
     (def-directive
        p2
        (Find (C)
-        (= C (set-of-cfun (Lam x (PLam y
+        (= C (set-of-cfun (Lam x (PLam y 
                (= (distance (point x y) (point 0 0))
                   (distance (point x y) (point 1 0)))))))))
-
+    
     ;; Answer: { x = 1/2 }
     (def-answer
        p2
@@ -254,15 +254,15 @@ is given as the object itself, not as a singleton set (as for the above example)
     (def-directive
        p2
        (Draw (C)
-        (= C (set-of-cfun (Lam x (PLam y
+        (= C (set-of-cfun (Lam x (PLam y 
                (= (distance (point x y) (point 0 0))
                   (distance (point x y) (point 1 0)))))))))
-
+    
     ;; Answer: line "x = 1/2"
     (def-answer
        p2
        (set-of-cfun (Lam x (PLam y (= x (/ 1 2))))))
-
+    
 
 ### 4.1.2 Answer with parameters
 The answer for the problem "Express the length of ... with a, b" must contain
@@ -276,7 +276,7 @@ Example:
     (def-directive
       p3
       (Find (x) (= (+ x a) 0)))
-
+    
     (def-answer
       p3
       (PLam x (= x (- a))))
@@ -292,7 +292,7 @@ Example:
       p4
       (Find (x) (&& (= (+ x a) 0)
                     (< 0 a))))
-
+    
     (def-answer
       p4
       (PLam x (&& (= x (- a))
@@ -306,7 +306,7 @@ Example:
     (def-directive
       p5
       (Find (x) (&& (= (^ x 2) a))))
-
+    
     (def-answer
       p5
       (PLam x (&& (|| (= x (sqrt a))
@@ -328,7 +328,7 @@ Example:
           (&& (= xy (list-of x y))
               (= (+ x y) 1)
               (= (- x y) 0)))))
-
+    
     (def-answer
       p5
       (PLam xy (= xy (list-of (/ 1 2) (/ 1 2)))))
@@ -341,7 +341,7 @@ It is same for problems with infinite solutions:
         (exists (x y)
            (= xy (list-of x y))
            (= (- x y) 0))))
-
+    
     (def-answer
       p5
       (PLam xy (exists (k)
@@ -356,11 +356,11 @@ Example
     (def-directive
       p6
       (Draw (P) (<= (distance P (origin) 1))))
-
+    
     (def-answer
       p6
       (set-of-cfun
-         (Lam x (PLam y
+         (Lam x (PLam y 
              (<= (+ (^ x 2) (^ y 2)) 1)))))
 
 ## 4.2 Answer Checking System
@@ -376,7 +376,7 @@ Example
 
 An answer is checked by proving the sentence
 
-    (forall (x)
+    (forall (x) 
        (<-> (PLamApp <solver-output> x)
             (PLamApp <defined-answer> x)))
 

@@ -150,3 +150,13 @@
 
 (def-answer p3_S (PLam minS (= minS (/ (sqrt 6) 3))))
 
+(def-answer a1 (PLam P_AP (&& (< 0 a)
+                              (= P_AP (pair (point 1 a)
+                                            (/ (sqrt (+ 1 (* 4 (^ a 2)))) (* 2 a)))))))
+
+(def-answer a2 (PLam S (&& (< 0 a) (= S (+ (/ (* 2 a) 3) (/ 1 (* 4 a)))))))
+
+(def-answer a3_1 (PLam minS (= minS (/ (sqrt 6) 3))))
+
+(def-answer a3_2 (PLam mina (= mina (/ (sqrt 6) 4))))
+

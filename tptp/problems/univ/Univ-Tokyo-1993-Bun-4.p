@@ -12,52 +12,52 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   71 (   5 equality;  18 variable)
+%            Number of atoms       :   79 (   5 equality;  18 variable)
 %            Maximal formula depth :   20 (  15 average)
-%            Number of connectives :   59 (   0   ~;   0   |;   4   &;  54   @)
+%            Number of connectives :   67 (   0   ~;   0   |;   4   &;  62   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   24 (   0   :)
+%            Number of symbols     :   24 (   0   :;   0   =)
 %            Number of variables   :    9 (   0 sgn;   1   !;   3   ?;   5   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   12 (   1 pred;    4 func;    7 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_I: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_I: $real] :
       ? [V_g1: 'R2R',V_g2: 'R2R'] :
-      ! [V_t: 'R'] :
-        ( ( ( '<=/2' @ 0 @ V_t )
-          & ( '<=/2' @ V_t @ 2 ) )
+      ! [V_t: $real] :
+        ( ( ( $lesseq @ 0.0 @ V_t )
+          & ( $lesseq @ V_t @ 2.0 ) )
        => ? [V_f: 'R2R'] :
             ( ( V_f
-              = ( 'poly-fun/1' @ ( 'cons/2' @ ( '-/2' @ V_t @ 1 ) @ ( 'cons/2' @ 0 @ ( 'cons/2' @ -2 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) )
+              = ( 'poly-fun/1' @ ( 'cons/2' @ $real @ ( $difference @ V_t @ 1.0 ) @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ -2.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) )
             & ( 'maximum/2'
-              @ ( 'set-by-def/1'
-                @ ^ [V_t_dot_2: 'R'] :
+              @ ( 'set-by-def/1' @ $real
+                @ ^ [V_t_dot_2: $real] :
                     ( ( 'funapp/2' @ V_f @ V_t_dot_2 )
-                    = 0 ) )
+                    = 0.0 ) )
               @ ( 'funapp/2' @ V_g1 @ V_t ) )
             & ( 'minimum/2'
-              @ ( 'set-by-def/1'
-                @ ^ [V_t_dot_1: 'R'] :
+              @ ( 'set-by-def/1' @ $real
+                @ ^ [V_t_dot_1: $real] :
                     ( ( 'funapp/2' @ V_f @ V_t_dot_1 )
-                    = 0 ) )
+                    = 0.0 ) )
               @ ( 'funapp/2' @ V_g2 @ V_t ) )
             & ( V_I
               = ( 'integral/3'
-                @ ^ [V_t_dot_0: 'R'] :
-                    ( '-/2' @ ( 'funapp/2' @ V_g1 @ V_t_dot_0 ) @ ( 'funapp/2' @ V_g2 @ V_t_dot_0 ) )
-                @ 0
-                @ 2 ) ) ) ) )).
+                @ ^ [V_t_dot_0: $real] :
+                    ( $difference @ ( 'funapp/2' @ V_g1 @ V_t_dot_0 ) @ ( 'funapp/2' @ V_g2 @ V_t_dot_0 ) )
+                @ 0.0
+                @ 2.0 ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_I_dot_0: 'R'] :
+    ^ [V_I_dot_0: $real] :
       ( V_I_dot_0
-      = ( '*/2' @ ( '//2' @ 8 @ 15 ) @ ( '+/2' @ ( '*/2' @ ( '+/2' @ 4 @ ( 'sqrt/1' @ 2 ) ) @ ( 'sqrt/1' @ ( '+/2' @ 1 @ ( 'sqrt/1' @ 2 ) ) ) ) @ 2 ) ) ) ),
+      = ( $product @ ( $quotient @ 8.0 @ 15.0 ) @ ( $sum @ ( $product @ ( $sum @ 4.0 @ ( 'sqrt/1' @ 2.0 ) ) @ ( 'sqrt/1' @ ( $sum @ 1.0 @ ( 'sqrt/1' @ 2.0 ) ) ) ) @ 2.0 ) ) ) ),
     answer_to(p_question,[])).
+

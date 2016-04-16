@@ -12,29 +12,28 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  130 (   8 equality;  60 variable)
-%            Maximal formula depth :   18 (  18 average)
-%            Number of connectives :  113 (   0   ~;   0   |;   7   &; 105   @)
+%            Number of atoms       :  137 (   8 equality;  60 variable)
+%            Maximal formula depth :   19 (  19 average)
+%            Number of connectives :  120 (   0   ~;   0   |;   7   &; 112   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   15 (   0   :)
+%            Number of symbols     :   15 (   0   :;   0   =)
 %            Number of variables   :    6 (   0 sgn;   6   !;   0   ?;   0   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   0 pred;    3 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point'] :
-      ( ( ( '2d.is-convex-shape/1' @ ( '2d.polygon/1' @ ( 'cons/2' @ V_A @ ( 'cons/2' @ V_B @ ( 'cons/2' @ V_C @ ( 'cons/2' @ V_D @ ( 'cons/2' @ V_E @ ( 'cons/2' @ V_F @ 'nil/0' ) ) ) ) ) ) ) )
-        & ( ( '*/2' @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) @ ( '+/2' @ ( '2d.distance/2' @ V_A @ V_B ) @ ( '2d.distance/2' @ V_D @ V_E ) ) )
+      ( ( ( '2d.is-convex-shape/1' @ ( '2d.polygon/1' @ ( 'cons/2' @ '2d.Point' @ V_A @ ( 'cons/2' @ '2d.Point' @ V_B @ ( 'cons/2' @ '2d.Point' @ V_C @ ( 'cons/2' @ '2d.Point' @ V_D @ ( 'cons/2' @ '2d.Point' @ V_E @ ( 'cons/2' @ '2d.Point' @ V_F @ ( 'nil/0' @ '2d.Point' ) ) ) ) ) ) ) ) )
+        & ( ( $product @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) @ ( $sum @ ( '2d.distance/2' @ V_A @ V_B ) @ ( '2d.distance/2' @ V_D @ V_E ) ) )
           = ( '2d.distance/2' @ ( '2d.midpoint-of/2' @ V_A @ V_B ) @ ( '2d.midpoint-of/2' @ V_D @ V_E ) ) )
-        & ( ( '*/2' @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) @ ( '+/2' @ ( '2d.distance/2' @ V_B @ V_C ) @ ( '2d.distance/2' @ V_E @ V_F ) ) )
+        & ( ( $product @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) @ ( $sum @ ( '2d.distance/2' @ V_B @ V_C ) @ ( '2d.distance/2' @ V_E @ V_F ) ) )
           = ( '2d.distance/2' @ ( '2d.midpoint-of/2' @ V_B @ V_C ) @ ( '2d.midpoint-of/2' @ V_E @ V_F ) ) )
-        & ( ( '*/2' @ ( '//2' @ ( 'sqrt/1' @ 3 ) @ 2 ) @ ( '+/2' @ ( '2d.distance/2' @ V_C @ V_D ) @ ( '2d.distance/2' @ V_F @ V_A ) ) )
+        & ( ( $product @ ( $quotient @ ( 'sqrt/1' @ 3.0 ) @ 2.0 ) @ ( $sum @ ( '2d.distance/2' @ V_C @ V_D ) @ ( '2d.distance/2' @ V_F @ V_A ) ) )
           = ( '2d.distance/2' @ ( '2d.midpoint-of/2' @ V_C @ V_D ) @ ( '2d.midpoint-of/2' @ V_F @ V_A ) ) ) )
      => ( ( ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_A @ V_B @ V_C ) )
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_B @ V_C @ V_D ) ) )
@@ -46,3 +45,4 @@ thf(p,conjecture,(
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_E @ V_F @ V_A ) ) )
         & ( ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_E @ V_F @ V_A ) )
           = ( '2d.rad-of-angle/1' @ ( '2d.angle/3' @ V_F @ V_A @ V_B ) ) ) ) ) )).
+

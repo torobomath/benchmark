@@ -15,50 +15,50 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   79 (   6 equality;  20 variable)
+%            Number of atoms       :   77 (   6 equality;  20 variable)
 %            Maximal formula depth :   12 (  10 average)
-%            Number of connectives :   63 (   0   ~;   1   |;   2   &;  60   @)
+%            Number of connectives :   61 (   0   ~;   1   |;   2   &;  58   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    2 (   2   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   14 (   0   :)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :    8 (   0 sgn;   0   !;   2   ?;   6   ^)
 %                                         (   8   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   0 pred;    0 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ 'complex.Complex'
     @ ^ [V_z: 'complex.Complex'] :
-      ? [V_f: 'complex.Complex' > 'complex.Complex'] :
+      ? [V_f: ( 'complex.Complex' > 'complex.Complex' )] :
         ( ( V_f
           = ( ^ [V_z_dot_0: 'complex.Complex'] :
-                ( 'complex.//2' @ ( 'complex.-/2' @ V_z_dot_0 @ ( 'complex.complex/2' @ 1 @ 0 ) ) @ ( 'complex.+/2' @ V_z_dot_0 @ ( 'complex.complex/2' @ 1 @ 0 ) ) ) ) )
-        & ( ( 'complex.+/2' @ V_z @ ( 'complex.complex/2' @ 1 @ 0 ) )
-          = ( 'LamApp/2' @ V_f @ ( 'LamApp/2' @ V_f @ V_z ) ) ) ) )).
+                ( 'complex.//2' @ ( 'complex.-/2' @ V_z_dot_0 @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) ) @ ( 'complex.+/2' @ V_z_dot_0 @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) ) ) ) )
+        & ( ( 'complex.+/2' @ V_z @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) )
+          = ( V_f @ ( V_f @ V_z ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ 'complex.Complex'
     @ ^ [V_a: 'complex.Complex'] :
-      ? [V_f: 'complex.Complex' > 'complex.Complex'] :
+      ? [V_f: ( 'complex.Complex' > 'complex.Complex' )] :
         ( ( V_f
           = ( ^ [V_z: 'complex.Complex'] :
-                ( 'complex.//2' @ ( 'complex.-/2' @ V_z @ ( 'complex.complex/2' @ 1 @ 0 ) ) @ ( 'complex.+/2' @ V_z @ ( 'complex.complex/2' @ 1 @ 0 ) ) ) ) )
-        & ( '2d.is-equilateral-triangle/3' @ ( 'complex.complex->point/1' @ ( 'complex.complex/2' @ 0 @ 0 ) ) @ ( 'complex.complex->point/1' @ V_a ) @ ( 'complex.complex->point/1' @ ( 'LamApp/2' @ V_f @ ( 'LamApp/2' @ V_f @ V_a ) ) ) ) ) )).
+                ( 'complex.//2' @ ( 'complex.-/2' @ V_z @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) ) @ ( 'complex.+/2' @ V_z @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) ) ) ) )
+        & ( '2d.is-equilateral-triangle/3' @ ( 'complex.complex->point/1' @ ( 'complex.complex/2' @ 0.0 @ 0.0 ) ) @ ( 'complex.complex->point/1' @ V_a ) @ ( 'complex.complex->point/1' @ ( V_f @ ( V_f @ V_a ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
     ^ [V_z_dot_1: 'complex.Complex'] :
-      ( ( 'complex.+/2' @ ( 'complex.^/2' @ V_z_dot_1 @ 2 ) @ V_z_dot_1 )
-      = ( 'complex.complex/2' @ -1 @ 0 ) ) ),
+      ( ( 'complex.+/2' @ ( 'complex.^/2' @ V_z_dot_1 @ 2.0 ) @ V_z_dot_1 )
+      = ( 'complex.complex/2' @ -1.0 @ 0.0 ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
     ^ [V_a_dot_0: 'complex.Complex'] :
-      ( ( ( 'complex.-/2' @ ( 'complex.^/2' @ V_a_dot_0 @ 2 ) @ V_a_dot_0 )
-        = ( 'complex.complex/2' @ -1 @ 0 ) )
-      | ( ( 'complex.+/2' @ ( 'complex.^/2' @ V_a_dot_0 @ 2 ) @ V_a_dot_0 )
-        = ( 'complex.complex/2' @ -1 @ 0 ) ) ) ),
+      ( ( ( 'complex.-/2' @ ( 'complex.^/2' @ V_a_dot_0 @ 2.0 ) @ V_a_dot_0 )
+        = ( 'complex.complex/2' @ -1.0 @ 0.0 ) )
+      | ( ( 'complex.+/2' @ ( 'complex.^/2' @ V_a_dot_0 @ 2.0 ) @ V_a_dot_0 )
+        = ( 'complex.complex/2' @ -1.0 @ 0.0 ) ) ) ),
     answer_to(p2_question,[])).
+

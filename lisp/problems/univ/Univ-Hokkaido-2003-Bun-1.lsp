@@ -18,7 +18,7 @@
 (namespace 2d)
 
 (def-directive
-  p1
+  a1
   (Find (b)
         (exists (A B P Q x1 x2 y1 y2)
                 (&& (= A (shape-of-cpfun (PLam p (= (y-coord p)
@@ -33,7 +33,7 @@
                     (= 2 (- x1 x2))))))
 
 (def-directive
-  p2
+  a2_1
   (Find (D)
         (exists (A)
           (&& (= A (shape-of-cpfun (PLam p (= (y-coord p)
@@ -49,7 +49,9 @@
                    (> x1 x2)
                    (= 2 (- x1 x2)))))))))))
 
-(def-answer p1 (PLam b (= b (+ (* (/ 1 2) (^ a 2)) 2))))
+(def-answer a1 (PLam b (= b (+ (* (/ 1 2) (^ a 2)) 2))))
 
-(def-answer p2 (PLam D (= D (shape-of-cpfun (PLam P (<= (y-coord P) (+ (^ (x-coord P) 2) 1)))))))
+(def-answer a2_1 (PLam D (= D (shape-of-cpfun (PLam P (<= (y-coord P) (+ (^ (x-coord P) 2) 1)))))))
+
+(def-answer a2_2 (shape-of-cpfun (PLam P (<= (y-coord P) (+ (^ (x-coord P) 2) 1)))))
 

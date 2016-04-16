@@ -82,3 +82,7 @@
 
 (def-answer p3 (PLam vl (= vl (* (/ 64 3) (Pi)))))
 
+(def-answer a1 (PLam ms_m (= ms_m (list-of 0 (* 3 (Pi))))))
+
+(def-answer a2 (PLam vl (= vl (* (/ 64 3) (Pi)))))
+

@@ -18,16 +18,15 @@
 %            Maximal formula depth :   19 (  19 average)
 %            Number of connectives :   99 (   0   ~;   4   |;   5   &;  89   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   12 (   0   :)
+%            Number of symbols     :   12 (   0   :;   0   =)
 %            Number of variables   :    7 (   0 sgn;   7   !;   0   ?;   0   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   2 pred;    1 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_P1: '2d.Point',V_P2: '2d.Point',V_P3: '2d.Point',V_P: '2d.Point',V_Q1: '2d.Point',V_Q2: '2d.Point',V_Q3: '2d.Point'] :
@@ -36,9 +35,10 @@ thf(p,conjecture,(
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_P @ V_P1 ) @ ( '2d.line/2' @ V_P2 @ V_P3 ) @ V_Q1 )
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_P @ V_P2 ) @ ( '2d.line/2' @ V_P1 @ V_P3 ) @ V_Q2 )
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_P @ V_P3 ) @ ( '2d.line/2' @ V_P1 @ V_P2 ) @ V_Q3 ) )
-     => ( ( ( '<=/2' @ ( '//2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P1 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q1 ) ) ) @ 2 )
-          | ( '<=/2' @ ( '//2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P2 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q2 ) ) ) @ 2 )
-          | ( '<=/2' @ ( '//2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P3 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q3 ) ) ) @ 2 ) )
-        & ( ( '>=/2' @ ( '//2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P1 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q1 ) ) ) @ 2 )
-          | ( '>=/2' @ ( '//2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P2 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q2 ) ) ) @ 2 )
-          | ( '>=/2' @ ( '//2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P3 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q3 ) ) ) @ 2 ) ) ) ) )).
+     => ( ( ( $lesseq @ ( $quotient @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P1 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q1 ) ) ) @ 2.0 )
+          | ( $lesseq @ ( $quotient @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P2 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q2 ) ) ) @ 2.0 )
+          | ( $lesseq @ ( $quotient @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P3 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q3 ) ) ) @ 2.0 ) )
+        & ( ( $greatereq @ ( $quotient @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P1 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q1 ) ) ) @ 2.0 )
+          | ( $greatereq @ ( $quotient @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P2 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q2 ) ) ) @ 2.0 )
+          | ( $greatereq @ ( $quotient @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_P3 ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_Q3 ) ) ) @ 2.0 ) ) ) ) )).
+

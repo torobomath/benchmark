@@ -21,16 +21,15 @@
 %            Maximal formula depth :   18 (  16 average)
 %            Number of connectives :   79 (   0   ~;   0   |;  11   &;  66   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   12 (   0   :)
+%            Number of symbols     :   12 (   0   :;   0   =)
 %            Number of variables   :   11 (   0 sgn;   7   !;   4   ?;   0   ^)
 %                                         (  11   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    6 (   2 pred;    2 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
     ! [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point'] :
@@ -39,15 +38,15 @@ thf(p1,conjecture,(
           = ( '3d.distance/2' @ V_C @ V_D ) )
         & ( ( '3d.distance/2' @ V_B @ V_C )
           = ( '3d.distance/2' @ V_A @ V_D ) ) )
-     => ( ( '+/2' @ ( '^/2' @ ( '3d.distance/2' @ V_A @ V_B ) @ 2 ) @ ( '^/2' @ ( '3d.distance/2' @ V_B @ V_C ) @ 2 ) )
-        = ( '//2' @ ( '+/2' @ ( '^/2' @ ( '3d.distance/2' @ V_B @ V_D ) @ 2 ) @ ( '^/2' @ ( '3d.distance/2' @ V_A @ V_C ) @ 2 ) ) @ 2 ) ) ) )).
+     => ( ( $sum @ ( '^/2' @ ( '3d.distance/2' @ V_A @ V_B ) @ 2.0 ) @ ( '^/2' @ ( '3d.distance/2' @ V_B @ V_C ) @ 2.0 ) )
+        = ( $quotient @ ( $sum @ ( '^/2' @ ( '3d.distance/2' @ V_B @ V_D ) @ 2.0 ) @ ( '^/2' @ ( '3d.distance/2' @ V_A @ V_C ) @ 2.0 ) ) @ 2.0 ) ) ) )).
 
 thf(p2,conjecture,(
-    ! [V_a: 'R',V_b: 'R',V_c: 'R'] :
-      ( ( ( '</2' @ 0 @ V_a )
-        & ( '<=/2' @ V_a @ V_b )
-        & ( '<=/2' @ V_b @ V_c )
-        & ( '</2' @ ( '^/2' @ V_c @ 2 ) @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ ( '^/2' @ V_b @ 2 ) ) ) )
+    ! [V_a: $real,V_b: $real,V_c: $real] :
+      ( ( ( $less @ 0.0 @ V_a )
+        & ( $lesseq @ V_a @ V_b )
+        & ( $lesseq @ V_b @ V_c )
+        & ( $less @ ( '^/2' @ V_c @ 2.0 ) @ ( $sum @ ( '^/2' @ V_a @ 2.0 ) @ ( '^/2' @ V_b @ 2.0 ) ) ) )
      => ? [V_A: '3d.Point',V_B: '3d.Point',V_C: '3d.Point',V_D: '3d.Point'] :
           ( ( '3d.is-tetrahedron/4' @ V_A @ V_B @ V_C @ V_D )
           & ( V_a
@@ -62,3 +61,4 @@ thf(p2,conjecture,(
             = ( '3d.distance/2' @ V_B @ V_D ) )
           & ( V_a
             = ( '3d.distance/2' @ V_C @ V_D ) ) ) ) )).
+

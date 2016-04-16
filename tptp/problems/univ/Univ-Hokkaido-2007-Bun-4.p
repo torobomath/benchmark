@@ -24,278 +24,287 @@
 %% $\frac{1}{2}\le p\le\frac{3}{4}$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :   14 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  602 (  38 equality; 215 variable)
-%            Maximal formula depth :   35 (  20 average)
-%            Number of connectives :  512 (   0   ~;   0   |; 103   &; 409   @)
+% Syntax   : Number of formulae    :   17 (   0 unit;   3 type;   0 defn)
+%            Number of atoms       :  637 (  38 equality; 166 variable)
+%            Maximal formula depth :   35 (  17 average)
+%            Number of connectives :  547 (   0   ~;   0   |; 103   &; 444   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   36 (   0   :)
-%            Number of variables   :   83 (   1 sgn;   0   !;  42   ?;  29   ^)
+%            Number of symbols     :   39 (   3   :;   0   =)
+%            Number of variables   :   71 (   0 sgn;   0   !;  42   ?;  29   ^)
 %                                         (  71   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   17 (   4 pred;    5 func;    8 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('p/0_type',type,(
+    'p/0': $real )).
+
+thf('x/0_type',type,(
+    'x/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_b: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_b: $real] :
       ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point'] :
-        ( ( '>/2' @ V_a @ 0 )
-        & ( '>=/2' @ V_b @ 0 )
-        & ( '</2' @ 0 @ V_p )
-        & ( '</2' @ V_p @ 1 )
+        ( ( $greater @ 'a/0' @ 0.0 )
+        & ( $greatereq @ V_b @ 0.0 )
+        & ( $less @ 0.0 @ 'p/0' )
+        & ( $less @ 'p/0' @ 1.0 )
         & ( V_P
-          = ( '2d.point/2' @ V_p @ ( '^/2' @ V_p @ 2 ) ) )
+          = ( '2d.point/2' @ 'p/0' @ ( '^/2' @ 'p/0' @ 2.0 ) ) )
         & ( '2d.on/2' @ V_P @ V_F )
         & ( V_F
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ V_a @ ( 'cons/2' @ ( '-/1' @ V_b ) @ 'nil/0' ) ) ) ) ) )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 'a/0' @ ( 'cons/2' @ $real @ ( $uminus @ V_b ) @ ( 'nil/0' @ $real ) ) ) ) ) ) )
         & ( V_C
           = ( '2d.intersection/2' @ V_F
             @ ( '2d.shape-of-cpfun/1'
               @ ^ [V_q: '2d.Point'] :
-                  ( ( '<=/2' @ 0 @ ( '2d.x-coord/1' @ V_q ) )
-                  & ( '<=/2' @ ( '2d.x-coord/1' @ V_q ) @ V_p ) ) ) ) ) ) )).
+                  ( ( $lesseq @ 0.0 @ ( '2d.x-coord/1' @ V_q ) )
+                  & ( $lesseq @ ( '2d.x-coord/1' @ V_q ) @ 'p/0' ) ) ) ) ) ) )).
 
 thf(p2_i_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_y: 'R'] :
-      ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: 'R',V_b: 'R',V_D: '2d.Shape',V_Dp: '2d.Point'] :
-        ( ( '>/2' @ V_a @ 0 )
-        & ( '>=/2' @ V_b @ 0 )
-        & ( '</2' @ 0 @ V_p )
-        & ( '</2' @ V_p @ 1 )
+    ( 'find/1' @ $real
+    @ ^ [V_y: $real] :
+      ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: $real,V_b: $real,V_D: '2d.Shape',V_Dp: '2d.Point'] :
+        ( ( $greater @ V_a @ 0.0 )
+        & ( $greatereq @ V_b @ 0.0 )
+        & ( $less @ 0.0 @ 'p/0' )
+        & ( $less @ 'p/0' @ 1.0 )
         & ( V_P
-          = ( '2d.point/2' @ V_p @ ( '^/2' @ V_p @ 2 ) ) )
+          = ( '2d.point/2' @ 'p/0' @ ( '^/2' @ 'p/0' @ 2.0 ) ) )
         & ( '2d.on/2' @ V_P @ V_F )
         & ( V_F
-          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ V_a @ ( 'cons/2' @ ( '-/1' @ V_b ) @ 'nil/0' ) ) ) ) ) )
+          = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ ( $uminus @ V_b ) @ ( 'nil/0' @ $real ) ) ) ) ) ) )
         & ( V_C
           = ( '2d.intersection/2' @ V_F
             @ ( '2d.shape-of-cpfun/1'
               @ ^ [V_q: '2d.Point'] :
-                  ( ( '<=/2' @ 0 @ ( '2d.x-coord/1' @ V_q ) )
-                  & ( '<=/2' @ ( '2d.x-coord/1' @ V_q ) @ V_p ) ) ) ) )
+                  ( ( $lesseq @ 0.0 @ ( '2d.x-coord/1' @ V_q ) )
+                  & ( $lesseq @ ( '2d.x-coord/1' @ V_q ) @ 'p/0' ) ) ) ) )
         & ( V_D
           = ( '2d.shape-of-cpfun/1'
             @ ^ [V_Dp_dot_0: '2d.Point'] :
                 ( ( '2d.on/2' @ V_Dp_dot_0 @ V_C )
-                & ( '<=/2' @ V_p @ V_a )
-                & ( '<=/2' @ V_a @ 1 ) ) ) )
+                & ( $lesseq @ 'p/0' @ V_a )
+                & ( $lesseq @ V_a @ 1.0 ) ) ) )
         & ( V_Dp
-          = ( '2d.point/2' @ V_x @ V_y ) )
+          = ( '2d.point/2' @ 'x/0' @ V_y ) )
         & ( '2d.on/2' @ V_Dp @ V_D ) ) )).
 
 thf(p2_ii_qustion,question,
-    ( 'Draw/1'
+    ( 'draw/1' @ '2d.Shape'
     @ ^ [V_Dp: '2d.Shape'] :
         ( V_Dp
         = ( '2d.shape-of-cpfun/1'
           @ ^ [V_point: '2d.Point'] :
-            ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: 'R',V_b: 'R'] :
-              ( ( '>/2' @ V_a @ 0 )
-              & ( '>=/2' @ V_b @ 0 )
-              & ( '</2' @ 0 @ V_p )
-              & ( '</2' @ V_p @ 1 )
-              & ( '<=/2' @ V_p @ V_a )
-              & ( '<=/2' @ V_a @ 1 )
+            ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: $real,V_b: $real] :
+              ( ( $greater @ V_a @ 0.0 )
+              & ( $greatereq @ V_b @ 0.0 )
+              & ( $less @ 0.0 @ 'p/0' )
+              & ( $less @ 'p/0' @ 1.0 )
+              & ( $lesseq @ 'p/0' @ V_a )
+              & ( $lesseq @ V_a @ 1.0 )
               & ( V_P
-                = ( '2d.point/2' @ V_p @ ( '^/2' @ V_p @ 2 ) ) )
+                = ( '2d.point/2' @ 'p/0' @ ( '^/2' @ 'p/0' @ 2.0 ) ) )
               & ( '2d.on/2' @ V_P @ V_F )
               & ( V_F
-                = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ V_a @ ( 'cons/2' @ ( '-/1' @ V_b ) @ 'nil/0' ) ) ) ) ) )
+                = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ ( $uminus @ V_b ) @ ( 'nil/0' @ $real ) ) ) ) ) ) )
               & ( V_C
                 = ( '2d.intersection/2' @ V_F
                   @ ( '2d.shape-of-cpfun/1'
                     @ ^ [V_q: '2d.Point'] :
-                        ( ( '<=/2' @ 0 @ ( '2d.x-coord/1' @ V_q ) )
-                        & ( '<=/2' @ ( '2d.x-coord/1' @ V_q ) @ V_p ) ) ) ) )
+                        ( ( $lesseq @ 0.0 @ ( '2d.x-coord/1' @ V_q ) )
+                        & ( $lesseq @ ( '2d.x-coord/1' @ V_q ) @ 'p/0' ) ) ) ) )
               & ( '2d.on/2' @ V_point @ V_C ) ) ) ) )).
 
 thf(p3_1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_S: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_S: $real] :
       ? [V_D: '2d.Shape'] :
-        ( ( '<=/2' @ ( '//2' @ 1 @ 2 ) @ V_p )
-        & ( '<=/2' @ V_p @ ( '//2' @ 3 @ 4 ) )
+        ( ( $lesseq @ ( $quotient @ 1.0 @ 2.0 ) @ 'p/0' )
+        & ( $lesseq @ 'p/0' @ ( $quotient @ 3.0 @ 4.0 ) )
         & ( V_S
           = ( '2d.area-of/1' @ V_D ) )
         & ( V_D
           = ( '2d.shape-of-cpfun/1'
             @ ^ [V_Dp: '2d.Point'] :
-              ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: 'R',V_b: 'R'] :
-                ( ( '>/2' @ V_a @ 0 )
-                & ( '>=/2' @ V_b @ 0 )
-                & ( '</2' @ 0 @ V_p )
-                & ( '</2' @ V_p @ 1 )
+              ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: $real,V_b: $real] :
+                ( ( $greater @ V_a @ 0.0 )
+                & ( $greatereq @ V_b @ 0.0 )
+                & ( $less @ 0.0 @ 'p/0' )
+                & ( $less @ 'p/0' @ 1.0 )
                 & ( V_P
-                  = ( '2d.point/2' @ V_p @ ( '^/2' @ V_p @ 2 ) ) )
+                  = ( '2d.point/2' @ 'p/0' @ ( '^/2' @ 'p/0' @ 2.0 ) ) )
                 & ( '2d.on/2' @ V_P @ V_F )
                 & ( V_F
-                  = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ V_a @ ( 'cons/2' @ ( '-/1' @ V_b ) @ 'nil/0' ) ) ) ) ) )
+                  = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ ( $uminus @ V_b ) @ ( 'nil/0' @ $real ) ) ) ) ) ) )
                 & ( V_C
                   = ( '2d.intersection/2' @ V_F
                     @ ( '2d.shape-of-cpfun/1'
                       @ ^ [V_q: '2d.Point'] :
-                          ( ( '<=/2' @ 0 @ ( '2d.x-coord/1' @ V_q ) )
-                          & ( '<=/2' @ ( '2d.x-coord/1' @ V_q ) @ V_p ) ) ) ) )
+                          ( ( $lesseq @ 0.0 @ ( '2d.x-coord/1' @ V_q ) )
+                          & ( $lesseq @ ( '2d.x-coord/1' @ V_q ) @ 'p/0' ) ) ) ) )
                 & ( '2d.on/2' @ V_Dp @ V_C )
-                & ( '<=/2' @ V_p @ V_a )
-                & ( '<=/2' @ V_a @ 1 ) ) ) ) ) )).
+                & ( $lesseq @ 'p/0' @ V_a )
+                & ( $lesseq @ V_a @ 1.0 ) ) ) ) ) )).
 
 thf(p3_2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_S_max: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_S_max: $real] :
         ( V_S_max
         = ( 'max-of/1'
-          @ ^ [V_S: 'R'] :
-            ? [V_D: '2d.Shape',V_p: 'R'] :
-              ( ( '<=/2' @ ( '//2' @ 1 @ 2 ) @ V_p )
-              & ( '<=/2' @ V_p @ ( '//2' @ 3 @ 4 ) )
+          @ ^ [V_S: $real] :
+            ? [V_D: '2d.Shape',V_p: $real] :
+              ( ( $lesseq @ ( $quotient @ 1.0 @ 2.0 ) @ V_p )
+              & ( $lesseq @ V_p @ ( $quotient @ 3.0 @ 4.0 ) )
               & ( V_S
                 = ( '2d.area-of/1' @ V_D ) )
               & ( V_D
                 = ( '2d.shape-of-cpfun/1'
                   @ ^ [V_Dp: '2d.Point'] :
-                    ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: 'R',V_b: 'R'] :
-                      ( ( '>/2' @ V_a @ 0 )
-                      & ( '>=/2' @ V_b @ 0 )
-                      & ( '</2' @ 0 @ V_p )
-                      & ( '</2' @ V_p @ 1 )
+                    ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: $real,V_b: $real] :
+                      ( ( $greater @ V_a @ 0.0 )
+                      & ( $greatereq @ V_b @ 0.0 )
+                      & ( $less @ 0.0 @ V_p )
+                      & ( $less @ V_p @ 1.0 )
                       & ( V_P
-                        = ( '2d.point/2' @ V_p @ ( '^/2' @ V_p @ 2 ) ) )
+                        = ( '2d.point/2' @ V_p @ ( '^/2' @ V_p @ 2.0 ) ) )
                       & ( '2d.on/2' @ V_P @ V_F )
                       & ( V_F
-                        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ V_a @ ( 'cons/2' @ ( '-/1' @ V_b ) @ 'nil/0' ) ) ) ) ) )
+                        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ ( $uminus @ V_b ) @ ( 'nil/0' @ $real ) ) ) ) ) ) )
                       & ( V_C
                         = ( '2d.intersection/2' @ V_F
                           @ ( '2d.shape-of-cpfun/1'
                             @ ^ [V_q: '2d.Point'] :
-                                ( ( '<=/2' @ 0 @ ( '2d.x-coord/1' @ V_q ) )
-                                & ( '<=/2' @ ( '2d.x-coord/1' @ V_q ) @ V_p ) ) ) ) )
+                                ( ( $lesseq @ 0.0 @ ( '2d.x-coord/1' @ V_q ) )
+                                & ( $lesseq @ ( '2d.x-coord/1' @ V_q ) @ V_p ) ) ) ) )
                       & ( '2d.on/2' @ V_Dp @ V_C )
-                      & ( '<=/2' @ V_p @ V_a )
-                      & ( '<=/2' @ V_a @ 1 ) ) ) ) ) ) ) )).
+                      & ( $lesseq @ V_p @ V_a )
+                      & ( $lesseq @ V_a @ 1.0 ) ) ) ) ) ) ) )).
 
 thf(p3_3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_S_min: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_S_min: $real] :
         ( V_S_min
         = ( 'min-of/1'
-          @ ^ [V_S: 'R'] :
-            ? [V_D: '2d.Shape',V_p: 'R'] :
-              ( ( '<=/2' @ ( '//2' @ 1 @ 2 ) @ V_p )
-              & ( '<=/2' @ V_p @ ( '//2' @ 3 @ 4 ) )
+          @ ^ [V_S: $real] :
+            ? [V_D: '2d.Shape',V_p: $real] :
+              ( ( $lesseq @ ( $quotient @ 1.0 @ 2.0 ) @ V_p )
+              & ( $lesseq @ V_p @ ( $quotient @ 3.0 @ 4.0 ) )
               & ( V_S
                 = ( '2d.area-of/1' @ V_D ) )
               & ( V_D
                 = ( '2d.shape-of-cpfun/1'
                   @ ^ [V_Dp: '2d.Point'] :
-                    ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: 'R',V_b: 'R'] :
-                      ( ( '>/2' @ V_a @ 0 )
-                      & ( '>=/2' @ V_b @ 0 )
-                      & ( '</2' @ 0 @ V_p )
-                      & ( '</2' @ V_p @ 1 )
+                    ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: $real,V_b: $real] :
+                      ( ( $greater @ V_a @ 0.0 )
+                      & ( $greatereq @ V_b @ 0.0 )
+                      & ( $less @ 0.0 @ V_p )
+                      & ( $less @ V_p @ 1.0 )
                       & ( V_P
-                        = ( '2d.point/2' @ V_p @ ( '^/2' @ V_p @ 2 ) ) )
+                        = ( '2d.point/2' @ V_p @ ( '^/2' @ V_p @ 2.0 ) ) )
                       & ( '2d.on/2' @ V_P @ V_F )
                       & ( V_F
-                        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ V_a @ ( 'cons/2' @ ( '-/1' @ V_b ) @ 'nil/0' ) ) ) ) ) )
+                        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ ( $uminus @ V_b ) @ ( 'nil/0' @ $real ) ) ) ) ) ) )
                       & ( V_C
                         = ( '2d.intersection/2' @ V_F
                           @ ( '2d.shape-of-cpfun/1'
                             @ ^ [V_q: '2d.Point'] :
-                                ( ( '<=/2' @ 0 @ ( '2d.x-coord/1' @ V_q ) )
-                                & ( '<=/2' @ ( '2d.x-coord/1' @ V_q ) @ V_p ) ) ) ) )
+                                ( ( $lesseq @ 0.0 @ ( '2d.x-coord/1' @ V_q ) )
+                                & ( $lesseq @ ( '2d.x-coord/1' @ V_q ) @ V_p ) ) ) ) )
                       & ( '2d.on/2' @ V_Dp @ V_C )
-                      & ( '<=/2' @ V_p @ V_a )
-                      & ( '<=/2' @ V_a @ 1 ) ) ) ) ) ) ) )).
+                      & ( $lesseq @ V_p @ V_a )
+                      & ( $lesseq @ V_a @ 1.0 ) ) ) ) ) ) ) )).
 
 thf(p3_range_1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_S: 'R'] :
-      ? [V_D: '2d.Shape',V_p: 'R'] :
-        ( ( '<=/2' @ ( '//2' @ 1 @ 2 ) @ V_p )
-        & ( '<=/2' @ V_p @ ( '//2' @ 3 @ 4 ) )
+    ( 'find/1' @ $real
+    @ ^ [V_S: $real] :
+      ? [V_D: '2d.Shape',V_p: $real] :
+        ( ( $lesseq @ ( $quotient @ 1.0 @ 2.0 ) @ V_p )
+        & ( $lesseq @ V_p @ ( $quotient @ 3.0 @ 4.0 ) )
         & ( V_S
           = ( '2d.area-of/1' @ V_D ) )
         & ( V_D
           = ( '2d.shape-of-cpfun/1'
             @ ^ [V_Dp: '2d.Point'] :
-              ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: 'R',V_b: 'R'] :
-                ( ( '>/2' @ V_a @ 0 )
-                & ( '>=/2' @ V_b @ 0 )
-                & ( '</2' @ 0 @ V_p )
-                & ( '</2' @ V_p @ 1 )
+              ? [V_C: '2d.Shape',V_F: '2d.Shape',V_P: '2d.Point',V_a: $real,V_b: $real] :
+                ( ( $greater @ V_a @ 0.0 )
+                & ( $greatereq @ V_b @ 0.0 )
+                & ( $less @ 0.0 @ V_p )
+                & ( $less @ V_p @ 1.0 )
                 & ( V_P
-                  = ( '2d.point/2' @ V_p @ ( '^/2' @ V_p @ 2 ) ) )
+                  = ( '2d.point/2' @ V_p @ ( '^/2' @ V_p @ 2.0 ) ) )
                 & ( '2d.on/2' @ V_P @ V_F )
                 & ( V_F
-                  = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ V_a @ ( 'cons/2' @ ( '-/1' @ V_b ) @ 'nil/0' ) ) ) ) ) )
+                  = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ ( $uminus @ V_b ) @ ( 'nil/0' @ $real ) ) ) ) ) ) )
                 & ( V_C
                   = ( '2d.intersection/2' @ V_F
                     @ ( '2d.shape-of-cpfun/1'
                       @ ^ [V_q: '2d.Point'] :
-                          ( ( '<=/2' @ 0 @ ( '2d.x-coord/1' @ V_q ) )
-                          & ( '<=/2' @ ( '2d.x-coord/1' @ V_q ) @ V_p ) ) ) ) )
+                          ( ( $lesseq @ 0.0 @ ( '2d.x-coord/1' @ V_q ) )
+                          & ( $lesseq @ ( '2d.x-coord/1' @ V_q ) @ V_p ) ) ) ) )
                 & ( '2d.on/2' @ V_Dp @ V_C )
-                & ( '<=/2' @ V_p @ V_a )
-                & ( '<=/2' @ V_a @ 1 ) ) ) ) ) )).
+                & ( $lesseq @ V_p @ V_a )
+                & ( $lesseq @ V_a @ 1.0 ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_b_dot_0: 'R'] :
-      ( ( '>/2' @ V_a @ 0 )
-      & ( '>=/2' @ V_b_dot_0 @ 0 )
-      & ( '</2' @ 0 @ V_p )
-      & ( '</2' @ V_p @ 1 )
+    ^ [V_b_dot_0: $real] :
+      ( ( $greater @ 'a/0' @ 0.0 )
+      & ( $greatereq @ V_b_dot_0 @ 0.0 )
+      & ( $less @ 0.0 @ 'p/0' )
+      & ( $less @ 'p/0' @ 1.0 )
       & ( V_b_dot_0
-        = ( '-/2' @ ( '//2' @ V_a @ V_p ) @ 1 ) ) ) ),
+        = ( $difference @ ( $quotient @ 'a/0' @ 'p/0' ) @ 1.0 ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_i_answer,answer,(
-    ^ [V_y_dot_0: 'R'] :
-      ( ( '</2' @ 0 @ V_p )
-      & ( '</2' @ V_p @ 1 )
-      & ( '<=/2' @ ( '*/2' @ V_p @ V_x ) @ V_y_dot_0 )
-      & ( '<=/2' @ V_y_dot_0 @ ( '+/2' @ ( '*/2' @ ( '-/2' @ 1 @ ( '//2' @ 1 @ V_p ) ) @ ( '^/2' @ V_x @ 2 ) ) @ V_x ) ) ) ),
+    ^ [V_y_dot_0: $real] :
+      ( ( $less @ 0.0 @ 'p/0' )
+      & ( $less @ 'p/0' @ 1.0 )
+      & ( $lesseq @ ( $product @ 'p/0' @ 'x/0' ) @ V_y_dot_0 )
+      & ( $lesseq @ V_y_dot_0 @ ( $sum @ ( $product @ ( $difference @ 1.0 @ ( $quotient @ 1.0 @ 'p/0' ) ) @ ( '^/2' @ 'x/0' @ 2.0 ) ) @ 'x/0' ) ) ) ),
     answer_to(p2_i_question,[])).
 
 thf(p2_ii_answer,answer,
     ( '2d.shape-of-cpfun/1'
     @ ^ [V_Dp_dot_0: '2d.Point'] :
-        ( ( '</2' @ 0 @ V_p )
-        & ( '</2' @ V_p @ 1 )
-        & ( '<=/2' @ 0 @ ( '2d.x-coord/1' @ V_Dp_dot_0 ) )
-        & ( '<=/2' @ ( '2d.x-coord/1' @ V_Dp_dot_0 ) @ V_p )
-        & ( '<=/2' @ ( '*/2' @ V_p @ ( '2d.x-coord/1' @ V_Dp_dot_0 ) ) @ ( '2d.y-coord/1' @ V_Dp_dot_0 ) )
-        & ( '<=/2' @ ( '2d.y-coord/1' @ V_Dp_dot_0 ) @ ( '+/2' @ ( '*/2' @ ( '-/2' @ 1 @ ( '//2' @ 1 @ V_p ) ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_Dp_dot_0 ) @ 2 ) ) @ ( '2d.x-coord/1' @ V_Dp_dot_0 ) ) ) ) ),
+        ( ( $less @ 0.0 @ 'p/0' )
+        & ( $less @ 'p/0' @ 1.0 )
+        & ( $lesseq @ 0.0 @ ( '2d.x-coord/1' @ V_Dp_dot_0 ) )
+        & ( $lesseq @ ( '2d.x-coord/1' @ V_Dp_dot_0 ) @ 'p/0' )
+        & ( $lesseq @ ( $product @ 'p/0' @ ( '2d.x-coord/1' @ V_Dp_dot_0 ) ) @ ( '2d.y-coord/1' @ V_Dp_dot_0 ) )
+        & ( $lesseq @ ( '2d.y-coord/1' @ V_Dp_dot_0 ) @ ( $sum @ ( $product @ ( $difference @ 1.0 @ ( $quotient @ 1.0 @ 'p/0' ) ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_Dp_dot_0 ) @ 2.0 ) ) @ ( '2d.x-coord/1' @ V_Dp_dot_0 ) ) ) ) ),
     answer_to(p2_ii_question,[])).
 
 thf(p3_1_answer,answer,(
-    ^ [V_S_dot_0: 'R'] :
-      ( ( '<=/2' @ ( '//2' @ 1 @ 2 ) @ V_p )
-      & ( '<=/2' @ V_p @ ( '//2' @ 3 @ 4 ) )
+    ^ [V_S_dot_0: $real] :
+      ( ( $lesseq @ ( $quotient @ 1.0 @ 2.0 ) @ 'p/0' )
+      & ( $lesseq @ 'p/0' @ ( $quotient @ 3.0 @ 4.0 ) )
       & ( V_S_dot_0
-        = ( '*/2' @ ( '//2' @ 1 @ 6 ) @ ( '-/2' @ ( '^/2' @ V_p @ 2 ) @ ( '^/2' @ V_p @ 3 ) ) ) ) ) ),
+        = ( $product @ ( $quotient @ 1.0 @ 6.0 ) @ ( $difference @ ( '^/2' @ 'p/0' @ 2.0 ) @ ( '^/2' @ 'p/0' @ 3.0 ) ) ) ) ) ),
     answer_to(p3_1_question,[])).
 
 thf(p3_2_answer,answer,(
-    ^ [V_S_max_dot_0: 'R'] :
+    ^ [V_S_max_dot_0: $real] :
       ( V_S_max_dot_0
-      = ( '//2' @ 2 @ 81 ) ) ),
+      = ( $quotient @ 2.0 @ 81.0 ) ) ),
     answer_to(p3_2_question,[])).
 
 thf(p3_3_answer,answer,(
-    ^ [V_S_min_dot_0: 'R'] :
+    ^ [V_S_min_dot_0: $real] :
       ( V_S_min_dot_0
-      = ( '//2' @ 1 @ 48 ) ) ),
+      = ( $quotient @ 1.0 @ 48.0 ) ) ),
     answer_to(p3_3_question,[])).
 
 thf(p3_range_1_answer,answer,(
-    ^ [V_S_dot_0: 'R'] :
-      ( ( '<=/2' @ ( '//2' @ 1 @ 48 ) @ V_S_dot_0 )
-      & ( '<=/2' @ V_S_dot_0 @ ( '//2' @ 2 @ 81 ) ) ) ),
+    ^ [V_S_dot_0: $real] :
+      ( ( $lesseq @ ( $quotient @ 1.0 @ 48.0 ) @ V_S_dot_0 )
+      & ( $lesseq @ V_S_dot_0 @ ( $quotient @ 2.0 @ 81.0 ) ) ) ),
     answer_to(p3_range_1_question,[])).
+

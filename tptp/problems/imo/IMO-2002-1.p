@@ -14,60 +14,63 @@
 %% Show that there are the same number of type 1 and type 2 subsets.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   99 (   9 equality;  50 variable)
-%            Maximal formula depth :   25 (  25 average)
-%            Number of connectives :  106 (   4   ~;   0   |;  18   &;  80   @)
+% Syntax   : Number of formulae    :    2 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  141 (   9 equality;  48 variable)
+%            Maximal formula depth :   27 (  15 average)
+%            Number of connectives :  149 (   4   ~;   0   |;  18   &; 123   @)
 %                                         (   0 <=>;   4  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   18 (   0   :)
-%            Number of variables   :   15 (   0 sgn;  11   !;   0   ?;   3   ^)
+%            Number of symbols     :   19 (   1   :;   0   =)
+%            Number of variables   :   14 (   0 sgn;  11   !;   0   ?;   3   ^)
 %                                         (  14   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   3 pred;    1 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('z/0_type',type,(
+    'z/0': 'ListOf' @ $int )).
 
 thf(p,conjecture,(
-    ! [V_n: 'Z',V_S: 'SetOf' @ ( 'ListOf' @ 'Z' ),V_B: 'SetOf' @ ( 'ListOf' @ 'Z' ),V_R: 'SetOf' @ ( 'ListOf' @ 'Z' ),V_X: 'SetOf' @ ( 'SetOf' @ ( 'ListOf' @ 'Z' ) ),V_Y: 'SetOf' @ ( 'SetOf' @ ( 'ListOf' @ 'Z' ) )] :
+    ! [V_n: $int,V_S: ( 'SetOf' @ ( 'ListOf' @ $int ) ),V_B: ( 'SetOf' @ ( 'ListOf' @ $int ) ),V_R: ( 'SetOf' @ ( 'ListOf' @ $int ) ),V_X: ( 'SetOf' @ ( 'SetOf' @ ( 'ListOf' @ $int ) ) ),V_Y: ( 'SetOf' @ ( 'SetOf' @ ( 'ListOf' @ $int ) ) )] :
       ( ( ( V_S
-          = ( 'set-by-def/1'
-            @ ^ [V_z_dot_0: 'ListOf' @ 'Z'] :
+          = ( 'set-by-def/1' @ ( 'ListOf' @ $int )
+            @ ^ [V_z_dot_0: ( 'ListOf' @ $int )] :
                 ( ( 'int.is-lattice-point/1' @ V_z_dot_0 )
-                & ( 'int.>=/2' @ ( 'int.x-coord/1' @ V_z_dot_0 ) @ 0 )
-                & ( 'int.>=/2' @ ( 'int.y-coord/1' @ V_z_dot_0 ) @ 0 )
-                & ( 'int.</2' @ ( 'int.+/2' @ ( 'int.x-coord/1' @ V_z_dot_0 ) @ ( 'int.y-coord/1' @ V_z_dot_0 ) ) @ V_n ) ) ) )
-        & ( 'is-subset-of/2' @ V_R @ V_S )
-        & ! [V_w_dot_1: 'ListOf' @ 'Z'] :
-            ( ( ( 'elem/2' @ V_w_dot_1 @ V_R )
-              & ( 'int.<=/2' @ ( 'int.x-coord/1' @ V_w_dot_1 ) @ ( 'int.x-coord/1' @ V_z ) )
-              & ( 'int.<=/2' @ ( 'int.y-coord/1' @ V_w_dot_1 ) @ ( 'int.y-coord/1' @ V_z ) ) )
-           => ( 'elem/2' @ V_w_dot_1 @ V_R ) )
+                & ( $greatereq @ ( 'int.x-coord/1' @ V_z_dot_0 ) @ 0 )
+                & ( $greatereq @ ( 'int.y-coord/1' @ V_z_dot_0 ) @ 0 )
+                & ( $less @ ( $sum @ ( 'int.x-coord/1' @ V_z_dot_0 ) @ ( 'int.y-coord/1' @ V_z_dot_0 ) ) @ V_n ) ) ) )
+        & ( 'is-subset-of/2' @ ( 'ListOf' @ $int ) @ V_R @ V_S )
+        & ! [V_w_dot_1: ( 'ListOf' @ $int )] :
+            ( ( ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_w_dot_1 @ V_R )
+              & ( $lesseq @ ( 'int.x-coord/1' @ V_w_dot_1 ) @ ( 'int.x-coord/1' @ 'z/0' ) )
+              & ( $lesseq @ ( 'int.y-coord/1' @ V_w_dot_1 ) @ ( 'int.y-coord/1' @ 'z/0' ) ) )
+           => ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_w_dot_1 @ V_R ) )
         & ( V_B
-          = ( 'complement-of-in/2' @ V_R @ V_S ) )
+          = ( 'complement-of-in/2' @ ( 'ListOf' @ $int ) @ V_R @ V_S ) )
         & ( V_X
-          = ( 'set-by-def/1'
-            @ ^ [V_U_dot_0: 'SetOf' @ ( 'ListOf' @ 'Z' )] :
-                ( ( 'is-subset-of/2' @ V_U_dot_0 @ V_S )
-                & ( 'is-cardinality-of/2' @ V_n @ ( 'set-intersection/2' @ V_B @ V_U_dot_0 ) )
-                & ! [V_w_dot_0: 'ListOf' @ 'Z',V_v_dot_0: 'ListOf' @ 'Z'] :
-                    ( ( ( 'elem/2' @ V_w_dot_0 @ V_U_dot_0 )
-                      & ( 'elem/2' @ V_v_dot_0 @ V_U_dot_0 )
+          = ( 'set-by-def/1' @ ( 'SetOf' @ ( 'ListOf' @ $int ) )
+            @ ^ [V_U_dot_0: ( 'SetOf' @ ( 'ListOf' @ $int ) )] :
+                ( ( 'is-subset-of/2' @ ( 'ListOf' @ $int ) @ V_U_dot_0 @ V_S )
+                & ( 'is-cardinality-of/2' @ ( 'ListOf' @ $int ) @ V_n @ ( 'set-intersection/2' @ ( 'ListOf' @ $int ) @ V_B @ V_U_dot_0 ) )
+                & ! [V_w_dot_0: ( 'ListOf' @ $int ),V_v_dot_0: ( 'ListOf' @ $int )] :
+                    ( ( ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_w_dot_0 @ V_U_dot_0 )
+                      & ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_v_dot_0 @ V_U_dot_0 )
                       & ( V_w_dot_0 != V_v_dot_0 ) )
                    => ( ( 'int.x-coord/1' @ V_w_dot_0 )
                      != ( 'int.x-coord/1' @ V_v_dot_0 ) ) ) ) ) )
         & ( V_Y
-          = ( 'set-by-def/1'
-            @ ^ [V_U: 'SetOf' @ ( 'ListOf' @ 'Z' )] :
-                ( ( 'is-subset-of/2' @ V_U @ V_B )
-                & ( 'is-cardinality-of/2' @ V_n @ ( 'set-intersection/2' @ V_B @ V_U ) )
-                & ! [V_w: 'ListOf' @ 'Z',V_v: 'ListOf' @ 'Z'] :
-                    ( ( ( 'elem/2' @ V_w @ V_U )
-                      & ( 'elem/2' @ V_v @ V_U )
+          = ( 'set-by-def/1' @ ( 'SetOf' @ ( 'ListOf' @ $int ) )
+            @ ^ [V_U: ( 'SetOf' @ ( 'ListOf' @ $int ) )] :
+                ( ( 'is-subset-of/2' @ ( 'ListOf' @ $int ) @ V_U @ V_B )
+                & ( 'is-cardinality-of/2' @ ( 'ListOf' @ $int ) @ V_n @ ( 'set-intersection/2' @ ( 'ListOf' @ $int ) @ V_B @ V_U ) )
+                & ! [V_w: ( 'ListOf' @ $int ),V_v: ( 'ListOf' @ $int )] :
+                    ( ( ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_w @ V_U )
+                      & ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_v @ V_U )
                       & ( V_w != V_v ) )
                    => ( ( 'int.y-coord/1' @ V_w )
                      != ( 'int.y-coord/1' @ V_v ) ) ) ) ) ) )
-     => ( ( 'cardinality-of/1' @ V_X )
-        = ( 'cardinality-of/1' @ V_Y ) ) ) )).
+     => ( ( 'cardinality-of/1' @ ( 'SetOf' @ ( 'ListOf' @ $int ) ) @ V_X )
+        = ( 'cardinality-of/1' @ ( 'SetOf' @ ( 'ListOf' @ $int ) ) @ V_Y ) ) ) )).
+

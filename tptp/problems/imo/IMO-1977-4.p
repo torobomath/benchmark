@@ -18,20 +18,20 @@
 %            Maximal formula depth :   19 (  19 average)
 %            Number of connectives :   48 (   0   ~;   0   |;   1   &;  46   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   12 (   0   :)
+%            Number of symbols     :   12 (   0   :;   0   =)
 %            Number of variables   :    5 (   0 sgn;   5   !;   0   ?;   0   ^)
 %                                         (   5   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   2 pred;    3 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_a: 'R',V_b: 'R',V_A: 'R',V_B: 'R'] :
-      ( ! [V_theta: 'R'] :
-          ( '>=/2' @ ( '+/2' @ 1 @ ( '+/2' @ ( '-/1' @ ( '*/2' @ V_a @ ( 'cos/1' @ V_theta ) ) ) @ ( '+/2' @ ( '-/1' @ ( '*/2' @ V_b @ ( 'sin/1' @ V_theta ) ) ) @ ( '+/2' @ ( '-/1' @ ( '*/2' @ V_A @ ( 'cos/1' @ ( '*/2' @ 2 @ V_theta ) ) ) ) @ ( '-/1' @ ( '*/2' @ V_B @ ( 'sin/1' @ ( '*/2' @ 2 @ V_theta ) ) ) ) ) ) ) ) @ 0 )
-     => ( ( '<=/2' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ ( '^/2' @ V_b @ 2 ) ) @ 2 )
-        & ( '<=/2' @ ( '+/2' @ ( '^/2' @ V_A @ 2 ) @ ( '^/2' @ V_B @ 2 ) ) @ 1 ) ) ) )).
+    ! [V_a: $real,V_b: $real,V_A: $real,V_B: $real] :
+      ( ! [V_theta: $real] :
+          ( $greatereq @ ( $sum @ 1.0 @ ( $sum @ ( $uminus @ ( $product @ V_a @ ( 'cos/1' @ V_theta ) ) ) @ ( $sum @ ( $uminus @ ( $product @ V_b @ ( 'sin/1' @ V_theta ) ) ) @ ( $sum @ ( $uminus @ ( $product @ V_A @ ( 'cos/1' @ ( $product @ 2.0 @ V_theta ) ) ) ) @ ( $uminus @ ( $product @ V_B @ ( 'sin/1' @ ( $product @ 2.0 @ V_theta ) ) ) ) ) ) ) ) @ 0.0 )
+     => ( ( $lesseq @ ( $sum @ ( '^/2' @ V_a @ 2.0 ) @ ( '^/2' @ V_b @ 2.0 ) ) @ 2.0 )
+        & ( $lesseq @ ( $sum @ ( '^/2' @ V_A @ 2.0 ) @ ( '^/2' @ V_B @ 2.0 ) ) @ 1.0 ) ) ) )).
+

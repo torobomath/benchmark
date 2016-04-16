@@ -365,7 +365,9 @@
 	(shape1 shape2)
 	(<-> (similar shape1 shape2)
 		(exists (a b c d e f g h i s t r u) (&&
-			(is-non-singular (matrix a b c d e f g h i))
+            
+			;(is-non-singular (matrix a b c d e f g h i))
+			(is-inverse-of (matrix a b c d e f g h i) (transposed-matrix (matrix a b c d e f g h i)))
 			(translate (mat-shape* (matrix a b c d e f g h i) shape1) (vec3d s t r) u shape2)
 		))))
 
@@ -392,6 +394,14 @@
 	(a b c p q r)
 	(= (line3d a b c p q r)
 		(line (point p q r) (vec->point (v+ (vec (origin) (point a b c)) (vec (origin) (point p q r)))))))
+
+(def-typing-trigger
+  (line3d-type L)
+  (a b c d e f)
+  (&& (= L (line3d a b c d e f))
+      (! (&& (= a 0)
+             (= b 0)
+             (= c 0)))))
 
 (axiom
   def_line3d_eq
@@ -459,6 +469,18 @@
              (= 0 t)
              (= 0 u)))))
        ;(negate (drs () (= 0 (+ (^ s 2) (+ (^ t 2) (^ u 2))))))))
+
+(def-typing-trigger
+  (plane1-type p)
+  (P Q R)
+  (&& (= p (plane1 P Q R))
+      (is-plane P Q R)))
+
+(def-typing-trigger
+  (plane2-type p)
+  (P V)
+  (&& (= p (plane2 P V))
+      (! (= V (zero-vector)))))
 
 (axiom
 	def_is_plane_by_three_points
@@ -654,12 +676,16 @@
 (axiom
 	def_a_point_on_plane_by_three_points
 	(P Q R)
-	(= (a-point-on (plane1 P Q R)) P))
+	;(= (a-point-on (plane1 P Q R)) P))
+	(= (a-point-on (plane1 P Q R))
+       (a-point-on (plane (plane1 P Q R)))))
 
 (axiom
 	def_a_point_on_plane_by_point_normal
 	(P V)
-	(= (a-point-on (plane2 P V)) P))
+	;(= (a-point-on (plane2 P V)) P))
+	(= (a-point-on (plane2 P V))
+       (a-point-on (plane (plane2 P V)))))
 
 (axiom
 	def_perpendicular_plane_including
@@ -880,6 +906,11 @@
   (&& (= T (square-pyramid O A B C D))
       (is-square-pyramid O A B C D)))
 
+(def-typing-trigger
+  (octahedron-type T)
+  (A B C D E F)
+  (&& (= T (octahedron A B C D E F))
+      (is-octahedron A B C D E F)))
 
 ;; ayashii
 ;(axiom
@@ -951,6 +982,24 @@
           (= (distance^2 A B) (distance^2 D B)))))
 
 (axiom
+  def_is_regular_tetrahedron/1
+  (A B C D)
+  (<-> (is-regular-tetrahedron (tetrahedron A B C D))
+       (is-regular-tetrahedron A B C D)))
+
+(axiom
+  def_triangle_pyramid_is_regular_tetrahedron
+  (A B C D)
+  (<-> (is-regular-tetrahedron (pyramid (triangle A B C) D))
+       (is-regular-tetrahedron A B C D)))
+
+(axiom
+  def_triangle_pyramid_is_regular_tetrahedron2
+  (A B C D)
+  (<-> (is-regular-tetrahedron (pyramid (polygon (list-of A B C)) D))
+       (is-regular-tetrahedron A B C D)))
+
+(axiom
  def_is_parallelopiped
  (A B C D E F G H)
  (<-> (is-parallelopiped A B C D
@@ -987,6 +1036,36 @@
           (= (distance^2 A B) (distance^2 A D))
           (= (distance^2 A B) (distance^2 A E))
       )))
+
+(axiom
+  def_is_octahedron
+  (P A B C D Q)
+  (<-> (is-octahedron P A B C D Q)
+       
+       (&& (is-tetrahedron P A B D)
+           (is-tetrahedron P B C D)
+           (is-tetrahedron Q A B D)
+           (is-tetrahedron Q B C D)
+           (intersect (seg A C) (extend-to-plane (triangle P B D)))
+           (intersect (seg P Q) (extend-to-plane (triangle B C D))))))
+
+(axiom
+  def_is_regular_octahedron
+  (P A B C D Q)
+  (<-> (is-regular-octahedron P A B C D Q)
+       (&& (is-octahedron P A B C D Q)
+           (is-equilateral-triangle P A B)
+           (is-equilateral-triangle P B C)
+           (is-equilateral-triangle P C D)
+           (is-equilateral-triangle P D A)
+           (is-equilateral-triangle Q A B)
+           (is-equilateral-triangle Q C D))))
+
+(axiom
+  def_is_regular_octahedron/1
+  (P A B C D Q)
+  (<-> (is-regular-octahedron (octahedron P A B C D Q))
+       (is-regular-octahedron P A B C D Q)))
 
 (axiom
   def_center_of_sphere
@@ -1049,6 +1128,12 @@
 )
 
 
+(def-typing-trigger
+  (prism-type P)
+  (ps h)
+  (&& (= P (prism (polygon ps) h))
+      (is-polygon ps)
+      (! (= h (zero-vector)))))
 
 
 ;;@------------------------------------------------------------------------------
@@ -1078,6 +1163,12 @@
   (c r n)
   (= (radius-of (circle c r n))
      r))
+
+(axiom
+  def_normal_vector_of_circle_3d
+  (c r n)
+  (= (normal-vector-of (circle c r n))
+     n))
 
 (axiom
   def_circle_equality
@@ -2087,6 +2178,12 @@
       (distance (foot-of-perpendicular-line-from-to V (plane1 P1 P2 P3)) V)))
 
 (axiom
+   def_height_of_plane
+   (s t u v)
+   (= (height-of (plane s t u v))
+      (point-shape-distance (origin) (plane s t u v))))
+
+(axiom
 	def_area_of_right_conical_surface
 	(c r n P)
 	(= (area-of (right-conical-surface (circle c r n) P))
@@ -2372,6 +2469,19 @@
                                      (seg C D)
                                      (seg D B)))))
 
+(axiom
+  def-sides-of-square-pyramid
+  (O A B C D)
+  (= (sides-of (square-pyramid O A B C D))
+     (list-of (seg O A)
+              (seg O B)
+              (seg O C)
+              (seg O D)
+              (seg A B)
+              (seg B C)
+              (seg C D)
+              (seg D A))))
+
 ;(axiom
 ; def_face_of_tetrahedron
 ; (O A B C f)
@@ -2584,7 +2694,7 @@
 		(an-inner-point-of (triangle (car vertices) (cadr vertices) (caddr vertices)))))
 
 ;;@------------------------------------------------------------------------------
-;;@ test if a point in on a geometric object
+;;@ test if a point is on a geometric object
 ;;@------------------------------------------------------------------------------
 (axiom
   def_point_on_set_by_cfun
@@ -3704,6 +3814,70 @@
 			))
 		)))
 
+
+;;@------------------------------------------------------------------------------
+;;@ central axis of 3D objects
+;;@------------------------------------------------------------------------------
+(axiom
+   def-central-axis-of-square-pyramid
+   (P A B C D)
+   (= (central-axis-of (square-pyramid P A B C D))
+      (line P (center-of (square A B C D)))))
+
+(axiom
+   def-central-axis-of-pyramid
+   (base P)
+   (= (central-axis-of (pyramid base P))
+      (line P (center-of base))))
+
+(axiom
+   def-central-axis-of-disk
+   (C r n)
+   (= (central-axis-of (disk C r n))
+      (line C (vec-translate C n))))
+
+(axiom
+   def-central-axis-of-cone
+   (base P)
+   (= (central-axis-of (cone base P))
+      (line P (center-of base))))
+
+(axiom
+   def-central-axis-of-conical-surface
+   (base P)
+   (= (central-axis-of (conical-surface base P))
+      (line P (center-of base))))
+
+(axiom
+   def-central-axis-of-right-cone
+   (base P)
+   (= (central-axis-of (right-cone base P))
+      (line P (center-of base))))
+
+(axiom
+   def-central-axis-of-right-conical-surface
+   (base P)
+   (= (central-axis-of (right-conical-surface base P))
+      (line P (center-of base))))
+
+(axiom
+   def-central-axis-of-cylynder
+   (base top)
+   (= (central-axis-of (cylinder base top))
+      (line (center-of base) (center-of top))))
+
+(axiom
+   def-central-axis-of-cylyndrical-surface
+   (base top)
+   (= (central-axis-of (cylindrical-surface base top))
+      (line (center-of base) (center-of top))))
+
+(axiom
+   def-central-axis-of-prism
+   (base n)
+   (= (central-axis-of (prism base n))
+      (line (center-of base) (vec-translate (center-of base) n))))
+      
 
 ;;@------------------------------------------------------------------------------
 ;;@ Upper-region/lower-region

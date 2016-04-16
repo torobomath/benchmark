@@ -18,21 +18,32 @@
 %% $\vec{b}$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    3 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  107 (   9 equality;  61 variable)
-%            Maximal formula depth :   21 (  16 average)
-%            Number of connectives :   86 (   0   ~;   0   |;  12   &;  73   @)
+% Syntax   : Number of formulae    :    7 (   0 unit;   4 type;   0 defn)
+%            Number of atoms       :  108 (   9 equality;  53 variable)
+%            Maximal formula depth :   21 (   8 average)
+%            Number of connectives :   87 (   0   ~;   0   |;  12   &;  74   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :)
-%            Number of variables   :   23 (   8 sgn;   4   !;   9   ?;   2   ^)
+%            Number of symbols     :   24 (   4   :;   0   =)
+%            Number of variables   :   15 (   0 sgn;   4   !;   9   ?;   2   ^)
 %                                         (  15   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    3 (   0 pred;    3 func;    0 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('ax/0_type',type,(
+    'ax/0': $real )).
+
+thf('ay/0_type',type,(
+    'ay/0': $real )).
+
+thf('bx/0_type',type,(
+    'bx/0': $real )).
+
+thf('by/0_type',type,(
+    'by/0': $real )).
 
 thf(p1,conjecture,(
     ! [V_O: '2d.Point',V_A: '2d.Point',V_B: '2d.Point',V_P: '2d.Point'] :
@@ -42,8 +53,8 @@ thf(p1,conjecture,(
      => ( '2d.divide-internally/4' @ V_P @ ( '2d.seg/2' @ V_A @ V_B ) @ ( '2d.radius/1' @ ( '2d.vec/2' @ V_O @ V_A ) ) @ ( '2d.radius/1' @ ( '2d.vec/2' @ V_O @ V_B ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_oq: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_oq: $real] :
       ? [V_O: '2d.Point',V_A: '2d.Point',V_B: '2d.Point',V_P: '2d.Point',V_Q: '2d.Point',V_a: '2d.Vector',V_b: '2d.Vector'] :
         ( ( '2d.is-triangle/3' @ V_O @ V_A @ V_B )
         & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_O @ V_P ) @ ( '2d.angle/3' @ V_A @ V_O @ V_B ) )
@@ -55,19 +66,20 @@ thf(p2_qustion,question,
         & ( V_b
           = ( '2d.vec/2' @ V_O @ V_B ) )
         & ( V_a
-          = ( '2d.vec2d/2' @ V_ax @ V_ay ) )
+          = ( '2d.vec2d/2' @ 'ax/0' @ 'ay/0' ) )
         & ( V_b
-          = ( '2d.vec2d/2' @ V_bx @ V_by ) )
+          = ( '2d.vec2d/2' @ 'bx/0' @ 'by/0' ) )
         & ( V_oq
           = ( '2d.distance/2' @ V_O @ V_Q ) ) ) )).
 
 thf(p2_answer,answer,(
-    ^ [V_oq_dot_0: 'R'] :
+    ^ [V_oq_dot_0: $real] :
     ? [V_a_dot_0: '2d.Vector',V_b_dot_0: '2d.Vector'] :
       ( ( V_a_dot_0
-        = ( '2d.vec2d/2' @ V_ax @ V_ay ) )
+        = ( '2d.vec2d/2' @ 'ax/0' @ 'ay/0' ) )
       & ( V_b_dot_0
-        = ( '2d.vec2d/2' @ V_bx @ V_by ) )
+        = ( '2d.vec2d/2' @ 'bx/0' @ 'by/0' ) )
       & ( V_oq_dot_0
-        = ( '//2' @ ( '+/2' @ ( '*/2' @ ( '2d.radius/1' @ V_a_dot_0 ) @ ( '2d.radius/1' @ V_b_dot_0 ) ) @ ( '2d.inner-prod/2' @ V_a_dot_0 @ V_b_dot_0 ) ) @ ( '+/2' @ ( '2d.radius/1' @ V_a_dot_0 ) @ ( '2d.radius/1' @ V_b_dot_0 ) ) ) ) ) ),
+        = ( $quotient @ ( $sum @ ( $product @ ( '2d.radius/1' @ V_a_dot_0 ) @ ( '2d.radius/1' @ V_b_dot_0 ) ) @ ( '2d.inner-prod/2' @ V_a_dot_0 @ V_b_dot_0 ) ) @ ( $sum @ ( '2d.radius/1' @ V_a_dot_0 ) @ ( '2d.radius/1' @ V_b_dot_0 ) ) ) ) ) ),
     answer_to(p2_question,[])).
+

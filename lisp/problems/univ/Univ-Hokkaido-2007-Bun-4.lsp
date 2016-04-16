@@ -272,3 +272,38 @@
 
 (def-answer p3_range_1 (PLam S (&& (<= (/ 1 48) S) (<= S (/ 2 81)))))
 
+(def-answer a1 (PLam b (&&
+  (> a 0)
+  (>= b 0)
+  (< 0 p)
+  (< p 1)
+  (= b (- (/ a p) 1))
+)))
+
+(def-answer a2_1 (PLam y (&&
+  (< 0 p)
+  (< p 1)
+  (<= (* p x) y)
+  (<= y (+ (* (- 1 (/ 1 p)) (^ x 2)) x))
+)))
+
+(def-answer a2_2 (shape-of-cpfun
+  (PLam Dp (&&
+    (< 0 p)
+    (< p 1)
+    (<= 0 (x-coord Dp))
+    (<= (x-coord Dp) p)
+    (<= (* p (x-coord Dp)) (y-coord Dp))
+    (<= (y-coord Dp) (+ (* (- 1 (/ 1 p)) (^ (x-coord Dp) 2)) (x-coord Dp)))
+  ))
+))
+
+(def-answer a3_1 (PLam S (&&
+  (<= (/ 1 2) p)
+  (<= p (/ 3 4))
+  (= S (* (/ 1 6) (- (^ p 2) (^ p 3))))
+)))
+
+(def-answer a3_2 (PLam S_maxmin (= S_maxmin (list-of (/ 2 81)
+                                                     (/ 1 48)))))
+

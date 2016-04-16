@@ -53,7 +53,7 @@
   (PLam H (exists (C D)
                   (&& (= C (foot-of-perpendicular-line-from-to (point Bx By) (line (point Ox Oy) (point Ax Ay))))
           (= D (foot-of-perpendicular-line-from-to (point Ax Ay) (line (point Ox Oy) (point Bx By))))
-                      (point-inside-of H (triangle O C D))
+                      (point-inside-of H (triangle (point Ox Oy) C D))
                       )
                   ))
 )

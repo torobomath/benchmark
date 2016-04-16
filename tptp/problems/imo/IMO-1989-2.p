@@ -20,20 +20,19 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  228 (   1 equality; 133 variable)
+%            Number of atoms       :  235 (   1 equality; 133 variable)
 %            Maximal formula depth :   31 (  31 average)
-%            Number of connectives :  224 (   0   ~;   0   |;  28   &; 194   @)
+%            Number of connectives :  231 (   0   ~;   0   |;  28   &; 201   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :)
+%            Number of symbols     :   20 (   0   :;   0   =)
 %            Number of variables   :   20 (   0 sgn;  20   !;   0   ?;   0   ^)
 %                                         (  20   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   1 pred;    1 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_S: '2d.Shape',V_A0: '2d.Point',V_B0: '2d.Point',V_C0: '2d.Point',V_A1: '2d.Point',V_B1: '2d.Point',V_C1: '2d.Point'] :
@@ -52,7 +51,7 @@ thf(p1,conjecture,(
         & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_A0 @ V_B ) @ ( '2d.angle/3' @ V_C @ V_B @ ( '2d.vec-translate/2' @ V_B @ ( '2d.vec/2' @ V_A @ V_B ) ) ) )
         & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_B0 @ V_C ) @ ( '2d.angle/3' @ V_A @ V_C @ ( '2d.vec-translate/2' @ V_C @ ( '2d.vec/2' @ V_B @ V_C ) ) ) )
         & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_C0 @ V_A ) @ ( '2d.angle/3' @ V_B @ V_A @ ( '2d.vec-translate/2' @ V_A @ ( '2d.vec/2' @ V_C @ V_A ) ) ) ) )
-     => ( ( '*/2' @ 2 @ ( '2d.area-of/1' @ ( '2d.polygon/1' @ ( 'cons/2' @ V_A @ ( 'cons/2' @ V_C1 @ ( 'cons/2' @ V_B @ ( 'cons/2' @ V_A1 @ ( 'cons/2' @ V_C @ ( 'cons/2' @ V_B1 @ 'nil/0' ) ) ) ) ) ) ) ) )
+     => ( ( $product @ 2.0 @ ( '2d.area-of/1' @ ( '2d.polygon/1' @ ( 'cons/2' @ '2d.Point' @ V_A @ ( 'cons/2' @ '2d.Point' @ V_C1 @ ( 'cons/2' @ '2d.Point' @ V_B @ ( 'cons/2' @ '2d.Point' @ V_A1 @ ( 'cons/2' @ '2d.Point' @ V_C @ ( 'cons/2' @ '2d.Point' @ V_B1 @ ( 'nil/0' @ '2d.Point' ) ) ) ) ) ) ) ) ) )
         = ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A0 @ V_B0 @ V_C0 ) ) ) ) )).
 
 thf(p2,conjecture,(
@@ -72,4 +71,5 @@ thf(p2,conjecture,(
         & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_A0 @ V_B ) @ ( '2d.angle/3' @ V_C @ V_B @ ( '2d.vec-translate/2' @ V_B @ ( '2d.vec/2' @ V_A @ V_B ) ) ) )
         & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_B0 @ V_C ) @ ( '2d.angle/3' @ V_A @ V_C @ ( '2d.vec-translate/2' @ V_C @ ( '2d.vec/2' @ V_B @ V_C ) ) ) )
         & ( '2d.is-angle-bisector/2' @ ( '2d.line/2' @ V_C0 @ V_A ) @ ( '2d.angle/3' @ V_B @ V_A @ ( '2d.vec-translate/2' @ V_A @ ( '2d.vec/2' @ V_C @ V_A ) ) ) ) )
-     => ( '<=/2' @ ( '*/2' @ 4 @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) ) @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A0 @ V_B0 @ V_C0 ) ) ) ) )).
+     => ( $lesseq @ ( $product @ 4.0 @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) ) ) @ ( '2d.area-of/1' @ ( '2d.triangle/3' @ V_A0 @ V_B0 @ V_C0 ) ) ) ) )).
+

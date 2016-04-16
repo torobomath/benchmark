@@ -21,14 +21,14 @@
 
 (def-directive
   p1
-  (Draw (a)
-    (exists (b)
+  (Draw (D)
+    (= D (shape-of-cpfun (PLam a (exists (b)
       (forall (p)
-        (= (+ (^ (inner-prod a p) 2)
+        (= (+ (^ (inner-prod (vec (origin) a) p) 2)
         (^ (inner-prod b p) 2))
            (^ (radius p) 2))
-      )
-    )
+            )
+    ))))
   )
 )
 
@@ -97,4 +97,10 @@
 
 (def-answer p2_2 (PLam b2 (&& (= (+ (^ a1 2) (^ a2 2)) 1)
             (|| (= b2 a1) (= b2 (- a1))))))
+
+(def-answer a1 (set-of-cfun (Lam x (PLam y (= (+ (^ x 2) (^ y 2)) 1)))))
+
+(def-answer a2 (PLam b (&& (= (+ (^ a1 2) (^ a2 2)) 1)
+                           (|| (= b (point a2 (- a1)))
+                               (= b (point (- a2) a1))))))
 

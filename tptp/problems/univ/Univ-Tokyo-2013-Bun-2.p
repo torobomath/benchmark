@@ -21,101 +21,101 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  273 (  18 equality;  80 variable)
+%            Number of atoms       :  283 (  18 equality;  80 variable)
 %            Maximal formula depth :   32 (  18 average)
-%            Number of connectives :  231 (   0   ~;   0   |;  32   &; 195   @)
+%            Number of connectives :  241 (   0   ~;   0   |;  32   &; 205   @)
 %                                         (   0 <=>;   4  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   29 (   0   :)
+%            Number of symbols     :   29 (   0   :;   0   =)
 %            Number of variables   :   30 (   0 sgn;  24   !;   2   ?;   4   ^)
 %                                         (  30   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   1 pred;    4 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
-thf(p1_1,conjecture,(
-    ? [V_d: 'R'] :
-    ! [V_P: '2d.Point',V_Q: '2d.Point',V_A: '2d.Point',V_a: 'R'] :
+thf(a1_1,conjecture,(
+    ? [V_d: $real] :
+    ! [V_P: '2d.Point',V_Q: '2d.Point',V_A: '2d.Point',V_a: $real] :
       ( ( ( V_P
-          = ( '2d.point/2' @ 0 @ ( '-/1' @ ( 'sqrt/1' @ 2 ) ) ) )
+          = ( '2d.point/2' @ 0.0 @ ( $uminus @ ( 'sqrt/1' @ 2.0 ) ) ) )
         & ( V_Q
-          = ( '2d.point/2' @ 0 @ ( 'sqrt/1' @ 2 ) ) )
+          = ( '2d.point/2' @ 0.0 @ ( 'sqrt/1' @ 2.0 ) ) )
         & ( V_A
-          = ( '2d.point/2' @ V_a @ ( 'sqrt/1' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ 1 ) ) ) )
-        & ( '<=/2' @ 0 @ V_a )
-        & ( '<=/2' @ V_a @ 1 ) )
+          = ( '2d.point/2' @ V_a @ ( 'sqrt/1' @ ( $sum @ ( '^/2' @ V_a @ 2.0 ) @ 1.0 ) ) ) )
+        & ( $lesseq @ 0.0 @ V_a )
+        & ( $lesseq @ V_a @ 1.0 ) )
      => ( V_d
-        = ( '-/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_A ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_Q ) ) ) ) ) )).
+        = ( $difference @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_A ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_Q ) ) ) ) ) )).
 
-thf(p1_2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_d: 'R'] :
-      ! [V_P: '2d.Point',V_Q: '2d.Point',V_A: '2d.Point',V_a: 'R'] :
+thf(a1_2_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_d: $real] :
+      ! [V_P: '2d.Point',V_Q: '2d.Point',V_A: '2d.Point',V_a: $real] :
         ( ( ( V_P
-            = ( '2d.point/2' @ 0 @ ( '-/1' @ ( 'sqrt/1' @ 2 ) ) ) )
+            = ( '2d.point/2' @ 0.0 @ ( $uminus @ ( 'sqrt/1' @ 2.0 ) ) ) )
           & ( V_Q
-            = ( '2d.point/2' @ 0 @ ( 'sqrt/1' @ 2 ) ) )
+            = ( '2d.point/2' @ 0.0 @ ( 'sqrt/1' @ 2.0 ) ) )
           & ( V_A
-            = ( '2d.point/2' @ V_a @ ( 'sqrt/1' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ 1 ) ) ) )
-          & ( '<=/2' @ 0 @ V_a )
-          & ( '<=/2' @ V_a @ 1 ) )
+            = ( '2d.point/2' @ V_a @ ( 'sqrt/1' @ ( $sum @ ( '^/2' @ V_a @ 2.0 ) @ 1.0 ) ) ) )
+          & ( $lesseq @ 0.0 @ V_a )
+          & ( $lesseq @ V_a @ 1.0 ) )
        => ( V_d
-          = ( '-/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_A ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_Q ) ) ) ) ) )).
+          = ( $difference @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_A ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_Q ) ) ) ) ) )).
 
-thf(p2_1,conjecture,(
-    ? [V_s: 'R'] :
-    ! [V_P: '2d.Point',V_Q: '2d.Point',V_A: '2d.Point',V_a: 'R',V_B: '2d.Point',V_C: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape'] :
+thf(a2_1,conjecture,(
+    ? [V_s: $real] :
+    ! [V_P: '2d.Point',V_Q: '2d.Point',V_A: '2d.Point',V_a: $real,V_B: '2d.Point',V_C: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape'] :
       ( ( ( V_P
-          = ( '2d.point/2' @ 0 @ ( '-/1' @ ( 'sqrt/1' @ 2 ) ) ) )
+          = ( '2d.point/2' @ 0.0 @ ( $uminus @ ( 'sqrt/1' @ 2.0 ) ) ) )
         & ( V_Q
-          = ( '2d.point/2' @ 0 @ ( 'sqrt/1' @ 2 ) ) )
+          = ( '2d.point/2' @ 0.0 @ ( 'sqrt/1' @ 2.0 ) ) )
         & ( V_A
-          = ( '2d.point/2' @ V_a @ ( 'sqrt/1' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ 1 ) ) ) )
-        & ( '<=/2' @ 0 @ V_a )
-        & ( '<=/2' @ V_a @ 1 )
+          = ( '2d.point/2' @ V_a @ ( 'sqrt/1' @ ( $sum @ ( '^/2' @ V_a @ 2.0 ) @ 1.0 ) ) ) )
+        & ( $lesseq @ 0.0 @ V_a )
+        & ( $lesseq @ V_a @ 1.0 )
         & ( '2d.half-line-type/1' @ V_l )
         & ( '2d.is-end-point-of/2' @ V_Q @ V_l )
         & ( '2d.on/2' @ V_A @ V_l )
-        & ( '2d.intersect/3' @ V_l @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ ( 'sqrt/1' @ 2 ) @ 8 ) @ 'nil/0' ) ) ) ) ) @ V_B )
+        & ( '2d.intersect/3' @ V_l @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ ( 'sqrt/1' @ 2.0 ) @ 8.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_B )
         & ( '2d.line-type/1' @ V_m )
         & ( '2d.on/2' @ V_B @ V_m )
-        & ( '2d.perpendicular/2' @ V_m @ ( '2d.line/2' @ ( '2d.point/2' @ 0 @ 2 ) @ ( '2d.point/2' @ 1 @ 2 ) ) )
-        & ( '2d.intersect/3' @ V_m @ ( '2d.line/2' @ ( '2d.point/2' @ 0 @ 2 ) @ ( '2d.point/2' @ 1 @ 2 ) ) @ V_C ) )
+        & ( '2d.perpendicular/2' @ V_m @ ( '2d.line/2' @ ( '2d.point/2' @ 0.0 @ 2.0 ) @ ( '2d.point/2' @ 1.0 @ 2.0 ) ) )
+        & ( '2d.intersect/3' @ V_m @ ( '2d.line/2' @ ( '2d.point/2' @ 0.0 @ 2.0 ) @ ( '2d.point/2' @ 1.0 @ 2.0 ) ) @ V_C ) )
      => ( V_s
-        = ( '+/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_A ) ) @ ( '+/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_C ) ) ) ) ) ) )).
+        = ( $sum @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_A ) ) @ ( $sum @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_C ) ) ) ) ) ) )).
 
-thf(p2_2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_s: 'R'] :
-      ! [V_P: '2d.Point',V_Q: '2d.Point',V_A: '2d.Point',V_a: 'R',V_B: '2d.Point',V_C: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape'] :
+thf(a2_2_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_s: $real] :
+      ! [V_P: '2d.Point',V_Q: '2d.Point',V_A: '2d.Point',V_a: $real,V_B: '2d.Point',V_C: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape'] :
         ( ( ( V_P
-            = ( '2d.point/2' @ 0 @ ( '-/1' @ ( 'sqrt/1' @ 2 ) ) ) )
+            = ( '2d.point/2' @ 0.0 @ ( $uminus @ ( 'sqrt/1' @ 2.0 ) ) ) )
           & ( V_Q
-            = ( '2d.point/2' @ 0 @ ( 'sqrt/1' @ 2 ) ) )
+            = ( '2d.point/2' @ 0.0 @ ( 'sqrt/1' @ 2.0 ) ) )
           & ( V_A
-            = ( '2d.point/2' @ V_a @ ( 'sqrt/1' @ ( '+/2' @ ( '^/2' @ V_a @ 2 ) @ 1 ) ) ) )
-          & ( '<=/2' @ 0 @ V_a )
-          & ( '<=/2' @ V_a @ 1 )
+            = ( '2d.point/2' @ V_a @ ( 'sqrt/1' @ ( $sum @ ( '^/2' @ V_a @ 2.0 ) @ 1.0 ) ) ) )
+          & ( $lesseq @ 0.0 @ V_a )
+          & ( $lesseq @ V_a @ 1.0 )
           & ( '2d.half-line-type/1' @ V_l )
           & ( '2d.is-end-point-of/2' @ V_Q @ V_l )
           & ( '2d.on/2' @ V_A @ V_l )
-          & ( '2d.intersect/3' @ V_l @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '//2' @ ( 'sqrt/1' @ 2 ) @ 8 ) @ 'nil/0' ) ) ) ) ) @ V_B )
+          & ( '2d.intersect/3' @ V_l @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $quotient @ ( 'sqrt/1' @ 2.0 ) @ 8.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ) @ V_B )
           & ( '2d.line-type/1' @ V_m )
           & ( '2d.on/2' @ V_B @ V_m )
-          & ( '2d.perpendicular/2' @ V_m @ ( '2d.line/2' @ ( '2d.point/2' @ 0 @ 2 ) @ ( '2d.point/2' @ 1 @ 2 ) ) )
-          & ( '2d.intersect/3' @ V_m @ ( '2d.line/2' @ ( '2d.point/2' @ 0 @ 2 ) @ ( '2d.point/2' @ 1 @ 2 ) ) @ V_C ) )
+          & ( '2d.perpendicular/2' @ V_m @ ( '2d.line/2' @ ( '2d.point/2' @ 0.0 @ 2.0 ) @ ( '2d.point/2' @ 1.0 @ 2.0 ) ) )
+          & ( '2d.intersect/3' @ V_m @ ( '2d.line/2' @ ( '2d.point/2' @ 0.0 @ 2.0 ) @ ( '2d.point/2' @ 1.0 @ 2.0 ) ) @ V_C ) )
        => ( V_s
-          = ( '+/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_A ) ) @ ( '+/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_C ) ) ) ) ) ) )).
+          = ( $sum @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_P @ V_A ) ) @ ( $sum @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_C ) ) ) ) ) ) )).
 
-thf(p1_2_answer,answer,(
-    ^ [V_d_dot_0: 'R'] : ( V_d_dot_0 = 2 ) ),
-    answer_to(p1_2_question,[])).
+thf(a1_2_answer,answer,(
+    ^ [V_d_dot_0: $real] : ( V_d_dot_0 = 2.0 ) ),
+    answer_to(a1_2_question,[])).
 
-thf(p2_2_answer,answer,(
-    ^ [V_s_dot_0: 'R'] :
+thf(a2_2_answer,answer,(
+    ^ [V_s_dot_0: $real] :
       ( V_s_dot_0
-      = ( 'sqrt/1' @ 2 ) ) ),
-    answer_to(p2_2_question,[])).
+      = ( 'sqrt/1' @ 2.0 ) ) ),
+    answer_to(a2_2_question,[])).
+

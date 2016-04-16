@@ -21,10 +21,10 @@
 
 (def-directive p2
   (Find (n)
-    (.is-cardinality-of n (set-by-def (PLam s (&&
+    (.is-cardinality-of n (set-by-def (PLam s (exists (S) (&&
       (= S (set-by-def (PLam s (member s (list-of 1 2 3)))))
       (is-subset-of s S)
-    ))))
+    )))))
   )
 )
 

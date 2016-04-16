@@ -37,7 +37,7 @@
   (Find (answer)
     (forall (V A S) (->
       (&& (sphere-type S)
-        (= 12 (* 2 (radius-of S)))
+        (= (/ 12 2) (radius-of S))
         (= V (volume-of S))
         (= A (area-of S))
       )

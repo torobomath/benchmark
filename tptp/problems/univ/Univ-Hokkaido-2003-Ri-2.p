@@ -15,23 +15,22 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  108 (  13 equality;  28 variable)
-%            Maximal formula depth :   17 (  14 average)
-%            Number of connectives :   82 (   4   ~;   2   |;   9   &;  67   @)
+%            Number of atoms       :  106 (  11 equality;  26 variable)
+%            Maximal formula depth :   17 (  12 average)
+%            Number of connectives :   84 (   4   ~;   2   |;   9   &;  69   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   21 (   0   :)
-%            Number of variables   :   14 (   0 sgn;   0   !;   5   ?;   9   ^)
-%                                         (  14   :;   0  !>;   0  ?*)
+%            Number of symbols     :   21 (   0   :;   0   =)
+%            Number of variables   :   12 (   0 sgn;   0   !;   5   ?;   7   ^)
+%                                         (  12   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    3 (   0 pred;    0 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
+    ( 'draw/1' @ '2d.Shape'
     @ ^ [V_P: '2d.Shape'] :
         ( V_P
         = ( '2d.shape-of-cpfun/1'
@@ -39,10 +38,10 @@ thf(p1_qustion,question,
             ? [V_z: 'complex.Complex'] :
               ( ( V_p
                 = ( 'complex.complex->point/1' @ V_z ) )
-              & ( 'complex.real-number/1' @ ( 'complex.+/2' @ ( 'complex.//2' @ ( 'complex.complex/2' @ 1 @ 0 ) @ ( 'complex.+/2' @ V_z @ 'complex.i/0' ) ) @ ( 'complex.//2' @ ( 'complex.complex/2' @ 1 @ 0 ) @ ( 'complex.-/2' @ V_z @ 'complex.i/0' ) ) ) ) ) ) ) )).
+              & ( 'complex.real-number/1' @ ( 'complex.+/2' @ ( 'complex.//2' @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) @ ( 'complex.+/2' @ V_z @ 'complex.i/0' ) ) @ ( 'complex.//2' @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) @ ( 'complex.-/2' @ V_z @ 'complex.i/0' ) ) ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
+    ( 'draw/1' @ '2d.Shape'
     @ ^ [V_w_set: '2d.Shape'] :
       ? [V_P: '2d.Shape'] :
         ( ( V_P
@@ -51,7 +50,7 @@ thf(p2_qustion,question,
               ? [V_z_dot_0: 'complex.Complex'] :
                 ( ( V_p_dot_0
                   = ( 'complex.complex->point/1' @ V_z_dot_0 ) )
-                & ( 'complex.real-number/1' @ ( 'complex.+/2' @ ( 'complex.//2' @ ( 'complex.complex/2' @ 1 @ 0 ) @ ( 'complex.+/2' @ V_z_dot_0 @ 'complex.i/0' ) ) @ ( 'complex.//2' @ ( 'complex.complex/2' @ 1 @ 0 ) @ ( 'complex.-/2' @ V_z_dot_0 @ 'complex.i/0' ) ) ) ) ) ) )
+                & ( 'complex.real-number/1' @ ( 'complex.+/2' @ ( 'complex.//2' @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) @ ( 'complex.+/2' @ V_z_dot_0 @ 'complex.i/0' ) ) @ ( 'complex.//2' @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) @ ( 'complex.-/2' @ V_z_dot_0 @ 'complex.i/0' ) ) ) ) ) ) )
         & ( V_w_set
           = ( '2d.shape-of-cpfun/1'
             @ ^ [V_p: '2d.Point'] :
@@ -62,27 +61,24 @@ thf(p2_qustion,question,
                 & ( V_p
                   = ( 'complex.complex->point/1' @ V_w ) ) ) ) ) ) )).
 
-thf(p1_answer,answer,(
-    ^ [V_P_dot_0: '2d.Shape'] :
-      ( V_P_dot_0
-      = ( '2d.shape-of-cpfun/1'
-        @ ^ [V_p_dot_0: '2d.Point'] :
-            ( ( ( '2d.on/2' @ V_p_dot_0 @ ( '2d.circle/2' @ '2d.origin/0' @ 1 ) )
-              | ( '2d.on/2' @ V_p_dot_0 @ '2d.x-axis/0' ) )
-            & ( V_p_dot_0
-             != ( '2d.point/2' @ 0 @ 1 ) )
-            & ( V_p_dot_0
-             != ( '2d.point/2' @ 0 @ -1 ) ) ) ) ) ),
+thf(p1_answer,answer,
+    ( '2d.shape-of-cpfun/1'
+    @ ^ [V_p_dot_0: '2d.Point'] :
+        ( ( ( '2d.on/2' @ V_p_dot_0 @ ( '2d.circle/2' @ '2d.origin/0' @ 1.0 ) )
+          | ( '2d.on/2' @ V_p_dot_0 @ '2d.x-axis/0' ) )
+        & ( V_p_dot_0
+         != ( '2d.point/2' @ 0.0 @ 1.0 ) )
+        & ( V_p_dot_0
+         != ( '2d.point/2' @ 0.0 @ -1.0 ) ) ) ),
     answer_to(p1_question,[])).
 
-thf(p2_answer,answer,(
-    ^ [V_w_set_dot_0: '2d.Shape'] :
-      ( V_w_set_dot_0
-      = ( '2d.shape-of-cpfun/1'
-        @ ^ [V_P_dot_0: '2d.Point'] :
-            ( ( ( '2d.on/2' @ V_P_dot_0 @ ( '2d.circle/2' @ '2d.origin/0' @ 1 ) )
-              | ( '2d.on/2' @ V_P_dot_0 @ '2d.y-axis/0' ) )
-            & ( V_P_dot_0 != '2d.origin/0' )
-            & ( V_P_dot_0
-             != ( '2d.point/2' @ 1 @ 0 ) ) ) ) ) ),
+thf(p2_answer,answer,
+    ( '2d.shape-of-cpfun/1'
+    @ ^ [V_P_dot_0: '2d.Point'] :
+        ( ( ( '2d.on/2' @ V_P_dot_0 @ ( '2d.circle/2' @ '2d.origin/0' @ 1.0 ) )
+          | ( '2d.on/2' @ V_P_dot_0 @ '2d.y-axis/0' ) )
+        & ( V_P_dot_0 != '2d.origin/0' )
+        & ( V_P_dot_0
+         != ( '2d.point/2' @ 1.0 @ 0.0 ) ) ) ),
     answer_to(p2_question,[])).
+

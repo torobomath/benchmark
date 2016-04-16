@@ -22,40 +22,40 @@
 %            Maximal formula depth :   22 (  22 average)
 %            Number of connectives :   66 (   0   ~;   0   |;  11   &;  52   @)
 %                                         (   0 <=>;   3  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   15 (   0   :)
+%            Number of symbols     :   16 (   0   :;   0   =)
 %            Number of variables   :   10 (   0 sgn;   4   !;   2   ?;   4   ^)
 %                                         (  10   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    9 (   2 pred;    4 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ? [V_x1: 'R',V_x: 'seq.Seq'] :
-      ( ( '</2' @ 0 @ V_x1 )
-      & ( '</2' @ V_x1 @ 1 )
+    ? [V_x1: $real,V_x: 'seq.Seq'] :
+      ( ( $less @ 0.0 @ V_x1 )
+      & ( $less @ V_x1 @ 1.0 )
       & ( V_x
         = ( 'seq.seq-by-rec1/2' @ V_x1
-          @ ^ [V_n_dot_2: 'Z',V_xn: 'R'] :
-              ( '*/2' @ V_xn @ ( '+/2' @ V_xn @ ( '//2' @ 1 @ ( 'int->real/1' @ V_n_dot_2 ) ) ) ) ) )
-      & ! [V_n_dot_1: 'Z'] :
-          ( ( 'int.<=/2' @ V_n_dot_1 @ 1 )
-         => ( ( '</2' @ 0 @ ( 'seq.nth-term-of/2' @ V_x @ ( 'seq.index/1' @ V_n_dot_1 ) ) )
-            & ( '</2' @ ( 'seq.nth-term-of/2' @ V_x @ ( 'seq.index/1' @ V_n_dot_1 ) ) @ 1 ) ) )
+          @ ^ [V_n_dot_2: $int,V_xn: $real] :
+              ( $product @ V_xn @ ( $sum @ V_xn @ ( $quotient @ 1.0 @ ( $to_real @ V_n_dot_2 ) ) ) ) ) )
+      & ! [V_n_dot_1: $int] :
+          ( ( $lesseq @ V_n_dot_1 @ 1 )
+         => ( ( $less @ 0.0 @ ( 'seq.nth-term-of/2' @ V_x @ ( 'seq.index/1' @ V_n_dot_1 ) ) )
+            & ( $less @ ( 'seq.nth-term-of/2' @ V_x @ ( 'seq.index/1' @ V_n_dot_1 ) ) @ 1.0 ) ) )
       & ( 'seq.is-strictly-increasing/1' @ V_x )
-      & ! [V_y1: 'R',V_y: 'seq.Seq'] :
-          ( ( ( '</2' @ 0 @ V_y1 )
-            & ( '</2' @ V_y1 @ 1 )
+      & ! [V_y1: $real,V_y: 'seq.Seq'] :
+          ( ( ( $less @ 0.0 @ V_y1 )
+            & ( $less @ V_y1 @ 1.0 )
             & ( V_y
               = ( 'seq.seq-by-rec1/2' @ V_y1
-                @ ^ [V_n_dot_0: 'Z',V_yn: 'R'] :
-                    ( '*/2' @ V_yn @ ( '+/2' @ V_yn @ ( '//2' @ 1 @ ( 'int->real/1' @ V_n_dot_0 ) ) ) ) ) )
-            & ! [V_n: 'Z'] :
-                ( ( 'int.<=/2' @ V_n @ 1 )
-               => ( ( '</2' @ 0 @ ( 'seq.nth-term-of/2' @ V_y @ ( 'seq.index/1' @ V_n ) ) )
-                  & ( '</2' @ ( 'seq.nth-term-of/2' @ V_y @ ( 'seq.index/1' @ V_n ) ) @ 1 ) ) )
+                @ ^ [V_n_dot_0: $int,V_yn: $real] :
+                    ( $product @ V_yn @ ( $sum @ V_yn @ ( $quotient @ 1.0 @ ( $to_real @ V_n_dot_0 ) ) ) ) ) )
+            & ! [V_n: $int] :
+                ( ( $lesseq @ V_n @ 1 )
+               => ( ( $less @ 0.0 @ ( 'seq.nth-term-of/2' @ V_y @ ( 'seq.index/1' @ V_n ) ) )
+                  & ( $less @ ( 'seq.nth-term-of/2' @ V_y @ ( 'seq.index/1' @ V_n ) ) @ 1.0 ) ) )
             & ( 'seq.is-strictly-increasing/1' @ V_y ) )
          => ( V_x1 = V_y1 ) ) ) )).
+

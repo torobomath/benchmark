@@ -14,23 +14,22 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   48 (   2 equality;  23 variable)
+%            Number of atoms       :   49 (   2 equality;  23 variable)
 %            Maximal formula depth :   22 (  12 average)
-%            Number of connectives :   42 (   0   ~;   0   |;   7   &;  35   @)
+%            Number of connectives :   43 (   0   ~;   0   |;   7   &;  36   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   14 (   0   :)
+%            Number of symbols     :   14 (   0   :;   0   =)
 %            Number of variables   :    9 (   0 sgn;   0   !;   7   ?;   2   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    2 (   0 pred;    0 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Shape'
     @ ^ [V_x: '2d.Shape'] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_P: '2d.Point',V_Q: '2d.Point',V_R: '2d.Point'] :
         ( ( V_x
@@ -40,12 +39,13 @@ thf(p1_qustion,question,
             & ( ( '2d.center-of/1' @ V_O )
               = '2d.origin/0' )
             & ( '2d.is-inscribed-in/2' @ V_O @ ( '2d.triangle/3' @ V_A @ V_B @ V_C ) )
-            & ( '2d.divide-internally/4' @ V_P @ ( '2d.seg/2' @ V_A @ V_B ) @ 2 @ 3 )
-            & ( '2d.divide-internally/4' @ V_Q @ ( '2d.seg/2' @ V_B @ V_C ) @ 2 @ 3 )
-            & ( '2d.divide-internally/4' @ V_R @ ( '2d.seg/2' @ V_C @ V_A ) @ 2 @ 3 )
+            & ( '2d.divide-internally/4' @ V_P @ ( '2d.seg/2' @ V_A @ V_B ) @ 2.0 @ 3.0 )
+            & ( '2d.divide-internally/4' @ V_Q @ ( '2d.seg/2' @ V_B @ V_C ) @ 2.0 @ 3.0 )
+            & ( '2d.divide-internally/4' @ V_R @ ( '2d.seg/2' @ V_C @ V_A ) @ 2.0 @ 3.0 )
             & ( '2d.is-circumcenter-of/2' @ '2d.origin/0' @ ( '2d.triangle/3' @ V_P @ V_Q @ V_R ) ) ) ) )).
 
 thf(p1_answer,answer,(
     ^ [V_x_dot_0: '2d.Shape'] :
       ( '2d.is-equilateral-triangle/1' @ V_x_dot_0 ) ),
     answer_to(p1_question,[])).
+

@@ -115,3 +115,13 @@
 
 (def-answer p3 (PLam min_ans (= min_ans (/ 5 12))))
 
+(def-answer a1 (PLam R_PRQ
+                     (&& (< a 0)
+                         (< 0 b)
+                         (= R_PRQ (pair (point (+ (/ a 2) (/ b 2)) (* a b))
+                                        (* (/ 1 4) (^ (- b a) 3)))))))
+
+(def-answer a2 (PLam ans (&& (< a 0) (< 0 b) (= ans (* (/ 1 5) (^ (- b a) 3))))))
+
+(def-answer a3 (PLam min_ans (= min_ans (/ 5 12))))
+

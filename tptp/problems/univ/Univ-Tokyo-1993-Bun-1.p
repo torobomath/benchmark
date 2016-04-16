@@ -12,45 +12,45 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   79 (   3 equality;  29 variable)
+%            Number of atoms       :   92 (   3 equality;  29 variable)
 %            Maximal formula depth :   18 (  16 average)
-%            Number of connectives :   73 (   0   ~;   0   |;  12   &;  61   @)
+%            Number of connectives :   86 (   0   ~;   0   |;  12   &;  74   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   25 (   0   :)
+%            Number of symbols     :   25 (   0   :;   0   =)
 %            Number of variables   :    9 (   0 sgn;   0   !;   7   ?;   2   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   14 (   3 pred;    5 func;    6 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ab: 'ListOf' @ 'R'] :
-      ? [V_a: 'R',V_b: 'R',V_f: 'R2R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_ab: ( 'ListOf' @ $real )] :
+      ? [V_a: $real,V_b: $real,V_f: 'R2R'] :
         ( ( V_ab
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ 'nil/0' ) ) )
+          = ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ V_b @ ( 'nil/0' @ $real ) ) ) )
         & ( V_f
-          = ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ V_b @ ( 'cons/2' @ V_a @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) )
-        & ? [V_x0: 'R',V_x1: 'R'] :
-            ( ( '<=/2' @ -1 @ V_x0 )
-            & ( '<=/2' @ V_x0 @ 1 )
-            & ( '<=/2' @ -1 @ V_x1 )
-            & ( '<=/2' @ V_x1 @ 1 )
+          = ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ V_b @ ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) )
+        & ? [V_x0: $real,V_x1: $real] :
+            ( ( $lesseq @ -1.0 @ V_x0 )
+            & ( $lesseq @ V_x0 @ 1.0 )
+            & ( $lesseq @ -1.0 @ V_x1 )
+            & ( $lesseq @ V_x1 @ 1.0 )
             & ( 'func-maximal/3' @ V_f @ V_x0 @ ( 'funapp/2' @ V_f @ V_x0 ) )
             & ( 'func-minimal/3' @ V_f @ V_x1 @ ( 'funapp/2' @ V_f @ V_x1 ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_ab_dot_0: 'ListOf' @ 'R'] :
-    ? [V_a_dot_0: 'R',V_b_dot_0: 'R'] :
+    ^ [V_ab_dot_0: ( 'ListOf' @ $real )] :
+    ? [V_a_dot_0: $real,V_b_dot_0: $real] :
       ( ( V_ab_dot_0
-        = ( 'cons/2' @ V_a_dot_0 @ ( 'cons/2' @ V_b_dot_0 @ 'nil/0' ) ) )
-      & ( '</2' @ V_b_dot_0 @ ( '//2' @ ( '^/2' @ V_a_dot_0 @ 2 ) @ 3 ) )
-      & ( '</2' @ -3 @ V_a_dot_0 )
-      & ( '</2' @ V_a_dot_0 @ 3 )
-      & ( '>=/2' @ V_b_dot_0 @ ( '-/2' @ ( '*/2' @ 2 @ V_a_dot_0 ) @ 3 ) )
-      & ( '>=/2' @ V_b_dot_0 @ ( '-/1' @ ( '+/2' @ ( '*/2' @ 2 @ V_a_dot_0 ) @ 3 ) ) ) ) ),
+        = ( 'cons/2' @ $real @ V_a_dot_0 @ ( 'cons/2' @ $real @ V_b_dot_0 @ ( 'nil/0' @ $real ) ) ) )
+      & ( $less @ V_b_dot_0 @ ( $quotient @ ( '^/2' @ V_a_dot_0 @ 2.0 ) @ 3.0 ) )
+      & ( $less @ -3.0 @ V_a_dot_0 )
+      & ( $less @ V_a_dot_0 @ 3.0 )
+      & ( $greatereq @ V_b_dot_0 @ ( $difference @ ( $product @ 2.0 @ V_a_dot_0 ) @ 3.0 ) )
+      & ( $greatereq @ V_b_dot_0 @ ( $uminus @ ( $sum @ ( $product @ 2.0 @ V_a_dot_0 ) @ 3.0 ) ) ) ) ),
     answer_to(p_question,[])).
+

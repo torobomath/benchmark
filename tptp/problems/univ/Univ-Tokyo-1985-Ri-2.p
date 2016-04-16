@@ -21,44 +21,49 @@
 %% line segment $RS$ is equal to $l$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  141 (  18 equality;  55 variable)
-%            Maximal formula depth :   39 (  26 average)
-%            Number of connectives :  106 (   0   ~;   0   |;  24   &;  76   @)
+% Syntax   : Number of formulae    :    4 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :  149 (  18 equality;  44 variable)
+%            Maximal formula depth :   39 (  14 average)
+%            Number of connectives :  114 (   0   ~;   0   |;  24   &;  84   @)
 %                                         (   0 <=>;   6  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   37 (   0   :)
-%            Number of variables   :   19 (   1 sgn;   0   !;  12   ?;   4   ^)
+%            Number of symbols     :   42 (   2   :;   0   =)
+%            Number of variables   :   16 (   0 sgn;   0   !;  12   ?;   4   ^)
 %                                         (  16   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   15 (   2 pred;    2 func;   11 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('S2/0_type',type,(
+    'S2/0': '2d.Shape' )).
+
+thf('l/0_type',type,(
+    'l/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_n: 'Z'] :
-      ? [V_O: '2d.Point',V_A: '2d.Point',V_S1: '2d.Shape',V_PQ_set: 'SetOf' @ ( 'ListOf' @ '2d.Point' )] :
+    ( 'find/1' @ $int
+    @ ^ [V_n: $int] :
+      ? [V_O: '2d.Point',V_A: '2d.Point',V_S1: '2d.Shape',V_PQ_set: ( 'SetOf' @ ( 'ListOf' @ '2d.Point' ) )] :
         ( ( V_O = '2d.origin/0' )
         & ( V_A
-          = ( '2d.point/2' @ 1 @ 0 ) )
+          = ( '2d.point/2' @ 1.0 @ 0.0 ) )
         & ( V_S1
           = ( '2d.shape-of-cpfun/1'
             @ ^ [V_p: '2d.Point'] :
-                ( ( '+/2' @ ( '^/2' @ ( '2d.x-coord/1' @ V_p ) @ 2 ) @ ( '^/2' @ ( '2d.y-coord/1' @ V_p ) @ 2 ) )
-                = 1 ) ) )
+                ( ( $sum @ ( '^/2' @ ( '2d.x-coord/1' @ V_p ) @ 2.0 ) @ ( '^/2' @ ( '2d.y-coord/1' @ V_p ) @ 2.0 ) )
+                = 1.0 ) ) )
         & ( V_n
-          = ( 'cardinality-of/1' @ V_PQ_set ) )
+          = ( 'cardinality-of/1' @ ( 'ListOf' @ '2d.Point' ) @ V_PQ_set ) )
         & ( V_PQ_set
-          = ( 'set-by-def/1'
-            @ ^ [V_PQ: 'ListOf' @ '2d.Point'] :
-              ? [V_P: '2d.Point',V_Q: '2d.Point',V_L1: '2d.Shape',V_L2: '2d.Shape',V_R: '2d.Point',V_S: '2d.Point',V_OAP: 'R',V_OPQ: 'R'] :
+          = ( 'set-by-def/1' @ ( 'ListOf' @ '2d.Point' )
+            @ ^ [V_PQ: ( 'ListOf' @ '2d.Point' )] :
+              ? [V_P: '2d.Point',V_Q: '2d.Point',V_L1: '2d.Shape',V_L2: '2d.Shape',V_R: '2d.Point',V_S: '2d.Point',V_OAP: $real,V_OPQ: $real] :
                 ( ( V_PQ
-                  = ( 'cons/2' @ V_P @ ( 'cons/2' @ V_Q @ 'nil/0' ) ) )
+                  = ( 'cons/2' @ '2d.Point' @ V_P @ ( 'cons/2' @ '2d.Point' @ V_Q @ ( 'nil/0' @ '2d.Point' ) ) ) )
                 & ( '2d.on/2' @ V_P @ V_S1 )
-                & ( '2d.on/2' @ V_Q @ V_S2 )
+                & ( '2d.on/2' @ V_Q @ 'S2/0' )
                 & ( '2d.lines-intersect-angle/3' @ ( '2d.line/2' @ V_O @ V_A ) @ ( '2d.line/2' @ V_O @ V_P ) @ V_OAP )
                 & ( '2d.lines-intersect-angle/3' @ ( '2d.line/2' @ V_O @ V_P ) @ ( '2d.line/2' @ V_O @ V_Q ) @ V_OPQ )
                 & ( V_OAP = V_OPQ )
@@ -68,25 +73,26 @@ thf(p_qustion,question,
                 & ( '2d.on/2' @ V_Q @ V_L2 )
                 & ( '2d.perpendicular/2' @ V_L2 @ '2d.x-axis/0' )
                 & ( '2d.on/2' @ V_S @ ( '2d.intersection/2' @ V_L2 @ '2d.x-axis/0' ) )
-                & ( '<=/2' @ 0 @ V_l )
-                & ( V_l
+                & ( $lesseq @ 0.0 @ 'l/0' )
+                & ( 'l/0'
                   = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_R @ V_S ) ) ) ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_n_dot_0: 'Z'] :
-      ( ( ( V_l = 0 )
+    ^ [V_n_dot_0: $int] :
+      ( ( ( 'l/0' = 0.0 )
        => ( V_n_dot_0 = 3 ) )
-      & ( ( ( '</2' @ 0 @ V_l )
-          & ( '</2' @ V_l @ ( '//2' @ 9 @ 8 ) ) )
+      & ( ( ( $less @ 0.0 @ 'l/0' )
+          & ( $less @ 'l/0' @ ( $quotient @ 9.0 @ 8.0 ) ) )
        => ( V_n_dot_0 = 6 ) )
-      & ( ( V_l
-          = ( '//2' @ 9 @ 8 ) )
+      & ( ( 'l/0'
+          = ( $quotient @ 9.0 @ 8.0 ) )
        => ( V_n_dot_0 = 4 ) )
-      & ( ( ( '</2' @ ( '//2' @ 9 @ 8 ) @ V_l )
-          & ( '</2' @ V_l @ 2 ) )
+      & ( ( ( $less @ ( $quotient @ 9.0 @ 8.0 ) @ 'l/0' )
+          & ( $less @ 'l/0' @ 2.0 ) )
        => ( V_n_dot_0 = 2 ) )
-      & ( ( V_l = 2 )
+      & ( ( 'l/0' = 2.0 )
        => ( V_n_dot_0 = 1 ) )
-      & ( ( '</2' @ 2 @ V_l )
+      & ( ( $less @ 2.0 @ 'l/0' )
        => ( V_n_dot_0 = 0 ) ) ) ),
     answer_to(p_question,[])).
+

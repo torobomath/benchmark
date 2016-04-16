@@ -12,28 +12,28 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   31 (   2 equality;  14 variable)
-%            Maximal formula depth :   12 (  12 average)
-%            Number of connectives :   26 (   0   ~;   0   |;   3   &;  22   @)
+%            Number of atoms       :   24 (   2 equality;  14 variable)
+%            Maximal formula depth :   11 (  11 average)
+%            Number of connectives :   19 (   0   ~;   0   |;   3   &;  15   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    7 (   0   :)
+%            Number of symbols     :    6 (   0   :;   0   =)
 %            Number of variables   :    2 (   0 sgn;   1   !;   1   ?;   0   ^)
 %                                         (   2   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    4 (   1 pred;    1 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ? [V_f: 'Z' > 'Z'] :
-      ( ( ( 'LamApp/2' @ V_f @ 1 )
+    ? [V_f: ( $int > $int )] :
+      ( ( ( V_f @ 1 )
         = 2 )
-      & ! [V_n: 'Z'] :
+      & ! [V_n: $int] :
           ( ( 'int.is-natural-number/1' @ V_n )
-         => ( ( 'int.is-natural-number/1' @ ( 'LamApp/2' @ V_f @ V_n ) )
-            & ( ( 'LamApp/2' @ V_f @ ( 'LamApp/2' @ V_f @ V_n ) )
-              = ( 'int.+/2' @ ( 'LamApp/2' @ V_f @ V_n ) @ V_n ) )
-            & ( 'int.</2' @ ( 'LamApp/2' @ V_f @ V_n ) @ ( 'LamApp/2' @ V_f @ ( 'int.+/2' @ V_n @ 1 ) ) ) ) ) ) )).
+         => ( ( 'int.is-natural-number/1' @ ( V_f @ V_n ) )
+            & ( ( V_f @ ( V_f @ V_n ) )
+              = ( $sum @ ( V_f @ V_n ) @ V_n ) )
+            & ( $less @ ( V_f @ V_n ) @ ( V_f @ ( $sum @ V_n @ 1 ) ) ) ) ) ) )).
+

@@ -9,7 +9,7 @@
 
 (def-directive p1
   (Find (V)
-  (exists (C1 C2 E)
+  (exists (E)
     (&&
      (= E (2d.set-of-cfun (Lam x (PLam y (&& (<= y (exp x))
                (<= 0 y)
@@ -24,7 +24,7 @@
 
 (def-directive p2
   (Find (V)
-  (exists (C E)
+  (exists (E)
     (&&
      (= E (2d.set-of-cfun (Lam x (PLam y (&& (<= (- (^ x 2) x) y)
                   (<= y 0)

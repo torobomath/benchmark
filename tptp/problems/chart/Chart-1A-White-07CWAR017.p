@@ -6,54 +6,54 @@
 %% GENERATED: 2015-01-08
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   52 (   4 equality;  17 variable)
+%            Number of atoms       :   66 (   4 equality;  17 variable)
 %            Maximal formula depth :   19 (  10 average)
-%            Number of connectives :   41 (   0   ~;   0   |;   7   &;  34   @)
+%            Number of connectives :   56 (   0   ~;   0   |;   7   &;  49   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   22 (   0   :)
-%            Number of variables   :   11 (   0 sgn;   1   !;   2   ?;   7   ^)
+%            Number of symbols     :   21 (   0   :;   0   =)
+%            Number of variables   :   10 (   0 sgn;   0   !;   3   ?;   7   ^)
 %                                         (  10   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   11 (   2 pred;    2 func;    7 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_n: 'Z'] :
+    ( 'find/1' @ $int
+    @ ^ [V_n: $int] :
         ( 'int.is-cardinality-of/2' @ V_n
-        @ ( 'set-by-def/1'
-          @ ^ [V_m: 'Z'] :
-            ? [V_x: 'Z',V_y: 'Z'] :
-              ( ( 'int.is-integer/1' @ V_x )
-              & ( 'int.<=/2' @ 1 @ V_x )
-              & ( 'int.<=/2' @ V_x @ 5 )
-              & ( 'int.is-integer/1' @ V_y )
-              & ( 'int.<=/2' @ 1 @ V_y )
-              & ( 'int.<=/2' @ V_y @ 5 )
+        @ ( 'set-by-def/1' @ $int
+          @ ^ [V_m: $int] :
+            ? [V_x: $int,V_y: $int] :
+              ( ( $is_int @ V_x )
+              & ( $lesseq @ 1 @ V_x )
+              & ( $lesseq @ V_x @ 5 )
+              & ( $is_int @ V_y )
+              & ( $lesseq @ 1 @ V_y )
+              & ( $lesseq @ V_y @ 5 )
               & ( V_m
-                = ( 'int.+/2' @ ( 'int.*/2' @ 10 @ V_x ) @ V_y ) ) ) ) ) )).
+                = ( $sum @ ( $product @ 10 @ V_x ) @ V_y ) ) ) ) ) )).
 
-thf(p2_qustion,question,(
-    ! [Tv32: $tType] :
-      ( 'Find/1'
-      @ ^ [V_n: 'Z'] :
-          ( 'is-cardinality-of/2' @ V_n
-          @ ( 'set-by-def/1'
-            @ ^ [V_s: 'SetOf' @ Tv32] :
-                ( ( V_S
-                  = ( 'set-by-def/1'
-                    @ ^ [V_s_dot_0: Tv32] :
-                        ( 'member/2' @ V_s_dot_0 @ ( 'cons/2' @ 1 @ ( 'cons/2' @ 2 @ ( 'cons/2' @ 3 @ 'nil/0' ) ) ) ) ) )
-                & ( 'is-subset-of/2' @ V_s @ V_S ) ) ) ) ) )).
+thf(p2_qustion,question,
+    ( 'find/1' @ $int
+    @ ^ [V_n: $int] :
+        ( 'is-cardinality-of/2' @ ( 'SetOf' @ $int ) @ V_n
+        @ ( 'set-by-def/1' @ ( 'SetOf' @ $int )
+          @ ^ [V_s: ( 'SetOf' @ $int )] :
+            ? [V_S: ( 'SetOf' @ $int )] :
+              ( ( V_S
+                = ( 'set-by-def/1' @ $int
+                  @ ^ [V_s_dot_0: $int] :
+                      ( 'member/2' @ $int @ V_s_dot_0 @ ( 'cons/2' @ $int @ 1 @ ( 'cons/2' @ $int @ 2 @ ( 'cons/2' @ $int @ 3 @ ( 'nil/0' @ $int ) ) ) ) ) ) )
+              & ( 'is-subset-of/2' @ $int @ V_s @ V_S ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_n_dot_0: 'Z'] : ( V_n_dot_0 = 25 ) ),
+    ^ [V_n_dot_0: $int] : ( V_n_dot_0 = 25 ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_n_dot_0: 'Z'] : ( V_n_dot_0 = 8 ) ),
+    ^ [V_n_dot_0: $int] : ( V_n_dot_0 = 8 ) ),
     answer_to(p2_question,[])).
+

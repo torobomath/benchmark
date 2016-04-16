@@ -18,110 +18,119 @@
 %% $- 5 x + y$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    8 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  250 (  21 equality;  72 variable)
-%            Maximal formula depth :   21 (  14 average)
-%            Number of connectives :  209 (   7   ~;   1   |;  23   &; 178   @)
+% Syntax   : Number of formulae    :   11 (   0 unit;   3 type;   0 defn)
+%            Number of atoms       :  266 (  21 equality;  58 variable)
+%            Maximal formula depth :   21 (  11 average)
+%            Number of connectives :  225 (   7   ~;   1   |;  23   &; 194   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   34 (   0   :)
-%            Number of variables   :   29 (   3 sgn;   0   !;  12   ?;  11   ^)
+%            Number of symbols     :   37 (   3   :;   0   =)
+%            Number of variables   :   23 (   0 sgn;   0   !;  12   ?;  11   ^)
 %                                         (  23   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   13 (   1 pred;    5 func;    7 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
-thf(p1_1_qustion,question,
-    ( 'Find/1'
+thf('x/0_type',type,(
+    'x/0': $real )).
+
+thf('y/0_type',type,(
+    'y/0': $real )).
+
+thf('z/0_type',type,(
+    'z/0': 'complex.Complex' )).
+
+thf(a1_1_qustion,question,
+    ( 'find/1' @ 'complex.Complex'
     @ ^ [V_w: 'complex.Complex'] :
         ( ( V_w
-         != ( 'complex.real->complex/1' @ -1 ) )
-        & ( V_z
-          = ( 'complex.//2' @ ( 'complex.-/2' @ V_w @ ( 'complex.real->complex/1' @ 1 ) ) @ ( 'complex.+/2' @ V_w @ ( 'complex.real->complex/1' @ 1 ) ) ) ) ) )).
+         != ( 'complex.real->complex/1' @ -1.0 ) )
+        & ( 'z/0'
+          = ( 'complex.//2' @ ( 'complex.-/2' @ V_w @ ( 'complex.real->complex/1' @ 1.0 ) ) @ ( 'complex.+/2' @ V_w @ ( 'complex.real->complex/1' @ 1.0 ) ) ) ) ) )).
 
-thf(p1_2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_ans: 'ListOf' @ 'R'] :
-      ? [V_z: 'complex.Complex',V_w: 'complex.Complex',V_s: 'R',V_t: 'R'] :
+thf(a1_2_qustion,question,
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_ans: ( 'ListOf' @ $real )] :
+      ? [V_z: 'complex.Complex',V_w: 'complex.Complex',V_s: $real,V_t: $real] :
         ( ( V_w
-         != ( 'complex.real->complex/1' @ -1 ) )
+         != ( 'complex.real->complex/1' @ -1.0 ) )
         & ( V_z
-          = ( 'complex.complex/2' @ V_x @ V_y ) )
+          = ( 'complex.complex/2' @ 'x/0' @ 'y/0' ) )
         & ( V_w
           = ( 'complex.complex/2' @ V_s @ V_t ) )
         & ( V_z
-          = ( 'complex.//2' @ ( 'complex.-/2' @ V_w @ ( 'complex.real->complex/1' @ 1 ) ) @ ( 'complex.+/2' @ V_w @ ( 'complex.real->complex/1' @ 1 ) ) ) )
+          = ( 'complex.//2' @ ( 'complex.-/2' @ V_w @ ( 'complex.real->complex/1' @ 1.0 ) ) @ ( 'complex.+/2' @ V_w @ ( 'complex.real->complex/1' @ 1.0 ) ) ) )
         & ( V_ans
-          = ( 'cons/2' @ V_s @ ( 'cons/2' @ V_t @ 'nil/0' ) ) ) ) )).
+          = ( 'cons/2' @ $real @ V_s @ ( 'cons/2' @ $real @ V_t @ ( 'nil/0' @ $real ) ) ) ) ) )).
 
-thf(p2_qustion,question,
-    ( 'Draw/1'
+thf(a2_qustion,question,
+    ( 'draw/1' @ '2d.Shape'
     @ ^ [V_D: '2d.Shape'] :
-      ? [V_x: 'R',V_y: 'R',V_s: 'R',V_t: 'R'] :
+      ? [V_x: $real,V_y: $real,V_s: $real,V_t: $real] :
         ( ( ( 'complex.complex/2' @ V_s @ V_t )
-         != ( 'complex.real->complex/1' @ -1 ) )
+         != ( 'complex.real->complex/1' @ -1.0 ) )
         & ( ( 'complex.complex/2' @ V_x @ V_y )
-          = ( 'complex.//2' @ ( 'complex.-/2' @ ( 'complex.complex/2' @ V_s @ V_t ) @ ( 'complex.real->complex/1' @ 1 ) ) @ ( 'complex.+/2' @ ( 'complex.complex/2' @ V_s @ V_t ) @ ( 'complex.real->complex/1' @ 1 ) ) ) )
-        & ( '<=/2' @ 0 @ V_s )
-        & ( '<=/2' @ V_s @ 1 )
-        & ( '<=/2' @ 0 @ V_t )
-        & ( '<=/2' @ V_t @ 1 )
+          = ( 'complex.//2' @ ( 'complex.-/2' @ ( 'complex.complex/2' @ V_s @ V_t ) @ ( 'complex.real->complex/1' @ 1.0 ) ) @ ( 'complex.+/2' @ ( 'complex.complex/2' @ V_s @ V_t ) @ ( 'complex.real->complex/1' @ 1.0 ) ) ) )
+        & ( $lesseq @ 0.0 @ V_s )
+        & ( $lesseq @ V_s @ 1.0 )
+        & ( $lesseq @ 0.0 @ V_t )
+        & ( $lesseq @ V_t @ 1.0 )
         & ( V_D
           = ( '2d.shape-of-cpfun/1'
             @ ^ [V_p: '2d.Point'] :
                 ( V_p
                 = ( 'complex.complex->point/1' @ ( 'complex.complex/2' @ V_x @ V_y ) ) ) ) ) ) )).
 
-thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_m: 'R'] :
+thf(a3_qustion,question,
+    ( 'find/1' @ $real
+    @ ^ [V_m: $real] :
         ( 'minimum/2'
-        @ ( 'set-by-def/1'
-          @ ^ [V_v: 'R'] :
-            ? [V_x: 'R',V_y: 'R'] :
+        @ ( 'set-by-def/1' @ $real
+          @ ^ [V_v: $real] :
+            ? [V_x: $real,V_y: $real] :
               ( ( V_v
-                = ( '+/2' @ ( '-/1' @ ( '*/2' @ 5 @ V_x ) ) @ V_y ) )
-              & ? [V_s: 'R',V_t: 'R'] :
+                = ( $sum @ ( $uminus @ ( $product @ 5.0 @ V_x ) ) @ V_y ) )
+              & ? [V_s: $real,V_t: $real] :
                   ( ( ( 'complex.complex/2' @ V_s @ V_t )
-                   != ( 'complex.real->complex/1' @ -1 ) )
+                   != ( 'complex.real->complex/1' @ -1.0 ) )
                   & ( ( 'complex.complex/2' @ V_x @ V_y )
-                    = ( 'complex.//2' @ ( 'complex.-/2' @ ( 'complex.complex/2' @ V_s @ V_t ) @ ( 'complex.real->complex/1' @ 1 ) ) @ ( 'complex.+/2' @ ( 'complex.complex/2' @ V_s @ V_t ) @ ( 'complex.real->complex/1' @ 1 ) ) ) )
-                  & ( '<=/2' @ 0 @ V_s )
-                  & ( '<=/2' @ V_s @ 1 )
-                  & ( '<=/2' @ 0 @ V_t )
-                  & ( '<=/2' @ V_t @ 1 ) ) ) )
+                    = ( 'complex.//2' @ ( 'complex.-/2' @ ( 'complex.complex/2' @ V_s @ V_t ) @ ( 'complex.real->complex/1' @ 1.0 ) ) @ ( 'complex.+/2' @ ( 'complex.complex/2' @ V_s @ V_t ) @ ( 'complex.real->complex/1' @ 1.0 ) ) ) )
+                  & ( $lesseq @ 0.0 @ V_s )
+                  & ( $lesseq @ V_s @ 1.0 )
+                  & ( $lesseq @ 0.0 @ V_t )
+                  & ( $lesseq @ V_t @ 1.0 ) ) ) )
         @ V_m ) )).
 
-thf(p1_1_answer,answer,(
+thf(a1_1_answer,answer,(
     ^ [V_w_dot_0: 'complex.Complex'] :
       ( V_w_dot_0
-      = ( 'complex.//2' @ ( 'complex.+/2' @ ( 'complex.-/1' @ V_z ) @ ( 'complex.-/1' @ 1 ) ) @ ( 'complex.-/2' @ V_z @ 1 ) ) ) ),
-    answer_to(p1_1_question,[])).
+      = ( 'complex.//2' @ ( 'complex.+/2' @ ( 'complex.-/1' @ 'z/0' ) @ ( 'complex.-/1' @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) ) ) @ ( 'complex.-/2' @ 'z/0' @ ( 'complex.complex/2' @ 1.0 @ 0.0 ) ) ) ) ),
+    answer_to(a1_1_question,[])).
 
-thf(p1_2_answer,answer,(
-    ^ [V_ans_dot_0: 'ListOf' @ 'R'] :
-      ( ~ ( ( V_x = 1 )
-          & ( V_y = 0 ) )
+thf(a1_2_answer,answer,(
+    ^ [V_ans_dot_0: ( 'ListOf' @ $real )] :
+      ( ~ ( ( 'x/0' = 1.0 )
+          & ( 'y/0' = 0.0 ) )
       & ( V_ans_dot_0
-        = ( 'cons/2' @ ( '//2' @ ( '+/2' @ ( '-/1' @ ( '-/2' @ ( '^/2' @ V_x @ 2 ) @ 1 ) ) @ ( '-/1' @ ( '^/2' @ V_y @ 2 ) ) ) @ ( '+/2' @ ( '^/2' @ ( '-/2' @ V_x @ 1 ) @ 2 ) @ ( '^/2' @ V_y @ 2 ) ) ) @ ( 'cons/2' @ ( '//2' @ ( '*/2' @ 2 @ V_y ) @ ( '+/2' @ ( '^/2' @ ( '-/2' @ V_x @ 1 ) @ 2 ) @ ( '^/2' @ V_y @ 2 ) ) ) @ 'nil/0' ) ) ) ) ),
-    answer_to(p1_2_question,[])).
+        = ( 'cons/2' @ $real @ ( $quotient @ ( $sum @ ( $uminus @ ( $difference @ ( '^/2' @ 'x/0' @ 2.0 ) @ 1.0 ) ) @ ( $uminus @ ( '^/2' @ 'y/0' @ 2.0 ) ) ) @ ( $sum @ ( '^/2' @ ( $difference @ 'x/0' @ 1.0 ) @ 2.0 ) @ ( '^/2' @ 'y/0' @ 2.0 ) ) ) @ ( 'cons/2' @ $real @ ( $quotient @ ( $product @ 2.0 @ 'y/0' ) @ ( $sum @ ( '^/2' @ ( $difference @ 'x/0' @ 1.0 ) @ 2.0 ) @ ( '^/2' @ 'y/0' @ 2.0 ) ) ) @ ( 'nil/0' @ $real ) ) ) ) ) ),
+    answer_to(a1_2_question,[])).
 
-thf(p2_answer,answer,
+thf(a2_answer,answer,
     ( '2d.set-of-cfun/1'
-    @ ^ [V_x_dot_0: 'R',V_y_dot_0: 'R'] :
-        ( ( '<=/2' @ ( '+/2' @ ( '^/2' @ V_x_dot_0 @ 2 ) @ ( '^/2' @ V_y_dot_0 @ 2 ) ) @ 1 )
-        & ( '<=/2' @ ( '//2' @ 1 @ 4 ) @ ( '+/2' @ ( '^/2' @ ( '-/2' @ V_x_dot_0 @ ( '//2' @ 1 @ 2 ) ) @ 2 ) @ ( '^/2' @ V_y_dot_0 @ 2 ) ) )
-        & ( '<=/2' @ 0 @ V_y_dot_0 )
-        & ( '<=/2' @ 1 @ ( '+/2' @ ( '^/2' @ ( '-/2' @ V_x_dot_0 @ 1 ) @ 2 ) @ ( '^/2' @ ( '-/2' @ V_y_dot_0 @ 1 ) @ 2 ) ) )
-        & ( ( V_x_dot_0 != 1 )
-          | ( V_y_dot_0 != 0 ) ) ) ),
-    answer_to(p2_question,[])).
+    @ ^ [V_x_dot_0: $real,V_y_dot_0: $real] :
+        ( ( $lesseq @ ( $sum @ ( '^/2' @ V_x_dot_0 @ 2.0 ) @ ( '^/2' @ V_y_dot_0 @ 2.0 ) ) @ 1.0 )
+        & ( $lesseq @ ( $quotient @ 1.0 @ 4.0 ) @ ( $sum @ ( '^/2' @ ( $difference @ V_x_dot_0 @ ( $quotient @ 1.0 @ 2.0 ) ) @ 2.0 ) @ ( '^/2' @ V_y_dot_0 @ 2.0 ) ) )
+        & ( $lesseq @ 0.0 @ V_y_dot_0 )
+        & ( $lesseq @ 1.0 @ ( $sum @ ( '^/2' @ ( $difference @ V_x_dot_0 @ 1.0 ) @ 2.0 ) @ ( '^/2' @ ( $difference @ V_y_dot_0 @ 1.0 ) @ 2.0 ) ) )
+        & ( ( V_x_dot_0 != 1.0 )
+          | ( V_y_dot_0 != 0.0 ) ) ) ),
+    answer_to(a2_question,[])).
 
-thf(p3_answer,answer,(
-    ^ [V_m_dot_0: 'R'] :
+thf(a3_answer,answer,(
+    ^ [V_m_dot_0: $real] :
       ( V_m_dot_0
-      = ( '-/1' @ ( '//2' @ 3 @ 5 ) ) ) ),
-    answer_to(p3_question,[])).
+      = ( $uminus @ ( $quotient @ 3.0 @ 5.0 ) ) ) ),
+    answer_to(a3_question,[])).
+

@@ -11,38 +11,36 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   34 (   0 equality;  10 variable)
-%            Maximal formula depth :   15 (  11 average)
-%            Number of connectives :   32 (   0   ~;   0   |;   2   &;  30   @)
+%            Number of atoms       :   33 (   0 equality;  10 variable)
+%            Maximal formula depth :   14 (  10 average)
+%            Number of connectives :   31 (   0   ~;   0   |;   2   &;  29   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   12 (   0   :)
+%            Number of symbols     :   11 (   0   :;   0   =)
 %            Number of variables   :    5 (   0 sgn;   1   !;   0   ?;   4   ^)
 %                                         (   5   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   4 pred;    2 func;    2 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_a: 'R'] :
-        ( ( '>=/2' @ V_a @ 2 )
-        & ! [V_x: 'R'] :
-            ( '>/2'
-            @ ( 'LamApp/2'
-              @ ^ [V_x_dot_1: 'R'] :
-                  ( '*/2' @ ( '+/2' @ V_x_dot_1 @ V_a ) @ ( '+/2' @ V_x_dot_1 @ 2 ) )
-              @ ( 'LamApp/2'
-                @ ^ [V_x_dot_0: 'R'] :
-                    ( '*/2' @ ( '+/2' @ V_x_dot_0 @ V_a ) @ ( '+/2' @ V_x_dot_0 @ 2 ) )
+    ( 'find/1' @ $real
+    @ ^ [V_a: $real] :
+        ( ( $greatereq @ V_a @ 2.0 )
+        & ! [V_x: $real] :
+            ( $greater
+            @ ( ^ [V_x_dot_1: $real] :
+                  ( $product @ ( $sum @ V_x_dot_1 @ V_a ) @ ( $sum @ V_x_dot_1 @ 2.0 ) )
+              @ ( ^ [V_x_dot_0: $real] :
+                    ( $product @ ( $sum @ V_x_dot_0 @ V_a ) @ ( $sum @ V_x_dot_0 @ 2.0 ) )
                 @ V_x ) )
-            @ 0 ) ) )).
+            @ 0.0 ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_a_dot_0: 'R'] :
-      ( ( '<=/2' @ 2 @ V_a_dot_0 )
-      & ( '</2' @ V_a_dot_0 @ ( '+/2' @ 2 @ ( '*/2' @ 2 @ ( 'sqrt/1' @ 2 ) ) ) ) ) ),
+    ^ [V_a_dot_0: $real] :
+      ( ( $lesseq @ 2.0 @ V_a_dot_0 )
+      & ( $less @ V_a_dot_0 @ ( $sum @ 2.0 @ ( $product @ 2.0 @ ( 'sqrt/1' @ 2.0 ) ) ) ) ) ),
     answer_to(p1_question,[])).
+

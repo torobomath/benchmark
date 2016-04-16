@@ -22,62 +22,74 @@
 %% line that is parallel to the $y$ axis.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    7 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  103 (   5 equality;  40 variable)
-%            Maximal formula depth :   12 (  10 average)
-%            Number of connectives :   88 (   2   ~;   0   |;   4   &;  81   @)
-%                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+% Syntax   : Number of formulae    :   13 (   0 unit;   7 type;   0 defn)
+%            Number of atoms       :   94 (   4 equality;  11 variable)
+%            Maximal formula depth :   13 (   6 average)
+%            Number of connectives :   81 (   1   ~;   0   |;   2   &;  78   @)
+%                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   22 (   0   :)
-%            Number of variables   :   33 (  22 sgn;   2   !;   4   ?;   4   ^)
-%                                         (  10   :;   0  !>;   0  ?*)
+%            Number of symbols     :   26 (   7   :;   0   =)
+%            Number of variables   :    8 (   0 sgn;   1   !;   3   ?;   4   ^)
+%                                         (   8   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   0 pred;    2 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('X/0_type',type,(
+    'X/0': $real )).
+
+thf('Y/0_type',type,(
+    'Y/0': $real )).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
+
+thf('c/0_type',type,(
+    'c/0': $real )).
+
+thf('p/0_type',type,(
+    'p/0': $real )).
+
+thf('q/0_type',type,(
+    'q/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Point'
     @ ^ [V_P: '2d.Point'] :
-        ( '2d.point-symmetry/3' @ V_P @ ( '2d.point/2' @ V_X @ V_Y ) @ ( '2d.point/2' @ V_p @ V_q ) ) )).
+        ( '2d.point-symmetry/3' @ V_P @ ( '2d.point/2' @ 'X/0' @ 'Y/0' ) @ ( '2d.point/2' @ 'p/0' @ 'q/0' ) ) )).
 
 thf(p2,conjecture,(
     ? [V_G: '2d.Shape',V_Q: '2d.Point'] :
       ( ( V_G
-        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ V_c @ ( 'cons/2' @ V_b @ ( 'cons/2' @ V_a @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) ) )
+        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 'c/0' @ ( 'cons/2' @ $real @ 'b/0' @ ( 'cons/2' @ $real @ 'a/0' @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ) )
       & ( '2d.point-symmetry-shape/2' @ V_G @ V_Q ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
+    ( 'find/1' @ '2d.Point'
     @ ^ [V_R: '2d.Point'] :
-        ( '2d.line-symmetry/3' @ ( '2d.point/2' @ V_X @ V_Y ) @ V_R @ ( '2d.line/2' @ ( '2d.point/2' @ V_p @ 0 ) @ ( '2d.point/2' @ V_p @ 1 ) ) ) )).
+        ( '2d.line-symmetry/3' @ ( '2d.point/2' @ 'X/0' @ 'Y/0' ) @ V_R @ ( '2d.line/2' @ ( '2d.point/2' @ 'p/0' @ 0.0 ) @ ( '2d.point/2' @ 'p/0' @ 1.0 ) ) ) )).
 
 thf(p4,conjecture,(
     ? [V_G: '2d.Shape'] :
       ( ( V_G
-        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ V_c @ ( 'cons/2' @ V_b @ ( 'cons/2' @ V_a @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) ) )
-      & ! [V_x: 'R'] :
-          ~ ( '2d.line-symmetry-shape/2' @ V_G @ ( '2d.line/2' @ ( '2d.point/2' @ V_x @ 0 ) @ ( '2d.point/2' @ V_x @ 1 ) ) ) ) )).
-
-thf(p4_1,conjecture,(
-    ? [V_G: '2d.Shape'] :
-      ( ( V_G
-        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ V_c @ ( 'cons/2' @ V_b @ ( 'cons/2' @ V_a @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) ) )
-      & ! [V_l: '2d.Shape'] :
-          ( ( ( '2d.line-type/1' @ V_l )
-            & ( '2d.parallel/2' @ '2d.y-axis/0' @ V_l ) )
-         => ~ ( '2d.line-symmetry-shape/2' @ V_G @ V_l ) ) ) )).
+        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 'c/0' @ ( 'cons/2' @ $real @ 'b/0' @ ( 'cons/2' @ $real @ 'a/0' @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ) )
+      & ! [V_x: $real] :
+          ~ ( '2d.line-symmetry-shape/2' @ V_G @ ( '2d.line/2' @ ( '2d.point/2' @ V_x @ 0.0 ) @ ( '2d.point/2' @ V_x @ 1.0 ) ) ) ) )).
 
 thf(p1_answer,answer,(
     ^ [V_P_dot_0: '2d.Point'] :
       ( V_P_dot_0
-      = ( '2d.point/2' @ ( '-/2' @ ( '*/2' @ 2 @ V_p ) @ V_X ) @ ( '-/2' @ ( '*/2' @ 2 @ V_q ) @ V_Y ) ) ) ),
+      = ( '2d.point/2' @ ( $difference @ ( $product @ 2.0 @ 'p/0' ) @ 'X/0' ) @ ( $difference @ ( $product @ 2.0 @ 'q/0' ) @ 'Y/0' ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p3_answer,answer,(
     ^ [V_R_dot_0: '2d.Point'] :
       ( V_R_dot_0
-      = ( '2d.point/2' @ ( '-/2' @ ( '*/2' @ 2 @ V_p ) @ V_X ) @ V_Y ) ) ),
+      = ( '2d.point/2' @ ( $difference @ ( $product @ 2.0 @ 'p/0' ) @ 'X/0' ) @ 'Y/0' ) ) ),
     answer_to(p3_question,[])).
+

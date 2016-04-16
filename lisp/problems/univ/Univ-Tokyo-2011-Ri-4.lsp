@@ -3,6 +3,14 @@
 ;; SOURCE:    The University of Tokyo, 2011, Science Course, Problem 4
 ;; AUTHOR:    Hidenao Iwane
 ;; GENERATED: 2014-02-18
+;;
+;; <PROBLEM-TEXT>
+;; Consider the point $P(\frac{1}{2}, \frac{1}{4})$ on the coordinate
+;; plane. When $Q({\alpha}, {\alpha}^2)$ and $R({\beta}, {\beta}^2)$ on
+;; the parabola $y=x^2$ move so that the points $P$, $Q$, and $R$ form
+;; an isosceles triangle taking $QR$ as the base, find the locus of the
+;; centroid $G(X, Y)$ of $\triangle PQR$.
+;; </PROBLEM-TEXT>
 
 (namespace 2d)
 

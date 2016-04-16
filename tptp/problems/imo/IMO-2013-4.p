@@ -20,16 +20,14 @@
 %            Maximal formula depth :   30 (  30 average)
 %            Number of connectives :   58 (   2   ~;   0   |;  12   &;  43   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   0   :)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :   11 (   0 sgn;  11   !;   0   ?;   0   ^)
 %                                         (  11   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_H: '2d.Point',V_w1: '2d.Shape',V_w2: '2d.Shape',V_M: '2d.Point',V_N: '2d.Point',V_X: '2d.Point',V_Y: '2d.Point',V_W: '2d.Point'] :
@@ -39,7 +37,7 @@ thf(p,conjecture,(
         & ( V_W != V_B )
         & ( V_W != V_C )
         & ( V_M
-          = ( '2d.foot-of-perpendicular-line-from-to/2' @ V_A @ ( '2d.line/2' @ V_B @ V_C ) ) )
+          = ( '2d.foot-of-perpendicular-line-from-to/2' @ V_B @ ( '2d.line/2' @ V_A @ V_C ) ) )
         & ( V_N
           = ( '2d.foot-of-perpendicular-line-from-to/2' @ V_C @ ( '2d.line/2' @ V_A @ V_B ) ) )
         & ( '2d.circle-type/1' @ V_w1 )
@@ -49,3 +47,4 @@ thf(p,conjecture,(
         & ( '2d.is-inscribed-in/2' @ ( '2d.triangle/3' @ V_C @ V_W @ V_M ) @ V_w2 )
         & ( '2d.is-diameter-of/2' @ ( '2d.seg/2' @ V_W @ V_Y ) @ V_w2 ) )
      => ( '2d.colinear/3' @ V_X @ V_Y @ V_H ) ) )).
+

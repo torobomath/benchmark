@@ -15,44 +15,47 @@
 %% of the line segment $ST$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   72 (   3 equality;  23 variable)
-%            Maximal formula depth :   24 (  16 average)
-%            Number of connectives :   65 (   1   ~;   0   |;   8   &;  56   @)
+% Syntax   : Number of formulae    :    3 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :   78 (   3 equality;  17 variable)
+%            Maximal formula depth :   24 (  12 average)
+%            Number of connectives :   71 (   1   ~;   0   |;   8   &;  62   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   26 (   0   :)
-%            Number of variables   :    9 (   1 sgn;   0   !;   4   ?;   3   ^)
+%            Number of symbols     :   27 (   1   :;   0   =)
+%            Number of variables   :    7 (   0 sgn;   0   !;   4   ?;   3   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   1 pred;    2 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('d/0_type',type,(
+    'd/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_max: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_max: $real] :
       ? [V_P: '2d.Point',V_Q: '2d.Point'] :
-        ( ( '</2' @ 0 @ V_d )
-        & ( '</2' @ V_d @ 1 )
-        & ( '2d.intersect/3' @ ( '2d.circle/2' @ '2d.origin/0' @ 1 ) @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ V_d @ 'nil/0' ) ) ) @ V_P )
-        & ( '2d.intersect/3' @ ( '2d.circle/2' @ '2d.origin/0' @ 1 ) @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ V_d @ 'nil/0' ) ) ) @ V_Q )
+        ( ( $less @ 0.0 @ 'd/0' )
+        & ( $less @ 'd/0' @ 1.0 )
+        & ( '2d.intersect/3' @ ( '2d.circle/2' @ '2d.origin/0' @ 1.0 ) @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 'd/0' @ ( 'nil/0' @ $real ) ) ) ) @ V_P )
+        & ( '2d.intersect/3' @ ( '2d.circle/2' @ '2d.origin/0' @ 1.0 ) @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 'd/0' @ ( 'nil/0' @ $real ) ) ) ) @ V_Q )
         & ( V_P != V_Q )
         & ( 'maximum/2'
-          @ ( 'set-by-def/1'
-            @ ^ [V_st: 'R'] :
+          @ ( 'set-by-def/1' @ $real
+            @ ^ [V_st: $real] :
               ? [V_R: '2d.Point',V_S: '2d.Point'] :
-                ( ( '</2' @ V_d @ ( '2d.y-coord/1' @ V_R ) )
-                & ( '2d.on/2' @ V_R @ ( '2d.circle/2' @ '2d.origin/0' @ 1 ) )
+                ( ( $less @ 'd/0' @ ( '2d.y-coord/1' @ V_R ) )
+                & ( '2d.on/2' @ V_R @ ( '2d.circle/2' @ '2d.origin/0' @ 1.0 ) )
                 & ( '2d.intersect/3' @ ( '2d.seg/2' @ '2d.origin/0' @ V_R ) @ ( '2d.seg/2' @ V_P @ V_Q ) @ V_S )
                 & ( V_st
                   = ( '2d.distance/2' @ V_S @ ( '2d.foot-of-perpendicular-line-from-to/2' @ V_R @ ( '2d.line/2' @ V_P @ V_Q ) ) ) ) ) )
           @ V_max ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_max_dot_0: 'R'] :
+    ^ [V_max_dot_0: $real] :
       ( V_max_dot_0
-      = ( '^/2' @ ( '-/2' @ 1 @ ( '^/2' @ V_d @ ( '//2' @ 2 @ 3 ) ) ) @ ( '//2' @ 3 @ 2 ) ) ) ),
+      = ( '^/2' @ ( $difference @ 1.0 @ ( '^/2' @ 'd/0' @ ( $quotient @ 2.0 @ 3.0 ) ) ) @ ( $quotient @ 3.0 @ 2.0 ) ) ) ),
     answer_to(p1_question,[])).
+

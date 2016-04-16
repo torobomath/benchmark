@@ -18,6 +18,7 @@
           (= (rad-of-angle (angle A D E)) (* 90 (Degree)))
           (= (rad-of-angle (angle D A E))
              (rad-of-angle (angle B A C)))
+          (on E (divided-region-including (line A D) C))
         )
         (exists (K) (&&
           (circle-type K)

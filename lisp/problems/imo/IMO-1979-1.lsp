@@ -18,6 +18,6 @@
   (Show (forall (p q)
                 (-> (= (ratio p q)
                        (sum (map (Lam n (* (^ (int->rat -1) (int.+ n 1)) (ratio 1 n)))
-                                 (iota 1 1319))))
+                                 (int.iota 1 1319))))
                     (int.is-divisible-by p 1979)))))
 

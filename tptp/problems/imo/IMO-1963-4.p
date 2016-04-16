@@ -15,50 +15,53 @@
 %% where $y$ is a parameter.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  120 (  11 equality;  49 variable)
-%            Maximal formula depth :   21 (  18 average)
-%            Number of connectives :   98 (   0   ~;   2   |;   7   &;  89   @)
+% Syntax   : Number of formulae    :    3 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  146 (  11 equality;  37 variable)
+%            Maximal formula depth :   21 (  13 average)
+%            Number of connectives :  124 (   0   ~;   2   |;   7   &; 115   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   0   :)
-%            Number of variables   :   12 (   0 sgn;   0   !;   8   ?;   2   ^)
+%            Number of symbols     :   14 (   1   :;   0   =)
+%            Number of variables   :   10 (   0 sgn;   0   !;   8   ?;   2   ^)
 %                                         (  10   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    7 (   0 pred;    4 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('y/0_type',type,(
+    'y/0': $real )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_x1x2x3x4x5: 'ListOf' @ 'R'] :
-      ? [V_x1: 'R',V_x2: 'R',V_x3: 'R',V_x4: 'R',V_x5: 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_x1x2x3x4x5: ( 'ListOf' @ $real )] :
+      ? [V_x1: $real,V_x2: $real,V_x3: $real,V_x4: $real,V_x5: $real] :
         ( ( V_x1x2x3x4x5
-          = ( 'cons/2' @ V_x1 @ ( 'cons/2' @ V_x2 @ ( 'cons/2' @ V_x3 @ ( 'cons/2' @ V_x4 @ ( 'cons/2' @ V_x5 @ 'nil/0' ) ) ) ) ) )
-        & ( ( '+/2' @ V_x2 @ V_x5 )
-          = ( '*/2' @ V_y @ V_x1 ) )
-        & ( ( '+/2' @ V_x1 @ V_x3 )
-          = ( '*/2' @ V_y @ V_x2 ) )
-        & ( ( '+/2' @ V_x2 @ V_x4 )
-          = ( '*/2' @ V_y @ V_x3 ) )
-        & ( ( '+/2' @ V_x3 @ V_x5 )
-          = ( '*/2' @ V_y @ V_x4 ) )
-        & ( ( '+/2' @ V_x4 @ V_x1 )
-          = ( '*/2' @ V_y @ V_x5 ) ) ) )).
+          = ( 'cons/2' @ $real @ V_x1 @ ( 'cons/2' @ $real @ V_x2 @ ( 'cons/2' @ $real @ V_x3 @ ( 'cons/2' @ $real @ V_x4 @ ( 'cons/2' @ $real @ V_x5 @ ( 'nil/0' @ $real ) ) ) ) ) ) )
+        & ( ( $sum @ V_x2 @ V_x5 )
+          = ( $product @ 'y/0' @ V_x1 ) )
+        & ( ( $sum @ V_x1 @ V_x3 )
+          = ( $product @ 'y/0' @ V_x2 ) )
+        & ( ( $sum @ V_x2 @ V_x4 )
+          = ( $product @ 'y/0' @ V_x3 ) )
+        & ( ( $sum @ V_x3 @ V_x5 )
+          = ( $product @ 'y/0' @ V_x4 ) )
+        & ( ( $sum @ V_x4 @ V_x1 )
+          = ( $product @ 'y/0' @ V_x5 ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_x1x2x3x4x5_dot_0: 'ListOf' @ 'R'] :
-      ( ( ( ( '-/2' @ ( '+/2' @ ( '^/2' @ V_y @ 2 ) @ V_y ) @ 1 )
-          = 0 )
-        & ? [V_s_dot_0: 'R',V_t: 'R'] :
+    ^ [V_x1x2x3x4x5_dot_0: ( 'ListOf' @ $real )] :
+      ( ( ( ( $difference @ ( $sum @ ( '^/2' @ 'y/0' @ 2.0 ) @ 'y/0' ) @ 1.0 )
+          = 0.0 )
+        & ? [V_s_dot_0: $real,V_t: $real] :
             ( V_x1x2x3x4x5_dot_0
-            = ( 'cons/2' @ V_s_dot_0 @ ( 'cons/2' @ V_t @ ( 'cons/2' @ ( '+/2' @ ( '-/1' @ V_s_dot_0 ) @ ( '*/2' @ V_y @ V_t ) ) @ ( 'cons/2' @ ( '-/1' @ ( '+/2' @ ( '*/2' @ ( '-/2' @ ( '^/2' @ V_y @ 2 ) @ 1 ) @ V_s_dot_0 ) @ ( '*/2' @ V_y @ V_t ) ) ) @ ( 'cons/2' @ ( '-/2' @ ( '*/2' @ V_y @ V_s_dot_0 ) @ V_t ) @ 'nil/0' ) ) ) ) ) ) )
-      | ( ( V_y = 2 )
-        & ? [V_s: 'R'] :
+            = ( 'cons/2' @ $real @ V_s_dot_0 @ ( 'cons/2' @ $real @ V_t @ ( 'cons/2' @ $real @ ( $sum @ ( $uminus @ V_s_dot_0 ) @ ( $product @ 'y/0' @ V_t ) ) @ ( 'cons/2' @ $real @ ( $uminus @ ( $sum @ ( $product @ ( $difference @ ( '^/2' @ 'y/0' @ 2.0 ) @ 1.0 ) @ V_s_dot_0 ) @ ( $product @ 'y/0' @ V_t ) ) ) @ ( 'cons/2' @ $real @ ( $difference @ ( $product @ 'y/0' @ V_s_dot_0 ) @ V_t ) @ ( 'nil/0' @ $real ) ) ) ) ) ) ) )
+      | ( ( 'y/0' = 2.0 )
+        & ? [V_s: $real] :
             ( V_x1x2x3x4x5_dot_0
-            = ( 'cons/2' @ V_s @ ( 'cons/2' @ V_s @ ( 'cons/2' @ V_s @ ( 'cons/2' @ V_s @ ( 'cons/2' @ V_s @ 'nil/0' ) ) ) ) ) ) )
+            = ( 'cons/2' @ $real @ V_s @ ( 'cons/2' @ $real @ V_s @ ( 'cons/2' @ $real @ V_s @ ( 'cons/2' @ $real @ V_s @ ( 'cons/2' @ $real @ V_s @ ( 'nil/0' @ $real ) ) ) ) ) ) ) )
       | ( V_x1x2x3x4x5_dot_0
-        = ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ 'nil/0' ) ) ) ) ) ) ) ),
+        = ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ) ) ),
     answer_to(p_question,[])).
+

@@ -42,7 +42,7 @@
   p2
   (Find (S)
         (exists (P_set)
-                (&& (= P_set (shape-of-cpfun (PLam P (exists (C)
+                (&& (= P_set (shape-of-cpfun (PLam P (exists (a C)
                                                              (&& (circle-type C)
                                                                  (= P (center-of C))
                                                                  (tangent (graph-of (fun (Lam x (- x)))) C (point a (- a)))
@@ -54,7 +54,7 @@
   p2_1
   (Find (S)
         (exists (P_set)
-                (&& (= P_set (shape-of-cpfun (PLam P (exists (C)
+                (&& (= P_set (shape-of-cpfun (PLam P (exists (a C)
                                                              (&& (circle-type C)
                                                                  (= P (center-of C))
                                                                  (tangent (line (origin) (point 1 -1)) C (point a (- a)))
@@ -77,4 +77,12 @@
 (def-answer p2   (PLam S (= S (* (/ 2 3) (sqrt 2)))))
 
 (def-answer p2_1 (PLam S (= S (* (/ 2 3) (sqrt 2)))))
+
+(def-answer a1   (PLam P (exists (Px Py) (&&
+  (! (= (+ (* 2 (^ a 2)) (* 2 a) 1) 0))
+  (= P (list-of Px Py))
+  (= Px (/ (+ (* 2 (^ a 2)) (* 4 a) 1) 2))
+  (= Py (/ (+ (* 2 (^ a 2)) 1) 2))))))
+
+(def-answer a2   (PLam S (= S (* (/ 2 3) (sqrt 2)))))
 

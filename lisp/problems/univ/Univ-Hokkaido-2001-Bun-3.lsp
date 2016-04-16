@@ -101,3 +101,10 @@
 
 (def-answer p3 (PLam S (= S (.* (./ 5 6) (Pi)))))
 
+(def-answer a1 (PLam eta_r (= eta_r (pair (complex 1 0) 2))))
+
+(def-answer a2 (PLam args (= args (list-of (.* 45 (Degree))
+                                           (.* 120 (Degree))))))
+
+(def-answer a3 (PLam S (= S (.* (./ 5 6) (Pi)))))
+

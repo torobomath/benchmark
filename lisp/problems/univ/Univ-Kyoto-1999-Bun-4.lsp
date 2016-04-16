@@ -22,21 +22,6 @@
 (namespace complex)
 
 (def-directive
-  p1_0
-  (Show
-    (forall (z)
-      (<->
-        (2d.on (complex->point z) (2d.unit-circle))
-        (&&
-          (= (conjugate z)
-             (/ (complex 1 0) z))
-          (! (= z (complex 0 0))))
-      )
-    )
-  )
-)
-
-(def-directive
   p1
   (Show
     (forall (z w z1 z2 z3 z4)

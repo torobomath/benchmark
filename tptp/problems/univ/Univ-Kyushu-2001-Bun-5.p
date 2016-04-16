@@ -24,28 +24,30 @@
 %% (3) Prove that $PQ = CF$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    5 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  387 (  29 equality; 188 variable)
-%            Maximal formula depth :   46 (  30 average)
-%            Number of connectives :  324 (   0   ~;   0   |;  74   &; 249   @)
+% Syntax   : Number of formulae    :    6 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  389 (  29 equality; 174 variable)
+%            Maximal formula depth :   46 (  26 average)
+%            Number of connectives :  326 (   0   ~;   0   |;  74   &; 251   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   22 (   0   :)
-%            Number of variables   :   51 (   2 sgn;  15   !;  28   ?;   4   ^)
+%            Number of symbols     :   23 (   1   :;   0   =)
+%            Number of variables   :   47 (   0 sgn;  15   !;  28   ?;   4   ^)
 %                                         (  47   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   1 pred;    4 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('r/0_type',type,(
+    'r/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_AP: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_AP: $real] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_G: '2d.Point',V_P: '2d.Point',V_Q: '2d.Point',V_R: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape',V_C1: '2d.Shape',V_C2: '2d.Shape'] :
-        ( ( '</2' @ 0 @ V_r )
-        & ( '</2' @ V_r @ 1 )
+        ( ( $less @ 0.0 @ 'r/0' )
+        & ( $less @ 'r/0' @ 1.0 )
         & ( '2d.circle-type/1' @ V_C1 )
         & ( '2d.circle-type/1' @ V_C2 )
         & ( V_l
@@ -53,23 +55,23 @@ thf(p1_qustion,question,
         & ( '2d.on/2' @ V_B @ V_l )
         & ( '2d.on/2' @ V_C @ V_l )
         & ( '2d.on/2' @ V_D @ V_l )
-        & ( ( '-/2' @ 1 @ V_r )
+        & ( ( $difference @ 1.0 @ 'r/0' )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) )
-        & ( 1
+        & ( 1.0
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_C ) ) )
-        & ( ( '+/2' @ 1 @ V_r )
+        & ( ( $sum @ 1.0 @ 'r/0' )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_D ) ) )
-        & ( '2d.tangent/3' @ V_m @ ( '2d.circle/2' @ ( '2d.midpoint-of/2' @ V_B @ V_D ) @ ( '//2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_D ) ) @ 2 ) ) @ V_R )
+        & ( '2d.tangent/3' @ V_m @ ( '2d.circle/2' @ ( '2d.midpoint-of/2' @ V_B @ V_D ) @ ( $quotient @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_D ) ) @ 2.0 ) ) @ V_R )
         & ( V_m
           = ( '2d.half-line/2' @ V_A @ V_R ) )
         & ( '2d.on/2' @ V_E @ V_m )
         & ( '2d.on/2' @ V_F @ V_m )
         & ( '2d.on/2' @ V_G @ V_m )
-        & ( ( '-/2' @ 1 @ V_r )
+        & ( ( $difference @ 1.0 @ 'r/0' )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_E ) ) )
-        & ( 1
+        & ( 1.0
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_F ) ) )
-        & ( ( '+/2' @ 1 @ V_r )
+        & ( ( $sum @ 1.0 @ 'r/0' )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_G ) ) )
         & ( '2d.on/2' @ V_E @ V_C1 )
         & ( '2d.on/2' @ V_F @ V_C1 )
@@ -81,11 +83,11 @@ thf(p1_qustion,question,
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_P ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_CF: 'R'] :
+    ( 'find/1' @ $real
+    @ ^ [V_CF: $real] :
       ? [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_G: '2d.Point',V_P: '2d.Point',V_Q: '2d.Point',V_R: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape',V_C1: '2d.Shape',V_C2: '2d.Shape'] :
-        ( ( '</2' @ 0 @ V_r )
-        & ( '</2' @ V_r @ 1 )
+        ( ( $less @ 0.0 @ 'r/0' )
+        & ( $less @ 'r/0' @ 1.0 )
         & ( '2d.circle-type/1' @ V_C1 )
         & ( '2d.circle-type/1' @ V_C2 )
         & ( V_l
@@ -93,23 +95,23 @@ thf(p2_qustion,question,
         & ( '2d.on/2' @ V_B @ V_l )
         & ( '2d.on/2' @ V_C @ V_l )
         & ( '2d.on/2' @ V_D @ V_l )
-        & ( ( '-/2' @ 1 @ V_r )
+        & ( ( $difference @ 1.0 @ 'r/0' )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) )
-        & ( 1
+        & ( 1.0
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_C ) ) )
-        & ( ( '+/2' @ 1 @ V_r )
+        & ( ( $sum @ 1.0 @ 'r/0' )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_D ) ) )
-        & ( '2d.tangent/3' @ V_m @ ( '2d.circle/2' @ ( '2d.midpoint-of/2' @ V_B @ V_D ) @ ( '//2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_D ) ) @ 2 ) ) @ V_R )
+        & ( '2d.tangent/3' @ V_m @ ( '2d.circle/2' @ ( '2d.midpoint-of/2' @ V_B @ V_D ) @ ( $quotient @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_D ) ) @ 2.0 ) ) @ V_R )
         & ( V_m
           = ( '2d.half-line/2' @ V_A @ V_R ) )
         & ( '2d.on/2' @ V_E @ V_m )
         & ( '2d.on/2' @ V_F @ V_m )
         & ( '2d.on/2' @ V_G @ V_m )
-        & ( ( '-/2' @ 1 @ V_r )
+        & ( ( $difference @ 1.0 @ 'r/0' )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_E ) ) )
-        & ( 1
+        & ( 1.0
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_F ) ) )
-        & ( ( '+/2' @ 1 @ V_r )
+        & ( ( $sum @ 1.0 @ 'r/0' )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_G ) ) )
         & ( '2d.on/2' @ V_E @ V_C1 )
         & ( '2d.on/2' @ V_F @ V_C1 )
@@ -121,9 +123,9 @@ thf(p2_qustion,question,
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_C @ V_F ) ) ) ) )).
 
 thf(p3,conjecture,(
-    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_G: '2d.Point',V_P: '2d.Point',V_Q: '2d.Point',V_R: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape',V_C1: '2d.Shape',V_C2: '2d.Shape',V_r: 'R'] :
-      ( ( ( '</2' @ 0 @ V_r )
-        & ( '</2' @ V_r @ 1 )
+    ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_G: '2d.Point',V_P: '2d.Point',V_Q: '2d.Point',V_R: '2d.Point',V_l: '2d.Shape',V_m: '2d.Shape',V_C1: '2d.Shape',V_C2: '2d.Shape',V_r: $real] :
+      ( ( ( $less @ 0.0 @ V_r )
+        & ( $less @ V_r @ 1.0 )
         & ( '2d.circle-type/1' @ V_C1 )
         & ( '2d.circle-type/1' @ V_C2 )
         & ( V_l
@@ -131,23 +133,23 @@ thf(p3,conjecture,(
         & ( '2d.on/2' @ V_B @ V_l )
         & ( '2d.on/2' @ V_C @ V_l )
         & ( '2d.on/2' @ V_D @ V_l )
-        & ( ( '-/2' @ 1 @ V_r )
+        & ( ( $difference @ 1.0 @ V_r )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_B ) ) )
-        & ( 1
+        & ( 1.0
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_C ) ) )
-        & ( ( '+/2' @ 1 @ V_r )
+        & ( ( $sum @ 1.0 @ V_r )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_D ) ) )
-        & ( '2d.tangent/3' @ V_m @ ( '2d.circle/2' @ ( '2d.midpoint-of/2' @ V_B @ V_D ) @ ( '//2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_D ) ) @ 2 ) ) @ V_R )
+        & ( '2d.tangent/3' @ V_m @ ( '2d.circle/2' @ ( '2d.midpoint-of/2' @ V_B @ V_D ) @ ( $quotient @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_B @ V_D ) ) @ 2.0 ) ) @ V_R )
         & ( V_m
           = ( '2d.half-line/2' @ V_A @ V_R ) )
         & ( '2d.on/2' @ V_E @ V_m )
         & ( '2d.on/2' @ V_F @ V_m )
         & ( '2d.on/2' @ V_G @ V_m )
-        & ( ( '-/2' @ 1 @ V_r )
+        & ( ( $difference @ 1.0 @ V_r )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_E ) ) )
-        & ( 1
+        & ( 1.0
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_F ) ) )
-        & ( ( '+/2' @ 1 @ V_r )
+        & ( ( $sum @ 1.0 @ V_r )
           = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A @ V_G ) ) )
         & ( '2d.on/2' @ V_E @ V_C1 )
         & ( '2d.on/2' @ V_F @ V_C1 )
@@ -159,13 +161,14 @@ thf(p3,conjecture,(
         = ( '2d.length-of/1' @ ( '2d.seg/2' @ V_C @ V_F ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_AP_dot_0: 'R'] :
+    ^ [V_AP_dot_0: $real] :
       ( V_AP_dot_0
-      = ( 'sqrt/1' @ ( '-/2' @ 1 @ V_r ) ) ) ),
+      = ( 'sqrt/1' @ ( $difference @ 1.0 @ 'r/0' ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_CF_dot_0: 'R'] :
+    ^ [V_CF_dot_0: $real] :
       ( V_CF_dot_0
-      = ( 'sqrt/1' @ ( '-/2' @ 2 @ ( '*/2' @ 2 @ ( 'sqrt/1' @ ( '-/2' @ 1 @ ( '^/2' @ V_r @ 2 ) ) ) ) ) ) ) ),
+      = ( 'sqrt/1' @ ( $difference @ 2.0 @ ( $product @ 2.0 @ ( 'sqrt/1' @ ( $difference @ 1.0 @ ( '^/2' @ 'r/0' @ 2.0 ) ) ) ) ) ) ) ),
     answer_to(p2_question,[])).
+

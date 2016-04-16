@@ -141,3 +141,28 @@
   p4
   (PLam abbc (= abbc (list-of (sqrt 5) (/ 1 2)))))
 
+(def-answer
+  a1
+  (PLam V_S (&&
+              (< 0 a)
+              (< 0 b)
+              (< 0 c)
+              (= V_S (list-of (* (/ 1 3) (Pi) (^ a 2) (+ (* 3 b) c))
+                              (* (Pi) a (+ (* 2 b) (sqrt (+ (^ a 2) (^ c 2)))))
+                              )
+                 ))
+        ))
+
+(def-answer
+  a2_1
+  (PLam T (&&
+    (< 0 a)
+    (< 0 V)
+    (= T (+ (/ (* 2 V) a) (/ (* (sqrt 5) (Pi) (^ a 2)) 3)))
+  ))
+)
+
+(def-answer
+  a2_2
+  (PLam abbc (= abbc (list-of (sqrt 5) (/ 1 2)))))
+

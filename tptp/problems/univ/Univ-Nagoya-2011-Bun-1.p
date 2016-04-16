@@ -14,82 +14,82 @@
 %% solutions of the cubic equation $x^3 - x^2 = p(x -\frac{3}{2})$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  165 (  18 equality;  33 variable)
-%            Maximal formula depth :   19 (  12 average)
-%            Number of connectives :  123 (   0   ~;   8   |;  12   &; 103   @)
+% Syntax   : Number of formulae    :    7 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  183 (  17 equality;  22 variable)
+%            Maximal formula depth :   18 (  11 average)
+%            Number of connectives :  143 (   0   ~;   8   |;  12   &; 123   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   32 (   0   :)
-%            Number of variables   :   13 (   2 sgn;   1   !;   3   ?;   7   ^)
-%                                         (  11   :;   0  !>;   0  ?*)
+%            Number of symbols     :   36 (   1   :;   0   =)
+%            Number of variables   :    8 (   0 sgn;   0   !;   2   ?;   6   ^)
+%                                         (   8   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   17 (   1 pred;    3 func;   13 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('p/0_type',type,(
+    'p/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
+    ( 'draw/1' @ '2d.Shape'
     @ ^ [V_C: '2d.Shape'] :
         ( V_C
-        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ -1 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) ) ) )).
+        = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ -1.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ) ) )).
 
-thf(p2_qustion,question,(
-    ! [Tv3: $tType] :
-      ( 'Find/1'
-      @ ^ [V_l: '2d.Shape'] :
-        ? [V_p: '2d.Point',V_q: '2d.Point',V_t: Tv3] :
-          ( ( '</2' @ ( '2d.x-coord/1' @ V_p ) @ ( '2d.x-coord/1' @ V_q ) )
-          & ( V_l
-            = ( '2d.line/2' @ V_p @ V_q ) )
-          & ( '2d.on/2' @ ( '2d.point/2' @ ( '//2' @ 3 @ 2 ) @ 0 ) @ V_l )
-          & ( '2d.tangent/2' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ -1 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) ) @ V_l ) ) ) )).
+thf(p2_qustion,question,
+    ( 'find/1' @ '2d.Shape'
+    @ ^ [V_l: '2d.Shape'] :
+      ? [V_p: '2d.Point',V_q: '2d.Point'] :
+        ( ( $less @ ( '2d.x-coord/1' @ V_p ) @ ( '2d.x-coord/1' @ V_q ) )
+        & ( V_l
+          = ( '2d.line/2' @ V_p @ V_q ) )
+        & ( '2d.on/2' @ ( '2d.point/2' @ ( $quotient @ 3.0 @ 2.0 ) @ 0.0 ) @ V_l )
+        & ( '2d.tangent/2' @ ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ -1.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ) @ V_l ) ) )).
 
 thf(p3_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_c: 'Z'] :
+    ( 'find/1' @ $int
+    @ ^ [V_c: $int] :
         ( V_c
-        = ( 'cardinality-of/1'
-          @ ( 'set-by-def/1'
-            @ ^ [V_x: 'R'] :
-                ( ( '-/2' @ ( '^/2' @ V_x @ 3 ) @ ( '^/2' @ V_x @ 2 ) )
-                = ( '*/2' @ V_p @ ( '-/2' @ V_x @ ( '//2' @ 3 @ 2 ) ) ) ) ) ) ) )).
+        = ( 'cardinality-of/1' @ $real
+          @ ( 'set-by-def/1' @ $real
+            @ ^ [V_x: $real] :
+                ( ( $difference @ ( '^/2' @ V_x @ 3.0 ) @ ( '^/2' @ V_x @ 2.0 ) )
+                = ( $product @ 'p/0' @ ( $difference @ V_x @ ( $quotient @ 3.0 @ 2.0 ) ) ) ) ) ) ) )).
 
-thf(p1_answer,answer,(
-    ^ [V_C_dot_0: '2d.Shape'] :
-      ( V_C_dot_0
-      = ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ -1 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) ) ) ),
+thf(p1_answer,answer,
+    ( '2d.graph-of/1' @ ( 'poly-fun/1' @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ -1.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
     ^ [V_l_dot_0: '2d.Shape'] :
       ( ( V_l_dot_0
-        = ( '2d.line/2' @ ( '2d.point/2' @ 0 @ 0 ) @ ( '2d.point/2' @ 1 @ 0 ) ) )
+        = ( '2d.line/2' @ ( '2d.point/2' @ 0.0 @ 0.0 ) @ ( '2d.point/2' @ 1.0 @ 0.0 ) ) )
       | ( V_l_dot_0
-        = ( '2d.line/2' @ ( '2d.point/2' @ 0 @ ( '//2' @ -9 @ 32 ) ) @ ( '2d.point/2' @ ( '//2' @ 3 @ 2 ) @ 0 ) ) )
+        = ( '2d.line/2' @ ( '2d.point/2' @ 0.0 @ ( $quotient @ -9.0 @ 32.0 ) ) @ ( '2d.point/2' @ ( $quotient @ 3.0 @ 2.0 ) @ 0.0 ) ) )
       | ( V_l_dot_0
-        = ( '2d.line/2' @ ( '2d.point/2' @ 0 @ -12 ) @ ( '2d.point/2' @ ( '//2' @ 3 @ 2 ) @ 0 ) ) ) ) ),
+        = ( '2d.line/2' @ ( '2d.point/2' @ 0.0 @ -12.0 ) @ ( '2d.point/2' @ ( $quotient @ 3.0 @ 2.0 ) @ 0.0 ) ) ) ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(
-    ^ [V_c_dot_0: 'Z'] :
-      ( ( ( '</2' @ V_p @ 0 )
+    ^ [V_c_dot_0: $int] :
+      ( ( ( $less @ 'p/0' @ 0.0 )
         & ( V_c_dot_0 = 1 ) )
-      | ( ( V_p = 0 )
+      | ( ( 'p/0' = 0.0 )
         & ( V_c_dot_0 = 2 ) )
-      | ( ( '</2' @ 0 @ V_p )
-        & ( '</2' @ V_p @ ( '//2' @ 3 @ 16 ) )
+      | ( ( $less @ 0.0 @ 'p/0' )
+        & ( $less @ 'p/0' @ ( $quotient @ 3.0 @ 16.0 ) )
         & ( V_c_dot_0 = 3 ) )
-      | ( ( V_p
-          = ( '//2' @ 3 @ 16 ) )
+      | ( ( 'p/0'
+          = ( $quotient @ 3.0 @ 16.0 ) )
         & ( V_c_dot_0 = 2 ) )
-      | ( ( '</2' @ ( '//2' @ 3 @ 16 ) @ V_p )
-        & ( '</2' @ V_p @ 8 )
+      | ( ( $less @ ( $quotient @ 3.0 @ 16.0 ) @ 'p/0' )
+        & ( $less @ 'p/0' @ 8.0 )
         & ( V_c_dot_0 = 1 ) )
-      | ( ( V_p = 8 )
+      | ( ( 'p/0' = 8.0 )
         & ( V_c_dot_0 = 2 ) )
-      | ( ( '</2' @ 8 @ V_p )
+      | ( ( $less @ 8.0 @ 'p/0' )
         & ( V_c_dot_0 = 3 ) ) ) ),
     answer_to(p3_question,[])).
+

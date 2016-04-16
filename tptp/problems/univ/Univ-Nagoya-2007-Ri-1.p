@@ -22,88 +22,97 @@
 %% that $A^2 = E$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    5 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  165 (  27 equality;  48 variable)
-%            Maximal formula depth :   14 (  12 average)
-%            Number of connectives :  110 (   0   ~;   5   |;  20   &;  84   @)
+% Syntax   : Number of formulae    :    8 (   0 unit;   3 type;   0 defn)
+%            Number of atoms       :  197 (  27 equality;  17 variable)
+%            Maximal formula depth :   14 (   8 average)
+%            Number of connectives :  142 (   0   ~;   5   |;  20   &; 116   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   17 (   0   :)
-%            Number of variables   :   22 (   3 sgn;   4   !;   2   ?;   4   ^)
+%            Number of symbols     :   20 (   3   :;   0   =)
+%            Number of variables   :   10 (   0 sgn;   4   !;   2   ?;   4   ^)
 %                                         (  10   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   2 pred;    1 func;    5 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
+
+thf('d/0_type',type,(
+    'd/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_As: 'ListOf' @ 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_As: ( 'ListOf' @ $real )] :
       ? [V_A: '2d.Matrix'] :
         ( ( ( '2d.m^/2' @ V_A @ 2 )
           = '2d.identity-matrix/0' )
         & ( V_A
-          = ( '2d.matrix/4' @ V_a @ V_b @ 0 @ V_d ) )
+          = ( '2d.matrix/4' @ 'a/0' @ 'b/0' @ 0.0 @ 'd/0' ) )
         & ( V_As
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ ( 'cons/2' @ V_d @ 'nil/0' ) ) ) ) ) )).
+          = ( 'cons/2' @ $real @ 'a/0' @ ( 'cons/2' @ $real @ 'b/0' @ ( 'cons/2' @ $real @ 'd/0' @ ( 'nil/0' @ $real ) ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_As: 'ListOf' @ 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_As: ( 'ListOf' @ $real )] :
       ? [V_A: '2d.Matrix'] :
         ( ( ( '2d.m^/2' @ V_A @ 3 )
           = '2d.identity-matrix/0' )
         & ( V_A
-          = ( '2d.matrix/4' @ V_a @ V_b @ 0 @ V_d ) )
+          = ( '2d.matrix/4' @ 'a/0' @ 'b/0' @ 0.0 @ 'd/0' ) )
         & ( V_As
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ ( 'cons/2' @ V_d @ 'nil/0' ) ) ) ) ) )).
+          = ( 'cons/2' @ $real @ 'a/0' @ ( 'cons/2' @ $real @ 'b/0' @ ( 'cons/2' @ $real @ 'd/0' @ ( 'nil/0' @ $real ) ) ) ) ) ) )).
 
 thf(p3,conjecture,(
-    ! [V_A: '2d.Matrix',V_a: 'R',V_b: 'R',V_d: 'R'] :
+    ! [V_A: '2d.Matrix',V_a: $real,V_b: $real,V_d: $real] :
       ( ( ( ( '2d.m^/2' @ V_A @ 4 )
           = '2d.identity-matrix/0' )
         & ( V_A
-          = ( '2d.matrix/4' @ V_a @ V_b @ 0 @ V_d ) ) )
+          = ( '2d.matrix/4' @ V_a @ V_b @ 0.0 @ V_d ) ) )
      => ( ( '2d.m^/2' @ V_A @ 2 )
         = '2d.identity-matrix/0' ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_As_dot_0: 'ListOf' @ 'R'] :
-      ( ( ( V_b = 0 )
-        & ( V_a = 1 )
-        & ( V_d = 1 )
+    ^ [V_As_dot_0: ( 'ListOf' @ $real )] :
+      ( ( ( 'b/0' = 0.0 )
+        & ( 'a/0' = 1.0 )
+        & ( 'd/0' = 1.0 )
         & ( V_As_dot_0
-          = ( 'cons/2' @ 1 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) )
-      | ( ( V_b = 0 )
-        & ( V_a
-          = ( '-/1' @ 1 ) )
-        & ( V_d
-          = ( '-/1' @ 1 ) )
+          = ( 'cons/2' @ $real @ 1.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) )
+      | ( ( 'b/0' = 0.0 )
+        & ( 'a/0'
+          = ( $uminus @ 1.0 ) )
+        & ( 'd/0'
+          = ( $uminus @ 1.0 ) )
         & ( V_As_dot_0
-          = ( 'cons/2' @ ( '-/1' @ 1 ) @ ( 'cons/2' @ 0 @ ( 'cons/2' @ ( '-/1' @ 1 ) @ 'nil/0' ) ) ) ) )
-      | ( ( ( '<=/2' @ V_b @ 0 )
-          | ( '</2' @ 0 @ V_b ) )
-        & ( V_a = 1 )
-        & ( V_d
-          = ( '-/1' @ 1 ) )
+          = ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) )
+      | ( ( ( $lesseq @ 'b/0' @ 0.0 )
+          | ( $less @ 0.0 @ 'b/0' ) )
+        & ( 'a/0' = 1.0 )
+        & ( 'd/0'
+          = ( $uminus @ 1.0 ) )
         & ( V_As_dot_0
-          = ( 'cons/2' @ 1 @ ( 'cons/2' @ V_b @ ( 'cons/2' @ ( '-/1' @ 1 ) @ 'nil/0' ) ) ) ) )
-      | ( ( ( '<=/2' @ V_b @ 0 )
-          | ( '</2' @ 0 @ V_b ) )
-        & ( V_a
-          = ( '-/1' @ 1 ) )
-        & ( V_d = 1 )
+          = ( 'cons/2' @ $real @ 1.0 @ ( 'cons/2' @ $real @ 'b/0' @ ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) )
+      | ( ( ( $lesseq @ 'b/0' @ 0.0 )
+          | ( $less @ 0.0 @ 'b/0' ) )
+        & ( 'a/0'
+          = ( $uminus @ 1.0 ) )
+        & ( 'd/0' = 1.0 )
         & ( V_As_dot_0
-          = ( 'cons/2' @ ( '-/1' @ 1 ) @ ( 'cons/2' @ V_b @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) ) ),
+          = ( 'cons/2' @ $real @ ( $uminus @ 1.0 ) @ ( 'cons/2' @ $real @ 'b/0' @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_As_dot_0: 'ListOf' @ 'R'] :
-      ( ( V_a = 1 )
-      & ( V_d = 1 )
-      & ( V_b = 0 )
+    ^ [V_As_dot_0: ( 'ListOf' @ $real )] :
+      ( ( 'a/0' = 1.0 )
+      & ( 'd/0' = 1.0 )
+      & ( 'b/0' = 0.0 )
       & ( V_As_dot_0
-        = ( 'cons/2' @ 1 @ ( 'cons/2' @ 0 @ ( 'cons/2' @ 1 @ 'nil/0' ) ) ) ) ) ),
+        = ( 'cons/2' @ $real @ 1.0 @ ( 'cons/2' @ $real @ 0.0 @ ( 'cons/2' @ $real @ 1.0 @ ( 'nil/0' @ $real ) ) ) ) ) ) ),
     answer_to(p2_question,[])).
+

@@ -12,20 +12,18 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   55 (   0 equality;  33 variable)
-%            Maximal formula depth :   16 (  16 average)
-%            Number of connectives :   54 (   0   ~;   0   |;   8   &;  43   @)
-%                                         (   0 <=>;   3  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%            Number of atoms       :   36 (   0 equality;  22 variable)
+%            Maximal formula depth :   15 (  15 average)
+%            Number of connectives :   35 (   0   ~;   0   |;   5   &;  28   @)
+%                                         (   1 <=>;   1  =>;   0  <=;   0 <~>)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :    9 (   0   :)
-%            Number of variables   :    7 (   0 sgn;   5   !;   2   ?;   0   ^)
-%                                         (   7   :;   0  !>;   0  ?*)
+%            Number of symbols     :    9 (   0   :;   0   =)
+%            Number of variables   :    6 (   0 sgn;   5   !;   1   ?;   0   ^)
+%                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_K: '2d.Shape'] :
@@ -33,13 +31,9 @@ thf(p,conjecture,(
         & ( '2d.circle-type/1' @ V_K )
         & ( '2d.is-diameter-of/2' @ ( '2d.seg/2' @ V_A @ V_B ) @ V_K )
         & ( '2d.tangent/2' @ ( '2d.line/2' @ V_C @ V_D ) @ V_K ) )
-     => ( ( ? [V_K2: '2d.Shape'] :
-              ( ( '2d.circle-type/1' @ V_K2 )
-              & ( '2d.is-diameter-of/2' @ ( '2d.seg/2' @ V_C @ V_D ) @ V_K2 )
-              & ( '2d.tangent/2' @ ( '2d.line/2' @ V_A @ V_B ) @ V_K2 ) )
-         => ( '2d.parallel/2' @ ( '2d.line/2' @ V_B @ V_C ) @ ( '2d.line/2' @ V_A @ V_D ) ) )
-        & ( ( '2d.parallel/2' @ ( '2d.line/2' @ V_B @ V_C ) @ ( '2d.line/2' @ V_A @ V_D ) )
-         => ? [V_K2_dot_0: '2d.Shape'] :
-              ( ( '2d.circle-type/1' @ V_K2_dot_0 )
-              & ( '2d.is-diameter-of/2' @ ( '2d.seg/2' @ V_C @ V_D ) @ V_K2_dot_0 )
-              & ( '2d.tangent/2' @ ( '2d.line/2' @ V_A @ V_B ) @ V_K2_dot_0 ) ) ) ) ) )).
+     => ( ? [V_K2: '2d.Shape'] :
+            ( ( '2d.circle-type/1' @ V_K2 )
+            & ( '2d.is-diameter-of/2' @ ( '2d.seg/2' @ V_C @ V_D ) @ V_K2 )
+            & ( '2d.tangent/2' @ ( '2d.line/2' @ V_A @ V_B ) @ V_K2 ) )
+      <=> ( '2d.parallel/2' @ ( '2d.line/2' @ V_B @ V_C ) @ ( '2d.line/2' @ V_A @ V_D ) ) ) ) )).
+

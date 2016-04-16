@@ -11,32 +11,32 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   32 (   3 equality;   7 variable)
+%            Number of atoms       :   40 (   3 equality;   7 variable)
 %            Maximal formula depth :   14 (  10 average)
-%            Number of connectives :   26 (   0   ~;   0   |;   1   &;  25   @)
+%            Number of connectives :   34 (   0   ~;   0   |;   1   &;  33   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   11 (   0   :)
+%            Number of symbols     :   11 (   0   :;   0   =)
 %            Number of variables   :    4 (   0 sgn;   0   !;   2   ?;   2   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    5 (   0 pred;    2 func;    3 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_xy: 'ListOf' @ 'Z'] :
-      ? [V_x: 'Z',V_y: 'Z'] :
+    ( 'find/1' @ ( 'ListOf' @ $int )
+    @ ^ [V_xy: ( 'ListOf' @ $int )] :
+      ? [V_x: $int,V_y: $int] :
         ( ( V_xy
-          = ( 'cons/2' @ V_x @ ( 'cons/2' @ V_y @ 'nil/0' ) ) )
-        & ( ( 'int.+/2' @ 1 @ ( 'int.+/2' @ ( 'int.^/2' @ 2 @ V_x ) @ ( 'int.^/2' @ 2 @ ( 'int.+/2' @ ( 'int.*/2' @ 2 @ V_x ) @ 1 ) ) ) )
+          = ( 'cons/2' @ $int @ V_x @ ( 'cons/2' @ $int @ V_y @ ( 'nil/0' @ $int ) ) ) )
+        & ( ( $sum @ 1 @ ( $sum @ ( 'int.^/2' @ 2 @ V_x ) @ ( 'int.^/2' @ 2 @ ( $sum @ ( $product @ 2 @ V_x ) @ 1 ) ) ) )
           = ( 'int.^/2' @ V_y @ 2 ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_xy_dot_0: 'ListOf' @ 'Z'] :
+    ^ [V_xy_dot_0: ( 'ListOf' @ $int )] :
       ( V_xy_dot_0
-      = ( 'cons/2' @ 0 @ ( 'cons/2' @ 2 @ 'nil/0' ) ) ) ),
+      = ( 'cons/2' @ $int @ 0 @ ( 'cons/2' @ $int @ 2 @ ( 'nil/0' @ $int ) ) ) ) ),
     answer_to(p_question,[])).
+

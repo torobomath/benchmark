@@ -18,19 +18,18 @@
 %            Maximal formula depth :   15 (  15 average)
 %            Number of connectives :   28 (   0   ~;   0   |;   6   &;  21   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   0   :)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :    5 (   0 sgn;   5   !;   0   ?;   0   ^)
 %                                         (   5   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    3 (   0 pred;    2 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_T: '2d.Shape',V_K1: '2d.Shape',V_K2: '2d.Shape',V_r: 'R',V_rho: 'R'] :
+    ! [V_T: '2d.Shape',V_K1: '2d.Shape',V_K2: '2d.Shape',V_r: $real,V_rho: $real] :
       ( ( ( '2d.isosceles-triangle-type/1' @ V_T )
         & ( '2d.circle-type/1' @ V_K1 )
         & ( '2d.circle-type/1' @ V_K2 )
@@ -41,4 +40,5 @@ thf(p,conjecture,(
         & ( V_rho
           = ( '2d.radius-of/1' @ V_K2 ) ) )
      => ( ( '2d.length-of/1' @ ( '2d.seg/2' @ ( '2d.center-of/1' @ V_K1 ) @ ( '2d.center-of/1' @ V_K2 ) ) )
-        = ( 'sqrt/1' @ ( '*/2' @ V_r @ ( '-/2' @ V_r @ ( '*/2' @ 2 @ V_rho ) ) ) ) ) ) )).
+        = ( 'sqrt/1' @ ( $product @ V_r @ ( $difference @ V_r @ ( $product @ 2.0 @ V_rho ) ) ) ) ) ) )).
+

@@ -10,16 +10,15 @@
 %            Maximal formula depth :   22 (  22 average)
 %            Number of connectives :   59 (   0   ~;   0   |;   6   &;  52   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   14 (   0   :)
+%            Number of symbols     :   14 (   0   :;   0   =)
 %            Number of variables   :    9 (   0 sgn;   9   !;   0   ?;   0   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    2 (   0 pred;    1 func;    1 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
     ! [V_Cir: '2d.Shape',V_A: '2d.Point',V_B: '2d.Point',V_C: '2d.Point',V_D: '2d.Point',V_E: '2d.Point',V_F: '2d.Point',V_P: '2d.Point',V_Q: '2d.Point'] :
@@ -30,5 +29,6 @@ thf(p,conjecture,(
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_B @ V_C ) @ ( '2d.line/2' @ V_A @ V_D ) @ V_F )
         & ( '2d.tangent/3' @ ( '2d.line/2' @ V_E @ V_P ) @ V_Cir @ V_P )
         & ( '2d.tangent/3' @ ( '2d.line/2' @ V_F @ V_Q ) @ V_Cir @ V_Q ) )
-     => ( ( '+/2' @ ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_E @ V_P ) ) @ 2 ) @ ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_F @ V_Q ) ) @ 2 ) )
-        = ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_E @ V_F ) ) @ 2 ) ) ) )).
+     => ( ( $sum @ ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_E @ V_P ) ) @ 2.0 ) @ ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_F @ V_Q ) ) @ 2.0 ) )
+        = ( '^/2' @ ( '2d.length-of/1' @ ( '2d.seg/2' @ V_E @ V_F ) ) @ 2.0 ) ) ) )).
+

@@ -83,10 +83,9 @@
 
 (def-directive
   p4
-  (Find (Als)
-  (exists (X Y Z A A11 A12 A21 A22)
+  (Find (A)
+  (exists (X Y Z)
     (&&
-     (= A (matrix A11 A12 A21 A22))
      (= X (vec (point 1 0) (point 0 0)))
      (! (= Y X))
      (= (radius X) 1)
@@ -95,13 +94,12 @@
      (= (mv* A X) Y)
      (= (mv* A Y) Z)
      (= (mv* A Z) X)
-     (= Als (list-of A11 A12 A21 A22))
      ))))
 
-(def-answer p4 (PLam Als (|| (= Als (list-of
+(def-answer p4 (PLam A (|| (= A (matrix
          (/ -1 2) (/ (sqrt 3) 2)
          (/ (- (sqrt 3)) 2) (/ -1 2)))
-      (= Als (list-of
+      (= A (matrix
          (/ -1 2) (- (/ (sqrt 3) 2))
          (/ (sqrt 3) 2) (/ -1 2)))
 )))

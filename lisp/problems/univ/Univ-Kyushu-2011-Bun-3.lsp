@@ -35,7 +35,7 @@
 
 (def-directive
   p2
-  (Show (forall (A B C O M)
+  (Show (forall (A B C O)
                 (-> (&& (is-right (angle B A C))
                         (= (distance B C) 2)
                         (= (v- (sv* 4 (vec O A))

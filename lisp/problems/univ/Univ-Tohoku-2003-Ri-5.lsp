@@ -55,3 +55,15 @@
   (= r (./ (.+ (.^ a 2) 1) 2))
 )))
 
+(def-answer a_1 (2d.shape-of-cpfun (PLam alpha (exists (x y) (&&
+                                                               (= alpha (2d.point x y))
+                                                               (|| (2d.on (2d.point x y) (2d.circle (2d.origin) 1))
+                                                                   (2d.on (2d.point x y) (2d.y-axis)))
+                                                               (! (= y 0)))
+                                                       ))))
+
+(def-answer a_2 (PLam r (&&
+  (> a 0)
+  (= r (./ (.+ (.^ a 2) 1) 2))
+)))
+

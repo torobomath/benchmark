@@ -15,100 +15,106 @@
 %% $a$ and $b$ that give the minimum value.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  185 (   8 equality;  52 variable)
-%            Maximal formula depth :   30 (  18 average)
-%            Number of connectives :  167 (   0   ~;   0   |;  12   &; 155   @)
+% Syntax   : Number of formulae    :    6 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :  206 (   8 equality;  38 variable)
+%            Maximal formula depth :   30 (  12 average)
+%            Number of connectives :  188 (   0   ~;   0   |;  12   &; 176   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   23 (   0   :)
-%            Number of variables   :   20 (   0 sgn;   0   !;   5   ?;  11   ^)
+%            Number of symbols     :   26 (   2   :;   0   =)
+%            Number of variables   :   16 (   0 sgn;   0   !;   5   ?;  11   ^)
 %                                         (  16   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :   11 (   1 pred;    3 func;    7 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('a/0_type',type,(
+    'a/0': $real )).
+
+thf('b/0_type',type,(
+    'b/0': $real )).
 
 thf(p1_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_S: 'R'] :
-        ( ( '<=/2' @ 0 @ V_a )
-        & ( '<=/2' @ 0 @ V_b )
+    ( 'find/1' @ $real
+    @ ^ [V_S: $real] :
+        ( ( $lesseq @ 0.0 @ 'a/0' )
+        & ( $lesseq @ 0.0 @ 'b/0' )
         & ( V_S
           = ( '2d.area-of/1'
             @ ( '2d.shape-enclosed-by/1'
-              @ ( 'cons/2'
+              @ ( 'cons/2' @ '2d.Shape'
                 @ ( '2d.graph-of/1'
                   @ ( 'fun/1'
-                    @ ^ [V_x_dot_0: 'R'] :
-                        ( '+/2' @ ( '^/2' @ V_x_dot_0 @ 3 ) @ ( '*/2' @ V_b @ ( '^/2' @ V_x_dot_0 @ 2 ) ) ) ) )
-                @ ( 'cons/2'
+                    @ ^ [V_x_dot_0: $real] :
+                        ( $sum @ ( '^/2' @ V_x_dot_0 @ 3.0 ) @ ( $product @ 'b/0' @ ( '^/2' @ V_x_dot_0 @ 2.0 ) ) ) ) )
+                @ ( 'cons/2' @ '2d.Shape'
                   @ ( '2d.graph-of/1'
                     @ ( 'fun/1'
-                      @ ^ [V_x: 'R'] :
-                          ( '+/2' @ ( '*/2' @ V_a @ ( '^/2' @ V_x @ 2 ) ) @ ( '*/2' @ V_a @ ( '*/2' @ V_b @ V_x ) ) ) ) )
-                  @ 'nil/0' ) ) ) ) ) ) )).
+                      @ ^ [V_x: $real] :
+                          ( $sum @ ( $product @ 'a/0' @ ( '^/2' @ V_x @ 2.0 ) ) @ ( $product @ 'a/0' @ ( $product @ 'b/0' @ V_x ) ) ) ) )
+                  @ ( 'nil/0' @ '2d.Shape' ) ) ) ) ) ) ) )).
 
 thf(p2_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_a_b_minS: 'ListOf' @ 'R'] :
-      ? [V_a: 'R',V_b: 'R',V_minS: 'R'] :
+    ( 'find/1' @ ( 'ListOf' @ $real )
+    @ ^ [V_a_b_minS: ( 'ListOf' @ $real )] :
+      ? [V_a: $real,V_b: $real,V_minS: $real] :
         ( ( 'minimum/2'
-          @ ( 'set-by-def/1'
-            @ ^ [V_S: 'R'] :
-              ? [V_a_dot_0: 'R',V_b_dot_0: 'R'] :
-                ( ( '<=/2' @ 0 @ V_a_dot_0 )
-                & ( '<=/2' @ 0 @ V_b_dot_0 )
-                & ( ( '+/2' @ V_a_dot_0 @ V_b_dot_0 )
-                  = 1 )
+          @ ( 'set-by-def/1' @ $real
+            @ ^ [V_S: $real] :
+              ? [V_a_dot_0: $real,V_b_dot_0: $real] :
+                ( ( $lesseq @ 0.0 @ V_a_dot_0 )
+                & ( $lesseq @ 0.0 @ V_b_dot_0 )
+                & ( ( $sum @ V_a_dot_0 @ V_b_dot_0 )
+                  = 1.0 )
                 & ( V_S
                   = ( '2d.area-of/1'
                     @ ( '2d.shape-enclosed-by/1'
-                      @ ( 'cons/2'
+                      @ ( 'cons/2' @ '2d.Shape'
                         @ ( '2d.graph-of/1'
                           @ ( 'fun/1'
-                            @ ^ [V_x_dot_2: 'R'] :
-                                ( '+/2' @ ( '^/2' @ V_x_dot_2 @ 3 ) @ ( '*/2' @ V_b_dot_0 @ ( '^/2' @ V_x_dot_2 @ 2 ) ) ) ) )
-                        @ ( 'cons/2'
+                            @ ^ [V_x_dot_2: $real] :
+                                ( $sum @ ( '^/2' @ V_x_dot_2 @ 3.0 ) @ ( $product @ V_b_dot_0 @ ( '^/2' @ V_x_dot_2 @ 2.0 ) ) ) ) )
+                        @ ( 'cons/2' @ '2d.Shape'
                           @ ( '2d.graph-of/1'
                             @ ( 'fun/1'
-                              @ ^ [V_x_dot_1: 'R'] :
-                                  ( '+/2' @ ( '*/2' @ V_a_dot_0 @ ( '^/2' @ V_x_dot_1 @ 2 ) ) @ ( '*/2' @ V_a_dot_0 @ ( '*/2' @ V_b_dot_0 @ V_x_dot_1 ) ) ) ) )
-                          @ 'nil/0' ) ) ) ) ) ) )
+                              @ ^ [V_x_dot_1: $real] :
+                                  ( $sum @ ( $product @ V_a_dot_0 @ ( '^/2' @ V_x_dot_1 @ 2.0 ) ) @ ( $product @ V_a_dot_0 @ ( $product @ V_b_dot_0 @ V_x_dot_1 ) ) ) ) )
+                          @ ( 'nil/0' @ '2d.Shape' ) ) ) ) ) ) ) )
           @ V_minS )
-        & ( '<=/2' @ 0 @ V_a )
-        & ( '<=/2' @ 0 @ V_b )
-        & ( ( '+/2' @ V_a @ V_b )
-          = 1 )
+        & ( $lesseq @ 0.0 @ V_a )
+        & ( $lesseq @ 0.0 @ V_b )
+        & ( ( $sum @ V_a @ V_b )
+          = 1.0 )
         & ( V_minS
           = ( '2d.area-of/1'
             @ ( '2d.shape-enclosed-by/1'
-              @ ( 'cons/2'
+              @ ( 'cons/2' @ '2d.Shape'
                 @ ( '2d.graph-of/1'
                   @ ( 'fun/1'
-                    @ ^ [V_x_dot_0: 'R'] :
-                        ( '+/2' @ ( '^/2' @ V_x_dot_0 @ 3 ) @ ( '*/2' @ V_b @ ( '^/2' @ V_x_dot_0 @ 2 ) ) ) ) )
-                @ ( 'cons/2'
+                    @ ^ [V_x_dot_0: $real] :
+                        ( $sum @ ( '^/2' @ V_x_dot_0 @ 3.0 ) @ ( $product @ V_b @ ( '^/2' @ V_x_dot_0 @ 2.0 ) ) ) ) )
+                @ ( 'cons/2' @ '2d.Shape'
                   @ ( '2d.graph-of/1'
                     @ ( 'fun/1'
-                      @ ^ [V_x: 'R'] :
-                          ( '+/2' @ ( '*/2' @ V_a @ ( '^/2' @ V_x @ 2 ) ) @ ( '*/2' @ V_a @ ( '*/2' @ V_b @ V_x ) ) ) ) )
-                  @ 'nil/0' ) ) ) ) )
+                      @ ^ [V_x: $real] :
+                          ( $sum @ ( $product @ V_a @ ( '^/2' @ V_x @ 2.0 ) ) @ ( $product @ V_a @ ( $product @ V_b @ V_x ) ) ) ) )
+                  @ ( 'nil/0' @ '2d.Shape' ) ) ) ) ) )
         & ( V_a_b_minS
-          = ( 'cons/2' @ V_a @ ( 'cons/2' @ V_b @ ( 'cons/2' @ V_minS @ 'nil/0' ) ) ) ) ) )).
+          = ( 'cons/2' @ $real @ V_a @ ( 'cons/2' @ $real @ V_b @ ( 'cons/2' @ $real @ V_minS @ ( 'nil/0' @ $real ) ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
-    ^ [V_S_dot_0: 'R'] :
+    ^ [V_S_dot_0: $real] :
       ( ( V_S_dot_0
-        = ( '*/2' @ ( '//2' @ 1 @ 12 ) @ ( '+/2' @ ( '^/2' @ V_a @ 4 ) @ ( '+/2' @ ( '*/2' @ 2 @ ( '*/2' @ ( '^/2' @ V_a @ 3 ) @ V_b ) ) @ ( '+/2' @ ( '*/2' @ 2 @ ( '*/2' @ V_a @ ( '^/2' @ V_b @ 3 ) ) ) @ ( '^/2' @ V_b @ 4 ) ) ) ) ) )
-      & ( '<=/2' @ 0 @ V_a )
-      & ( '<=/2' @ 0 @ V_b ) ) ),
+        = ( $product @ ( $quotient @ 1.0 @ 12.0 ) @ ( $sum @ ( '^/2' @ 'a/0' @ 4.0 ) @ ( $sum @ ( $product @ 2.0 @ ( $product @ ( '^/2' @ 'a/0' @ 3.0 ) @ 'b/0' ) ) @ ( $sum @ ( $product @ 2.0 @ ( $product @ 'a/0' @ ( '^/2' @ 'b/0' @ 3.0 ) ) ) @ ( '^/2' @ 'b/0' @ 4.0 ) ) ) ) ) )
+      & ( $lesseq @ 0.0 @ 'a/0' )
+      & ( $lesseq @ 0.0 @ 'b/0' ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
-    ^ [V_a_b_minS_dot_0: 'ListOf' @ 'R'] :
+    ^ [V_a_b_minS_dot_0: ( 'ListOf' @ $real )] :
       ( V_a_b_minS_dot_0
-      = ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ ( 'cons/2' @ ( '//2' @ 1 @ 2 ) @ ( 'cons/2' @ ( '//2' @ 1 @ 32 ) @ 'nil/0' ) ) ) ) ),
+      = ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 2.0 ) @ ( 'cons/2' @ $real @ ( $quotient @ 1.0 @ 32.0 ) @ ( 'nil/0' @ $real ) ) ) ) ) ),
     answer_to(p2_question,[])).
+

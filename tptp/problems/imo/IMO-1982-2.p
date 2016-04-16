@@ -18,19 +18,17 @@
 %            Maximal formula depth :   44 (  44 average)
 %            Number of connectives :  103 (   1   ~;   0   |;  21   &;  80   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   17 (   0   :)
+%            Number of symbols     :   17 (   0   :;   0   =)
 %            Number of variables   :   20 (   0 sgn;  19   !;   1   ?;   0   ^)
 %                                         (  20   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
 
 thf(p,conjecture,(
-    ! [V_A1: '2d.Point',V_A2: '2d.Point',V_A3: '2d.Point',V_a1: 'R',V_a2: 'R',V_a3: 'R',V_M1: '2d.Point',V_M2: '2d.Point',V_M3: '2d.Point',V_K: '2d.Shape',V_T1: '2d.Point',V_T2: '2d.Point',V_T3: '2d.Point',V_L1: '2d.Shape',V_L2: '2d.Shape',V_L3: '2d.Shape',V_S1: '2d.Point',V_S2: '2d.Point',V_S3: '2d.Point'] :
+    ! [V_A1: '2d.Point',V_A2: '2d.Point',V_A3: '2d.Point',V_a1: $real,V_a2: $real,V_a3: $real,V_M1: '2d.Point',V_M2: '2d.Point',V_M3: '2d.Point',V_K: '2d.Shape',V_T1: '2d.Point',V_T2: '2d.Point',V_T3: '2d.Point',V_L1: '2d.Shape',V_L2: '2d.Shape',V_L3: '2d.Shape',V_S1: '2d.Point',V_S2: '2d.Point',V_S3: '2d.Point'] :
       ( ( ~ ( '2d.is-isosceles-triangle/3' @ V_A1 @ V_A2 @ V_A3 )
         & ( ( '2d.length-of/1' @ ( '2d.seg/2' @ V_A2 @ V_A3 ) )
           = V_a1 )
@@ -61,3 +59,4 @@ thf(p,conjecture,(
      => ? [V_X: '2d.Point'] :
           ( ( '2d.intersect/3' @ ( '2d.line/2' @ V_M1 @ V_S1 ) @ ( '2d.line/2' @ V_M2 @ V_S2 ) @ V_X )
           & ( '2d.intersect/3' @ ( '2d.line/2' @ V_M2 @ V_S2 ) @ ( '2d.line/2' @ V_M3 @ V_S3 ) @ V_X ) ) ) )).
+

@@ -42,13 +42,13 @@
 
 (def-directive
   p2
-  (Find (CAE)
+  (Find (sin_CAE)
         (exists (A B C D E r)
                 (&& (is-square A B C D)
-                    (is-acute (angle A B C))
-                    (is-acute (angle B C D))
-                    (is-acute (angle C D A))
-                    (is-acute (angle D A B))
+                    (< 0 (sin-of-angle (angle A B C)))
+                    (< 0 (sin-of-angle (angle B C D)))
+                    (< 0 (sin-of-angle (angle C D A)))
+                    (< 0 (sin-of-angle (angle D A B)))
                     (= (distance A B) r)
                     (= (distance B C) r)
                     (= (distance A D) (* 2 r))
@@ -57,7 +57,8 @@
                        (area-of (triangle A C E)))
                     (= (area-of (triangle A C E))
                        (area-of (triangle A D E)))
-                    (= CAE (sin-of-angle (angle C A E)))))))
+                    (= (/ 3 5) (cos-of-angle (angle D A B)))
+                    (= sin_CAE (sin-of-angle (angle C A E)))))))
 
-(def-answer p2 (PLam CAE (= CAE (/ 1 (sqrt 17)))))
+(def-answer p2 (PLam sin_CAE (= sin_CAE (/ 1 (sqrt 17)))))
 

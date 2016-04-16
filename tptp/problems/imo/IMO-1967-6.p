@@ -14,41 +14,47 @@
 %% medals were awarded altogether?
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   49 (   5 equality;  18 variable)
-%            Maximal formula depth :   16 (  11 average)
-%            Number of connectives :   40 (   0   ~;   0   |;   5   &;  34   @)
+% Syntax   : Number of formulae    :    4 (   0 unit;   2 type;   0 defn)
+%            Number of atoms       :   61 (   5 equality;  13 variable)
+%            Maximal formula depth :   17 (   7 average)
+%            Number of connectives :   52 (   0   ~;   0   |;   5   &;  46   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
-%                                         (   0  ~|;   0  ~&;   0  !!;   0  ??)
+%                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   18 (   0   :)
-%            Number of variables   :    6 (   0 sgn;   1   !;   1   ?;   2   ^)
+%            Number of symbols     :   20 (   2   :;   0   =)
+%            Number of variables   :    4 (   0 sgn;   1   !;   1   ?;   2   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
+%            Arithmetic symbols    :    8 (   1 pred;    3 func;    4 numbers)
 
 include('axioms.ax').
-thf(find_directive_type, type, (! [V: $tType]: ('find/1': (V > $o) > $o))).
-thf(draw_directive_type, type, (! [V: $tType]: ('draw/1': (V > $o) > $o))).
+
+thf('m/0_type',type,(
+    'm/0': $int )).
+
+thf('n/0_type',type,(
+    'n/0': $int )).
 
 thf(p_qustion,question,
-    ( 'Find/1'
-    @ ^ [V_nm: 'ListOf' @ 'Z'] :
-      ? [V_medals: 'ListOf' @ 'Z'] :
-        ( ( V_n
-          = ( 'list-len/1' @ V_medals ) )
-        & ! [V_k: 'Z'] :
-            ( ( ( 'int.<=/2' @ 1 @ V_k )
-              & ( 'int.<=/2' @ V_k @ V_n ) )
-           => ( ( ( 'nth/2' @ ( 'int.-/2' @ V_k @ 1 ) @ V_medals )
-                = ( 'int.+/2' @ V_k @ ( 'int.div/2' @ ( 'int.sum/1' @ ( 'nthcdr/2' @ V_k @ V_medals ) ) @ 7 ) ) )
-              & ( 'int.is-divisible-by/2' @ ( 'int.sum/1' @ ( 'nthcdr/2' @ V_k @ V_medals ) ) @ 7 ) ) )
-        & ( V_m
+    ( 'find/1' @ ( 'ListOf' @ $int )
+    @ ^ [V_nm: ( 'ListOf' @ $int )] :
+      ? [V_medals: ( 'ListOf' @ $int )] :
+        ( ( 'n/0'
+          = ( 'list-len/1' @ $int @ V_medals ) )
+        & ! [V_k: $int] :
+            ( ( ( $lesseq @ 1 @ V_k )
+              & ( $lesseq @ V_k @ 'n/0' ) )
+           => ( ( ( 'nth/2' @ $int @ ( $difference @ V_k @ 1 ) @ V_medals )
+                = ( $sum @ V_k @ ( $quotient_f @ ( 'int.sum/1' @ ( 'nthcdr/2' @ $int @ V_k @ V_medals ) ) @ 7 ) ) )
+              & ( 'int.is-divisible-by/2' @ ( 'int.sum/1' @ ( 'nthcdr/2' @ $int @ V_k @ V_medals ) ) @ 7 ) ) )
+        & ( 'm/0'
           = ( 'int.sum/1' @ V_medals ) )
         & ( V_nm
-          = ( 'cons/2' @ V_n @ ( 'cons/2' @ V_m @ 'nil/0' ) ) ) ) )).
+          = ( 'cons/2' @ $int @ 'n/0' @ ( 'cons/2' @ $int @ 'm/0' @ ( 'nil/0' @ $int ) ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_nm_dot_0: 'ListOf' @ 'Z'] :
+    ^ [V_nm_dot_0: ( 'ListOf' @ $int )] :
       ( V_nm_dot_0
-      = ( 'cons/2' @ 6 @ ( 'cons/2' @ 36 @ 'nil/0' ) ) ) ),
+      = ( 'cons/2' @ $int @ 6 @ ( 'cons/2' @ $int @ 36 @ ( 'nil/0' @ $int ) ) ) ) ),
     answer_to(p_question,[])).
+
