@@ -6,13 +6,13 @@
 %% GENERATED: 2014-12-29
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  117 (  14 equality;  50 variable)
+%            Number of atoms       :  109 (  14 equality;  50 variable)
 %            Maximal formula depth :   26 (  15 average)
-%            Number of connectives :   85 (   0   ~;   0   |;  10   &;  75   @)
+%            Number of connectives :   77 (   0   ~;   0   |;  10   &;  67   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :   16 (  16   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   14 (   0   :;   0   =)
+%            Number of symbols     :   13 (   0   :;   0   =)
 %            Number of variables   :   36 (   0 sgn;   0   !;  14   ?;  22   ^)
 %                                         (  36   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
@@ -39,8 +39,8 @@ thf(p1_qustion,question,
                 ( ( V_f
                   = ( ^ [V_x_dot_0: $real,V_y_dot_0: $real,V_a_dot_0: $real,V_b_dot_0: $real] :
                         ( $sum @ ( $product @ V_a_dot_0 @ V_x_dot_0 ) @ ( $product @ V_b_dot_0 @ V_y_dot_0 ) ) ) )
-                & ( 'PLamApp/2' @ $real @ ( V_C1 @ V_x ) @ V_y )
-                & ( 'PLamApp/2' @ $real @ ( V_C2 @ V_a ) @ V_b )
+                & ( V_C1 @ V_x @ V_y )
+                & ( V_C2 @ V_a @ V_b )
                 & ( V_v
                   = ( V_f @ V_x @ V_y @ V_a @ V_b ) ) ) )
           @ V_max ) ) )).
@@ -64,8 +64,8 @@ thf(p2_qustion,question,
                 ( ( V_f
                   = ( ^ [V_x_dot_0: $real,V_y_dot_0: $real,V_a_dot_0: $real,V_b_dot_0: $real] :
                         ( $sum @ ( $product @ V_a_dot_0 @ V_x_dot_0 ) @ ( $product @ V_b_dot_0 @ V_y_dot_0 ) ) ) )
-                & ( 'PLamApp/2' @ $real @ ( V_C1 @ V_x ) @ V_y )
-                & ( 'PLamApp/2' @ $real @ ( V_C2 @ V_a ) @ V_b )
+                & ( V_C1 @ V_x @ V_y )
+                & ( V_C2 @ V_a @ V_b )
                 & ( V_v
                   = ( V_f @ V_x @ V_y @ V_a @ V_b ) ) ) )
           @ V_min ) ) )).

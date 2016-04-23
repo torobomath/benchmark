@@ -16,8 +16,7 @@
 (def-directive p
   (Find (k)
    (exists (n d)
-     (&& (is-integer m)
-           (= d (Lam n (cardinality-of (set-by-def (PLam k (&& (<= 1 k)
+     (&& (= d (Lam n (cardinality-of (set-by-def (PLam k (&& (<= 1 k)
                                                                (is-divisible-by n k)))))))
            (= (* k (LamApp d n))
               (LamApp d (^ n 2)))))))

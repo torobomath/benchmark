@@ -2270,14 +2270,14 @@
 ;; Area enclosed by (algebraic) curves
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(def-fun area-enclosed-by :: (ListOf (Point -> Bool)) => R)
-(def-fun area-enclosed-by-within :: (ListOf (Point -> Bool)) -> (Point -> Bool) => R)
+(def-fun area-enclosed-by :: (ListOf (Point -> Bool)) -> (Unit -> Bool) => R)
+(def-fun area-enclosed-by-within :: (ListOf (Point -> Bool)) -> (Point -> Bool) -> (Unit -> Bool) => R)
 
 (axiom
  def_area_of_enclosed_shape
  (shapes)
  (= (area-of (shape-enclosed-by-cpfun shapes))
-    (area-enclosed-by shapes)))
+    (area-enclosed-by shapes (PLam _ (true)))))
 
 ;;-------------------------------------------
 ;; 2015-03-31:
@@ -2290,7 +2290,7 @@
  def_area_of_enclosed_shape_with_restriction
  (boundaries shape)
  (= (area-of (shape-enclosed-by-within boundaries shape))
-    (area-enclosed-by-within boundaries shape)))
+    (area-enclosed-by-within boundaries shape (PLam _ (true)))))
 
 (axiom
  def_area_of_enclosed_shape_with_restriction2

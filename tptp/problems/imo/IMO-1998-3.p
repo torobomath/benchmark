@@ -11,30 +11,26 @@
 %% $¥frac{d(n^2)}{d(n)} = k$ for some $n$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    3 (   0 unit;   1 type;   0 defn)
-%            Number of atoms       :   26 (   2 equality;  10 variable)
-%            Maximal formula depth :   15 (   7 average)
-%            Number of connectives :   20 (   0   ~;   0   |;   3   &;  17   @)
+% Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
+%            Number of atoms       :   24 (   2 equality;  10 variable)
+%            Maximal formula depth :   14 (   8 average)
+%            Number of connectives :   18 (   0   ~;   0   |;   2   &;  16   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   13 (   1   :;   0   =)
+%            Number of symbols     :   11 (   0   :;   0   =)
 %            Number of variables   :    6 (   0 sgn;   0   !;   2   ?;   4   ^)
 %                                         (   6   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
-%            Arithmetic symbols    :    5 (   2 pred;    1 func;    2 numbers)
+%            Arithmetic symbols    :    4 (   1 pred;    1 func;    2 numbers)
 
 include('axioms.ax').
-
-thf('m/0_type',type,(
-    'm/0': $int )).
 
 thf(p_qustion,question,
     ( 'find/1' @ $int
     @ ^ [V_k: $int] :
       ? [V_n: $int,V_d: ( $int > $int )] :
-        ( ( $is_int @ 'm/0' )
-        & ( V_d
+        ( ( V_d
           = ( ^ [V_n_dot_0: $int] :
                 ( 'int.cardinality-of/1'
                 @ ( 'set-by-def/1' @ $int
@@ -45,7 +41,7 @@ thf(p_qustion,question,
           = ( V_d @ ( 'int.^/2' @ V_n @ 2 ) ) ) ) )).
 
 thf(p_answer,answer,(
-    ^ [V_m_dot_0: $int] :
-      ( 'int.is-odd-number/1' @ V_m_dot_0 ) ),
+    ^ [V_m: $int] :
+      ( 'int.is-odd-number/1' @ V_m ) ),
     answer_to(p_question,[])).
 

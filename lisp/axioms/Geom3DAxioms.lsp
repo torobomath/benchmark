@@ -2286,14 +2286,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Volume enclosed by (algebraic) surfaces
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(def-fun volume-enclosed-by :: (ListOf (Point -> Bool)) => R)
-(def-fun volume-enclosed-by-within :: (ListOf (Point -> Bool)) -> (Point -> Bool) => R)
+(def-fun volume-enclosed-by :: (ListOf (Point -> Bool)) -> (Unit -> Bool) => R)
+(def-fun volume-enclosed-by-within :: (ListOf (Point -> Bool)) -> (Point -> Bool) -> (Unit -> Bool) => R)
 
 (axiom
  def_volume_of_enclosed_shape
  (shapes)
  (= (volume-of (shape-enclosed-by-cpfun shapes))
-    (volume-enclosed-by shapes)))
+    (volume-enclosed-by shapes (PLam _ (true)))))
 
 ;;-------------------------------------------
 ;; 2015-03-31:
@@ -2306,7 +2306,7 @@
  def_volume_of_enclosed_shape_with_restriction
  (boundaries shape)
  (= (volume-of (shape-enclosed-by-within boundaries shape))
-    (volume-enclosed-by-within boundaries shape)))
+    (volume-enclosed-by-within boundaries shape (PLam _ (true)))))
 
 (axiom
  def_volume_of_enclosed_shape_with_restriction2

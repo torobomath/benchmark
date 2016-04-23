@@ -1495,7 +1495,7 @@ thf('.def-succedent-of_axiom',axiom,(
 thf('.def-hold-open_axiom',axiom,(
     ! [V_p: ( 'Unit' > $o )] :
       ( ( 'hold-open/1' @ ( 'prop/1' @ V_p ) )
-    <=> ( 'PLamApp/2' @ 'Unit' @ V_p @ '_/0' ) ) )).
+    <=> ( V_p @ '_/0' ) ) )).
 
 %-----------------------------------------------------------------------------
 %
@@ -5780,7 +5780,7 @@ thf('.def_all_0_axiom',axiom,(
 thf('.def_all_rec_axiom',axiom,(
     ! [Tv10: $tType,V_f: ( Tv10 > $o ),V_x: Tv10,V_xs: ( 'ListOf' @ Tv10 )] :
       ( ( 'all/2' @ Tv10 @ V_f @ ( 'cons/2' @ Tv10 @ V_x @ V_xs ) )
-    <=> ( ( 'PLamApp/2' @ Tv10 @ V_f @ V_x )
+    <=> ( ( V_f @ V_x )
         & ( 'all/2' @ Tv10 @ V_f @ V_xs ) ) ) )).
 
 thf('.def_combinatorial_all_base_case_axiom',axiom,(
@@ -5793,7 +5793,7 @@ thf('.def_combinatorial_all_rec_axiom',axiom,(
       ( ( 'combinatorial-all/2' @ Tv16 @ V_pred @ ( 'cons/2' @ Tv16 @ V_x @ V_xs ) )
     <=> ( ( 'all/2' @ Tv16
           @ ^ [V_y: Tv16] :
-              ( 'PLamApp/2' @ Tv16 @ ( V_pred @ V_x ) @ V_y )
+              ( V_pred @ V_x @ V_y )
           @ V_xs )
         & ( 'combinatorial-all/2' @ Tv16 @ V_pred @ V_xs ) ) ) )).
 
@@ -5807,7 +5807,7 @@ thf('.def_combinatorial_some_rec_axiom',axiom,(
       ( ( 'combinatorial-some/2' @ Tv16 @ V_pred @ ( 'cons/2' @ Tv16 @ V_x @ V_xs ) )
     <=> ( ( 'some/2' @ Tv16
           @ ^ [V_y: Tv16] :
-              ( 'PLamApp/2' @ Tv16 @ ( V_pred @ V_x ) @ V_y )
+              ( V_pred @ V_x @ V_y )
           @ V_xs )
         | ( 'combinatorial-some/2' @ Tv16 @ V_pred @ V_xs ) ) ) )).
 
@@ -5839,20 +5839,20 @@ thf('.def_cyclic_all_rec_base_case2_axiom',axiom,(
 thf('.def_cyclic_all_rec_base_case3_axiom',axiom,(
     ! [Tv20: $tType,V_pred: ( Tv20 > Tv20 > Tv20 > $o ),V_p0: Tv20,V_p1: Tv20,V_p2: Tv20] :
       ( ( 'cyclic-all-rec/2' @ Tv20 @ V_pred @ ( 'cons/2' @ Tv20 @ V_p0 @ ( 'cons/2' @ Tv20 @ V_p1 @ ( 'cons/2' @ Tv20 @ V_p2 @ ( 'nil/0' @ Tv20 ) ) ) ) )
-    <=> ( 'PLamApp/2' @ Tv20 @ ( V_pred @ V_p0 @ V_p1 ) @ V_p2 ) ) )).
+    <=> ( V_pred @ V_p0 @ V_p1 @ V_p2 ) ) )).
 
 thf('.def_cyclic_all_rec_axiom',axiom,(
     ! [Tv26: $tType,V_pred: ( Tv26 > Tv26 > Tv26 > $o ),V_p0: Tv26,V_p1: Tv26,V_p2: Tv26,V_ps: ( 'ListOf' @ Tv26 )] :
       ( ( 'cyclic-all-rec/2' @ Tv26 @ V_pred @ ( 'cons/2' @ Tv26 @ V_p0 @ ( 'cons/2' @ Tv26 @ V_p1 @ ( 'cons/2' @ Tv26 @ V_p2 @ V_ps ) ) ) )
-    <=> ( ( 'PLamApp/2' @ Tv26 @ ( V_pred @ V_p0 @ V_p1 ) @ V_p2 )
+    <=> ( ( V_pred @ V_p0 @ V_p1 @ V_p2 )
         & ( 'cyclic-all-rec/2' @ Tv26 @ V_pred @ ( 'cons/2' @ Tv26 @ V_p1 @ ( 'cons/2' @ Tv26 @ V_p2 @ V_ps ) ) ) ) ) )).
 
 thf('.def_cyclic_all_axiom',axiom,(
     ! [Tv51: $tType,V_pred: ( Tv51 > Tv51 > Tv51 > $o ),V_list: ( 'ListOf' @ Tv51 )] :
       ( ( 'cyclic-all/2' @ Tv51 @ V_pred @ V_list )
-    <=> ( ( 'PLamApp/2' @ Tv51 @ ( V_pred @ ( 'last/1' @ Tv51 @ ( 'butlast/1' @ Tv51 @ V_list ) ) @ ( 'last/1' @ Tv51 @ V_list ) ) @ ( 'car/1' @ Tv51 @ V_list ) )
-        & ( 'PLamApp/2' @ Tv51 @ ( V_pred @ ( 'last/1' @ Tv51 @ V_list ) @ ( 'car/1' @ Tv51 @ V_list ) ) @ ( 'cadr/1' @ Tv51 @ V_list ) )
-        & ( 'PLamApp/2' @ Tv51 @ ( V_pred @ ( 'car/1' @ Tv51 @ V_list ) @ ( 'cadr/1' @ Tv51 @ V_list ) ) @ ( 'caddr/1' @ Tv51 @ V_list ) )
+    <=> ( ( V_pred @ ( 'last/1' @ Tv51 @ ( 'butlast/1' @ Tv51 @ V_list ) ) @ ( 'last/1' @ Tv51 @ V_list ) @ ( 'car/1' @ Tv51 @ V_list ) )
+        & ( V_pred @ ( 'last/1' @ Tv51 @ V_list ) @ ( 'car/1' @ Tv51 @ V_list ) @ ( 'cadr/1' @ Tv51 @ V_list ) )
+        & ( V_pred @ ( 'car/1' @ Tv51 @ V_list ) @ ( 'cadr/1' @ Tv51 @ V_list ) @ ( 'caddr/1' @ Tv51 @ V_list ) )
         & ( 'cyclic-all-rec/2' @ Tv51 @ V_pred @ ( 'cdr/1' @ Tv51 @ V_list ) ) ) ) )).
 
 thf('.def_cyclic_some_base_case0_axiom',axiom,(
@@ -5883,20 +5883,20 @@ thf('.def_cyclic_some_rec_base_case2_axiom',axiom,(
 thf('.def_cyclic_some_rec_base_case3_axiom',axiom,(
     ! [Tv20: $tType,V_pred: ( Tv20 > Tv20 > Tv20 > $o ),V_p0: Tv20,V_p1: Tv20,V_p2: Tv20] :
       ( ( 'cyclic-some-rec/2' @ Tv20 @ V_pred @ ( 'cons/2' @ Tv20 @ V_p0 @ ( 'cons/2' @ Tv20 @ V_p1 @ ( 'cons/2' @ Tv20 @ V_p2 @ ( 'nil/0' @ Tv20 ) ) ) ) )
-    <=> ( 'PLamApp/2' @ Tv20 @ ( V_pred @ V_p0 @ V_p1 ) @ V_p2 ) ) )).
+    <=> ( V_pred @ V_p0 @ V_p1 @ V_p2 ) ) )).
 
 thf('.def_cyclic_some_rec_axiom',axiom,(
     ! [Tv26: $tType,V_pred: ( Tv26 > Tv26 > Tv26 > $o ),V_p0: Tv26,V_p1: Tv26,V_p2: Tv26,V_ps: ( 'ListOf' @ Tv26 )] :
       ( ( 'cyclic-some-rec/2' @ Tv26 @ V_pred @ ( 'cons/2' @ Tv26 @ V_p0 @ ( 'cons/2' @ Tv26 @ V_p1 @ ( 'cons/2' @ Tv26 @ V_p2 @ V_ps ) ) ) )
-    <=> ( ( 'PLamApp/2' @ Tv26 @ ( V_pred @ V_p0 @ V_p1 ) @ V_p2 )
+    <=> ( ( V_pred @ V_p0 @ V_p1 @ V_p2 )
         | ( 'cyclic-some-rec/2' @ Tv26 @ V_pred @ ( 'cons/2' @ Tv26 @ V_p1 @ ( 'cons/2' @ Tv26 @ V_p2 @ V_ps ) ) ) ) ) )).
 
 thf('.def_cyclic_some_axiom',axiom,(
     ! [Tv51: $tType,V_pred: ( Tv51 > Tv51 > Tv51 > $o ),V_list: ( 'ListOf' @ Tv51 )] :
       ( ( 'cyclic-some/2' @ Tv51 @ V_pred @ V_list )
-    <=> ( ( 'PLamApp/2' @ Tv51 @ ( V_pred @ ( 'last/1' @ Tv51 @ ( 'butlast/1' @ Tv51 @ V_list ) ) @ ( 'last/1' @ Tv51 @ V_list ) ) @ ( 'car/1' @ Tv51 @ V_list ) )
-        | ( 'PLamApp/2' @ Tv51 @ ( V_pred @ ( 'last/1' @ Tv51 @ V_list ) @ ( 'car/1' @ Tv51 @ V_list ) ) @ ( 'cadr/1' @ Tv51 @ V_list ) )
-        | ( 'PLamApp/2' @ Tv51 @ ( V_pred @ ( 'car/1' @ Tv51 @ V_list ) @ ( 'cadr/1' @ Tv51 @ V_list ) ) @ ( 'caddr/1' @ Tv51 @ V_list ) )
+    <=> ( ( V_pred @ ( 'last/1' @ Tv51 @ ( 'butlast/1' @ Tv51 @ V_list ) ) @ ( 'last/1' @ Tv51 @ V_list ) @ ( 'car/1' @ Tv51 @ V_list ) )
+        | ( V_pred @ ( 'last/1' @ Tv51 @ V_list ) @ ( 'car/1' @ Tv51 @ V_list ) @ ( 'cadr/1' @ Tv51 @ V_list ) )
+        | ( V_pred @ ( 'car/1' @ Tv51 @ V_list ) @ ( 'cadr/1' @ Tv51 @ V_list ) @ ( 'caddr/1' @ Tv51 @ V_list ) )
         | ( 'cyclic-some-rec/2' @ Tv51 @ V_pred @ ( 'cdr/1' @ Tv51 @ V_list ) ) ) ) )).
 
 thf('.def_some_0_axiom',axiom,(
@@ -5907,7 +5907,7 @@ thf('.def_some_0_axiom',axiom,(
 thf('.def_some_rec_axiom',axiom,(
     ! [Tv10: $tType,V_f: ( Tv10 > $o ),V_x: Tv10,V_xs: ( 'ListOf' @ Tv10 )] :
       ( ( 'some/2' @ Tv10 @ V_f @ ( 'cons/2' @ Tv10 @ V_x @ V_xs ) )
-    <=> ( ( 'PLamApp/2' @ Tv10 @ V_f @ V_x )
+    <=> ( ( V_f @ V_x )
         | ( 'some/2' @ Tv10 @ V_f @ V_xs ) ) ) )).
 
 thf('.def_all2_nil_case1_axiom',axiom,(
@@ -5925,7 +5925,7 @@ thf('.def_all2_nil_case2_axiom',axiom,(
 thf('.def_all2_cons_case1_axiom',axiom,(
     ! [Tv18: $tType,Tv19: $tType,V_pred: ( Tv19 > Tv18 > $o ),V_x: Tv19,V_xs: ( 'ListOf' @ Tv19 ),V_y: Tv18,V_ys: ( 'ListOf' @ Tv18 )] :
       ( ( 'all2/3' @ Tv18 @ Tv19 @ V_pred @ ( 'cons/2' @ Tv19 @ V_x @ V_xs ) @ ( 'cons/2' @ Tv18 @ V_y @ V_ys ) )
-    <=> ( ( 'PLamApp/2' @ Tv18 @ ( V_pred @ V_x ) @ V_y )
+    <=> ( ( V_pred @ V_x @ V_y )
         & ( 'all2/3' @ Tv18 @ Tv19 @ V_pred @ V_xs @ V_ys ) ) ) )).
 
 thf('.def_all2_cons_case2_axiom',axiom,(
@@ -5934,7 +5934,7 @@ thf('.def_all2_cons_case2_axiom',axiom,(
     <=> ? [V_y: Tv21,V_ys1: ( 'ListOf' @ Tv21 )] :
           ( ( V_ys
             = ( 'cons/2' @ Tv21 @ V_y @ V_ys1 ) )
-          & ( 'PLamApp/2' @ Tv21 @ ( V_pred @ V_x ) @ V_y )
+          & ( V_pred @ V_x @ V_y )
           & ( 'all2/3' @ Tv21 @ Tv22 @ V_pred @ V_xs @ V_ys1 ) ) ) )).
 
 thf('.def_all2_cons_case3_axiom',axiom,(
@@ -5943,7 +5943,7 @@ thf('.def_all2_cons_case3_axiom',axiom,(
     <=> ? [V_x: Tv22,V_xs1: ( 'ListOf' @ Tv22 )] :
           ( ( V_xs
             = ( 'cons/2' @ Tv22 @ V_x @ V_xs1 ) )
-          & ( 'PLamApp/2' @ Tv21 @ ( V_pred @ V_x ) @ V_y )
+          & ( V_pred @ V_x @ V_y )
           & ( 'all2/3' @ Tv21 @ Tv22 @ V_pred @ V_xs1 @ V_ys ) ) ) )).
 
 thf('.def_list_equality0_axiom',axiom,(
@@ -6047,7 +6047,7 @@ thf('.def_filter_cons_axiom',axiom,(
       ( ( 'filter/2' @ Tv19 @ V_f @ ( 'cons/2' @ Tv19 @ V_x @ V_xs ) )
       = ( 'if/3' @ ( 'ListOf' @ Tv19 )
         @ ^ [V__: 'Unit'] :
-            ( 'PLamApp/2' @ Tv19 @ V_f @ V_x )
+            ( V_f @ V_x )
         @ ( 'cons/2' @ Tv19 @ V_x @ ( 'filter/2' @ Tv19 @ V_f @ V_xs ) )
         @ ( 'filter/2' @ Tv19 @ V_f @ V_xs ) ) ) )).
 
@@ -6355,7 +6355,7 @@ thf('.def-p-uncurry_axiom',axiom,(
     ! [Tv16: $tType,Tv17: $tType,V_f: ( Tv17 > Tv16 > $o )] :
       ( ( 'p-uncurry/1' @ Tv16 @ Tv17 @ V_f )
       = ( ^ [V_p: ( 'Pair' @ Tv17 @ Tv16 )] :
-            ( 'PLamApp/2' @ Tv16 @ ( V_f @ ( 'fst/1' @ Tv16 @ Tv17 @ V_p ) ) @ ( 'snd/1' @ Tv16 @ Tv17 @ V_p ) ) ) ) )).
+            ( V_f @ ( 'fst/1' @ Tv16 @ Tv17 @ V_p ) @ ( 'snd/1' @ Tv16 @ Tv17 @ V_p ) ) ) ) )).
 
 thf('.def-all-pairs-cons_axiom',axiom,(
     ! [Tv19: $tType,V_x: Tv19,V_xs: ( 'ListOf' @ Tv19 )] :
@@ -6376,20 +6376,20 @@ thf('.def_conj1_axiom',axiom,(
     ! [Tv10: $tType,V_f: ( Tv10 > $o ),V_g: ( Tv10 > $o )] :
       ( ( 'conj1/2' @ Tv10 @ V_f @ V_g )
       = ( ^ [V_x: Tv10] :
-            ( ( 'PLamApp/2' @ Tv10 @ V_f @ V_x )
-            & ( 'PLamApp/2' @ Tv10 @ V_g @ V_x ) ) ) ) )).
+            ( ( V_f @ V_x )
+            & ( V_g @ V_x ) ) ) ) )).
 
 thf('.def_conj2_axiom',axiom,(
     ! [Tv5: $tType,Tv18: $tType,V_f: ( Tv18 > Tv5 > $o ),V_g: ( Tv18 > Tv5 > $o )] :
       ( ( 'conj2/2' @ Tv5 @ Tv18 @ V_f @ V_g )
       = ( ^ [V_x: Tv18,V_y: Tv5] :
-            ( ( 'PLamApp/2' @ Tv5 @ ( V_f @ V_x ) @ V_y )
-            & ( 'PLamApp/2' @ Tv5 @ ( V_g @ V_x ) @ V_y ) ) ) ) )).
+            ( ( V_f @ V_x @ V_y )
+            & ( V_g @ V_x @ V_y ) ) ) ) )).
 
 thf('.def_set_elem_axiom',axiom,(
     ! [Tv7: $tType,V_x: Tv7,V_def: ( Tv7 > $o )] :
       ( ( 'elem/2' @ Tv7 @ V_x @ ( 'set-by-def/1' @ Tv7 @ V_def ) )
-    <=> ( 'PLamApp/2' @ Tv7 @ V_def @ V_x ) ) )).
+    <=> ( V_def @ V_x ) ) )).
 
 thf('.def_set_image_axiom',axiom,(
     ! [Tv18: $tType,Tv19: $tType,V_fun: ( Tv18 > Tv19 ),V_def: ( Tv18 > $o )] :
@@ -6397,7 +6397,7 @@ thf('.def_set_image_axiom',axiom,(
       = ( 'set-by-def/1' @ Tv19
         @ ^ [V_x: Tv19] :
           ? [V_y: Tv18] :
-            ( ( 'PLamApp/2' @ Tv18 @ V_def @ V_y )
+            ( ( V_def @ V_y )
             & ( V_x
               = ( V_fun @ V_y ) ) ) ) ) )).
 
@@ -6565,14 +6565,14 @@ thf('.def-is-upper-bound-of_axiom',axiom,(
     ! [V_ub: $real,V_s: ( $real > $o )] :
       ( ( 'is-upper-bound-of/2' @ V_ub @ ( 'set-by-def/1' @ $real @ V_s ) )
     <=> ! [V_e: $real] :
-          ( ( 'PLamApp/2' @ $real @ V_s @ V_e )
+          ( ( V_s @ V_e )
          => ( $lesseq @ V_e @ V_ub ) ) ) )).
 
 thf('.def-is-lower-bound-of_axiom',axiom,(
     ! [V_lb: $real,V_s: ( $real > $o )] :
       ( ( 'is-lower-bound-of/2' @ V_lb @ ( 'set-by-def/1' @ $real @ V_s ) )
     <=> ! [V_e: $real] :
-          ( ( 'PLamApp/2' @ $real @ V_s @ V_e )
+          ( ( V_s @ V_e )
          => ( $lesseq @ V_lb @ V_e ) ) ) )).
 
 thf('.def-is-sup-of_axiom',axiom,(
@@ -6836,18 +6836,18 @@ thf('.def_max_of_axiom',axiom,(
     ! [V_x: $real,V_cfun: ( $real > $o )] :
       ( ( V_x
         = ( 'max-of/1' @ V_cfun ) )
-    <=> ( ( 'PLamApp/2' @ $real @ V_cfun @ V_x )
+    <=> ( ( V_cfun @ V_x )
         & ! [V_y: $real] :
-            ( ( 'PLamApp/2' @ $real @ V_cfun @ V_y )
+            ( ( V_cfun @ V_y )
            => ( $lesseq @ V_y @ V_x ) ) ) ) )).
 
 thf('.def_min_of_axiom',axiom,(
     ! [V_x: $real,V_cfun: ( $real > $o )] :
       ( ( V_x
         = ( 'min-of/1' @ V_cfun ) )
-    <=> ( ( 'PLamApp/2' @ $real @ V_cfun @ V_x )
+    <=> ( ( V_cfun @ V_x )
         & ! [V_y: $real] :
-            ( ( 'PLamApp/2' @ $real @ V_cfun @ V_y )
+            ( ( V_cfun @ V_y )
            => ( $greatereq @ V_y @ V_x ) ) ) ) )).
 
 thf('.def_maximum_axiom',axiom,(
@@ -6873,7 +6873,7 @@ thf('.def_maximum_by_given_order_axiom',axiom,(
         & ! [V_v: Tv15] :
             ( ( 'elem/2' @ Tv15 @ V_v @ V_set )
            => ( ( V_max = V_v )
-              | ( 'PLamApp/2' @ Tv15 @ ( V_order @ V_v ) @ V_max ) ) ) ) ) )).
+              | ( V_order @ V_v @ V_max ) ) ) ) ) )).
 
 thf('.def_minimum_by_given_order_axiom',axiom,(
     ! [Tv15: $tType,V_set: ( 'SetOf' @ Tv15 ),V_order: ( Tv15 > Tv15 > $o ),V_min: Tv15] :
@@ -6882,7 +6882,7 @@ thf('.def_minimum_by_given_order_axiom',axiom,(
         & ! [V_v: Tv15] :
             ( ( 'elem/2' @ Tv15 @ V_v @ V_set )
            => ( ( V_min = V_v )
-              | ( 'PLamApp/2' @ Tv15 @ ( V_order @ V_min ) @ V_v ) ) ) ) ) )).
+              | ( V_order @ V_min @ V_v ) ) ) ) ) )).
 
 thf('.def-fun-convex-upward-parabola-in-region_axiom',axiom,(
     ! [V_a: $real,V_b: $real,V_c: $real,V_region: ( 'SetOf' @ $real )] :
@@ -9177,7 +9177,7 @@ thf('2d.def_set_as_shape_axiom',axiom,(
       ( ( '2d.set-as-shape/1' @ ( 'set-by-def/1' @ '2d.Point' @ V_cfun ) )
       = ( '2d.shape-of-cpfun/1'
         @ ^ [V_p: '2d.Point'] :
-            ( 'PLamApp/2' @ '2d.Point' @ V_cfun @ V_p ) ) ) )).
+            ( V_cfun @ V_p ) ) ) )).
 
 thf('2d.def_shape_as_set_axiom',axiom,(
     ! [V_shape: '2d.Shape'] :
@@ -9192,7 +9192,7 @@ thf('2d.shape-common-operation/1_type',type,(
 thf('2d.def_point_on_common_shape_axiom',axiom,(
     ! [V_p: '2d.Point',V_shape: '2d.Shape'] :
       ( ( '2d.on/2' @ V_p @ ( '2d.shape-common-operation/1' @ V_shape ) )
-    <=> ( 'PLamApp/2' @ '2d.Point' @ ( '2d.char-fun-of/1' @ V_shape ) @ V_p ) ) )).
+    <=> ( '2d.char-fun-of/1' @ V_shape @ V_p ) ) )).
 
 thf('2d.def_point_on_inner_part_of_axiom',axiom,(
     ! [V_p: '2d.Point',V_shape: '2d.Shape'] :
@@ -9292,7 +9292,7 @@ thf('2d.def_on_divided_by_line_region_including_axiom',axiom,(
 thf('2d.def_on_shape_axiom',axiom,(
     ! [V_point: '2d.Point',V_cfun: ( '2d.Point' > $o )] :
       ( ( '2d.on/2' @ V_point @ ( '2d.shape-of-cpfun/1' @ V_cfun ) )
-    <=> ( 'PLamApp/2' @ '2d.Point' @ V_cfun @ V_point ) ) )).
+    <=> ( V_cfun @ V_point ) ) )).
 
 thf('2d.def_point_inside_of_common_shape_axiom',axiom,(
     ! [V_p: '2d.Point',V_shape: '2d.Shape'] :
@@ -9878,8 +9878,8 @@ thf('2d.def_char_fun_of_union_axiom',axiom,(
     ! [V_s1: '2d.Shape',V_s2: '2d.Shape'] :
       ( ( '2d.char-fun-of/1' @ ( '2d.union/2' @ V_s1 @ V_s2 ) )
       = ( ^ [V_P: '2d.Point'] :
-            ( ( 'PLamApp/2' @ '2d.Point' @ ( '2d.char-fun-of/1' @ V_s1 ) @ V_P )
-            | ( 'PLamApp/2' @ '2d.Point' @ ( '2d.char-fun-of/1' @ V_s2 ) @ V_P ) ) ) ) )).
+            ( ( '2d.char-fun-of/1' @ V_s1 @ V_P )
+            | ( '2d.char-fun-of/1' @ V_s2 @ V_P ) ) ) ) )).
 
 thf('2d.def_char_fun_of_union_list_axiom',axiom,(
     ! [V_shapelist: ( 'ListOf' @ '2d.Shape' )] :
@@ -9887,15 +9887,15 @@ thf('2d.def_char_fun_of_union_list_axiom',axiom,(
       = ( ^ [V_P: '2d.Point'] :
             ( 'some/2' @ '2d.Shape'
             @ ^ [V_shape: '2d.Shape'] :
-                ( 'PLamApp/2' @ '2d.Point' @ ( '2d.char-fun-of/1' @ V_shape ) @ V_P )
+                ( '2d.char-fun-of/1' @ V_shape @ V_P )
             @ V_shapelist ) ) ) )).
 
 thf('2d.def_char_fun_of_intersection_axiom',axiom,(
     ! [V_s1: '2d.Shape',V_s2: '2d.Shape'] :
       ( ( '2d.char-fun-of/1' @ ( '2d.intersection/2' @ V_s1 @ V_s2 ) )
       = ( ^ [V_P: '2d.Point'] :
-            ( ( 'PLamApp/2' @ '2d.Point' @ ( '2d.char-fun-of/1' @ V_s1 ) @ V_P )
-            & ( 'PLamApp/2' @ '2d.Point' @ ( '2d.char-fun-of/1' @ V_s2 ) @ V_P ) ) ) ) )).
+            ( ( '2d.char-fun-of/1' @ V_s1 @ V_P )
+            & ( '2d.char-fun-of/1' @ V_s2 @ V_P ) ) ) ) )).
 
 thf('2d.def_char_fun_of_intersection_list_axiom',axiom,(
     ! [V_shapelist: ( 'ListOf' @ '2d.Shape' )] :
@@ -9903,7 +9903,7 @@ thf('2d.def_char_fun_of_intersection_list_axiom',axiom,(
       = ( ^ [V_P: '2d.Point'] :
             ( 'all/2' @ '2d.Shape'
             @ ^ [V_shape: '2d.Shape'] :
-                ( 'PLamApp/2' @ '2d.Point' @ ( '2d.char-fun-of/1' @ V_shape ) @ V_P )
+                ( '2d.char-fun-of/1' @ V_shape @ V_P )
             @ V_shapelist ) ) ) )).
 
 thf('2d.def_char_fun_of_line_axiom',axiom,(
@@ -10308,7 +10308,7 @@ thf('2d.def-intersection-encwithin-and-other_axiom',axiom,(
       ( ( '2d.intersection/2' @ ( '2d.shape-enclosed-by-within/2' @ V_boundaries @ V_shape1 ) @ V_shape2 )
       = ( '2d.shape-enclosed-by-within/2' @ V_boundaries
         @ ^ [V_P: '2d.Point'] :
-            ( ( 'PLamApp/2' @ '2d.Point' @ V_shape1 @ V_P )
+            ( ( V_shape1 @ V_P )
             & ( '2d.on/2' @ V_P @ V_shape2 ) ) ) ) )).
 
 thf('2d.def-intersection-other-and-encwithin_axiom',axiom,(
@@ -10329,13 +10329,13 @@ thf('2d.def-intersection-other-and-enc_axiom',axiom,(
 thf('2d.def_on_shape_enclosed_by_cpfun_axiom',axiom,(
     ! [V_point: '2d.Point',V_boundaries: ( 'ListOf' @ ( '2d.Point' > $o ) )] :
       ( ( '2d.on/2' @ V_point @ ( '2d.shape-enclosed-by-cpfun/1' @ V_boundaries ) )
-    <=> ( 'PLamApp/2' @ '2d.Point' @ ( '2d.char-fun-of/1' @ ( '2d.shape-enclosed-by-cpfun/1' @ V_boundaries ) ) @ V_point ) ) )).
+    <=> ( '2d.char-fun-of/1' @ ( '2d.shape-enclosed-by-cpfun/1' @ V_boundaries ) @ V_point ) ) )).
 
 thf('2d.def_on_shape_enclosed_by_within_axiom',axiom,(
     ! [V_point: '2d.Point',V_boundaries: ( 'ListOf' @ ( '2d.Point' > $o ) ),V_region: ( '2d.Point' > $o )] :
       ( ( '2d.on/2' @ V_point @ ( '2d.shape-enclosed-by-within/2' @ V_boundaries @ V_region ) )
     <=> ( ( '2d.on/2' @ V_point @ ( '2d.shape-enclosed-by-cpfun/1' @ V_boundaries ) )
-        & ( 'PLamApp/2' @ '2d.Point' @ V_region @ V_point ) ) ) )).
+        & ( V_region @ V_point ) ) ) )).
 
 thf('2d.def_shape_enclosed_by_cpfun_eq_something_axiom',axiom,(
     ! [V_boundaries: ( 'ListOf' @ ( '2d.Point' > $o ) ),V_S: '2d.Shape'] :
@@ -10638,11 +10638,6 @@ thf('2d.def-boundary-of-polygon_axiom',axiom,(
      => ( ( '2d.boundary-of/1' @ ( '2d.polygon/1' @ V_Ps ) )
         = ( '2d.boundary-of-polygon-main/1' @ ( 'append/2' @ '2d.Point' @ V_Ps @ ( 'cons/2' @ '2d.Point' @ ( 'car/1' @ '2d.Point' @ V_Ps ) @ ( 'nil/0' @ '2d.Point' ) ) ) ) ) ) )).
 
-thf('2d.def-coordinate-of_axiom',axiom,(
-    ! [V_P: '2d.Point'] :
-      ( ( '2d.coordinate-of/1' @ V_P )
-      = V_P ) )).
-
 thf('2d.def-translation-of-half-line_axiom',axiom,(
     ! [V_v: '2d.Vector',V_Q: '2d.Point',V_P: '2d.Point'] :
       ( ( '2d.half-line-type/1' @ ( '2d.half-line/2' @ V_P @ V_Q ) )
@@ -10704,18 +10699,18 @@ thf('2d.def_cpfun_to_cfun_2d_axiom',axiom,(
       ( ( '2d.shape-of-cpfun/1' @ V_pf )
       = ( '2d.set-of-cfun/1'
         @ ^ [V_x: $real,V_y: $real] :
-            ( 'PLamApp/2' @ '2d.Point' @ V_pf @ ( '2d.point/2' @ V_x @ V_y ) ) ) ) )).
+            ( V_pf @ ( '2d.point/2' @ V_x @ V_y ) ) ) ) )).
 
 thf('2d.def_char_fun_of_set_of_cfun_2d_axiom',axiom,(
     ! [V_cfun: ( $real > $real > $o )] :
       ( ( '2d.char-fun-of/1' @ ( '2d.set-of-cfun/1' @ V_cfun ) )
       = ( ^ [V_P: '2d.Point'] :
-            ( 'PLamApp/2' @ $real @ ( V_cfun @ ( '2d.x-coord/1' @ V_P ) ) @ ( '2d.y-coord/1' @ V_P ) ) ) ) )).
+            ( V_cfun @ ( '2d.x-coord/1' @ V_P ) @ ( '2d.y-coord/1' @ V_P ) ) ) ) )).
 
 thf('2d.def_on_set_of_cfun_2d_axiom',axiom,(
     ! [V_p: '2d.Point',V_cfun: ( $real > $real > $o )] :
       ( ( '2d.on/2' @ V_p @ ( '2d.set-of-cfun/1' @ V_cfun ) )
-    <=> ( 'PLamApp/2' @ $real @ ( V_cfun @ ( '2d.x-coord/1' @ V_p ) ) @ ( '2d.y-coord/1' @ V_p ) ) ) )).
+    <=> ( V_cfun @ ( '2d.x-coord/1' @ V_p ) @ ( '2d.y-coord/1' @ V_p ) ) ) )).
 
 thf('2d.def_common_noun_region_axiom',axiom,(
     ! [V_f: '2d.Shape'] :
@@ -11679,7 +11674,7 @@ thf('2d.def_intersect_fun_graph_and_region_axiom',axiom,(
       ( ( '2d.intersect/3' @ ( '2d.graph-of/1' @ V_f ) @ ( '2d.set-of-cfun/1' @ V_h ) @ ( '2d.point/2' @ V_x @ V_y ) )
     <=> ( ( V_y
           = ( 'funapp/2' @ V_f @ V_x ) )
-        & ( 'PLamApp/2' @ $real @ ( V_h @ V_x ) @ V_y ) ) ) )).
+        & ( V_h @ V_x @ V_y ) ) ) )).
 
 thf('2d.def_tangent_func_and_circle_axiom',axiom,(
     ! [V_py: $real,V_px: $real,V_r: $real,V_c: '2d.Point',V_f: 'R2R'] :
@@ -11702,7 +11697,7 @@ thf('2d.def_tangent_func_and_intersection_of_func_and_region_axiom',axiom,(
     ! [V_f: 'R2R',V_g: 'R2R',V_h: ( $real > $real > $o ),V_px: $real,V_py: $real] :
       ( ( '2d.tangent/3' @ ( '2d.graph-of/1' @ V_f ) @ ( '2d.intersection/2' @ ( '2d.graph-of/1' @ V_g ) @ ( '2d.set-of-cfun/1' @ V_h ) ) @ ( '2d.point/2' @ V_px @ V_py ) )
     <=> ( ( '2d.tangent/3' @ ( '2d.graph-of/1' @ V_f ) @ ( '2d.graph-of/1' @ V_g ) @ ( '2d.point/2' @ V_px @ V_py ) )
-        & ( 'PLamApp/2' @ $real @ ( V_h @ V_px ) @ V_py ) ) ) )).
+        & ( V_h @ V_px @ V_py ) ) ) )).
 
 thf('2d.def_tangent_func_and_line_axiom',axiom,(
     ! [V_py: $real,V_px: $real,V_q: '2d.Point',V_p: '2d.Point',V_f: 'R2R'] :
@@ -12277,7 +12272,7 @@ thf('2d.def_point_on_graph_of_implicit_function_axiom',axiom,(
 thf('2d.def_on_set_of_cfun_axiom',axiom,(
     ! [V_x: $real,V_y: $real,V_cf: ( $real > $real > $o )] :
       ( ( '2d.on/2' @ ( '2d.point/2' @ V_x @ V_y ) @ ( '2d.set-of-cfun/1' @ V_cf ) )
-    <=> ( 'PLamApp/2' @ $real @ ( V_cf @ V_x ) @ V_y ) ) )).
+    <=> ( V_cf @ V_x @ V_y ) ) )).
 
 thf('2d.def_on_circle_2d_axiom',axiom,(
     ! [V_r: $real,V_c: '2d.Point',V_p: '2d.Point'] :
@@ -12572,8 +12567,8 @@ thf('2d.def-intersection-to-cfun_axiom',axiom,(
       ( ( '2d.intersection/2' @ ( '2d.set-of-cfun/1' @ V_f1 ) @ ( '2d.set-of-cfun/1' @ V_f2 ) )
       = ( '2d.set-of-cfun/1'
         @ ^ [V_x: $real,V_y: $real] :
-            ( ( 'PLamApp/2' @ $real @ ( V_f1 @ V_x ) @ V_y )
-            & ( 'PLamApp/2' @ $real @ ( V_f2 @ V_x ) @ V_y ) ) ) ) )).
+            ( ( V_f1 @ V_x @ V_y )
+            & ( V_f2 @ V_x @ V_y ) ) ) ) )).
 
 thf('2d.def-intersection-of-square-cfun_axiom',axiom,(
     ! [V_f: ( $real > $real > $o ),V_S: '2d.Point',V_R: '2d.Point',V_Q: '2d.Point',V_P: '2d.Point'] :
@@ -12581,7 +12576,7 @@ thf('2d.def-intersection-of-square-cfun_axiom',axiom,(
      => ( ( '2d.intersection/2' @ ( '2d.square/4' @ V_P @ V_Q @ V_R @ V_S ) @ ( '2d.set-of-cfun/1' @ V_f ) )
         = ( '2d.set-of-cfun/1'
           @ ^ [V_x: $real,V_y: $real] :
-              ( ( 'PLamApp/2' @ $real @ ( V_f @ V_x ) @ V_y )
+              ( ( V_f @ V_x @ V_y )
               & ? [V_t1: $real,V_t2: $real,V_u1: $real,V_u2: $real] :
                   ( ( $lesseq @ 0.0 @ V_t1 )
                   & ( $lesseq @ 0.0 @ V_t2 )
@@ -12602,21 +12597,23 @@ thf('2d.def-cfun-to-tail-in-intersection-list2_axiom',axiom,(
       ( ( '2d.intersection/2' @ ( '2d.set-of-cfun/1' @ V_f ) @ ( '2d.intersection/2' @ V_S1 @ V_S2 ) )
       = ( '2d.intersection/2' @ V_S1 @ ( '2d.intersection/2' @ ( '2d.set-of-cfun/1' @ V_f ) @ V_S2 ) ) ) )).
 
-thf('2d.area-enclosed-by/1_type',type,(
-    '2d.area-enclosed-by/1': ( 'ListOf' @ ( '2d.Point' > $o ) ) > $real )).
+thf('2d.area-enclosed-by/2_type',type,(
+    '2d.area-enclosed-by/2': ( 'ListOf' @ ( '2d.Point' > $o ) ) > ( 'Unit' > $o ) > $real )).
 
-thf('2d.area-enclosed-by-within/2_type',type,(
-    '2d.area-enclosed-by-within/2': ( 'ListOf' @ ( '2d.Point' > $o ) ) > ( '2d.Point' > $o ) > $real )).
+thf('2d.area-enclosed-by-within/3_type',type,(
+    '2d.area-enclosed-by-within/3': ( 'ListOf' @ ( '2d.Point' > $o ) ) > ( '2d.Point' > $o ) > ( 'Unit' > $o ) > $real )).
 
 thf('2d.def_area_of_enclosed_shape_axiom',axiom,(
     ! [V_shapes: ( 'ListOf' @ ( '2d.Point' > $o ) )] :
       ( ( '2d.area-of/1' @ ( '2d.shape-enclosed-by-cpfun/1' @ V_shapes ) )
-      = ( '2d.area-enclosed-by/1' @ V_shapes ) ) )).
+      = ( '2d.area-enclosed-by/2' @ V_shapes
+        @ ^ [V__: 'Unit'] : $true ) ) )).
 
 thf('2d.def_area_of_enclosed_shape_with_restriction_axiom',axiom,(
     ! [V_boundaries: ( 'ListOf' @ ( '2d.Point' > $o ) ),V_shape: ( '2d.Point' > $o )] :
       ( ( '2d.area-of/1' @ ( '2d.shape-enclosed-by-within/2' @ V_boundaries @ V_shape ) )
-      = ( '2d.area-enclosed-by-within/2' @ V_boundaries @ V_shape ) ) )).
+      = ( '2d.area-enclosed-by-within/3' @ V_boundaries @ V_shape
+        @ ^ [V__: 'Unit'] : $true ) ) )).
 
 thf('2d.def_area_of_enclosed_shape_with_restriction2_axiom',axiom,(
     ! [V_shapes: ( 'ListOf' @ ( '2d.Point' > $o ) ),V_r: ( $real > $real > $o )] :
@@ -14244,7 +14241,7 @@ thf('3d.def_set_as_shape_axiom',axiom,(
       ( ( '3d.set-as-shape/1' @ ( 'set-by-def/1' @ '3d.Point' @ V_cfun ) )
       = ( '3d.shape-of-cpfun/1'
         @ ^ [V_p: '3d.Point'] :
-            ( 'PLamApp/2' @ '3d.Point' @ V_cfun @ V_p ) ) ) )).
+            ( V_cfun @ V_p ) ) ) )).
 
 thf('3d.def_shape_as_set_axiom',axiom,(
     ! [V_shape: '3d.Shape'] :
@@ -14259,7 +14256,7 @@ thf('3d.shape-common-operation/1_type',type,(
 thf('3d.def_point_on_common_shape_axiom',axiom,(
     ! [V_p: '3d.Point',V_shape: '3d.Shape'] :
       ( ( '3d.on/2' @ V_p @ ( '3d.shape-common-operation/1' @ V_shape ) )
-    <=> ( 'PLamApp/2' @ '3d.Point' @ ( '3d.char-fun-of/1' @ V_shape ) @ V_p ) ) )).
+    <=> ( '3d.char-fun-of/1' @ V_shape @ V_p ) ) )).
 
 thf('3d.def_point_on_inner_part_of_axiom',axiom,(
     ! [V_p: '3d.Point',V_shape: '3d.Shape'] :
@@ -14356,7 +14353,7 @@ thf('3d.def_on_divided_by_line_region_including_axiom',axiom,(
 thf('3d.def_on_shape_axiom',axiom,(
     ! [V_point: '3d.Point',V_cfun: ( '3d.Point' > $o )] :
       ( ( '3d.on/2' @ V_point @ ( '3d.shape-of-cpfun/1' @ V_cfun ) )
-    <=> ( 'PLamApp/2' @ '3d.Point' @ V_cfun @ V_point ) ) )).
+    <=> ( V_cfun @ V_point ) ) )).
 
 thf('3d.def_point_inside_of_common_shape_axiom',axiom,(
     ! [V_p: '3d.Point',V_shape: '3d.Shape'] :
@@ -14939,8 +14936,8 @@ thf('3d.def_char_fun_of_union_axiom',axiom,(
     ! [V_s1: '3d.Shape',V_s2: '3d.Shape'] :
       ( ( '3d.char-fun-of/1' @ ( '3d.union/2' @ V_s1 @ V_s2 ) )
       = ( ^ [V_P: '3d.Point'] :
-            ( ( 'PLamApp/2' @ '3d.Point' @ ( '3d.char-fun-of/1' @ V_s1 ) @ V_P )
-            | ( 'PLamApp/2' @ '3d.Point' @ ( '3d.char-fun-of/1' @ V_s2 ) @ V_P ) ) ) ) )).
+            ( ( '3d.char-fun-of/1' @ V_s1 @ V_P )
+            | ( '3d.char-fun-of/1' @ V_s2 @ V_P ) ) ) ) )).
 
 thf('3d.def_char_fun_of_union_list_axiom',axiom,(
     ! [V_shapelist: ( 'ListOf' @ '3d.Shape' )] :
@@ -14948,15 +14945,15 @@ thf('3d.def_char_fun_of_union_list_axiom',axiom,(
       = ( ^ [V_P: '3d.Point'] :
             ( 'some/2' @ '3d.Shape'
             @ ^ [V_shape: '3d.Shape'] :
-                ( 'PLamApp/2' @ '3d.Point' @ ( '3d.char-fun-of/1' @ V_shape ) @ V_P )
+                ( '3d.char-fun-of/1' @ V_shape @ V_P )
             @ V_shapelist ) ) ) )).
 
 thf('3d.def_char_fun_of_intersection_axiom',axiom,(
     ! [V_s1: '3d.Shape',V_s2: '3d.Shape'] :
       ( ( '3d.char-fun-of/1' @ ( '3d.intersection/2' @ V_s1 @ V_s2 ) )
       = ( ^ [V_P: '3d.Point'] :
-            ( ( 'PLamApp/2' @ '3d.Point' @ ( '3d.char-fun-of/1' @ V_s1 ) @ V_P )
-            & ( 'PLamApp/2' @ '3d.Point' @ ( '3d.char-fun-of/1' @ V_s2 ) @ V_P ) ) ) ) )).
+            ( ( '3d.char-fun-of/1' @ V_s1 @ V_P )
+            & ( '3d.char-fun-of/1' @ V_s2 @ V_P ) ) ) ) )).
 
 thf('3d.def_char_fun_of_intersection_list_axiom',axiom,(
     ! [V_shapelist: ( 'ListOf' @ '3d.Shape' )] :
@@ -14964,7 +14961,7 @@ thf('3d.def_char_fun_of_intersection_list_axiom',axiom,(
       = ( ^ [V_P: '3d.Point'] :
             ( 'all/2' @ '3d.Shape'
             @ ^ [V_shape: '3d.Shape'] :
-                ( 'PLamApp/2' @ '3d.Point' @ ( '3d.char-fun-of/1' @ V_shape ) @ V_P )
+                ( '3d.char-fun-of/1' @ V_shape @ V_P )
             @ V_shapelist ) ) ) )).
 
 thf('3d.def_char_fun_of_line_axiom',axiom,(
@@ -15369,7 +15366,7 @@ thf('3d.def-intersection-encwithin-and-other_axiom',axiom,(
       ( ( '3d.intersection/2' @ ( '3d.shape-enclosed-by-within/2' @ V_boundaries @ V_shape1 ) @ V_shape2 )
       = ( '3d.shape-enclosed-by-within/2' @ V_boundaries
         @ ^ [V_P: '3d.Point'] :
-            ( ( 'PLamApp/2' @ '3d.Point' @ V_shape1 @ V_P )
+            ( ( V_shape1 @ V_P )
             & ( '3d.on/2' @ V_P @ V_shape2 ) ) ) ) )).
 
 thf('3d.def-intersection-other-and-encwithin_axiom',axiom,(
@@ -15390,13 +15387,13 @@ thf('3d.def-intersection-other-and-enc_axiom',axiom,(
 thf('3d.def_on_shape_enclosed_by_cpfun_axiom',axiom,(
     ! [V_point: '3d.Point',V_boundaries: ( 'ListOf' @ ( '3d.Point' > $o ) )] :
       ( ( '3d.on/2' @ V_point @ ( '3d.shape-enclosed-by-cpfun/1' @ V_boundaries ) )
-    <=> ( 'PLamApp/2' @ '3d.Point' @ ( '3d.char-fun-of/1' @ ( '3d.shape-enclosed-by-cpfun/1' @ V_boundaries ) ) @ V_point ) ) )).
+    <=> ( '3d.char-fun-of/1' @ ( '3d.shape-enclosed-by-cpfun/1' @ V_boundaries ) @ V_point ) ) )).
 
 thf('3d.def_on_shape_enclosed_by_within_axiom',axiom,(
     ! [V_point: '3d.Point',V_boundaries: ( 'ListOf' @ ( '3d.Point' > $o ) ),V_region: ( '3d.Point' > $o )] :
       ( ( '3d.on/2' @ V_point @ ( '3d.shape-enclosed-by-within/2' @ V_boundaries @ V_region ) )
     <=> ( ( '3d.on/2' @ V_point @ ( '3d.shape-enclosed-by-cpfun/1' @ V_boundaries ) )
-        & ( 'PLamApp/2' @ '3d.Point' @ V_region @ V_point ) ) ) )).
+        & ( V_region @ V_point ) ) ) )).
 
 thf('3d.def_shape_enclosed_by_cpfun_eq_something_axiom',axiom,(
     ! [V_boundaries: ( 'ListOf' @ ( '3d.Point' > $o ) ),V_S: '3d.Shape'] :
@@ -15699,11 +15696,6 @@ thf('3d.def-boundary-of-polygon_axiom',axiom,(
      => ( ( '3d.boundary-of/1' @ ( '3d.polygon/1' @ V_Ps ) )
         = ( '3d.boundary-of-polygon-main/1' @ ( 'append/2' @ '3d.Point' @ V_Ps @ ( 'cons/2' @ '3d.Point' @ ( 'car/1' @ '3d.Point' @ V_Ps ) @ ( 'nil/0' @ '3d.Point' ) ) ) ) ) ) )).
 
-thf('3d.def-coordinate-of_axiom',axiom,(
-    ! [V_P: '3d.Point'] :
-      ( ( '3d.coordinate-of/1' @ V_P )
-      = V_P ) )).
-
 thf('3d.def-translation-of-half-line_axiom',axiom,(
     ! [V_v: '3d.Vector',V_Q: '3d.Point',V_P: '3d.Point'] :
       ( ( '3d.half-line-type/1' @ ( '3d.half-line/2' @ V_P @ V_Q ) )
@@ -15778,7 +15770,7 @@ thf('3d.def_cpfun_to_cfun_3d_axiom',axiom,(
       ( ( '3d.shape-of-cpfun/1' @ V_pf )
       = ( '3d.set-of-cfun/1'
         @ ^ [V_x: $real,V_y: $real,V_z: $real] :
-            ( 'PLamApp/2' @ '3d.Point' @ V_pf @ ( '3d.point/3' @ V_x @ V_y @ V_z ) ) ) ) )).
+            ( V_pf @ ( '3d.point/3' @ V_x @ V_y @ V_z ) ) ) ) )).
 
 %------------------------------------------------------------------------------
 % Coordinates
@@ -16013,7 +16005,7 @@ thf('3d.def_translate_general_3d_axiom',axiom,(
     <=> ( V_s2
         = ( '3d.shape-of-cpfun/1'
           @ ^ [V_p: '3d.Point'] :
-              ( 'PLamApp/2' @ '3d.Point' @ ( '3d.char-fun-of/1' @ V_s1 ) @ ( '3d.vec-translate/2' @ V_p @ ( '3d.sv*/2' @ ( $quotient @ V_m @ ( '3d.radius/1' @ V_v ) ) @ V_v ) ) ) ) ) ) )).
+              ( '3d.char-fun-of/1' @ V_s1 @ ( '3d.vec-translate/2' @ V_p @ ( '3d.sv*/2' @ ( $quotient @ V_m @ ( '3d.radius/1' @ V_v ) ) @ V_v ) ) ) ) ) ) )).
 
 thf('3d.def_mat_shape*_line_axiom',axiom,(
     ! [V_q: '3d.Point',V_p: '3d.Point',V_M: '3d.Matrix'] :
@@ -18000,21 +17992,23 @@ thf('3d.def_side_of_right_circular_cone_axiom',axiom,(
      => ( ( '3d.side-of/1' @ ( '3d.right-cone/2' @ ( '3d.disk/3' @ V_c @ V_r @ V_n ) @ V_v ) )
         = ( '3d.right-conical-surface/2' @ ( '3d.circle/3' @ V_c @ V_r @ V_n ) @ V_v ) ) ) )).
 
-thf('3d.volume-enclosed-by/1_type',type,(
-    '3d.volume-enclosed-by/1': ( 'ListOf' @ ( '3d.Point' > $o ) ) > $real )).
+thf('3d.volume-enclosed-by/2_type',type,(
+    '3d.volume-enclosed-by/2': ( 'ListOf' @ ( '3d.Point' > $o ) ) > ( 'Unit' > $o ) > $real )).
 
-thf('3d.volume-enclosed-by-within/2_type',type,(
-    '3d.volume-enclosed-by-within/2': ( 'ListOf' @ ( '3d.Point' > $o ) ) > ( '3d.Point' > $o ) > $real )).
+thf('3d.volume-enclosed-by-within/3_type',type,(
+    '3d.volume-enclosed-by-within/3': ( 'ListOf' @ ( '3d.Point' > $o ) ) > ( '3d.Point' > $o ) > ( 'Unit' > $o ) > $real )).
 
 thf('3d.def_volume_of_enclosed_shape_axiom',axiom,(
     ! [V_shapes: ( 'ListOf' @ ( '3d.Point' > $o ) )] :
       ( ( '3d.volume-of/1' @ ( '3d.shape-enclosed-by-cpfun/1' @ V_shapes ) )
-      = ( '3d.volume-enclosed-by/1' @ V_shapes ) ) )).
+      = ( '3d.volume-enclosed-by/2' @ V_shapes
+        @ ^ [V__: 'Unit'] : $true ) ) )).
 
 thf('3d.def_volume_of_enclosed_shape_with_restriction_axiom',axiom,(
     ! [V_boundaries: ( 'ListOf' @ ( '3d.Point' > $o ) ),V_shape: ( '3d.Point' > $o )] :
       ( ( '3d.volume-of/1' @ ( '3d.shape-enclosed-by-within/2' @ V_boundaries @ V_shape ) )
-      = ( '3d.volume-enclosed-by-within/2' @ V_boundaries @ V_shape ) ) )).
+      = ( '3d.volume-enclosed-by-within/3' @ V_boundaries @ V_shape
+        @ ^ [V__: 'Unit'] : $true ) ) )).
 
 thf('3d.def_volume_of_enclosed_shape_with_restriction2_axiom',axiom,(
     ! [V_shapes: ( 'ListOf' @ ( '3d.Point' > $o ) ),V_r: ( $real > $real > $real > $o )] :
@@ -18416,7 +18410,7 @@ thf('3d.def_an_inner_point_of_polygon_axiom',axiom,(
 thf('3d.def_point_on_set_by_cfun_axiom',axiom,(
     ! [V_x: $real,V_y: $real,V_z: $real,V_f: ( $real > $real > $real > $o )] :
       ( ( '3d.on/2' @ ( '3d.point/3' @ V_x @ V_y @ V_z ) @ ( '3d.set-of-cfun/1' @ V_f ) )
-    <=> ( 'PLamApp/2' @ $real @ ( V_f @ V_x @ V_y ) @ V_z ) ) )).
+    <=> ( V_f @ V_x @ V_y @ V_z ) ) )).
 
 thf('3d.def_point_on_line3d_axiom',axiom,(
     ! [V_r: $real,V_q: $real,V_p: $real,V_c: $real,V_b: $real,V_a: $real,V_P: '3d.Point'] :
@@ -18737,13 +18731,13 @@ thf('3d.def_cpfun_to_cfun_axiom',axiom,(
     ! [V_cpfun: ( '3d.Point' > $o )] :
       ( ( '3d.cpfun-to-cfun/1' @ V_cpfun )
       = ( ^ [V_x: $real,V_y: $real,V_z: $real] :
-            ( 'PLamApp/2' @ '3d.Point' @ V_cpfun @ ( '3d.point/3' @ V_x @ V_y @ V_z ) ) ) ) )).
+            ( V_cpfun @ ( '3d.point/3' @ V_x @ V_y @ V_z ) ) ) ) )).
 
 thf('3d.def_cfun_to_cpfun_axiom',axiom,(
     ! [V_cfun: ( $real > $real > $real > $o )] :
       ( ( '3d.cfun-to-cpfun/1' @ V_cfun )
       = ( ^ [V_P: '3d.Point'] :
-            ( 'PLamApp/2' @ $real @ ( V_cfun @ ( '3d.x-coord/1' @ V_P ) @ ( '3d.y-coord/1' @ V_P ) ) @ ( '3d.z-coord/1' @ V_P ) ) ) ) )).
+            ( V_cfun @ ( '3d.x-coord/1' @ V_P ) @ ( '3d.y-coord/1' @ V_P ) @ ( '3d.z-coord/1' @ V_P ) ) ) ) )).
 
 thf('3d.def_cfun_equality_axiom',axiom,(
     ! [V_f1: ( $real > $real > $real > $o ),V_f2: ( $real > $real > $real > $o )] :
@@ -18775,7 +18769,7 @@ thf('3d.def_char_fun_of_set_of_cfun_3d_axiom',axiom,(
     ! [V_cfun: ( $real > $real > $real > $o )] :
       ( ( '3d.char-fun-of/1' @ ( '3d.set-of-cfun/1' @ V_cfun ) )
       = ( ^ [V_P: '3d.Point'] :
-            ( 'PLamApp/2' @ $real @ ( V_cfun @ ( '3d.x-coord/1' @ V_P ) @ ( '3d.y-coord/1' @ V_P ) ) @ ( '3d.z-coord/1' @ V_P ) ) ) ) )).
+            ( V_cfun @ ( '3d.x-coord/1' @ V_P ) @ ( '3d.y-coord/1' @ V_P ) @ ( '3d.z-coord/1' @ V_P ) ) ) ) )).
 
 thf('3d.def_char_fun_of_inner_part_of_divided_region_including_plane_shape_axiom',axiom,(
     ! [V_plane: '3d.Shape',V_point: '3d.Point'] :
@@ -19195,8 +19189,8 @@ thf('3d.def_char_fun_of_boundary_of_solid_shape_axiom',axiom,(
       ( ( '3d.char-fun-of/1' @ ( '3d.solid-shape/1' @ ( '3d.boundary-of/1' @ V_shape ) ) )
       = ( 'foldr1/2' @ ( '3d.Point' > $o )
         @ ^ [V_P: ( '3d.Point' > $o ),V_Q: ( '3d.Point' > $o ),V_p: '3d.Point'] :
-            ( ( 'PLamApp/2' @ '3d.Point' @ V_P @ V_p )
-            | ( 'PLamApp/2' @ '3d.Point' @ V_Q @ V_p ) )
+            ( ( V_P @ V_p )
+            | ( V_Q @ V_p ) )
         @ ( 'map/2' @ ( '3d.Point' > $o ) @ '3d.Shape'
           @ ^ [V_f: '3d.Shape'] :
               ( '3d.char-fun-of/1' @ ( '3d.with-boundary/1' @ V_f ) )
@@ -19497,7 +19491,7 @@ thf('3d.def_import_2d_shape_axiom',axiom,(
       = ( '3d.set-of-cfun/1'
         @ ^ [V_x: $real,V_y: $real,V_z: $real] :
             ( ( V_z = 0.0 )
-            & ( 'PLamApp/2' @ '2d.Point' @ ( '2d.char-fun-of/1' @ V_S ) @ ( '2d.point/2' @ V_x @ V_y ) ) ) ) ) )).
+            & ( '2d.char-fun-of/1' @ V_S @ ( '2d.point/2' @ V_x @ V_y ) ) ) ) ) )).
 
 thf('3d.def_import_2d_point_axiom',axiom,(
     ! [V_x: $real,V_y: $real] :
@@ -19621,8 +19615,8 @@ thf('3d.def_intersection_of_shapes_of_charfuns_axiom',axiom,(
       ( ( '3d.intersection/2' @ ( '3d.set-of-cfun/1' @ V_f ) @ ( '3d.set-of-cfun/1' @ V_g ) )
       = ( '3d.set-of-cfun/1'
         @ ^ [V_x: $real,V_y: $real,V_z: $real] :
-            ( ( 'PLamApp/2' @ $real @ ( V_f @ V_x @ V_y ) @ V_z )
-            & ( 'PLamApp/2' @ $real @ ( V_g @ V_x @ V_y ) @ V_z ) ) ) ) )).
+            ( ( V_f @ V_x @ V_y @ V_z )
+            & ( V_g @ V_x @ V_y @ V_z ) ) ) ) )).
 
 %------------------------------------------------------------------------------
 % Intersection, general case

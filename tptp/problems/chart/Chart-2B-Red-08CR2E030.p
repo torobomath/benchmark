@@ -6,13 +6,13 @@
 %% GENERATED: 2015-01-08
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   80 (   4 equality;  25 variable)
+%            Number of atoms       :   74 (   4 equality;  25 variable)
 %            Maximal formula depth :   25 (  17 average)
-%            Number of connectives :   72 (   0   ~;   0   |;  10   &;  62   @)
+%            Number of connectives :   66 (   0   ~;   0   |;  10   &;  56   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :;   0   =)
+%            Number of symbols     :   19 (   0   :;   0   =)
 %            Number of variables   :    8 (   0 sgn;   0   !;   5   ?;   3   ^)
 %                                         (   8   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
@@ -34,9 +34,9 @@ thf(p_qustion,question,
         & ( $is_int @ V_x2 )
         & ( $is_int @ V_x3 )
         & ( $is_int @ V_a )
-        & ( 'PLamApp/2' @ $int @ V_P @ V_x1 )
-        & ( 'PLamApp/2' @ $int @ V_P @ V_x2 )
-        & ( 'PLamApp/2' @ $int @ V_P @ V_x3 )
+        & ( V_P @ V_x1 )
+        & ( V_P @ V_x2 )
+        & ( V_P @ V_x3 )
         & ( V_answer
           = ( 'cons/2' @ $int @ V_a @ ( 'cons/2' @ $int @ V_x1 @ ( 'cons/2' @ $int @ V_x2 @ ( 'cons/2' @ $int @ V_x3 @ ( 'nil/0' @ $int ) ) ) ) ) ) ) )).
 

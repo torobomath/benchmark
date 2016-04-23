@@ -6,13 +6,13 @@
 %% GENERATED: 2015-01-01
 
 % Syntax   : Number of formulae    :    5 (   0 unit;   1 type;   0 defn)
-%            Number of atoms       :  220 (  12 equality;  66 variable)
+%            Number of atoms       :  218 (  12 equality;  66 variable)
 %            Maximal formula depth :   22 (  15 average)
-%            Number of connectives :  195 (   2   ~;   1   |;  24   &; 166   @)
+%            Number of connectives :  193 (   2   ~;   1   |;  24   &; 164   @)
 %                                         (   0 <=>;   2  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    4 (   4   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   35 (   1   :;   0   =)
+%            Number of symbols     :   34 (   1   :;   0   =)
 %            Number of variables   :   22 (   0 sgn;   6   !;   6   ?;  10   ^)
 %                                         (  22   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
@@ -73,7 +73,7 @@ thf(p22,conjecture,(
                         = ( 'cadr/1' @ $int @ V_p ) )
                       & ( $is_int @ V_x )
                       & ( $is_int @ V_y )
-                      & ( 'PLamApp/2' @ $int @ ( V_P @ V_x ) @ V_y ) ) ) ) ) ) ) )).
+                      & ( V_P @ V_x @ V_y ) ) ) ) ) ) ) )).
 
 thf(p21_answer,answer,
     ( '2d.set-of-cfun/1'

@@ -25,7 +25,7 @@
                                               (exists (triangle)
                                                       (&& (triangle-type triangle)
                                                           (is-a-side-of s triangle)
-                                                          (inside-of triangle polygon)
+                                                          (inside-of triangle (polygon Ps))
                                                           (= a (area-of triangle))))))
                                       m)))
                      sides

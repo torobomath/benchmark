@@ -21,13 +21,13 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  224 (  12 equality;  63 variable)
+%            Number of atoms       :  204 (  12 equality;  63 variable)
 %            Maximal formula depth :   20 (  14 average)
-%            Number of connectives :  194 (   0   ~;   1   |;  21   &; 172   @)
+%            Number of connectives :  174 (   0   ~;   1   |;  21   &; 152   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    6 (   6   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   37 (   0   :;   0   =)
+%            Number of symbols     :   36 (   0   :;   0   =)
 %            Number of variables   :   25 (   0 sgn;   0   !;   8   ?;  17   ^)
 %                                         (  25   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
@@ -49,8 +49,8 @@ thf(p1_qustion,question,
                 = ( ^ [V_z_dot_0: 'complex.Complex',V_w: 'complex.Complex'] :
                       ( ( $greatereq @ ( 'complex.real-part/1' @ V_z_dot_0 ) @ ( 'complex.real-part/1' @ V_w ) )
                       & ( $greatereq @ ( 'complex.imaginary-part/1' @ V_z_dot_0 ) @ ( 'complex.imaginary-part/1' @ V_w ) ) ) ) )
-              & ( 'PLamApp/2' @ 'complex.Complex' @ ( V_f @ ( 'complex.^/2' @ V_z @ 2.0 ) ) @ ( 'complex.real->complex/1' @ 3.0 ) )
-              & ( 'PLamApp/2' @ 'complex.Complex' @ ( V_f @ ( 'complex.conjugate/1' @ V_z ) ) @ ( 'complex.//2' @ ( 'complex.real->complex/1' @ -5.0 ) @ ( 'complex.conjugate/1' @ V_z ) ) ) ) ) ) )).
+              & ( V_f @ ( 'complex.^/2' @ V_z @ 2.0 ) @ ( 'complex.real->complex/1' @ 3.0 ) )
+              & ( V_f @ ( 'complex.conjugate/1' @ V_z ) @ ( 'complex.//2' @ ( 'complex.real->complex/1' @ -5.0 ) @ ( 'complex.conjugate/1' @ V_z ) ) ) ) ) ) )).
 
 thf(p2_z_qustion,question,
     ( 'find/1' @ 'complex.Complex'
@@ -64,13 +64,13 @@ thf(p2_z_qustion,question,
           @ ( 'set-by-def/1' @ $real
             @ ^ [V_I: $real] :
               ? [V_z: 'complex.Complex'] :
-                ( ( 'PLamApp/2' @ 'complex.Complex' @ ( V_f @ ( 'complex.^/2' @ V_z @ 2.0 ) ) @ ( 'complex.real->complex/1' @ 3.0 ) )
-                & ( 'PLamApp/2' @ 'complex.Complex' @ ( V_f @ ( 'complex.conjugate/1' @ V_z ) ) @ ( 'complex.//2' @ ( 'complex.real->complex/1' @ -5.0 ) @ ( 'complex.conjugate/1' @ V_z ) ) )
+                ( ( V_f @ ( 'complex.^/2' @ V_z @ 2.0 ) @ ( 'complex.real->complex/1' @ 3.0 ) )
+                & ( V_f @ ( 'complex.conjugate/1' @ V_z ) @ ( 'complex.//2' @ ( 'complex.real->complex/1' @ -5.0 ) @ ( 'complex.conjugate/1' @ V_z ) ) )
                 & ( V_I
                   = ( 'complex.abs/1' @ ( 'complex.-/2' @ V_z @ ( 'complex.*/2' @ ( 'complex.real->complex/1' @ 3.0 ) @ 'complex.i/0' ) ) ) ) ) )
           @ V_minI )
-        & ( 'PLamApp/2' @ 'complex.Complex' @ ( V_f @ ( 'complex.^/2' @ V_minz @ 2.0 ) ) @ ( 'complex.real->complex/1' @ 3.0 ) )
-        & ( 'PLamApp/2' @ 'complex.Complex' @ ( V_f @ ( 'complex.conjugate/1' @ V_minz ) ) @ ( 'complex.//2' @ ( 'complex.real->complex/1' @ -5.0 ) @ ( 'complex.conjugate/1' @ V_minz ) ) )
+        & ( V_f @ ( 'complex.^/2' @ V_minz @ 2.0 ) @ ( 'complex.real->complex/1' @ 3.0 ) )
+        & ( V_f @ ( 'complex.conjugate/1' @ V_minz ) @ ( 'complex.//2' @ ( 'complex.real->complex/1' @ -5.0 ) @ ( 'complex.conjugate/1' @ V_minz ) ) )
         & ( V_minI
           = ( 'complex.abs/1' @ ( 'complex.-/2' @ V_minz @ ( 'complex.*/2' @ ( 'complex.real->complex/1' @ 3.0 ) @ 'complex.i/0' ) ) ) ) ) )).
 
@@ -86,13 +86,13 @@ thf(p2_I_qustion,question,
           @ ( 'set-by-def/1' @ $real
             @ ^ [V_I: $real] :
               ? [V_z: 'complex.Complex'] :
-                ( ( 'PLamApp/2' @ 'complex.Complex' @ ( V_f @ ( 'complex.^/2' @ V_z @ 2.0 ) ) @ ( 'complex.real->complex/1' @ 3.0 ) )
-                & ( 'PLamApp/2' @ 'complex.Complex' @ ( V_f @ ( 'complex.conjugate/1' @ V_z ) ) @ ( 'complex.//2' @ ( 'complex.real->complex/1' @ -5.0 ) @ ( 'complex.conjugate/1' @ V_z ) ) )
+                ( ( V_f @ ( 'complex.^/2' @ V_z @ 2.0 ) @ ( 'complex.real->complex/1' @ 3.0 ) )
+                & ( V_f @ ( 'complex.conjugate/1' @ V_z ) @ ( 'complex.//2' @ ( 'complex.real->complex/1' @ -5.0 ) @ ( 'complex.conjugate/1' @ V_z ) ) )
                 & ( V_I
                   = ( 'complex.abs/1' @ ( 'complex.-/2' @ V_z @ ( 'complex.*/2' @ ( 'complex.real->complex/1' @ 3.0 ) @ 'complex.i/0' ) ) ) ) ) )
           @ V_minI )
-        & ( 'PLamApp/2' @ 'complex.Complex' @ ( V_f @ ( 'complex.^/2' @ V_minz @ 2.0 ) ) @ ( 'complex.real->complex/1' @ 3.0 ) )
-        & ( 'PLamApp/2' @ 'complex.Complex' @ ( V_f @ ( 'complex.conjugate/1' @ V_minz ) ) @ ( 'complex.//2' @ ( 'complex.real->complex/1' @ -5.0 ) @ ( 'complex.conjugate/1' @ V_minz ) ) )
+        & ( V_f @ ( 'complex.^/2' @ V_minz @ 2.0 ) @ ( 'complex.real->complex/1' @ 3.0 ) )
+        & ( V_f @ ( 'complex.conjugate/1' @ V_minz ) @ ( 'complex.//2' @ ( 'complex.real->complex/1' @ -5.0 ) @ ( 'complex.conjugate/1' @ V_minz ) ) )
         & ( V_minI
           = ( 'complex.abs/1' @ ( 'complex.-/2' @ V_minz @ ( 'complex.*/2' @ ( 'complex.real->complex/1' @ 3.0 ) @ 'complex.i/0' ) ) ) ) ) )).
 

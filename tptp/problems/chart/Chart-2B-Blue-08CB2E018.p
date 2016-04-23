@@ -6,13 +6,13 @@
 %% GENERATED: 2014-12-26
 
 % Syntax   : Number of formulae    :    5 (   0 unit;   1 type;   0 defn)
-%            Number of atoms       :  319 (   9 equality;  64 variable)
+%            Number of atoms       :  317 (   9 equality;  64 variable)
 %            Maximal formula depth :   19 (  14 average)
-%            Number of connectives :  297 (   0   ~;   6   |;  40   &; 251   @)
+%            Number of connectives :  295 (   0   ~;   6   |;  40   &; 249   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    2 (   2   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   27 (   1   :;   0   =)
+%            Number of symbols     :   26 (   1   :;   0   =)
 %            Number of variables   :   13 (   0 sgn;   0   !;   6   ?;   7   ^)
 %                                         (  13   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
@@ -42,7 +42,7 @@ thf(p1_qustion,question,
                   = ( '2d.internally-dividing-point/3' @ V_P @ V_Q @ ( $quotient @ 1.0 @ 3.0 ) ) ) ) ) )
         & ( $lesseq @ -1.0 @ 'a/0' )
         & ( $lesseq @ 'a/0' @ 1.0 )
-        & ( 'PLamApp/2' @ '2d.Point' @ V_D @ ( '2d.point/2' @ 'a/0' @ V_b ) ) ) )).
+        & ( V_D @ ( '2d.point/2' @ 'a/0' @ V_b ) ) ) )).
 
 thf(p2_qustion,question,
     ( 'draw/1' @ '2d.Shape'
