@@ -5669,23 +5669,23 @@ thf('.def_equal_all_elem2_axiom',axiom,(
 
 thf('.def_map_on_nil_axiom',axiom,(
     ! [Tv8: $tType,Tv9: $tType,V_f: ( Tv8 > Tv9 )] :
-      ( ( 'map/2' @ Tv9 @ Tv8 @ V_f @ ( 'nil/0' @ Tv8 ) )
+      ( ( 'map/2' @ Tv8 @ Tv9 @ V_f @ ( 'nil/0' @ Tv8 ) )
       = ( 'nil/0' @ Tv9 ) ) )).
 
 thf('.def_map_on_cons_axiom',axiom,(
     ! [Tv16: $tType,Tv17: $tType,V_f: ( Tv16 > Tv17 ),V_hd: Tv16,V_tl: ( 'ListOf' @ Tv16 )] :
-      ( ( 'map/2' @ Tv17 @ Tv16 @ V_f @ ( 'cons/2' @ Tv16 @ V_hd @ V_tl ) )
-      = ( 'cons/2' @ Tv17 @ ( V_f @ V_hd ) @ ( 'map/2' @ Tv17 @ Tv16 @ V_f @ V_tl ) ) ) )).
+      ( ( 'map/2' @ Tv16 @ Tv17 @ V_f @ ( 'cons/2' @ Tv16 @ V_hd @ V_tl ) )
+      = ( 'cons/2' @ Tv17 @ ( V_f @ V_hd ) @ ( 'map/2' @ Tv16 @ Tv17 @ V_f @ V_tl ) ) ) )).
 
 thf('.def_foldr_on_nil_axiom',axiom,(
     ! [Tv7: $tType,Tv8: $tType,V_f: ( Tv8 > Tv7 > Tv7 ),V_res: Tv7] :
-      ( ( 'foldr/3' @ Tv7 @ Tv8 @ V_f @ V_res @ ( 'nil/0' @ Tv8 ) )
+      ( ( 'foldr/3' @ Tv8 @ Tv7 @ V_f @ V_res @ ( 'nil/0' @ Tv8 ) )
       = V_res ) )).
 
 thf('.def_foldr_on_cons_axiom',axiom,(
     ! [Tv17: $tType,Tv18: $tType,V_f: ( Tv18 > Tv17 > Tv17 ),V_res: Tv17,V_hd: Tv18,V_tl: ( 'ListOf' @ Tv18 )] :
-      ( ( 'foldr/3' @ Tv17 @ Tv18 @ V_f @ V_res @ ( 'cons/2' @ Tv18 @ V_hd @ V_tl ) )
-      = ( 'foldr/3' @ Tv17 @ Tv18 @ V_f @ ( V_f @ V_hd @ V_res ) @ V_tl ) ) )).
+      ( ( 'foldr/3' @ Tv18 @ Tv17 @ V_f @ V_res @ ( 'cons/2' @ Tv18 @ V_hd @ V_tl ) )
+      = ( 'foldr/3' @ Tv18 @ Tv17 @ V_f @ ( V_f @ V_hd @ V_res ) @ V_tl ) ) )).
 
 thf('.def_car_axiom',axiom,(
     ! [Tv7: $tType,V_x: Tv7,V_xs: ( 'ListOf' @ Tv7 )] :
@@ -6109,7 +6109,7 @@ thf('.def-permutations-rec_axiom',axiom,(
       = ( 'foldr1/2' @ ( 'ListOf' @ ( 'ListOf' @ Tv26 ) )
         @ ^ [V_ps1: ( 'ListOf' @ ( 'ListOf' @ Tv26 ) ),V_ps2: ( 'ListOf' @ ( 'ListOf' @ Tv26 ) )] :
             ( 'append/2' @ ( 'ListOf' @ Tv26 ) @ V_ps1 @ V_ps2 )
-        @ ( 'map/2' @ ( 'ListOf' @ ( 'ListOf' @ Tv26 ) ) @ ( 'ListOf' @ Tv26 )
+        @ ( 'map/2' @ ( 'ListOf' @ Tv26 ) @ ( 'ListOf' @ ( 'ListOf' @ Tv26 ) )
           @ ^ [V_ps: ( 'ListOf' @ Tv26 )] :
               ( '_insert/3' @ Tv26 @ V_x
               @ ^ [V_x_: ( 'ListOf' @ Tv26 )] : V_x_
@@ -6194,18 +6194,18 @@ thf('.def-is-subset-list-of_axiom',axiom,(
 
 thf('.def-zip-with-nil1_axiom',axiom,(
     ! [Tv8: $tType,Tv10: $tType,Tv11: $tType,V_f: ( Tv8 > Tv10 > Tv11 ),V_as: ( 'ListOf' @ Tv8 )] :
-      ( ( 'zip-with/3' @ Tv11 @ Tv10 @ Tv8 @ V_f @ V_as @ ( 'nil/0' @ Tv10 ) )
+      ( ( 'zip-with/3' @ Tv10 @ Tv8 @ Tv11 @ V_f @ V_as @ ( 'nil/0' @ Tv10 ) )
       = ( 'nil/0' @ Tv11 ) ) )).
 
 thf('.def-zip-with-nil2_axiom',axiom,(
     ! [Tv7: $tType,Tv10: $tType,Tv11: $tType,V_f: ( Tv10 > Tv7 > Tv11 ),V_bs: ( 'ListOf' @ Tv7 )] :
-      ( ( 'zip-with/3' @ Tv11 @ Tv7 @ Tv10 @ V_f @ ( 'nil/0' @ Tv10 ) @ V_bs )
+      ( ( 'zip-with/3' @ Tv7 @ Tv10 @ Tv11 @ V_f @ ( 'nil/0' @ Tv10 ) @ V_bs )
       = ( 'nil/0' @ Tv11 ) ) )).
 
 thf('.def-zip-with-rec_axiom',axiom,(
     ! [Tv24: $tType,Tv25: $tType,Tv26: $tType,V_f: ( Tv25 > Tv24 > Tv26 ),V_a: Tv25,V_as: ( 'ListOf' @ Tv25 ),V_b: Tv24,V_bs: ( 'ListOf' @ Tv24 )] :
-      ( ( 'zip-with/3' @ Tv26 @ Tv24 @ Tv25 @ V_f @ ( 'cons/2' @ Tv25 @ V_a @ V_as ) @ ( 'cons/2' @ Tv24 @ V_b @ V_bs ) )
-      = ( 'cons/2' @ Tv26 @ ( V_f @ V_a @ V_b ) @ ( 'zip-with/3' @ Tv26 @ Tv24 @ Tv25 @ V_f @ V_as @ V_bs ) ) ) )).
+      ( ( 'zip-with/3' @ Tv24 @ Tv25 @ Tv26 @ V_f @ ( 'cons/2' @ Tv25 @ V_a @ V_as ) @ ( 'cons/2' @ Tv24 @ V_b @ V_bs ) )
+      = ( 'cons/2' @ Tv26 @ ( V_f @ V_a @ V_b ) @ ( 'zip-with/3' @ Tv24 @ Tv25 @ Tv26 @ V_f @ V_as @ V_bs ) ) ) )).
 
 thf('.is-increasing-list-nil_axiom',axiom,
     ( 'is-increasing-list/1' @ ( 'nil/0' @ $real ) )).
@@ -6347,13 +6347,13 @@ thf('.def_append_cons_axiom',axiom,(
 
 thf('.def-uncurry_axiom',axiom,(
     ! [Tv14: $tType,Tv19: $tType,Tv20: $tType,V_f: ( Tv20 > Tv19 > Tv14 )] :
-      ( ( 'uncurry/1' @ Tv14 @ Tv19 @ Tv20 @ V_f )
+      ( ( 'uncurry/1' @ Tv20 @ Tv19 @ Tv14 @ V_f )
       = ( ^ [V_p: ( 'Pair' @ Tv20 @ Tv19 )] :
             ( V_f @ ( 'fst/1' @ Tv19 @ Tv20 @ V_p ) @ ( 'snd/1' @ Tv19 @ Tv20 @ V_p ) ) ) ) )).
 
 thf('.def-p-uncurry_axiom',axiom,(
     ! [Tv16: $tType,Tv17: $tType,V_f: ( Tv17 > Tv16 > $o )] :
-      ( ( 'p-uncurry/1' @ Tv16 @ Tv17 @ V_f )
+      ( ( 'p-uncurry/1' @ Tv17 @ Tv16 @ V_f )
       = ( ^ [V_p: ( 'Pair' @ Tv17 @ Tv16 )] :
             ( V_f @ ( 'fst/1' @ Tv16 @ Tv17 @ V_p ) @ ( 'snd/1' @ Tv16 @ Tv17 @ V_p ) ) ) ) )).
 
@@ -6361,7 +6361,7 @@ thf('.def-all-pairs-cons_axiom',axiom,(
     ! [Tv19: $tType,V_x: Tv19,V_xs: ( 'ListOf' @ Tv19 )] :
       ( ( 'all-pairs/1' @ Tv19 @ ( 'cons/2' @ Tv19 @ V_x @ V_xs ) )
       = ( 'append/2' @ ( 'Pair' @ Tv19 @ Tv19 )
-        @ ( 'map/2' @ ( 'Pair' @ Tv19 @ Tv19 ) @ Tv19
+        @ ( 'map/2' @ Tv19 @ ( 'Pair' @ Tv19 @ Tv19 )
           @ ^ [V_y: Tv19] :
               ( 'pair/2' @ Tv19 @ Tv19 @ V_x @ V_y )
           @ V_xs )
@@ -6381,7 +6381,7 @@ thf('.def_conj1_axiom',axiom,(
 
 thf('.def_conj2_axiom',axiom,(
     ! [Tv5: $tType,Tv18: $tType,V_f: ( Tv18 > Tv5 > $o ),V_g: ( Tv18 > Tv5 > $o )] :
-      ( ( 'conj2/2' @ Tv5 @ Tv18 @ V_f @ V_g )
+      ( ( 'conj2/2' @ Tv18 @ Tv5 @ V_f @ V_g )
       = ( ^ [V_x: Tv18,V_y: Tv5] :
             ( ( V_f @ V_x @ V_y )
             & ( V_g @ V_x @ V_y ) ) ) ) )).
@@ -6393,7 +6393,7 @@ thf('.def_set_elem_axiom',axiom,(
 
 thf('.def_set_image_axiom',axiom,(
     ! [Tv18: $tType,Tv19: $tType,V_fun: ( Tv18 > Tv19 ),V_def: ( Tv18 > $o )] :
-      ( ( 'image/2' @ Tv19 @ Tv18 @ V_fun @ ( 'set-by-def/1' @ Tv18 @ V_def ) )
+      ( ( 'image/2' @ Tv18 @ Tv19 @ V_fun @ ( 'set-by-def/1' @ Tv18 @ V_def ) )
       = ( 'set-by-def/1' @ Tv19
         @ ^ [V_x: Tv19] :
           ? [V_y: Tv18] :
@@ -7885,7 +7885,7 @@ thf('2d.def_equidistant_list_axiom',axiom,(
     ! [V_ps: ( 'ListOf' @ '2d.Point' ),V_q: '2d.Point'] :
       ( ( '2d.equidistant/2' @ V_ps @ V_q )
     <=> ( 'equal/1' @ $real
-        @ ( 'map/2' @ $real @ '2d.Point'
+        @ ( 'map/2' @ '2d.Point' @ $real
           @ ^ [V_p: '2d.Point'] :
               ( '2d.distance^2/2' @ V_p @ V_q )
           @ V_ps ) ) ) )).
@@ -9587,7 +9587,7 @@ thf('2d.def-perimeter-of-polygon_axiom',axiom,(
       ( ( '2d.polygon-type/1' @ ( '2d.polygon/1' @ V_Ps ) )
      => ( ( '2d.length-of/1' @ ( '2d.polygon/1' @ V_Ps ) )
         = ( 'sum/1'
-          @ ( 'zip-with/3' @ $real @ '2d.Point' @ '2d.Point'
+          @ ( 'zip-with/3' @ '2d.Point' @ '2d.Point' @ $real
             @ ^ [V_p1: '2d.Point',V_p2: '2d.Point'] :
                 ( '2d.distance/2' @ V_p1 @ V_p2 )
             @ V_Ps
@@ -9695,7 +9695,7 @@ thf('2d.def-is-a-side-of-a-polygon_axiom',axiom,(
       ( ( '2d.polygon-type/1' @ ( '2d.polygon/1' @ V_Ps ) )
      => ( ( '2d.is-a-side-of/2' @ V_s @ ( '2d.polygon/1' @ V_Ps ) )
       <=> ( 'member/2' @ '2d.Shape' @ V_s
-          @ ( 'zip-with/3' @ '2d.Shape' @ '2d.Point' @ '2d.Point'
+          @ ( 'zip-with/3' @ '2d.Point' @ '2d.Point' @ '2d.Shape'
             @ ^ [V_x: '2d.Point',V_y: '2d.Point'] :
                 ( '2d.seg/2' @ V_x @ V_y )
             @ ( 'cons/2' @ '2d.Point' @ ( 'last/1' @ '2d.Point' @ V_Ps ) @ V_Ps )
@@ -9706,7 +9706,7 @@ thf('2d.def-are-the-sides-of-a-polygon_axiom',axiom,(
       ( ( '2d.polygon-type/1' @ ( '2d.polygon/1' @ V_Ps ) )
      => ( ( '2d.are-the-sides-of/2' @ V_sides @ ( '2d.polygon/1' @ V_Ps ) )
       <=> ( 'is-a-permutation-of/2' @ '2d.Shape' @ V_sides
-          @ ( 'zip-with/3' @ '2d.Shape' @ '2d.Point' @ '2d.Point'
+          @ ( 'zip-with/3' @ '2d.Point' @ '2d.Point' @ '2d.Shape'
             @ ^ [V_x: '2d.Point',V_y: '2d.Point'] :
                 ( '2d.seg/2' @ V_x @ V_y )
             @ ( 'cons/2' @ '2d.Point' @ ( 'last/1' @ '2d.Point' @ V_Ps ) @ V_Ps )
@@ -9728,7 +9728,7 @@ thf('2d.def-sides-of-polygon_axiom',axiom,(
     ! [V_Ps: ( 'ListOf' @ '2d.Point' )] :
       ( ( '2d.polygon-type/1' @ ( '2d.polygon/1' @ V_Ps ) )
      => ( ( '2d.sides-of/1' @ ( '2d.polygon/1' @ V_Ps ) )
-        = ( 'zip-with/3' @ '2d.Shape' @ '2d.Point' @ '2d.Point'
+        = ( 'zip-with/3' @ '2d.Point' @ '2d.Point' @ '2d.Shape'
           @ ^ [V_x: '2d.Point',V_y: '2d.Point'] :
               ( '2d.seg/2' @ V_x @ V_y )
           @ ( 'cons/2' @ '2d.Point' @ ( 'last/1' @ '2d.Point' @ V_Ps ) @ V_Ps )
@@ -10293,7 +10293,7 @@ thf('2d.def-shape-enclosed-by-2-shape-enclosed-by-cpfun_axiom',axiom,(
     ! [V_shapes: ( 'ListOf' @ '2d.Shape' )] :
       ( ( '2d.shape-enclosed-by/1' @ V_shapes )
       = ( '2d.shape-enclosed-by-cpfun/1'
-        @ ( 'map/2' @ ( '2d.Point' > $o ) @ '2d.Shape'
+        @ ( 'map/2' @ '2d.Shape' @ ( '2d.Point' > $o )
           @ ^ [V_s: '2d.Shape',V_p: '2d.Point'] :
               ( '2d.on/2' @ V_p @ V_s )
           @ V_shapes ) ) ) )).
@@ -12101,7 +12101,7 @@ thf('2d.def-are-intersection-points-of-parabola-and-line_axiom',axiom,(
             & ? [V_xs: ( 'ListOf' @ $real )] :
                 ( ( 'are-solutions-of/2' @ V_xs @ ( 'poly-equation/1' @ ( 'cons/2' @ $real @ ( $difference @ V_c @ ( $sum @ ( $uminus @ ( $product @ ( $quotient @ ( $difference @ ( '2d.y-coord/1' @ V_B ) @ ( '2d.y-coord/1' @ V_A ) ) @ ( $difference @ ( '2d.x-coord/1' @ V_B ) @ ( '2d.x-coord/1' @ V_A ) ) ) @ ( '2d.x-coord/1' @ V_A ) ) ) @ ( '2d.y-coord/1' @ V_A ) ) ) @ ( 'cons/2' @ $real @ ( $difference @ V_b @ ( $quotient @ ( $difference @ ( '2d.y-coord/1' @ V_B ) @ ( '2d.y-coord/1' @ V_A ) ) @ ( $difference @ ( '2d.x-coord/1' @ V_B ) @ ( '2d.x-coord/1' @ V_A ) ) ) ) @ ( 'cons/2' @ $real @ V_a @ ( 'nil/0' @ $real ) ) ) ) ) )
                 & ( V_Ps
-                  = ( 'map/2' @ '2d.Point' @ $real
+                  = ( 'map/2' @ $real @ '2d.Point'
                     @ ^ [V_x: $real] :
                         ( '2d.point/2' @ V_x @ ( 'poly-value/2' @ ( 'cons/2' @ $real @ V_c @ ( 'cons/2' @ $real @ V_b @ ( 'cons/2' @ $real @ V_a @ ( 'nil/0' @ $real ) ) ) ) @ V_x ) )
                     @ V_xs ) ) ) ) ) ) ) )).
@@ -12226,7 +12226,7 @@ thf('2d.def-length-of-union-of-shapes_axiom',axiom,(
     ! [V_ss: ( 'ListOf' @ '2d.Shape' )] :
       ( ( '2d.length-of/1' @ ( '2d.union/1' @ V_ss ) )
       = ( 'sum/1'
-        @ ( 'map/2' @ $real @ '2d.Shape'
+        @ ( 'map/2' @ '2d.Shape' @ $real
           @ ^ [V_x: '2d.Shape'] :
               ( '2d.length-of/1' @ V_x )
           @ V_ss ) ) ) )).
@@ -12981,7 +12981,7 @@ thf('3d.def_equidistant_list_axiom',axiom,(
     ! [V_ps: ( 'ListOf' @ '3d.Point' ),V_q: '3d.Point'] :
       ( ( '3d.equidistant/2' @ V_ps @ V_q )
     <=> ( 'equal/1' @ $real
-        @ ( 'map/2' @ $real @ '3d.Point'
+        @ ( 'map/2' @ '3d.Point' @ $real
           @ ^ [V_p: '3d.Point'] :
               ( '3d.distance^2/2' @ V_p @ V_q )
           @ V_ps ) ) ) )).
@@ -14645,7 +14645,7 @@ thf('3d.def-perimeter-of-polygon_axiom',axiom,(
       ( ( '3d.polygon-type/1' @ ( '3d.polygon/1' @ V_Ps ) )
      => ( ( '3d.length-of/1' @ ( '3d.polygon/1' @ V_Ps ) )
         = ( 'sum/1'
-          @ ( 'zip-with/3' @ $real @ '3d.Point' @ '3d.Point'
+          @ ( 'zip-with/3' @ '3d.Point' @ '3d.Point' @ $real
             @ ^ [V_p1: '3d.Point',V_p2: '3d.Point'] :
                 ( '3d.distance/2' @ V_p1 @ V_p2 )
             @ V_Ps
@@ -14753,7 +14753,7 @@ thf('3d.def-is-a-side-of-a-polygon_axiom',axiom,(
       ( ( '3d.polygon-type/1' @ ( '3d.polygon/1' @ V_Ps ) )
      => ( ( '3d.is-a-side-of/2' @ V_s @ ( '3d.polygon/1' @ V_Ps ) )
       <=> ( 'member/2' @ '3d.Shape' @ V_s
-          @ ( 'zip-with/3' @ '3d.Shape' @ '3d.Point' @ '3d.Point'
+          @ ( 'zip-with/3' @ '3d.Point' @ '3d.Point' @ '3d.Shape'
             @ ^ [V_x: '3d.Point',V_y: '3d.Point'] :
                 ( '3d.seg/2' @ V_x @ V_y )
             @ ( 'cons/2' @ '3d.Point' @ ( 'last/1' @ '3d.Point' @ V_Ps ) @ V_Ps )
@@ -14764,7 +14764,7 @@ thf('3d.def-are-the-sides-of-a-polygon_axiom',axiom,(
       ( ( '3d.polygon-type/1' @ ( '3d.polygon/1' @ V_Ps ) )
      => ( ( '3d.are-the-sides-of/2' @ V_sides @ ( '3d.polygon/1' @ V_Ps ) )
       <=> ( 'is-a-permutation-of/2' @ '3d.Shape' @ V_sides
-          @ ( 'zip-with/3' @ '3d.Shape' @ '3d.Point' @ '3d.Point'
+          @ ( 'zip-with/3' @ '3d.Point' @ '3d.Point' @ '3d.Shape'
             @ ^ [V_x: '3d.Point',V_y: '3d.Point'] :
                 ( '3d.seg/2' @ V_x @ V_y )
             @ ( 'cons/2' @ '3d.Point' @ ( 'last/1' @ '3d.Point' @ V_Ps ) @ V_Ps )
@@ -14786,7 +14786,7 @@ thf('3d.def-sides-of-polygon_axiom',axiom,(
     ! [V_Ps: ( 'ListOf' @ '3d.Point' )] :
       ( ( '3d.polygon-type/1' @ ( '3d.polygon/1' @ V_Ps ) )
      => ( ( '3d.sides-of/1' @ ( '3d.polygon/1' @ V_Ps ) )
-        = ( 'zip-with/3' @ '3d.Shape' @ '3d.Point' @ '3d.Point'
+        = ( 'zip-with/3' @ '3d.Point' @ '3d.Point' @ '3d.Shape'
           @ ^ [V_x: '3d.Point',V_y: '3d.Point'] :
               ( '3d.seg/2' @ V_x @ V_y )
           @ ( 'cons/2' @ '3d.Point' @ ( 'last/1' @ '3d.Point' @ V_Ps ) @ V_Ps )
@@ -15351,7 +15351,7 @@ thf('3d.def-shape-enclosed-by-2-shape-enclosed-by-cpfun_axiom',axiom,(
     ! [V_shapes: ( 'ListOf' @ '3d.Shape' )] :
       ( ( '3d.shape-enclosed-by/1' @ V_shapes )
       = ( '3d.shape-enclosed-by-cpfun/1'
-        @ ( 'map/2' @ ( '3d.Point' > $o ) @ '3d.Shape'
+        @ ( 'map/2' @ '3d.Shape' @ ( '3d.Point' > $o )
           @ ^ [V_s: '3d.Shape',V_p: '3d.Point'] :
               ( '3d.on/2' @ V_p @ V_s )
           @ V_shapes ) ) ) )).
@@ -18285,7 +18285,7 @@ thf('3d.def_area_of_solid_shape_axiom',axiom,(
     ! [V_shape: '3d.Shape'] :
       ( ( '3d.area-of/1' @ ( '3d.solid-shape/1' @ V_shape ) )
       = ( 'sum/1'
-        @ ( 'map/2' @ $real @ '3d.Shape'
+        @ ( 'map/2' @ '3d.Shape' @ $real
           @ ^ [V_s: '3d.Shape'] :
               ( '3d.area-of/1' @ V_s )
           @ ( '3d.faces-of/1' @ V_shape ) ) ) ) )).
@@ -19191,7 +19191,7 @@ thf('3d.def_char_fun_of_boundary_of_solid_shape_axiom',axiom,(
         @ ^ [V_P: ( '3d.Point' > $o ),V_Q: ( '3d.Point' > $o ),V_p: '3d.Point'] :
             ( ( V_P @ V_p )
             | ( V_Q @ V_p ) )
-        @ ( 'map/2' @ ( '3d.Point' > $o ) @ '3d.Shape'
+        @ ( 'map/2' @ '3d.Shape' @ ( '3d.Point' > $o )
           @ ^ [V_f: '3d.Shape'] :
               ( '3d.char-fun-of/1' @ ( '3d.with-boundary/1' @ V_f ) )
           @ ( '3d.faces-of/1' @ V_shape ) ) ) ) )).
@@ -20571,7 +20571,7 @@ thf('stat.box-plot-with-avg-eq-2_axiom',axiom,(
 thf('stat.def-project-1st_axiom',axiom,(
     ! [V_points: ( 'ListOf' @ '2d.Point' )] :
       ( ( 'stat.project-1st/1' @ ( 'stat.scatter-plot/1' @ V_points ) )
-      = ( 'map/2' @ $real @ '2d.Point'
+      = ( 'map/2' @ '2d.Point' @ $real
         @ ^ [V_point: '2d.Point'] :
             ( '2d.x-coord/1' @ V_point )
         @ V_points ) ) )).
@@ -20579,7 +20579,7 @@ thf('stat.def-project-1st_axiom',axiom,(
 thf('stat.def-project-2nd_axiom',axiom,(
     ! [V_points: ( 'ListOf' @ '2d.Point' )] :
       ( ( 'stat.project-2nd/1' @ ( 'stat.scatter-plot/1' @ V_points ) )
-      = ( 'map/2' @ $real @ '2d.Point'
+      = ( 'map/2' @ '2d.Point' @ $real
         @ ^ [V_point: '2d.Point'] :
             ( '2d.y-coord/1' @ V_point )
         @ V_points ) ) )).
@@ -20601,7 +20601,7 @@ thf('stat.def-scatter-plot_axiom',axiom,(
     ! [V_xs: ( 'ListOf' @ $real ),V_ys: ( 'ListOf' @ $real )] :
       ( ( 'stat.scatter-plot-of/2' @ ( 'stat.data/1' @ V_xs ) @ ( 'stat.data/1' @ V_ys ) )
       = ( 'stat.scatter-plot/1'
-        @ ( 'zip-with/3' @ '2d.Point' @ $real @ $real
+        @ ( 'zip-with/3' @ $real @ $real @ '2d.Point'
           @ ^ [V_x: $real,V_y: $real] :
               ( '2d.point/2' @ V_x @ V_y )
           @ V_xs

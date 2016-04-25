@@ -30,7 +30,7 @@ thf(p,conjecture,(
     ! [V_p: $int,V_q: $int] :
       ( ( ( $quotient @ V_p @ V_q )
         = ( 'rat.sum/1'
-          @ ( 'map/2' @ $rat @ $int
+          @ ( 'map/2' @ $int @ $rat
             @ ^ [V_n: $int] :
                 ( $product @ ( 'rat.^/2' @ ( $to_rat @ -1 ) @ ( $sum @ V_n @ 1 ) ) @ ( $quotient @ 1 @ V_n ) )
             @ ( 'int.iota/2' @ 1 @ 1319 ) ) ) )

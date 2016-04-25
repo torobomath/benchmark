@@ -1,4 +1,4 @@
-;; DOMAIN:    DUP
+;; DOMAIN:    Functions and their Graphs
 ;; THEORY:    RCF
 ;; SOURCE:    Kyoto University, 1999, Humanities Course, Problem 2
 ;; AUTHOR:    Hidenao Iwane

@@ -36,13 +36,13 @@ thf(p_qustion,question,
             ( ( ( 'list-len/1' @ $int @ V_a )
               = V_n )
             & ( ( 'rat.sum/1'
-                @ ( 'map/2' @ $rat @ $int
+                @ ( 'map/2' @ $int @ $rat
                   @ ^ [V_x_dot_0: $int] :
                       ( $quotient @ 1 @ ( 'int.^/2' @ 2 @ V_x_dot_0 ) )
                   @ V_a ) )
               = 1/1 )
             & ( ( 'rat.sum/1'
-                @ ( 'zip-with/3' @ $rat @ $int @ $int
+                @ ( 'zip-with/3' @ $int @ $int @ $rat
                   @ ^ [V_n_dot_0: $int,V_x: $int] :
                       ( $quotient @ V_n_dot_0 @ ( 'int.^/2' @ 3 @ V_x ) )
                   @ ( 'int.iota/2' @ 1 @ V_n )

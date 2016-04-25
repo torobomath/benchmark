@@ -1,4 +1,4 @@
-;; DOMAIN:    DUP
+;; DOMAIN:    Vectors
 ;; THEORY:    RCF
 ;; SOURCE:    Tohoku University, 2003, Humanities Course, Problem 2
 ;; AUTHOR:    Yiyang Zhan
