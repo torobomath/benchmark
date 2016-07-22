@@ -6,17 +6,17 @@
 %% GENERATED: 2015-01-07
 
 % Syntax   : Number of formulae    :    8 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  237 (  18 equality;  48 variable)
+%            Number of atoms       :  243 (  18 equality;  48 variable)
 %            Maximal formula depth :   17 (  12 average)
-%            Number of connectives :  201 (   0   ~;   6   |;  18   &; 177   @)
+%            Number of connectives :  207 (   0   ~;   6   |;  18   &; 183   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   27 (   0   :;   0   =)
+%            Number of symbols     :   28 (   0   :;   0   =)
 %            Number of variables   :   16 (   0 sgn;   0   !;   8   ?;   8   ^)
 %                                         (  16   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
-%            Arithmetic symbols    :   21 (   2 pred;    5 func;   14 numbers)
+%            Arithmetic symbols    :   22 (   2 pred;    6 func;   14 numbers)
 
 include('axioms.ax').
 
@@ -65,8 +65,8 @@ thf(p4_qustion,question,
           = ( 'cons/2' @ $int @ V_x @ ( 'cons/2' @ $int @ V_y @ ( 'nil/0' @ $int ) ) ) )
         & ( $is_int @ V_x )
         & ( $is_int @ V_y )
-        & ( ( $quotient @ 1 @ 2 )
-          = ( $sum @ ( $quotient @ 1 @ V_x ) @ ( $quotient @ 1 @ V_y ) ) )
+        & ( ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ 2 ) )
+          = ( $sum @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ V_x ) ) @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ V_y ) ) ) )
         & ( $less @ 0 @ V_x )
         & ( $less @ 0 @ V_y ) ) )).
 

@@ -6,9 +6,9 @@
 %% GENERATED: 2015-01-08
 
 % Syntax   : Number of formulae    :    5 (   0 unit;   3 type;   0 defn)
-%            Number of atoms       :   87 (   2 equality;   5 variable)
+%            Number of atoms       :   89 (   2 equality;   5 variable)
 %            Maximal formula depth :   24 (  10 average)
-%            Number of connectives :   81 (   0   ~;   0   |;  14   &;  67   @)
+%            Number of connectives :   83 (   0   ~;   0   |;  14   &;  69   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
@@ -56,6 +56,6 @@ thf(p_answer,answer,(
       & ( $is_int @ 'c/0' )
       & ( $lesseq @ 0 @ 'c/0' )
       & ( ( $to_rat @ V_s_dot_0 )
-        = ( $product @ ( $quotient @ 1 @ 8 ) @ ( $to_rat @ ( $product @ ( $product @ ( $sum @ ( 'int.^/2' @ 2 @ ( $sum @ 'a/0' @ 1 ) ) @ 1 ) @ ( $sum @ ( 'int.^/2' @ 3 @ ( $sum @ 'b/0' @ 1 ) ) @ 1 ) ) @ ( $sum @ ( 'int.^/2' @ 5 @ ( $sum @ 'c/0' @ 1 ) ) @ 1 ) ) ) ) ) ) ),
+        = ( $product @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ 8 ) ) @ ( $to_rat @ ( $product @ ( $product @ ( $sum @ ( 'int.^/2' @ 2 @ ( $sum @ 'a/0' @ 1 ) ) @ 1 ) @ ( $sum @ ( 'int.^/2' @ 3 @ ( $sum @ 'b/0' @ 1 ) ) @ 1 ) ) @ ( $sum @ ( 'int.^/2' @ 5 @ ( $sum @ 'c/0' @ 1 ) ) @ 1 ) ) ) ) ) ) ),
     answer_to(p_question,[])).
 

@@ -4831,7 +4831,7 @@ thf('3d.unit-sphere/0_type',type,(
 thf('3d.is-square-pyramid/5_type',type,(
     '3d.is-square-pyramid/5': '3d.Point' > '3d.Point' > '3d.Point' > '3d.Point' > '3d.Point' > $o )).
 
-% is-sphere(shape) <-> shape is a sphere
+% is-sphere(shape) <-> shape is a sphere;;後で消す
 thf('3d.is-sphere/1_type',type,(
     '3d.is-sphere/1': '3d.Shape' > $o )).
 
@@ -7776,13 +7776,13 @@ thf('int.def-is-infinit-set_axiom',axiom,(
 
 thf('rat.def_rat^_axiom',axiom,(
     ! [V_a: $int,V_b: $int,V_n: $int] :
-      ( ( 'rat.^/2' @ ( $quotient @ V_a @ V_b ) @ V_n )
-      = ( $quotient @ ( 'int.^/2' @ V_a @ V_n ) @ ( 'int.^/2' @ V_b @ V_n ) ) ) )).
+      ( ( 'rat.^/2' @ ( $quotient @ ( $to_rat @ V_a ) @ ( $to_rat @ V_b ) ) @ V_n )
+      = ( $quotient @ ( $to_rat @ ( 'int.^/2' @ V_a @ V_n ) ) @ ( $to_rat @ ( 'int.^/2' @ V_b @ V_n ) ) ) ) )).
 
 thf('rat.def_rat_abs_axiom',axiom,(
     ! [V_a: $int,V_b: $int] :
-      ( ( 'rat.abs/1' @ ( $quotient @ V_a @ V_b ) )
-      = ( $quotient @ ( 'int.abs/1' @ V_a ) @ ( 'int.abs/1' @ V_b ) ) ) )).
+      ( ( 'rat.abs/1' @ ( $quotient @ ( $to_rat @ V_a ) @ ( $to_rat @ V_b ) ) )
+      = ( $quotient @ ( $to_rat @ ( 'int.abs/1' @ V_a ) ) @ ( $to_rat @ ( 'int.abs/1' @ V_b ) ) ) ) )).
 
 thf('rat.def_rat_sum_nil_axiom',axiom,
     ( ( 'rat.sum/1' @ ( 'nil/0' @ $rat ) )
@@ -10739,7 +10739,7 @@ thf('2d.disk-type_axiom',axiom,(
       ( ( '2d.disk-type/1' @ V_C )
     <=> ? [V_r: $real,V_c: '2d.Point'] :
           ( ( V_C
-            = ( '2d.circle/2' @ V_c @ V_r ) )
+            = ( '2d.disk/2' @ V_c @ V_r ) )
           & ( $less @ 0.0 @ V_r ) ) ) )).
 
 thf('2d.semicircle-type_axiom',axiom,(

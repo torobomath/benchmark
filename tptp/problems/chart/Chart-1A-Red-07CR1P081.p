@@ -6,9 +6,9 @@
 %% GENERATED: 2015-01-07
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  132 (   9 equality;  28 variable)
-%            Maximal formula depth :   19 (  13 average)
-%            Number of connectives :  114 (   0   ~;   3   |;  10   &; 101   @)
+%            Number of atoms       :  144 (   9 equality;  28 variable)
+%            Maximal formula depth :   20 (  13 average)
+%            Number of connectives :  126 (   0   ~;   3   |;  10   &; 113   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
@@ -29,8 +29,8 @@ thf(p1_qustion,question,
         & ( 'int.is-natural-number/1' @ V_x )
         & ( 'int.is-natural-number/1' @ V_y )
         & ( $less @ V_x @ V_y )
-        & ( ( $quotient @ 1 @ 4 )
-          = ( $sum @ ( $quotient @ 1 @ V_x ) @ ( $quotient @ 1 @ V_y ) ) ) ) )).
+        & ( ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ 4 ) )
+          = ( $sum @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ V_x ) ) @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ V_y ) ) ) ) ) )).
 
 thf(p2_qustion,question,
     ( 'find/1' @ ( 'ListOf' @ $int )
@@ -44,7 +44,7 @@ thf(p2_qustion,question,
         & ( $lesseq @ V_l @ V_m )
         & ( $lesseq @ V_m @ V_n )
         & ( ( $to_rat @ 1 )
-          = ( $sum @ ( $sum @ ( $quotient @ 1 @ V_l ) @ ( $quotient @ 1 @ V_m ) ) @ ( $quotient @ 1 @ V_n ) ) ) ) )).
+          = ( $sum @ ( $sum @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ V_l ) ) @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ V_m ) ) ) @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ V_n ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
     ^ [V_answer_dot_0: ( 'ListOf' @ $int )] :

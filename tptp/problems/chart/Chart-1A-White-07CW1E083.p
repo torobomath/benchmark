@@ -6,17 +6,17 @@
 %% GENERATED: 2015-01-08
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   77 (   7 equality;  19 variable)
-%            Maximal formula depth :   17 (  10 average)
-%            Number of connectives :   59 (   0   ~;   5   |;   3   &;  51   @)
+%            Number of atoms       :   81 (   7 equality;  19 variable)
+%            Maximal formula depth :   18 (  10 average)
+%            Number of connectives :   63 (   0   ~;   5   |;   3   &;  55   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   24 (   0   :;   0   =)
+%            Number of symbols     :   25 (   0   :;   0   =)
 %            Number of variables   :    7 (   0 sgn;   0   !;   0   ?;   7   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
-%            Arithmetic symbols    :   19 (   3 pred;    5 func;   11 numbers)
+%            Arithmetic symbols    :   20 (   3 pred;    6 func;   11 numbers)
 
 include('axioms.ax').
 
@@ -27,7 +27,7 @@ thf(p1_qustion,question,
         @ ( 'set-by-def/1' @ $int
           @ ^ [V_n0: $int] :
               ( ( 'int.is-natural-number/1' @ V_n0 )
-              & ( $lesseq @ ( $quotient @ ( $sum @ 9 @ ( $product @ -7 @ V_n0 ) ) @ 3 ) @ ( $quotient @ ( $difference @ ( $difference @ ( $uminus @ V_n0 ) @ 1 ) @ ( $product @ 3 @ ( $difference @ V_n0 @ 2 ) ) ) @ 4 ) ) ) )
+              & ( $lesseq @ ( $quotient @ ( $to_rat @ ( $sum @ 9 @ ( $product @ -7 @ V_n0 ) ) ) @ ( $to_rat @ 3 ) ) @ ( $quotient @ ( $to_rat @ ( $difference @ ( $difference @ ( $uminus @ V_n0 ) @ 1 ) @ ( $product @ 3 @ ( $difference @ V_n0 @ 2 ) ) ) ) @ ( $to_rat @ 4 ) ) ) ) )
         @ ^ [V_lhs: $int,V_rhs: $int] :
             ( $less @ V_lhs @ V_rhs )
         @ V_n ) )).

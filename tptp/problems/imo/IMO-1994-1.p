@@ -16,17 +16,17 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  115 (   3 equality;  43 variable)
+%            Number of atoms       :  119 (   3 equality;  43 variable)
 %            Maximal formula depth :   24 (  24 average)
-%            Number of connectives :  110 (   1   ~;   0   |;  14   &;  91   @)
+%            Number of connectives :  114 (   1   ~;   0   |;  14   &;  95   @)
 %                                         (   0 <=>;   4  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   15 (   0   :;   0   =)
+%            Number of symbols     :   16 (   0   :;   0   =)
 %            Number of variables   :    9 (   0 sgn;   8   !;   1   ?;   0   ^)
 %                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
-%            Arithmetic symbols    :   10 (   4 pred;    3 func;    3 numbers)
+%            Arithmetic symbols    :   11 (   4 pred;    4 func;    3 numbers)
 
 include('axioms.ax').
 
@@ -57,5 +57,5 @@ thf(p,conjecture,(
                 & ( $lesseq @ V_k @ V_m )
                 & ( ( $sum @ ( 'nth/2' @ $int @ ( $difference @ V_i @ 1 ) @ V_an ) @ ( 'nth/2' @ $int @ ( $difference @ V_j @ 1 ) @ V_an ) )
                   = ( 'nth/2' @ $int @ ( $difference @ V_k @ 1 ) @ V_an ) ) ) ) )
-     => ( $greatereq @ ( $quotient @ ( 'int.sum/1' @ V_an ) @ V_m ) @ ( $quotient @ ( $sum @ V_n @ 1 ) @ 2 ) ) ) )).
+     => ( $greatereq @ ( $quotient @ ( $to_rat @ ( 'int.sum/1' @ V_an ) ) @ ( $to_rat @ V_m ) ) @ ( $quotient @ ( $to_rat @ ( $sum @ V_n @ 1 ) ) @ ( $to_rat @ 2 ) ) ) ) )).
 

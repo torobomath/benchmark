@@ -13,9 +13,9 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   86 (   1 equality;  32 variable)
-%            Maximal formula depth :   20 (  20 average)
-%            Number of connectives :   83 (   0   ~;   0   |;   6   &;  73   @)
+%            Number of atoms       :   94 (   1 equality;  32 variable)
+%            Maximal formula depth :   21 (  21 average)
+%            Number of connectives :   91 (   0   ~;   0   |;   6   &;  81   @)
 %                                         (   0 <=>;   4  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    1 (   1   >;   0   *;   0   +;   0  <<)
@@ -37,11 +37,11 @@ thf(p,conjecture,(
            => ( $lesseq @ ( V_a @ V_n ) @ ( V_a @ ( $sum @ V_n @ 1 ) ) ) ) )
      => ? [V_n_dot_1: $int] :
           ( ( $lesseq @ 1 @ V_n_dot_1 )
-          & ( $less @ ( $to_rat @ ( V_a @ V_n_dot_1 ) ) @ ( $quotient @ ( 'int.sum/1' @ ( 'map/2' @ $int @ $int @ V_a @ ( 'int.iota/2' @ 0 @ V_n_dot_1 ) ) ) @ V_n_dot_1 ) )
-          & ( $lesseq @ ( $quotient @ ( 'int.sum/1' @ ( 'map/2' @ $int @ $int @ V_a @ ( 'int.iota/2' @ 0 @ V_n_dot_1 ) ) ) @ V_n_dot_1 ) @ ( $to_rat @ ( V_a @ ( $sum @ V_n_dot_1 @ 1 ) ) ) )
+          & ( $less @ ( $to_rat @ ( V_a @ V_n_dot_1 ) ) @ ( $quotient @ ( $to_rat @ ( 'int.sum/1' @ ( 'map/2' @ $int @ $int @ V_a @ ( 'int.iota/2' @ 0 @ V_n_dot_1 ) ) ) ) @ ( $to_rat @ V_n_dot_1 ) ) )
+          & ( $lesseq @ ( $quotient @ ( $to_rat @ ( 'int.sum/1' @ ( 'map/2' @ $int @ $int @ V_a @ ( 'int.iota/2' @ 0 @ V_n_dot_1 ) ) ) ) @ ( $to_rat @ V_n_dot_1 ) ) @ ( $to_rat @ ( V_a @ ( $sum @ V_n_dot_1 @ 1 ) ) ) )
           & ! [V_m: $int] :
               ( ( ( $lesseq @ 1 @ V_m )
-                & ( $less @ ( $to_rat @ ( V_a @ V_m ) ) @ ( $quotient @ ( 'int.sum/1' @ ( 'map/2' @ $int @ $int @ V_a @ ( 'int.iota/2' @ 0 @ V_m ) ) ) @ V_m ) )
-                & ( $lesseq @ ( $quotient @ ( 'int.sum/1' @ ( 'map/2' @ $int @ $int @ V_a @ ( 'int.iota/2' @ 0 @ V_m ) ) ) @ V_m ) @ ( $to_rat @ ( V_a @ ( $sum @ V_m @ 1 ) ) ) ) )
+                & ( $less @ ( $to_rat @ ( V_a @ V_m ) ) @ ( $quotient @ ( $to_rat @ ( 'int.sum/1' @ ( 'map/2' @ $int @ $int @ V_a @ ( 'int.iota/2' @ 0 @ V_m ) ) ) ) @ ( $to_rat @ V_m ) ) )
+                & ( $lesseq @ ( $quotient @ ( $to_rat @ ( 'int.sum/1' @ ( 'map/2' @ $int @ $int @ V_a @ ( 'int.iota/2' @ 0 @ V_m ) ) ) ) @ ( $to_rat @ V_m ) ) @ ( $to_rat @ ( V_a @ ( $sum @ V_m @ 1 ) ) ) ) )
              => ( V_n_dot_1 = V_m ) ) ) ) )).
 

@@ -14,17 +14,17 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   52 (   5 equality;  13 variable)
-%            Maximal formula depth :   17 (  13 average)
-%            Number of connectives :   41 (   0   ~;   1   |;   3   &;  37   @)
+%            Number of atoms       :   56 (   5 equality;  13 variable)
+%            Maximal formula depth :   18 (  14 average)
+%            Number of connectives :   45 (   0   ~;   1   |;   3   &;  41   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   20 (   0   :;   0   =)
+%            Number of symbols     :   21 (   0   :;   0   =)
 %            Number of variables   :    7 (   0 sgn;   0   !;   2   ?;   5   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
-%            Arithmetic symbols    :   10 (   1 pred;    3 func;    6 numbers)
+%            Arithmetic symbols    :   11 (   1 pred;    4 func;    6 numbers)
 
 include('axioms.ax').
 
@@ -38,13 +38,13 @@ thf(p_qustion,question,
             & ( ( 'rat.sum/1'
                 @ ( 'map/2' @ $int @ $rat
                   @ ^ [V_x_dot_0: $int] :
-                      ( $quotient @ 1 @ ( 'int.^/2' @ 2 @ V_x_dot_0 ) )
+                      ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ ( 'int.^/2' @ 2 @ V_x_dot_0 ) ) )
                   @ V_a ) )
               = 1/1 )
             & ( ( 'rat.sum/1'
                 @ ( 'zip-with/3' @ $int @ $int @ $rat
                   @ ^ [V_n_dot_0: $int,V_x: $int] :
-                      ( $quotient @ V_n_dot_0 @ ( 'int.^/2' @ 3 @ V_x ) )
+                      ( $quotient @ ( $to_rat @ V_n_dot_0 ) @ ( $to_rat @ ( 'int.^/2' @ 3 @ V_x ) ) )
                   @ ( 'int.iota/2' @ 1 @ V_n )
                   @ V_a ) )
               = 1/1 ) ) ) )).

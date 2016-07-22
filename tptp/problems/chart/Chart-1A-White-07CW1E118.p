@@ -6,17 +6,17 @@
 %% GENERATED: 2015-01-08
 
 % Syntax   : Number of formulae    :    2 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   87 (   6 equality;  26 variable)
-%            Maximal formula depth :   28 (  18 average)
-%            Number of connectives :   75 (   0   ~;   0   |;  10   &;  65   @)
+%            Number of atoms       :   95 (   6 equality;  26 variable)
+%            Maximal formula depth :   29 (  18 average)
+%            Number of connectives :   83 (   0   ~;   0   |;  10   &;  73   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   19 (   0   :;   0   =)
+%            Number of symbols     :   20 (   0   :;   0   =)
 %            Number of variables   :   10 (   0 sgn;   0   !;   5   ?;   5   ^)
 %                                         (  10   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
-%            Arithmetic symbols    :   11 (   1 pred;    2 func;    8 numbers)
+%            Arithmetic symbols    :   12 (   1 pred;    3 func;    8 numbers)
 
 include('axioms.ax').
 
@@ -29,8 +29,8 @@ thf(p_qustion,question,
         & ( 'int.is-natural-number/1' @ V_p )
         & ( 'int.is-natural-number/1' @ V_q )
         & ( $less @ ( $sum @ V_p @ V_q ) @ 30 )
-        & ( ( $quotient @ ( $sum @ V_p @ 1 ) @ ( $sum @ V_q @ 3 ) )
-          = ( $quotient @ 2 @ 5 ) )
+        & ( ( $quotient @ ( $to_rat @ ( $sum @ V_p @ 1 ) ) @ ( $to_rat @ ( $sum @ V_q @ 3 ) ) )
+          = ( $quotient @ ( $to_rat @ 2 ) @ ( $to_rat @ 5 ) ) )
         & ( V_max
           = ( $sum @ V_p @ V_q ) )
         & ( 'minimum/3' @ $int
@@ -40,8 +40,8 @@ thf(p_qustion,question,
                 ( ( 'int.is-natural-number/1' @ V_p0 )
                 & ( 'int.is-natural-number/1' @ V_q0 )
                 & ( $less @ ( $sum @ V_p0 @ V_q0 ) @ 30 )
-                & ( ( $quotient @ ( $sum @ V_p0 @ 1 ) @ ( $sum @ V_q0 @ 3 ) )
-                  = ( $quotient @ 2 @ 5 ) )
+                & ( ( $quotient @ ( $to_rat @ ( $sum @ V_p0 @ 1 ) ) @ ( $to_rat @ ( $sum @ V_q0 @ 3 ) ) )
+                  = ( $quotient @ ( $to_rat @ 2 ) @ ( $to_rat @ 5 ) ) )
                 & ( V_v
                   = ( $sum @ V_p0 @ V_q0 ) ) ) )
           @ ^ [V_lhs: $int,V_rhs: $int] :

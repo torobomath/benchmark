@@ -6,17 +6,17 @@
 %% GENERATED: 2015-01-07
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  182 (  16 equality;  29 variable)
-%            Maximal formula depth :   15 (  14 average)
-%            Number of connectives :  150 (   0   ~;  10   |;   8   &; 132   @)
+%            Number of atoms       :  188 (  16 equality;  29 variable)
+%            Maximal formula depth :   16 (  14 average)
+%            Number of connectives :  156 (   0   ~;  10   |;   8   &; 138   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   26 (   0   :;   0   =)
+%            Number of symbols     :   27 (   0   :;   0   =)
 %            Number of variables   :    8 (   0 sgn;   0   !;   4   ?;   4   ^)
 %                                         (   8   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
-%            Arithmetic symbols    :   20 (   2 pred;    3 func;   15 numbers)
+%            Arithmetic symbols    :   21 (   2 pred;    4 func;   15 numbers)
 
 include('axioms.ax').
 
@@ -41,8 +41,8 @@ thf(p2_qustion,question,
         & ( $less @ 0 @ V_x )
         & ( $is_int @ V_y )
         & ( $less @ 0 @ V_y )
-        & ( ( $quotient @ 1 @ 4 )
-          = ( $sum @ ( $quotient @ 1 @ V_x ) @ ( $quotient @ 1 @ V_y ) ) ) ) )).
+        & ( ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ 4 ) )
+          = ( $sum @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ V_x ) ) @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ V_y ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
     ^ [V_answer_dot_0: ( 'ListOf' @ $int )] :

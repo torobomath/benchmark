@@ -115,7 +115,6 @@
 ;;@ is-square-pyramid(p,a,b,c,d) <-> five points p, a, b, c, d form a square pyramid p-abcd
 (def-pred is-square-pyramid :: Point -> Point -> Point -> Point -> Point => Bool)
 
-;;@ is-sphere(shape) <-> shape is a sphere
 (def-pred is-sphere :: Shape => Bool)
 
 ;; 2013-02-28 suzuki

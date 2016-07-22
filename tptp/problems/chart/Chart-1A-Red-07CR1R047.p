@@ -6,9 +6,9 @@
 %% GENERATED: 2015-01-07
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  135 (   8 equality;  26 variable)
-%            Maximal formula depth :   21 (  14 average)
-%            Number of connectives :  119 (   0   ~;   2   |;  12   &; 105   @)
+%            Number of atoms       :  147 (   8 equality;  26 variable)
+%            Maximal formula depth :   22 (  14 average)
+%            Number of connectives :  131 (   0   ~;   2   |;  12   &; 117   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
@@ -30,8 +30,8 @@ thf(p1_qustion,question,
         & ( $less @ 0 @ V_x )
         & ( $is_int @ V_y )
         & ( $less @ 0 @ V_y )
-        & ( ( $quotient @ 1 @ 2 )
-          = ( $sum @ ( $quotient @ 1 @ ( $product @ 3 @ V_x ) ) @ ( $quotient @ 1 @ ( $product @ 3 @ V_y ) ) ) ) ) )).
+        & ( ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ 2 ) )
+          = ( $sum @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ ( $product @ 3 @ V_x ) ) ) @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ ( $product @ 3 @ V_y ) ) ) ) ) ) )).
 
 thf(p2_qustion,question,
     ( 'find/1' @ ( 'ListOf' @ $int )
@@ -46,7 +46,7 @@ thf(p2_qustion,question,
         & ( $is_int @ V_z )
         & ( $less @ 0 @ V_z )
         & ( ( $to_rat @ 1 )
-          = ( $sum @ ( $sum @ ( $quotient @ 1 @ ( $product @ 3 @ V_x ) ) @ ( $quotient @ 1 @ ( $product @ 3 @ V_y ) ) ) @ ( $quotient @ 1 @ ( $product @ 2 @ V_z ) ) ) ) ) )).
+          = ( $sum @ ( $sum @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ ( $product @ 3 @ V_x ) ) ) @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ ( $product @ 3 @ V_y ) ) ) ) @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ ( $product @ 2 @ V_z ) ) ) ) ) ) )).
 
 thf(p1_answer,answer,(
     ^ [V_answer_dot_0: ( 'ListOf' @ $int )] :

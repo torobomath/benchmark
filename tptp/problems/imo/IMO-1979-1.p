@@ -12,9 +12,9 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   24 (   1 equality;   5 variable)
+%            Number of atoms       :   28 (   1 equality;   5 variable)
 %            Maximal formula depth :   14 (  14 average)
-%            Number of connectives :   21 (   0   ~;   0   |;   0   &;  20   @)
+%            Number of connectives :   25 (   0   ~;   0   |;   0   &;  24   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
@@ -28,11 +28,11 @@ include('axioms.ax').
 
 thf(p,conjecture,(
     ! [V_p: $int,V_q: $int] :
-      ( ( ( $quotient @ V_p @ V_q )
+      ( ( ( $quotient @ ( $to_rat @ V_p ) @ ( $to_rat @ V_q ) )
         = ( 'rat.sum/1'
           @ ( 'map/2' @ $int @ $rat
             @ ^ [V_n: $int] :
-                ( $product @ ( 'rat.^/2' @ ( $to_rat @ -1 ) @ ( $sum @ V_n @ 1 ) ) @ ( $quotient @ 1 @ V_n ) )
+                ( $product @ ( 'rat.^/2' @ ( $to_rat @ -1 ) @ ( $sum @ V_n @ 1 ) ) @ ( $quotient @ ( $to_rat @ 1 ) @ ( $to_rat @ V_n ) ) )
             @ ( 'int.iota/2' @ 1 @ 1319 ) ) ) )
      => ( 'int.is-divisible-by/2' @ V_p @ 1979 ) ) )).
 

@@ -62,6 +62,9 @@
 (def-fun iset-rename-all :: (ListOf (IntentSetOf a)) -> 
                             (ListOf (IntentSetOf a)) => 
                             (ListOf (IntentSetOf a)))
+(def-fun iset-add-cond-all :: (a -> Bool) ->
+                              (ListOf (IntentSetOf a)) => 
+                              (ListOf (IntentSetOf a)))
 
 ;;------------------------------------------------------------------------------
 ;; for NLP: same as comma

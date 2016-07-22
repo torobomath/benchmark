@@ -6,9 +6,9 @@
 %% GENERATED: 2015-01-08
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :   77 (   4 equality;  17 variable)
-%            Maximal formula depth :   20 (  10 average)
-%            Number of connectives :   65 (   0   ~;   2   |;   4   &;  59   @)
+%            Number of atoms       :   83 (   4 equality;  17 variable)
+%            Maximal formula depth :   21 (  10 average)
+%            Number of connectives :   71 (   0   ~;   2   |;   4   &;  65   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
@@ -28,7 +28,7 @@ thf(p1_qustion,question,
           @ ( 'set-by-def/1' @ $int
             @ ^ [V_n0: $int] :
                 ( ( 'int.is-natural-number/1' @ V_n0 )
-                & ( $lesseq @ ( $sum @ ( $quotient @ ( $sum @ ( $product @ 3 @ V_n0 ) @ -1 ) @ 4 ) @ ( $quotient @ ( $uminus @ ( $sum @ ( $product @ 2 @ V_n0 ) @ -3 ) ) @ 5 ) ) @ ( $sum @ ( $quotient @ ( $sum @ ( $product @ 7 @ V_n0 ) @ -7 ) @ 10 ) @ ( $to_rat @ -1 ) ) ) ) )
+                & ( $lesseq @ ( $sum @ ( $quotient @ ( $to_rat @ ( $sum @ ( $product @ 3 @ V_n0 ) @ -1 ) ) @ ( $to_rat @ 4 ) ) @ ( $quotient @ ( $to_rat @ ( $uminus @ ( $sum @ ( $product @ 2 @ V_n0 ) @ -3 ) ) ) @ ( $to_rat @ 5 ) ) ) @ ( $sum @ ( $quotient @ ( $to_rat @ ( $sum @ ( $product @ 7 @ V_n0 ) @ -7 ) ) @ ( $to_rat @ 10 ) ) @ ( $to_rat @ -1 ) ) ) ) )
           @ ^ [V_lhs: $int,V_rhs: $int] :
               ( $less @ V_lhs @ V_rhs )
           @ V_n ) ) )).

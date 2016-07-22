@@ -76,7 +76,7 @@
 (def-typing-trigger
   (disk-type C)
   (c r)
-  (&& (= C (circle c r))
+  (&& (= C (disk c r))
       (< 0 r)))
 
 
