@@ -44,7 +44,7 @@
 (def-directive
   p1_2
   (Find (P)
-        (exists (A R x_set a b B Q)
+        (exists (A R x_set x_max a b B Q)
                 (&& (= A (sm* (/ 1 3) (matrix 2 -1 -1 2)))
                     (= (vec->point (mv* A (vec (origin) R))) (point 1 -1))
                     (maximum x_set x_max)
@@ -89,6 +89,7 @@
                                                            (&& (<= (abs a) (/ 1 2))
                                                                (<= (abs b) (/ 1 2))
                                                                (= P (point a b))
+                                                               (= A (sm* (/ 1 3) (matrix 2 -1 -1 2)))
                                                                (! (= P (origin)))
                                                                (= B (point (+ 1 a) (- b 1)))
                                                                (= (vec->point (mv* A (vec (origin) Q))) B)

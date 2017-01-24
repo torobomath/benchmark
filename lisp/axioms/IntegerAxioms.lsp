@@ -3,11 +3,17 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (namespace int)
 (import "axioms/IntegerTypes.lsp")
+(import "axioms/RationalTypes.lsp")
 
 (axiom
   def_is_integer
   (n)
   (is-integer n))
+
+(axiom
+  def_is_number
+  (n)
+  (is-number n))
 
 (def-typing-trigger
   (is-natural-number n)
@@ -15,15 +21,33 @@
   (&& (is-integer n)
       (<= 1 n)))
 
-(def-typing-trigger
-  (is-lattice-point ps)
-  (a b)
-  (&& (= ps (list-of a b))
-      (is-integer a)
-      (is-integer b)
-      ;(= (list-len ps) 2)
-   )
-)
+;;# DONT_EXPORT: $to_rat
+(axiom
+  def_to_rat
+  (x)
+  (= (to_rat x) (rat.int->rat x)))
+
+;;# DONT_EXPORT: $to_real
+(axiom
+  def_to_real
+  (x)
+  (= (to_real x) (int->real x)))
+
+;(def-typing-trigger
+;  (is-lattice-point ps)
+;  (a b)
+;  (&& (= ps (list-of a b))
+;      (is-integer a)
+;      (is-integer b)
+;      ;(= (list-len ps) 2)
+;   )
+;)
+
+;; division -> rational number
+(axiom
+  def-int-/
+  (x y)
+  (= (/ x y) (rat.ratio x y)))
 
 ;; min, max
 (axiom
@@ -144,6 +168,12 @@
        (exists (k) (= m (* k n)))))
 
 (axiom
+  def-divides
+  (m n)
+  (<-> (divides m n)
+       (exists (k) (= n (* k m)))))
+
+(axiom
  def-is-prime
  (p)
  (<-> (is-prime p)
@@ -233,9 +263,9 @@
 
 (axiom
  def_nthcdr_rec
- (n lis)
- (= (nthcdr n lis)
-    (cdr (nthcdr (- n 1) lis))))
+ (@n lis)
+ (= (nthcdr @n lis)
+    (cdr (nthcdr (- @n 1) lis))))
 
 ;; nth :: Z -> (ListOf a) => a
 ;; 2013/11/26 suzuki
@@ -399,9 +429,10 @@
 
 (axiom
   def_factorial_rec
-  (n)
-  (= (factorial n)
-	 (* n (factorial (- n 1)))))
+  (@n)
+  (= (factorial @n)
+	 ;(* @n (factorial (- @n 1)))))
+     (product (iota 1 @n))))
 
 (axiom
   def_permutation_base
@@ -410,9 +441,10 @@
 
 (axiom
   def_permutation_rec
-  (n m)
-  (= (permutation n m)
-	 (* n (permutation (- n 1) (- m 1)))))
+  (@n @m)
+  (= (permutation @n @m)
+	 ;(* @n (permutation (- @n 1) (- @m 1)))))
+     (product (iota (+ (- @n @m) 1) @n))))
 
 (axiom
   def_combination
@@ -420,16 +452,16 @@
   (= (combination n m)
 	 (div (permutation n m) (factorial m))))
 
-(axiom
- def-lattice-xcoord
- (x y)
- (= (x-coord (list-of x y)) x)
-)
-(axiom
- def-lattice-ycoord
- (x y)
- (= (y-coord (list-of x y)) y)
-)
+;(axiom
+; def-lattice-xcoord
+; (x y)
+; (= (x-coord (list-of x y)) x)
+;)
+;(axiom
+; def-lattice-ycoord
+; (x y)
+; (= (y-coord (list-of x y)) y)
+;)
 
 ; 2015-01-06:
 
@@ -480,6 +512,62 @@
   (<-> (>= m (num-of-digits n))
        (< n (^ 10 m))))
 
+;;--------------------------------------
+;;--------------------------------------
+(axiom
+  def-num-of-digits-in-base-k-eq
+  (n m k)
+  (<-> (= (list-len (digits-in-base n k)) m)
+       (&& (<= (^ k (- m 1)) n)
+           (< n (^ k m)))))
+
+(axiom
+  def-num-of-digits-in-base-k-lt1
+  (n m k)
+  (<-> (< (list-len (digits-in-base n k)) m)
+       (< n (^ k (- m 1)))))
+
+(axiom
+  def-num-of-digits-in-base-k-lt2
+  (n m k)
+  (<-> (< m (list-len (digits-in-base n k)))
+       (<= (^ k m) n)))
+
+(axiom
+  def-num-of-digits-in-base-k-gt1
+  (n m k)
+  (<-> (> (list-len (digits-in-base n k)) m)
+       (< m (list-len (digits-in-base n k)))))
+
+(axiom
+  def-num-of-digits-in-base-k-gt2
+  (n m k)
+  (<-> (> m (list-len (digits-in-base n k)))
+       (< (list-len (digits-in-base n k)) m)))
+
+(axiom
+  def-num-of-digits-in-base-k-le1
+  (n m k)
+  (<-> (<= (list-len (digits-in-base n k)) m)
+       (! (> (list-len (digits-in-base n k)) m))))
+
+(axiom
+  def-num-of-digits-in-base-k-le2
+  (n m k)
+  (<-> (<= m (list-len (digits-in-base n k)))
+       (! (> m (list-len (digits-in-base n k))))))
+
+(axiom
+  def-num-of-digits-in-base-k-ge1
+  (n m k)
+  (<-> (>= (list-len (digits-in-base n k)) m)
+       (! (< (list-len (digits-in-base n k)) m))))
+
+(axiom
+  def-num-of-digits-in-base-k-ge2
+  (n m k)
+  (<-> (>= m (list-len (digits-in-base n k)))
+       (! (< m (list-len (digits-in-base n k))))))
 
 ;;--------------------------------------
 ;;--------------------------------------
@@ -509,3 +597,142 @@
  (s)
  (<-> (is-infinite-set s)
       (! (is-finite-set s))))
+
+;;@-----------------------------------------------------------------------------
+;;@ Numeral system
+;;@-----------------------------------------------------------------------------
+(axiom
+  def-digits-in-base
+  (@k @n)
+  (= (digits-in-base @n @k)
+     (if (< @n @k)
+         (list-of @n)
+         (cons (mod @n @k) (digits-in-base (div @n @k) @k)))))
+
+(axiom
+  def-digits-in-base-nil
+  (k n)
+  (<-> (= (digits-in-base n k) (nil))
+       (false)))
+
+(axiom
+  def-digits-in-base-single-digit
+  (k n m)
+  (<-> (= (digits-in-base n k) (list-of m))
+       (&& (<= 0 m)
+           (< m k)
+           (= n m))))
+
+(axiom
+  def-digits-in-base-two-or-more-digits
+  (k n m1 m2 ms)
+  (<-> (= (digits-in-base n k) (cons m1 (cons m2 ms)))
+       (&& (= (mod n k) m1)
+           (= (digits-in-base (div n k) k) (cons m2 ms)))))
+
+(axiom
+  def-number-in-base-base
+  (k)
+  (= (number-in-base (nil) k) 0))
+
+(axiom
+  def-number-in-base-rec
+  (k n ns)
+  (= (number-in-base (cons n ns) k)
+     (+ n (* k (number-in-base ns k)))))
+
+;; TMP
+;(axiom
+;  def-div
+;  (m n k)
+;  (<-> (= (div m n) k)
+;       (&& (<= (* k n) m)
+;           (< m (* (+ k 1) n)))))
+
+;(axiom
+;  def-parametrize
+;  (vs cond)
+;  (<-> (parametrize vs cond)
+;       (PLamApp cond (_))))
+
+;; nth-largest/smallest-elem: 
+(axiom
+  def-nth-largest-elem-base
+  (m set fun)
+  (<-> (nth-largest-elem m set fun 1)
+       (&& (elem m set)
+           (forall (x)
+              (-> (elem x set)
+                  (<= (LamApp fun x) (LamApp fun m)))))))
+
+(axiom
+  def-nth-smallest-elem-base
+  (m set fun)
+  (<-> (nth-smallest-elem m set fun 1)
+       (&& (elem m set)
+           (forall (x)
+              (-> (elem x set)
+                  (<= (LamApp fun m) (LamApp fun x)))))))
+
+(axiom
+  def-nth-largest-elem-rec
+  (x set fun @n)
+  (<-> (nth-largest-elem x set fun @n)
+       (&& (elem x set)
+           (forall (y)
+              (-> (elem y set)
+                  (|| (some (PLam k (nth-largest-elem y set fun k)) (iota (- @n 1) 1))
+                      (<= (LamApp fun y) (LamApp fun x))))))))
+
+(axiom
+  def-nth-smallest-elem-rec
+  (x set fun @n)
+  (<-> (nth-smallest-elem x set fun @n)
+       (&& (elem x set)
+           (forall (y)
+              (-> (elem y set)
+                  (|| (some (PLam k (nth-smallest-elem y set fun k)) (iota (- @n 1) 1))
+                      (<= (LamApp fun y) (LamApp fun x))))))))
+
+;; iota(a, b) = [a, a+1, ..., b] (if a <= b)
+;; iota(a, b) = [a, a-1, ..., b] (if a > b)
+;(axiom
+;  def-iota-rec
+;  (@m @n)
+;  (= (iota @m @n)
+;     (if (= @m @n)
+;         (list-of @m)
+;         (if (< @m @n)
+;             (cons @m (iota (+ @m 1) @n))
+;             (cons @m (iota (- @m 1) @n))))))
+
+;;-----------------------------------------------------------------------
+;;-----------------------------------------------------------------------
+;; pfd(N = 123, N = a^m b^n ..) <-> (N = 123 <-> N = a^m b^m ..)
+;(axiom
+;  def-pfd-default
+;  (f g)
+;  (<-> (pfd f g)
+;       (&& (PLamApp f (_)) (PLamApp g (_)))))
+;
+;;; pfd_ee(123, a^m b^n ..) <-> N = a^m b^n ...
+;(axiom
+;  def-pfd_ee-default
+;  (m n)
+;  (<-> (pfd_ee m n)
+;       (= m n)))
+;
+;
+;;; pfd_ef(N, N = a^m b^m)
+;(axiom
+;  def-pfd-ef-default
+;  (n f)
+;  (<-> (pfd_ef n f)
+;       (PLamApp f (_))))
+;
+;;; transform(f, g) <-> (f <-> g)
+;(axiom
+;  def-transform-default
+;  (f g)
+;  (<-> (transform f g)
+;       (&& (PLamApp f (_)) (PLamApp g (_)))))

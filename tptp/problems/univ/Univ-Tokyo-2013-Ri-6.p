@@ -19,17 +19,17 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    5 (   0 unit;   1 type;   0 defn)
-%            Number of atoms       :  121 (   4 equality;   4 variable)
-%            Maximal formula depth :   16 (  10 average)
-%            Number of connectives :  109 (   0   ~;   0   |;   0   &; 109   @)
+%            Number of atoms       :  127 (   4 equality;   4 variable)
+%            Maximal formula depth :   18 (  10 average)
+%            Number of connectives :  115 (   0   ~;   0   |;   2   &; 113   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   24 (   1   :;   0   =)
+%            Number of symbols     :   26 (   1   :;   0   =)
 %            Number of variables   :    4 (   0 sgn;   0   !;   0   ?;   4   ^)
 %                                         (   4   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
-%            Arithmetic symbols    :   11 (   0 pred;    3 func;    8 numbers)
+%            Arithmetic symbols    :   13 (   2 pred;    3 func;    8 numbers)
 
 include('axioms.ax').
 
@@ -39,8 +39,10 @@ thf('t/0_type',type,(
 thf(p1_qustion,question,
     ( 'find/1' @ $real
     @ ^ [V_x: $real] :
-        ( V_x
-        = ( '3d.area-of/1' @ ( '3d.intersection/2' @ ( '3d.solid-of-revolution/2' @ ( '3d.square/4' @ ( '3d.point/3' @ -1.0 @ 1.0 @ 0.0 ) @ ( '3d.point/3' @ 1.0 @ 1.0 @ 0.0 ) @ ( '3d.point/3' @ 1.0 @ -1.0 @ 0.0 ) @ ( '3d.point/3' @ -1.0 @ -1.0 @ 0.0 ) ) @ ( '3d.line/2' @ ( '3d.point/3' @ 1.0 @ 1.0 @ 0.0 ) @ ( '3d.point/3' @ -1.0 @ -1.0 @ 0.0 ) ) ) @ ( '3d.plane/4' @ 1.0 @ 0.0 @ 0.0 @ 't/0' ) ) ) ) )).
+        ( ( $lesseq @ 0.0 @ 't/0' )
+        & ( $less @ 't/0' @ 1.0 )
+        & ( V_x
+          = ( '3d.area-of/1' @ ( '3d.intersection/2' @ ( '3d.solid-of-revolution/2' @ ( '3d.square/4' @ ( '3d.point/3' @ -1.0 @ 1.0 @ 0.0 ) @ ( '3d.point/3' @ 1.0 @ 1.0 @ 0.0 ) @ ( '3d.point/3' @ 1.0 @ -1.0 @ 0.0 ) @ ( '3d.point/3' @ -1.0 @ -1.0 @ 0.0 ) ) @ ( '3d.line/2' @ ( '3d.point/3' @ 1.0 @ 1.0 @ 0.0 ) @ ( '3d.point/3' @ -1.0 @ -1.0 @ 0.0 ) ) ) @ ( '3d.plane/4' @ 1.0 @ 0.0 @ 0.0 @ 't/0' ) ) ) ) ) )).
 
 thf(p2_qustion,question,
     ( 'find/1' @ $real

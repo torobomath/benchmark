@@ -24,7 +24,7 @@
   (Find (V)
   (exists (E)
     (&&
-        (= E (2d.set-of-cfun (Lam y (PLam x (&& (>= y (- (^ x 2) 1))
+        (= E (2d.set-of-cfun (Lam x (PLam y (&& (>= y (- (^ x 2) 1))
                   (<= y 0)
                   )))))
         (= V (volume-of (solid-of-revolution (import-2d-shape E) (x-axis) )))

@@ -31,11 +31,11 @@ thf(p_qustion,question,
     @ ^ [V_V: $real] :
       ? [V_l: '3d.Shape',V_A: '3d.Shape'] :
         ( ( V_l
-          = ( '3d.line/2' @ ( '3d.point/3' @ 1.0 @ 0.0 @ 1.0 ) @ ( '3d.point/3' @ 1.0 @ 0.0 @ 2.0 ) ) )
+          = ( '3d.seg/2' @ ( '3d.point/3' @ 1.0 @ 0.0 @ 1.0 ) @ ( '3d.point/3' @ 1.0 @ 0.0 @ 2.0 ) ) )
         & ( V_A
-          = ( '3d.rotation-around/2' @ V_l @ '3d.z-axis/0' ) )
+          = ( '3d.solid-of-revolution/2' @ V_l @ '3d.z-axis/0' ) )
         & ( V_V
-          = ( '3d.volume-of/1' @ ( '3d.rotation-around/2' @ V_A @ '3d.x-axis/0' ) ) ) ) )).
+          = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ V_A @ '3d.x-axis/0' ) ) ) ) )).
 
 thf(p_answer,answer,(
     ^ [V_V_dot_0: $real] :

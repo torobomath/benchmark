@@ -63,3 +63,12 @@
 
 (def-answer p2 (PLam zmax (= zmax -2)))
 
+(def-answer a1 (shape-of-cpfun (PLam ab (exists (a b) (&&
+  (= ab (point a b))
+  (<= -2 a) (<= a 2)
+  (<= (- a 1) b)
+  (<= (- (- a) 1) b)
+  (<= b (/ (^ a 2) 4)))))))
+
+(def-answer a2 (PLam zmaxmin (= zmaxmin (list-of 4 -2))))
+

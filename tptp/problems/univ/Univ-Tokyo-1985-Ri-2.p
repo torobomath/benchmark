@@ -21,23 +21,20 @@
 %% line segment $RS$ is equal to $l$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    4 (   0 unit;   2 type;   0 defn)
-%            Number of atoms       :  149 (  18 equality;  44 variable)
-%            Maximal formula depth :   39 (  14 average)
-%            Number of connectives :  114 (   0   ~;   0   |;  24   &;  84   @)
+% Syntax   : Number of formulae    :    3 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  153 (  18 equality;  47 variable)
+%            Maximal formula depth :   41 (  18 average)
+%            Number of connectives :  118 (   0   ~;   0   |;  26   &;  86   @)
 %                                         (   0 <=>;   6  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   42 (   2   :;   0   =)
+%            Number of symbols     :   42 (   1   :;   0   =)
 %            Number of variables   :   16 (   0 sgn;   0   !;  12   ?;   4   ^)
 %                                         (  16   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 %            Arithmetic symbols    :   15 (   2 pred;    2 func;   11 numbers)
 
 include('axioms.ax').
-
-thf('S2/0_type',type,(
-    'S2/0': '2d.Shape' )).
 
 thf('l/0_type',type,(
     'l/0': $real )).
@@ -63,13 +60,15 @@ thf(p_qustion,question,
                 ( ( V_PQ
                   = ( 'cons/2' @ '2d.Point' @ V_P @ ( 'cons/2' @ '2d.Point' @ V_Q @ ( 'nil/0' @ '2d.Point' ) ) ) )
                 & ( '2d.on/2' @ V_P @ V_S1 )
-                & ( '2d.on/2' @ V_Q @ 'S2/0' )
+                & ( '2d.on/2' @ V_Q @ V_S1 )
                 & ( '2d.lines-intersect-angle/3' @ ( '2d.line/2' @ V_O @ V_A ) @ ( '2d.line/2' @ V_O @ V_P ) @ V_OAP )
                 & ( '2d.lines-intersect-angle/3' @ ( '2d.line/2' @ V_O @ V_P ) @ ( '2d.line/2' @ V_O @ V_Q ) @ V_OPQ )
                 & ( V_OAP = V_OPQ )
+                & ( '2d.line-type/1' @ V_L1 )
                 & ( '2d.on/2' @ V_P @ V_L1 )
                 & ( '2d.perpendicular/2' @ V_L1 @ '2d.x-axis/0' )
                 & ( '2d.on/2' @ V_R @ ( '2d.intersection/2' @ V_L1 @ '2d.x-axis/0' ) )
+                & ( '2d.line-type/1' @ V_L2 )
                 & ( '2d.on/2' @ V_Q @ V_L2 )
                 & ( '2d.perpendicular/2' @ V_L2 @ '2d.x-axis/0' )
                 & ( '2d.on/2' @ V_S @ ( '2d.intersection/2' @ V_L2 @ '2d.x-axis/0' ) )

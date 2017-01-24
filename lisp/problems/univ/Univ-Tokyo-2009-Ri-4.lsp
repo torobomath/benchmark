@@ -25,7 +25,7 @@
 (def-directive
   p1_1
   (Find (W)
-        (exists (D1)
+        (exists (D1 E W)
                 (&& (= D1 (shape-of-cpfun
                            (PLam p (&& (<= (+ (^ (x-coord p) 2) (^ (y-coord p) 2)) 1)
                                        (= a (z-coord p))))))

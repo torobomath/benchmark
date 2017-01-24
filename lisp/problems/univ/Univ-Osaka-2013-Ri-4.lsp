@@ -18,17 +18,13 @@
   (Find (v) (= v (volume-of
     (solid-of-revolution
       (solid-of-revolution
-       (triangle
-        (point 0 0 0)
-        (point 1 1 0)
-        (point 1 0 1))
-         (x-axis)
-         )
-        (y-axis))
-       )
-    )
-  )
-)
+        (triangle
+          (point 0 0 0)
+          (point 1 1 0)
+          (point 1 0 1))
+          (x-axis))
+       (y-axis)
+    )))))
 
 (def-answer p4 (PLam v (= v (* (/ 8 3) (Pi)))))
 

@@ -137,12 +137,36 @@
              (= 0 (inner-prod v (vec p q)))))
 
 (axiom
+  def_is_normal_vector_of_half_line
+    (v p q)
+    (<-> (is-normal-vector-of v (half-line p q))
+             (= 0 (inner-prod v (vec p q)))))
+
+(axiom
+  def_is_normal_vector_of_segment
+    (v p q)
+    (<-> (is-normal-vector-of v (seg p q))
+             (= 0 (inner-prod v (vec p q)))))
+
+(axiom
 	def_normal_vector_to_line
 	(P Q point)
 	(= (normal-vector-to (line P Q) point)
 		(let ((p (vec P point)) (q (vec P Q)))
 			(v- p (sv* (/ (inner-prod p q) (radius^2 q)) q))
 		)))
+
+(axiom
+	def_normal_vector_to_half-line
+	(P Q point)
+	(= (normal-vector-to (half-line P Q) point)
+     (normal-vector-to (line P Q) point)))
+
+(axiom
+	def_normal_vector_to_seg
+	(P Q point)
+	(= (normal-vector-to (seg P Q) point)
+     (normal-vector-to (line P Q) point)))
 
 (axiom
   def_direction_vec
@@ -509,6 +533,135 @@
 
 ;; TODO: are-interior-angles
 
+(axiom
+  def_are_interior_angles_triangle
+  (as A B C)
+  (<-> (are-interior-angles as (triangle A B C))
+       (exists (Ang1 Ang2 Ang3)
+         (&& (is-a-permutation-of as (list-of Ang1 Ang2 Ang3))
+             (|| (= Ang1 (angle A B C))
+                 (= Ang1 (angle C B A)))
+             (|| (= Ang2 (angle B C A))
+                 (= Ang2 (angle A C B)))
+             (|| (= Ang3 (angle C A B))
+                 (= Ang3 (angle B A C)))))))
+
+(axiom
+  def_are_interior_angles_square
+  (as A B C D)
+  (<-> (are-interior-angles as (square A B C D))
+       (exists (Ang1 Ang2 Ang3 Ang4)
+         (&& (is-a-permutation-of as (list-of Ang1 Ang2 Ang3 Ang4))
+             (|| (= Ang1 (angle A B C))
+                 (= Ang1 (angle C B A)))
+             (|| (= Ang2 (angle B C D))
+                 (= Ang2 (angle D C B)))
+             (|| (= Ang3 (angle A D C))
+                 (= Ang3 (angle C D A)))
+             (|| (= Ang4 (angle B A D))
+                 (= Ang4 (angle D A B)))))))
+
+(axiom
+  def_angle_cyclic_all_rec_nil
+  (p0 p1 p2)
+  (= (angle-cyclic-all-rec (cons p0 (cons p1 (cons p2 (nil)))))
+     (cons (angle p0 p1 p2) (cons (angle p2 p1 p0) (nil)))))
+
+(axiom
+  def_angle_cyclic_all_rec
+  (p0 p1 p2 ps)
+  (= (angle-cyclic-all-rec (cons p0 (cons p1 (cons p2 ps))))
+     (cons (angle p0 p1 p2) (cons (angle p2 p1 p0) (angle-cyclic-all-rec (cons p1 (cons p2 (cons (car ps) (cdr ps)))))))))
+
+(axiom
+  def_is_interior_angle_polygon
+  (a p0 p1 p2 ps)
+  (<-> (is-interior-angle a (polygon (cons p0 (cons p1 (cons p2 ps)))))
+       (|| (= a (angle (last ps) p0 p1))
+           (= a (angle p1 p0 (last ps)))
+           (= a (angle (last (butlast ps)) (last ps) p0))
+           (= a (angle p0 (last ps) (last (butlast ps))))
+           (member a (angle-cyclic-all-rec (cons p0 (cons p1 (cons p2 ps))))))))
+
+(axiom
+  def_angle_of_cyclic_all_rec_nil
+  (p0 p1 p2)
+  (= (angle-of-cyclic-all-rec (cons p0 (cons p1 (cons p2 (nil)))))
+     (cons (rad-of-angle (angle p0 p1 p2)) (nil))))
+
+(axiom
+  def_angle_of_cyclic_all_rec
+  (p0 p1 p2 ps)
+  (= (angle-of-cyclic-all-rec (cons p0 (cons p1 (cons p2 ps))))
+     (cons (rad-of-angle (angle p0 p1 p2)) (angle-of-cyclic-all-rec (cons p1 (cons p2 (cons (car ps) (cdr ps))))))))
+
+(axiom
+  def_angles_of_polygon
+  (p0 p1 p2 ps)
+  (= (angles-of-polygon (polygon (cons p0 (cons p1 (cons p2 ps)))))
+     (cons (rad-of-angle (angle (last (butlast ps)) (last ps) p0)) (cons (rad-of-angle (angle (last ps) p0 p1)) (angle-of-cyclic-all-rec (cons p0 (cons p1 (cons p2 ps))))))))
+
+(axiom
+  def_cyclic_point_nil
+  (ps)
+  (= (cyclic-point ps 1)
+     (cons (last ps) (butlast ps))))
+
+(axiom
+  def_cyclic_point
+  (ps n)
+  (= (cyclic-point ps n)
+     (cyclic-point (cyclic-point ps (int.- n 1)) 1)))
+
+(axiom
+  def_reverse_point_nil
+    ()
+    (= (reverse-point (nil))
+       (nil)))
+
+(axiom
+  def_reverse_point 
+    (ps)
+    (= (reverse-point ps)
+       (cons (last ps) (reverse-point (butlast ps)))))
+
+
+(axiom
+  def_is_interior_angle_of_polygon
+  (a p0 p1 p2 ps)
+  (<-> (is-interior-angle-of a (polygon (cons p0 (cons p1 (cons p2 ps)))))
+       (|| (= a (rad-of-angle (angle (last ps) p0 p1)))
+           (= a (rad-of-angle (angle (last (butlast ps)) (last ps) p0)))
+           (member a (angle-of-cyclic-all-rec (cons p0 (cons p1 (cons p2 ps))))))))
+
+(axiom
+  def_are_interior_angle_of_polygon
+  (as p0 p1 p2 ps)
+  (<-> (are-interior-angles-of as (polygon (cons p0 (cons p1 (cons p2 ps)))))
+       (is-a-permutation-of as (cons (rad-of-angle (angle (last ps) p0 p1)) (cons (rad-of-angle (angle (last (butlast ps)) (last ps) p0)) (angle-of-cyclic-all-rec (cons p0 (cons p1 (cons p2 ps)))))))))
+
+
+(axiom
+  def_center_point_of_angle
+  (A B C)
+  (= (center-point-of-angle (angle A B C)) B))
+
+(axiom
+  def_are_interior_angles_polygon
+  (as p0 p1 p2 ps)
+  (<-> (are-interior-angles as (polygon (cons p0 (cons p1 (cons p2 ps)))))
+         (forall (p q)
+          (&&
+           (-> (member p as)
+               (is-interior-angle p (polygon (cons p0 (cons p1 (cons p2 ps))))))
+           (-> (is-interior-angle p (polygon (cons p0 (cons p1 (cons p2 ps)))))
+               (exists (r)
+                 (&& (member r as)
+                     (= (center-point-of-angle r) (center-point-of-angle p)))))
+           (-> (&& (member p as) (member q as) (! (= p q)))
+               (! (= (center-point-of-angle p) (center-point-of-angle q))))))))
+              
+
 ;; is-angle-bisector :: Line -> Angle => Bool
 (axiom
 	def_is_angle_bisector
@@ -528,6 +681,12 @@
   def_is_angle_bisector_seg
   (P Q A)
   (<-> (is-angle-bisector (seg P Q) A)
+       (is-angle-bisector (line P Q) A)))
+
+(axiom
+  def_is_angle_bisector_half-line
+  (P Q A)
+  (<-> (is-angle-bisector (half-line P Q) A)
        (is-angle-bisector (line P Q) A)))
 
 (axiom
@@ -597,7 +756,13 @@
     (<-> (lines-intersect-at-one ls)
              (exists (p) (lines-intersect-at ls p))))
 
-
+(axiom
+  def_determine_line_by_two_points
+    (p q r s)
+    (<-> (determine (list-of p q) (line r s))
+         (&& (on p (line r s))
+             (on q (line r s))
+             (! (= p q)))))
 
 ;; Shape -> Point
 (axiom
@@ -1016,6 +1181,19 @@
                                                  (triangle u v w))))))
 
 (axiom
+    def_form_triangle_by_segments
+    (p1 p2 q1 q2 r1 r2 u v w)
+    (<-> (form-by-shapes (list-of (seg p1 p2) (seg q1 q2) (seg r1 r2)) (triangle u v w))
+             (exists (S1 S2 S3)
+               (&& (is-a-permutation-of (list-of (seg p1 p2) (seg q1 q2) (seg r1 r2)) (list-of S1 S2 S3))      
+                   (|| (= S1 (seg u v))
+                           (= S1 (seg v u)))
+                   (|| (= S2 (seg u w))
+                           (= S2 (seg w u)))
+                   (|| (= S3 (seg v w))
+                           (= S3 (seg w v)))))))
+   
+(axiom
  def_triangle_centroid
  (p q r)
  (= (centroid-of (triangle p q r))
@@ -1092,6 +1270,76 @@
 			(same-angle (angle c d a) (angle C D A))
 			(= (* (distance^2 a b) (distance^2 A D)) (* (distance^2 a d) (distance^2 A B))))))
 
+(def-pred lists-of-points-bending-in-same-way :: (ListOf Point) -> (ListOf Point) => Bool)
+(def-pred lists-of-points-with-proportional-interval :: (ListOf Point) -> (ListOf Point) => Bool)
+
+(axiom
+  def_lists_of_points_with_proportional_interval
+  (p0 p1 ps q0 q1 qs)
+    (<-> (lists-of-points-with-proportional-interval (cons p0 (cons p1 ps)) (cons q0 (cons q1 qs)))
+        (&& (= (list-len ps) (list-len qs))
+            (cyclic-all
+                (Lam x (Lam y (PLam z (=
+                    (* (distance^2 q0 q1) (distance^2 (fst x) (fst y)))
+                    (* (distance^2 p0 p1) (distance^2 (snd x) (snd y)))
+                ))))
+                (zip (cons p0 (cons p1 ps)) (cons q0 (cons q1 qs)))
+            )
+        )))
+
+(axiom
+  def_ordered_similar_polygon
+  (ps qs)
+    (<-> (ordered-similar (polygon ps) (polygon qs))
+        (&& (lists-of-points-bending-in-same-way ps qs)
+            (lists-of-points-with-proportional-interval ps qs)
+        )))
+
+;;@ ordered-similar(shape1,shape2,r1,r2) <-> shape1 and shape2 are similar in the given order of vertices with similitude ratio r1:r2
+(def-pred ordered-similar :: Shape -> Shape -> R -> R => Bool)
+(def-pred lists-of-points-with-proportional-interval :: (ListOf Point) -> (ListOf Point) -> R -> R => Bool)
+
+;;p_ip_i+1 : q_iq_i+1 = pr : qr
+(axiom
+  def_lists_of_points_with_proportional_interval_given_ratio
+  (ps qs pr qr)
+    (<-> (lists-of-points-with-proportional-interval ps qs pr qr)
+        (&& (= (list-len ps) (list-len qs))
+            (cyclic-all
+                (Lam x (Lam y (PLam z (=
+                    (* (^ qr 2) (distance^2 (fst x) (fst y)))
+                    (* (^ pr 2) (distance^2 (snd x) (snd y)))
+                ))))
+                (zip ps qs)
+            )
+        )))
+
+(axiom
+  def_ordered_similar_triangle_given_ratio
+  (a b c A B C r1 r2)
+    (<-> (ordered-similar (triangle a b c) (triangle A B C) r1 r2)
+        (&& (= (* (^ r2 2) (distance^2 a b)) (* (^ r1 2) (distance^2 A B)))
+            (= (* (^ r2 2) (distance^2 b c)) (* (^ r1 2) (distance^2 B C)))
+            (= (* (^ r2 2) (distance^2 c a)) (* (^ r1 2) (distance^2 C A))))))
+
+(axiom
+  def_ordered_similar_square_given_ratio
+  (a b c d A B C D r1 r2)
+    (<-> (ordered-similar (square a b c d) (square A B C D) r1 r2)
+        (&& (= (* (^ r2 2) (distance^2 a b)) (* (^ r1 2) (distance^2 A B)))
+            (= (* (^ r2 2) (distance^2 b c)) (* (^ r1 2) (distance^2 B C)))
+            (= (* (^ r2 2) (distance^2 c d)) (* (^ r1 2) (distance^2 C D)))
+            (= (* (^ r2 2) (distance^2 d a)) (* (^ r1 2) (distance^2 D A)))
+            (= (* (^ r2 2) (distance^2 a c)) (* (^ r1 2) (distance^2 A C))))))
+
+(axiom
+  def_ordered_similar_polygon_given_ratio
+  (ps qs r1 r2)
+    (<-> (ordered-similar (polygon ps) (polygon qs) r1 r2)
+        (&& (lists-of-points-bending-in-same-way ps qs)
+            (lists-of-points-with-proportional-interval ps qs r1 r2)
+        )))
+
 (def-pred congruent-sub :: Shape -> Shape => Bool)
 (axiom
 	def_congruent_sub_triangle
@@ -1117,6 +1365,45 @@
 					(= (distance^2 a b) (distance^2 A D))
 					(= (distance^2 a d) (distance^2 A B)))))))
 
+(axiom 
+  def_congruent_arc
+  (arc1 arc2)
+  (<-> (congruent (arc-shape arc1) (arc-shape arc2))
+       (&& (= (radius-of arc1) (radius-of arc2))
+           (= (arc-central-angle arc1) (arc-central-angle arc2)))))
+
+(axiom 
+  def_congruent_circular_sector
+  (sec1 sec2)
+  (<-> (congruent (circular-sector-shape sec1) (circular-sector-shape sec2))
+       (&& (= (radius-of sec1) (radius-of sec2))
+           (= (arc-central-angle sec1) (arc-central-angle sec2)))))
+
+(axiom
+  def_congruent_circle
+  (C1 C2)
+  (<-> (congruent (circle-shape C1) (circle-shape C2))
+      (= (radius-of C1) (radius-of C2))))
+
+(axiom
+  def_congruent_disk
+  (C1 C2)
+  (<-> (congruent (disk-shape C1) (disk-shape C2))
+      (= (radius-of C1) (radius-of C2))))
+
+(axiom
+  def_congruent_sub_polygon
+  (Ps Qs)
+  (<-> (congruent-sub (polygon Ps) (polygon Qs))
+       (||
+         (&&
+           (= (angles-of-polygon (polygon Ps)) (angles-of-polygon (polygon Qs)))
+           (= (lengths-of-sides-of (polygon Ps)) (lengths-of-sides-of (polygon Qs))))
+         (&&
+           (= (angles-of-polygon (polygon Ps)) (angles-of-polygon (polygon (reverse-point Qs))))
+           (= (lengths-of-sides-of (polygon Ps)) (lengths-of-sides-of (polygon (reverse-point Qs))))
+           ))))
+
 (axiom
 	def_congruent_triangle
 	(a b c A B C)
@@ -1135,6 +1422,26 @@
 			(congruent-sub (square a b c d) (square D A B C)))))
 
 (axiom
+  def_congruent_polygon_check_nil
+  (Ps Qs)
+  (<-> (congruent-polygon-check (polygon Ps) (polygon Qs) 1)
+       (congruent-sub (polygon Ps) (polygon (cyclic-point Qs 1)))))
+
+(axiom
+  def_congruent_polygon_check
+  (Ps Qs n)
+  (<-> (congruent-polygon-check (polygon Ps) (polygon Qs) n)
+       (||
+        (congruent-sub (polygon Ps) (polygon (cyclic-point Qs n)))
+        (congruent-polygon-check (polygon Ps) (polygon Qs) (int.- n 1)))))
+
+(axiom
+  def_congruent_polygon
+  (Ps Qs)
+  (<-> (congruent (polygon Ps) (polygon Qs))
+       (congruent-polygon-check (polygon Ps) (polygon Qs) (list-len Ps))))
+          
+(axiom
 	def_ordered_congruent_triangle
 	(a b c A B C)
 	(<-> (ordered-congruent (triangle a b c) (triangle A B C))
@@ -1146,11 +1453,33 @@
 	def_ordered_congruent_square
 	(a b c d A B C D)
 	(<-> (ordered-congruent (square a b c d) (square A B C D))
-		(&& (same-angle (angle d a b) (angle D A B))
-			(same-angle (angle a b c) (angle A B C))
-			(same-angle (angle c d a) (angle C D A))
-			(= (distance^2 a b) (distance^2 A B))
-			(= (distance^2 a d) (distance^2 A D)))))
+		(&& (= (distance^2 a b) (distance^2 A B))
+			(= (distance^2 b c) (distance^2 B C))
+			(= (distance^2 c d) (distance^2 C D))
+			(= (distance^2 d a) (distance^2 D A))
+			(= (distance^2 a c) (distance^2 A C))
+			)))
+
+(def-pred lists-of-points-with-equal-interval :: (ListOf Point) -> (ListOf Point) => Bool)
+
+(axiom
+  def_lists_of_points_with_equal_interval
+  (ps qs)
+    (<-> (lists-of-points-with-equal-interval ps qs)
+        (&& (= (list-len ps) (list-len qs))
+            (cyclic-all
+                (Lam x (Lam y (PLam z (= (distance^2 (fst x) (fst y)) (distance^2 (snd x) (snd y))))))
+                (zip ps qs)
+            )
+        )))
+
+(axiom
+  def_ordered_congruent_polygon
+  (ps qs)
+    (<-> (ordered-congruent (polygon ps) (polygon qs))
+        (&& (lists-of-points-bending-in-same-way ps qs)
+            (lists-of-points-with-equal-interval ps qs)
+        )))
 
 (axiom
 	def_is_regular_polygon
@@ -1162,6 +1491,24 @@
 				(points-bending-to-same-side (cons p0 (cons p1 (cons p2 ps))))
 				(all (PLam p (on p (inner-part-of (divided-region-including (line p0 p1) p2)))) ps)
 			)))
+
+(axiom
+	def_is_convex_shape_triangle_TORIAEZU
+	(A B C)
+	(<-> (is-convex-shape (triangle A B C))
+			(true)))
+
+(axiom
+	def_is_convex_shape_square_TORIAEZU
+	(A B C D)
+	(<-> (is-convex-shape (square A B C D))
+			(true)))
+
+(axiom
+	def_is_convex_shape_polygon_TORIAEZU
+	(vertices)
+	(<-> (is-convex-shape (polygon vertices))
+			(true)))
 
 (def-pred is-convex-shape-rec :: Shape => Bool)
 (axiom
@@ -1187,6 +1534,8 @@
 			(&& (all (PLam p (on p (inner-part-of (divided-region-including (line p0 p1) p2)))) ps)
 				(is-convex-shape-rec (polygon (cons p1 (cons p2 ps))))
 			)))
+
+
 
 (axiom
 	def_is_convex_shape_polygon
@@ -1392,6 +1741,12 @@
  (shape)
  (<-> (is-empty shape)
 		(forall (p) (! (on p shape)))))
+
+(axiom
+  def-empty-set
+  ()
+  (= (empty-set)
+     (shape-of-cpfun (PLam x (false)))))
 
 (axiom
  def_complement
@@ -1640,14 +1995,18 @@
   def_seg_equality
   (p q r s)
   (<-> (= (seg p q) (seg r s))
-       (|| (&& (= p r) (= q s))
-           (&& (= p s) (= q r)))))
+       (&& (! (= p q))
+           (! (= r s))
+           (|| (&& (= p r) (= q s))
+               (&& (= p s) (= q r))))))
 
 (axiom
   def_line_equality
   (p q r s)
   (<-> (= (line p q) (line r s))
-       (&& (colinear p q r)
+       (&& (! (= p q))
+           (! (= r s))
+           (colinear p q r)
            (colinear p q s))))
 
 (axiom
@@ -1655,6 +2014,8 @@
   (p q r s)
   (<-> (= (half-line p q) (half-line r s))
        (&& (= p r)
+           (! (= p q))
+           (! (= r s))
            (colinear p q r)
            (colinear p q s))))
 
@@ -1807,6 +2168,48 @@
     (<-> (perpendicular (seg p q) (half-line r s))
          (= 0 (inner-prod (vec p q) (vec r s)))))
 
+;; 2016-10-10: 
+;(axiom
+;   def_perpendicular_seg_vs_x
+;   (p q X)
+;   (<-> (perpendicular (seg p q) X)
+;        (exists (P Q)
+;          (&& (! (= P Q))
+;              (perpendicular (seg p q) (line P Q))
+;              (|| (= X (seg P Q))
+;                  (= X (line P Q))
+;                  (= X (half-line P Q)))))))
+;
+;(axiom
+;   def_perpendicular_line_vs_x
+;   (p q X)
+;   (<-> (perpendicular (line p q) X)
+;        (perpendicular (seg p q) X)))
+;
+;(axiom
+;   def_perpendicular_half_line_vs_x
+;   (p q X)
+;   (<-> (perpendicular (half-line p q) X)
+;        (perpendicular (seg p q) X)))
+;
+;(axiom
+;  def_perpendicular_x_vs_line
+;  (p q X)
+;  (<-> (perpendicular X (line p q))
+;       (perpendicular (line p q) X)))
+;
+;(axiom
+;  def_perpendicular_x_vs_seg
+;  (p q X)
+;  (<-> (perpendicular X (seg p q))
+;       (perpendicular (seg p q) X)))
+;
+;(axiom
+;  def_perpendicular_x_vs_half_line
+;  (p q X)
+;  (<-> (perpendicular X (half-line p q))
+;       (perpendicular (half-line p q) X)))
+
 ;;------------------------------------------------------------------------------
 
 (axiom
@@ -1814,6 +2217,13 @@
     (P Q)
     (= (length-of (seg P Q))
          (distance P Q)))
+
+(axiom
+    def_congruent_of_segment
+    (p q r s)
+    (<-> (congruent (seg p q) (seg r s))
+         (= (length-of (seg p q)) (length-of (seg r s)))))
+
 
 (axiom
    def-perimeter-of-triangle
@@ -1841,6 +2251,24 @@
                      (cons (last Ps) Ps)))))
 
 (axiom
+   def-perimeter-of-circle
+   (circle)
+   (= (length-of (circle-shape circle))
+      (* 2 (Pi) (radius-of circle))))
+
+(axiom
+   def-perimeter-of-disk
+   (disk)
+   (= (length-of (disk-shape disk))
+      (* 2 (Pi) (radius-of disk))))
+
+(axiom
+   def-perimeter-of-circular-sector
+   (sector)
+   (= (length-of (circular-sector-shape sector))
+      (+ (* 2 (radius-of sector)) (* (circular-sector-central-angle sector) (radius-of sector)))))
+
+(axiom
     def_midpoint_of
     (P1 P2)
     (= (midpoint-of P1 P2)
@@ -1858,29 +2286,53 @@
   (<-> (point-symmetry P1 P2 C)
        (= C (midpoint-of P1 P2))))
 
+
 (axiom
-  def_point_symmetry_shape
-  (G C)
-  (<-> (point-symmetry-shape G C)
-       (forall (P)
-               (-> (on P G)
-                   (exists (Q)
-                           (&& (on Q G)
-                               (point-symmetry P Q C)))))))
+  def_point_symmetry_shapes_triangle_order
+  (point A1 B1 C1 A2 B2 C2)
+  (<-> (point-symmetry-shapes-order (triangle A1 B1 C1) (triangle A2 B2 C2) point)
+       (&&
+        (point-symmetry A1 A2 point)
+        (point-symmetry B1 B2 point)
+        (point-symmetry C1 C2 point))))
+
 (axiom
-  def_point_symmetry_shapes
-  (G1 G2 C)
-  (<-> (point-symmetry-shapes G1 G2 C)
-       (&& (forall (P)
-                   (-> (on P G1)
-                       (exists (Q)
-                               (&& (on Q G2)
-                                   (point-symmetry P Q C)))))
-           (forall (P)
-                   (-> (on P G2)
-                       (exists (Q)
-                               (&& (on Q G1)
-                                   (point-symmetry P Q C))))))))
+  def_point_symmetry_shapes_square_order
+  (point A1 B1 C1 D1 A2 B2 C2 D2)
+  (<-> (point-symmetry-shapes-order (square A1 B1 C1 D1) (square A2 B2 C2 D2) point)
+       (&&
+        (point-symmetry A1 A2 point)
+        (point-symmetry B1 B2 point)
+        (point-symmetry C1 C2 point)
+        (point-symmetry D1 D2 point))))
+
+(axiom
+  def_point_symmetry_shapes_triangle
+  (point A1 B1 C1 A2 B2 C2)
+  (<-> (point-symmetry-shapes (triangle A1 B1 C1) (triangle A2 B2 C2) point)
+       (||
+        (point-symmetry-shapes-order (triangle A1 B1 C1) (triangle A2 B2 C2) point)
+        (point-symmetry-shapes-order (triangle A1 B1 C1) (triangle A2 C2 B2) point)
+        (point-symmetry-shapes-order (triangle A1 B1 C1) (triangle B2 A2 C2) point)
+        (point-symmetry-shapes-order (triangle A1 B1 C1) (triangle B2 C2 A2) point)
+        (point-symmetry-shapes-order (triangle A1 B1 C1) (triangle C2 A2 B2) point)
+        (point-symmetry-shapes-order (triangle A1 B1 C1) (triangle C2 B2 A2) point))))
+
+(axiom
+  def_point_symmetry_shapes_square
+  (point A1 B1 C1 D1 A2 B2 C2 D2)
+  (<-> (point-symmetry-shapes (square A1 B1 C1 D1) (square A2 B2 C2 D2) point)
+       (||
+        (point-symmetry-shapes-order (square A1 B1 C1 D1) (square A2 B2 C2 D2) point)
+        (point-symmetry-shapes-order (square A1 B1 C1 D1) (square B2 C2 D2 A2) point)
+        (point-symmetry-shapes-order (square A1 B1 C1 D1) (square C2 D2 A2 B2) point)
+        (point-symmetry-shapes-order (square A1 B1 C1 D1) (square D2 A2 B2 C2) point)
+        (point-symmetry-shapes-order (square A1 B1 C1 D1) (square D2 C2 B2 A2) point)
+        (point-symmetry-shapes-order (square A1 B1 C1 D1) (square C2 B2 A2 D2) point)
+        (point-symmetry-shapes-order (square A1 B1 C1 D1) (square B2 A2 D2 C2) point)
+        (point-symmetry-shapes-order (square A1 B1 C1 D1) (square A2 D2 C2 B2) point))))
+
+
 
 (axiom
 	def_line_symmetry
@@ -1914,14 +2366,6 @@
 ;                       (exists (Q)
 ;                               (&& (on Q G1)
 ;                                   (line-symmetry P Q l))))))))
-(axiom
-  def_line_symmetry_shapes
-  (G1 G2 l)
-  (<-> (line-symmetry-shapes G1 G2 l)
-       (&& (= G1 (shape-of-cpfun (PLam P (exists (Q) (&& (on Q G2)
-                                                         (line-symmetry P Q l))))))
-           (= G2 (shape-of-cpfun (PLam Q (exists (P) (&& (on P G1)
-                                                         (line-symmetry P Q l)))))))))
 
 ;;------------------------------------------------------------------------------
 ;; sides of polygons
@@ -1991,6 +2435,25 @@
      (zip-with (Lam x (Lam y (seg x y)))
                (cons (last Ps) Ps)
                Ps)))
+
+(axiom
+  def-lengths-of-sides-of-butlast-polygon-nil
+    (p0 p1 p2)
+    (= (lengths-of-sides-of-butlast (polygon (list-of p0 p1 p2)))
+       (list-of (distance p0 p1) (distance p1 p2))))
+
+(axiom
+  def-lengths-of-sides-of-butlast-polygon
+    (Ps)
+    (= (lengths-of-sides-of-butlast (polygon Ps))
+       (cons (distance (car Ps) (car (cdr Ps))) (lengths-of-sides-of (polygon (cdr Ps))))))
+
+(axiom
+  def-lengths-of-sides-of-polygon
+    (Ps)
+    (= (lengths-of-sides-of (polygon Ps))
+       (cons (distance (car Ps) (last Ps)) (lengths-of-sides-of-butlast (polygon Ps)))))
+
 ;;------------------------------------------------------------------------------
 ;; interior angles of polygons
 ;;------------------------------------------------------------------------------
@@ -2012,6 +2475,26 @@
                   (rad-of-angle (angle B C A))
                   (rad-of-angle (angle C A B))))))
 
+
+(axiom
+  def-is-interior-angle-of-a-square
+  (a A B C D)
+  (<-> (is-interior-angle-of a (square A B C D))
+       (|| (= a (rad-of-angle (angle A B C)))
+           (= a (rad-of-angle (angle B C D)))
+           (= a (rad-of-angle (angle C D A)))
+           (= a (rad-of-angle (angle D A B))))))
+
+(axiom
+  def-are-interior-angles-of-a-square
+  (as A B C D)
+  (<-> (are-interior-angles-of as (square A B C D))
+       (is-a-permutation-of
+         as
+         (list-of (rad-of-angle (angle A B C))
+                  (rad-of-angle (angle B C D))
+                  (rad-of-angle (angle C D A))
+                  (rad-of-angle (angle D A B))))))
 
 ;;------------------------------------------------------------------------------
 ;; angle/distance between two lines/planes
@@ -2088,6 +2571,53 @@
   (= (shape-shape-distance^2 (line p1 p2) (line q1 q2))
        (line-line-distance^2 (line p1 p2) (line q1 q2))))
 
+(axiom
+  def_point_shape_distance_seg
+  (p q1 q2)
+  (= (point-shape-distance p (seg q1 q2))
+       (if (on (foot-of-perpendicular-line-from-to p (line q1 q2)) (seg q1 q2))
+           (point-shape-distance p (line q1 q2))
+           (min (distance p q1) (distance p q2))
+       )))
+
+(axiom
+  def_point_shape_square_distance_seg
+  (p q1 q2)
+  (= (point-shape-distance^2 p (seg q1 q2))
+       (if (on (foot-of-perpendicular-line-from-to p (line q1 q2)) (seg q1 q2))
+           (point-shape-distance^2 p (line q1 q2))
+           (min (distance^2 p q1) (distance^2 p q2))
+       )))
+
+
+;;------------------------------------------------------------------------------
+;; Similar, Congruent lines
+;;------------------------------------------------------------------------------
+
+(axiom
+    def-line-line-similar
+        (p q r s)
+            (similar (line p q) (line r s)))
+
+(axiom
+    def-seg-seg-similar
+        (p q r s)
+            (similar (seg p q) (seg r s)))
+
+(axiom
+    def-half-line-half-line-similar
+        (p q r s)
+            (similar (half-line p q) (half-line r s)))
+
+(axiom
+    def-line-line-congruent
+        (p q r s)
+            (congruent (line p q) (line r s)))
+
+(axiom
+    def-half-line-half-line-congruent
+        (p q r s)
+            (congruent (half-line p q) (half-line r s)))
 
 ;;------------------------------------------------------------------------------
 ;; Base of triangle
@@ -2128,7 +2658,17 @@
                  (distance^2 A B))))
        (vec->point (v+ (sv* t (vec (origin) A)) (sv* (- 1 t) (vec (origin) B)))))))
 
+(axiom
+  def-foot-of-perpendicular-line-from-to-half-line
+  (P A B)
+  (= (foot-of-perpendicular-line-from-to P (half-line A B))
+     (foot-of-perpendicular-line-from-to P (line A B))))
 
+(axiom
+  def-foot-of-perpendicular-line-from-to-seg
+  (P A B)
+  (= (foot-of-perpendicular-line-from-to P (seg A B))
+     (foot-of-perpendicular-line-from-to P (line A B))))
 
 ;;------------------------------------------------------------------------------
 ;; (def-fun inner-part-of :: Shape => Shape)
@@ -2679,11 +3219,11 @@
          (&& (on point (shape-enclosed-by-cpfun boundaries))
              (PLamApp region point))))
 
-(axiom
-  def_shape_enclosed_by_cpfun_eq_something
-  (boundaries S)
-  (<-> (= (shape-enclosed-by-cpfun boundaries) S)
-       (= (shape-of-cpfun (char-fun-of (shape-enclosed-by-cpfun boundaries))) S)))
+;(axiom
+;  def_shape_enclosed_by_cpfun_eq_something
+;  (boundaries S)
+;  (<-> (= (shape-enclosed-by-cpfun boundaries) S)
+;       (= (shape-of-cpfun (char-fun-of (shape-enclosed-by-cpfun boundaries))) S)))
 
 
 ;;------------------------------------------------------------------------------
@@ -2862,6 +3402,95 @@
  (<-> (parallel (line p q) (seg r s))
       (vec-parallel (vec p q) (vec r s))))
 
+(axiom
+ def_parallel_line_vs_cfun
+ (p q L)
+ (<-> (parallel (line p q) L)
+      (exists (P Q)
+         (&& (! (= P Q))
+             (parallel (line p q) (line P Q))
+             (|| (= L (line P Q))
+                 (= L (half-line P Q))
+                 (= L (seg P Q)))))))
+(axiom
+ def_parallel_seg_vs_cfun
+ (p q L)
+ (<-> (parallel (seg p q) L)
+      (parallel (line p q) L)))
+
+(axiom
+  def_parallel_half_line_vs_cfun
+  (p q L)
+  (<-> (parallel (half-line p q) L)
+       (parallel (line p q) L)))
+
+(axiom
+ def_parallel_cfun_vs_line
+ (p q L)
+ (<-> (parallel L (line p q))
+      (parallel (line p q) L)))
+
+(axiom
+ def_parallel_cfun_vs_seg
+ (p q L)
+ (<-> (parallel L (seg p q))
+      (parallel (line p q) L)))
+
+(axiom
+ def_parallel_cfun_vs_half_line
+ (p q L)
+ (<-> (parallel L (half-line p q))
+      (parallel (line p q) L)))
+
+;; 2016-09-04:
+;; seg != line, seg != half-line, line != half-line
+(axiom
+  def_seg_is_not_a_line
+  (A B C D)
+  (<-> (= (line A B) (seg C D))
+       (false)))
+
+(axiom
+  def_seg_is_not_a_half_line
+  (A B C D)
+  (<-> (= (half-line A B) (seg C D))
+       (false)))
+
+(axiom
+  def_line_is_not_a_half_line
+  (A B C D)
+  (<-> (= (line A B) (half-line C D))
+       (false)))
+
+(axiom
+ def_parallel_line_vs_half_line
+ (p q r s)
+ (<-> (parallel (line p q) (half-line r s))
+      (vec-parallel (vec p q) (vec r s))))
+
+(axiom
+ def_parallel_half_line_vs_line
+ (p q r s)
+ (<-> (parallel (half-line p q) (line r s))
+      (vec-parallel (vec p q) (vec r s))))
+
+(axiom
+ def_parallel_half_line_vs_half_line
+ (p q r s)
+ (<-> (parallel (half-line p q) (half-line r s))
+      (vec-parallel (vec p q) (vec r s))))
+
+(axiom
+ def_parallel_half_line_vs_seg
+ (p q r s)
+ (<-> (parallel (half-line p q) (seg r s))
+      (vec-parallel (vec p q) (vec r s))))
+
+(axiom
+ def_parallel_seg_vs_half_line
+ (p q r s)
+ (<-> (parallel (seg p q) (half-line r s))
+      (vec-parallel (vec p q) (vec r s))))
 
 ;;------------------------------------------------------------------------------
 ;; tangent/2
@@ -2970,6 +3599,8 @@
      (boundary-of-polygon-main (append Ps (list-of (car Ps))))))
 
 
+
+
 ;;------------------------------------------------------------------------------
 ;; coordinate in 1-D space
 ;;------------------------------------------------------------------------------
@@ -3026,3 +3657,23 @@
   (v)
   (= (direction-of (axis-along v))
      v))
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(axiom
+   def-eq-intersection
+   (A B C)
+   (<-> (= (intersection A B) C)
+        (= (char-fun-of (intersection A B)) (char-fun-of C))))
+
+(axiom
+  def-end-point-of-something
+  (P A)
+  (<-> (is-end-point-of P A)
+       (|| (exists (Q R)
+                   (&& (= A (seg Q R))
+                       (is-end-point-of P (seg Q R))))
+           (exists (Q R)
+                   (&& (= A (half-line Q R))
+                       (is-end-point-of P (half-line Q R)))))))
+

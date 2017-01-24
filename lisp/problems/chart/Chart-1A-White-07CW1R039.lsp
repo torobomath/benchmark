@@ -13,7 +13,7 @@
       (maximum
         (set-by-def (PLam n0 (&&
           (is-natural-number n0)
-          (rat.<=
+          (rat.>
             (rat.+ (rat.ratio (+ (* 3 n0) -1) 4) (rat.ratio (- (+ (* 2 n0) -3)) 5))
             (rat.+ (rat.ratio (+ (* 7 n0) -7) 10) (rat.int->rat -1))
           )

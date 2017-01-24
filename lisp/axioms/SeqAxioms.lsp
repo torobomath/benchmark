@@ -28,44 +28,49 @@
   (ini r)
   (= s (geom-seq ini r)))
 
+
+(axiom
+  def-index-value-of
+  (n)
+  (= (index-value-of (index n)) n))
 ;;------------------------------------------------------------------------------
 ;; equality
 ;;------------------------------------------------------------------------------
-;for-wada;(axiom
-;for-wada;  seq-equality1
-;for-wada;  (f1 s2)
-;for-wada;  (<-> (= (seq f1) s2)
-;for-wada;       (= f1 (fun-of s2))))
-;for-wada;
-;for-wada;(axiom
-;for-wada;  seq-equality2
-;for-wada;  (a1 f s)
-;for-wada;  (<-> (= (seq-by-rec1 a1 f) s)
-;for-wada;       (= (fun-of (seq-by-rec1 a1 f)) (fun-of s))))
-;for-wada;
-;for-wada;(axiom
-;for-wada;  seq-equality3
-;for-wada;  (a1 a2 f s)
-;for-wada;  (<-> (= (seq-by-rec2 a1 a2 f) s)
-;for-wada;       (= (fun-of (seq-by-rec2 a1 a2 f)) (fun-of s))))
-;for-wada;
-;for-wada;(axiom
-;for-wada;  seq-equality4
-;for-wada;  (a1 a2 a3 f s)
-;for-wada;  (<-> (= (seq-by-rec3 a1 a2 a3 f) s)
-;for-wada;       (= (fun-of (seq-by-rec3 a1 a2 a3 f)) (fun-of s))))
-;for-wada;
-;for-wada;(axiom
-;for-wada;  seq-equality5
-;for-wada;  (a1 d s)
-;for-wada;  (<-> (= (arith-seq a1 d) s)
-;for-wada;       (= (fun-of (arith-seq a1 d)) (fun-of s))))
-;for-wada;
-;for-wada;(axiom
-;for-wada;  seq-equality6
-;for-wada;  (a1 r s)
-;for-wada;  (<-> (= (geom-seq a1 r) s)
-;for-wada;       (= (fun-of (geom-seq a1 r)) (fun-of s))))
+(axiom
+  seq-equality1
+  (f1 s2)
+  (<-> (= (seq f1) s2)
+       (= f1 (fun-of s2))))
+
+(axiom
+  seq-equality2
+  (a1 f s)
+  (<-> (= (seq-by-rec1 a1 f) s)
+       (= (fun-of (seq-by-rec1 a1 f)) (fun-of s))))
+
+(axiom
+  seq-equality3
+  (a1 a2 f s)
+  (<-> (= (seq-by-rec2 a1 a2 f) s)
+       (= (fun-of (seq-by-rec2 a1 a2 f)) (fun-of s))))
+
+(axiom
+  seq-equality4
+  (a1 a2 a3 f s)
+  (<-> (= (seq-by-rec3 a1 a2 a3 f) s)
+       (= (fun-of (seq-by-rec3 a1 a2 a3 f)) (fun-of s))))
+
+(axiom
+  seq-equality5
+  (a1 d s)
+  (<-> (= (arith-seq a1 d) s)
+       (= (fun-of (arith-seq a1 d)) (fun-of s))))
+
+(axiom
+  seq-equality6
+  (a1 r s)
+  (<-> (= (geom-seq a1 r) s)
+       (= (fun-of (geom-seq a1 r)) (fun-of s))))
 
 ;;------------------------------------------------------------------------------
 ;; Conversion to function Z -> R
@@ -156,12 +161,34 @@
     (seq-by-rec1 (nth-term-of s (index 1))
                  (Lam n (Lam pre (* pre (nth-term-of s (index n))))))))
 
+;(axiom
+;  def-sum-from-to-const-range
+;  (s @from @to)
+;  (= (sum-from-to s (index @from) (index @to))
+;     (sum (map (Lam k (nth-term-of s (index k)))
+;               (int.iota @from @to)))))
+(axiom
+  def-sum-from-to-const-range
+  (s @from @to)
+  (= (sum-from-to s (index @from) (index @to))
+     (if (= @from @to)
+       (nth-term-of s (index @from))
+       (+ (nth-term-of s (index @from))
+          (sum-from-to s (index (int.+ 1 @from)) (index @to))))))
+
 (axiom
  def-sum-from-to
  (s from to)
  (= (sum-from-to s (index from) (index to))
     (let ((sum (sum-seq s)))
          (- (nth-term-of sum (index to)) (nth-term-of sum (index (int.- from 1)))))))
+
+(axiom
+  def-prod-from-to-const-range
+  (s @from @to)
+  (= (sum-from-to s (index @from) (index @to))
+     (product (map (Lam k (nth-term-of s (index k)))
+                   (int.iota @from @to)))))
 
 (axiom
  def-prod-from-to
@@ -292,13 +319,39 @@
                               xs
                               (cdr xs))))))
 (axiom
-  def-finseq-common-diff-of
-  (x1 x2 xs)
-  (= (finseq-common-diff-of (cons x1 (cons x2 xs)))
-     (- x2 x1)))
+  def-finseq-common-diff-of-base
+  (x1 x2 d)
+  (<-> (= (finseq-common-diff-of (list-of x1 x2)) d)
+       (= (- x2 x1) d)))
 
 (axiom
-  def-finseq-common-ratio-of
-  (x1 x2 xs)
-  (= (finseq-common-ratio-of (cons x1 (cons x2 xs)))
-     (/ x2 x1)))
+  def-finseq-common-diff-of-rec
+  (x1 x2 x3 xs d)
+  (<-> (= (finseq-common-diff-of (cons x1 (cons x2 (cons x3 xs)))) d)
+       (&& (= (- x2 x1) d)
+           (= (finseq-common-diff-of (cons x2 (cons x3 xs))) d))))
+
+(axiom
+  def-finseq-common-ratio-of-base
+  (x1 x2 r)
+  (<-> (= (finseq-common-ratio-of (list-of x1 x2)) r)
+       (= (/ x2 x1) r)))
+
+(axiom
+  def-finseq-common-ratio-of-rec
+  (x1 x2 x3 xs r)
+  (<-> (= (finseq-common-ratio-of (cons x1 (cons x2 (cons x3 xs)))) r)
+       (&& (= (- x2 x1) r)
+           (= (finseq-common-ratio-of (cons x2 (cons x3 xs))) r))))
+
+;(axiom
+;  def-finseq-common-diff-of
+;  (x1 x2 xs)
+;  (= (finseq-common-diff-of (cons x1 (cons x2 xs)))
+;     (- x2 x1)))
+;
+;(axiom
+;  def-finseq-common-ratio-of
+;  (x1 x2 xs)
+;  (= (finseq-common-ratio-of (cons x1 (cons x2 xs)))
+;     (/ x2 x1)))

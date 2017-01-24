@@ -23,58 +23,58 @@
 (def-directive
   p1
   (Find (ms)
-  (exists (m)
-    (func-max (fun (Lam s (volume-of (solid-of-revolution (shape-of-cpfun (PLam p
-                          (&& (<= 1 (x-coord p))
-                        (<= (x-coord p) (+ 2 (* 4 s)))
-                        (<= 1 (y-coord p))
-                        (<= (y-coord p) (- 2 (* 3 s)))
-                        (= (z-coord p) 0))))
-                      (x-axis)))))
-        (set-by-def (PLam s (&& (< (- (/ 1 4)) s)
-              (< s (/ 1 3)))))
-        ms
-        m))))
+    (exists (m)
+        (func-max (fun (Lam s (volume-of (solid-of-revolution (shape-of-cpfun (PLam p
+                                                (&& (<= 1 (x-coord p))
+                                                (<= (x-coord p) (+ 2 (* 4 s)))
+                                                (<= 1 (y-coord p))
+                                                (<= (y-coord p) (- 2 (* 3 s)))
+                                                (= (z-coord p) 0))))
+                                      (x-axis)))))
+              (set-by-def (PLam s (&& (< (- (/ 1 4)) s)
+                          (< s (/ 1 3)))))
+              ms
+              m))))
 
 (def-directive
   p2
   (Find (m)
-  (exists (ms)
-    (func-max (fun (Lam s (volume-of (solid-of-revolution (shape-of-cpfun (PLam p
-                          (&& (<= 1 (x-coord p))
-                        (<= (x-coord p) (+ 2 (* 4 s)))
-                        (<= 1 (y-coord p))
-                        (<= (y-coord p) (- 2 (* 3 s)))
-                        (= (z-coord p) 0))))
-                      (x-axis)))))
-        (set-by-def (PLam s (&& (< (- (/ 1 4)) s)
-              (< s (/ 1 3)))))
-        ms
-        m))))
+    (exists (ms)
+        (func-max (fun (Lam s (volume-of (solid-of-revolution (shape-of-cpfun (PLam p
+                                                (&& (<= 1 (x-coord p))
+                                                (<= (x-coord p) (+ 2 (* 4 s)))
+                                                (<= 1 (y-coord p))
+                                                (<= (y-coord p) (- 2 (* 3 s)))
+                                                (= (z-coord p) 0))))
+                                      (x-axis)))))
+              (set-by-def (PLam s (&& (< (- (/ 1 4)) s)
+                          (< s (/ 1 3)))))
+              ms
+              m))))
 
 (def-directive
   p3
   (Find (vl)
-  (exists (ms m)
-    (&& (func-max (fun (Lam s (volume-of (solid-of-revolution  (shape-of-cpfun (PLam p
-                          (&& (<= 1 (x-coord p))
-                        (<= (x-coord p) (+ 2 (* 4 s)))
-                        (<= 1 (y-coord p))
-                        (<= (y-coord p) (- 2 (* 3 s)))
-                        (= (z-coord p) 0))))
-                    (x-axis)))))
-            (set-by-def (PLam s (&& (< (- (/ 1 4)) s)
-                  (< s (/ 1 3)))))
-            ms
-            m)
-        (= vl (volume-of (solid-of-revolution (solid-of-revolution (shape-of-cpfun (PLam p
-                          (&& (<= 1 (x-coord p))
-                        (<= (x-coord p) (+ 2 (* 4 s)))
-                        (<= 1 (y-coord p))
-                        (<= (y-coord p) (- 2 (* 3 s)))
-                        (= (z-coord p) 0))))
-                         (x-axis))
-                (y-axis))))))))
+    (exists (ms m)
+        (&& (func-max (fun (Lam s (volume-of (solid-of-revolution  (shape-of-cpfun (PLam p
+                                                (&& (<= 1 (x-coord p))
+                                                (<= (x-coord p) (+ 2 (* 4 s)))
+                                                (<= 1 (y-coord p))
+                                                (<= (y-coord p) (- 2 (* 3 s)))
+                                                (= (z-coord p) 0))))
+                                      (x-axis)))))
+                  (set-by-def (PLam s (&& (< (- (/ 1 4)) s)
+                              (< s (/ 1 3)))))
+                  ms
+                  m)
+            (= vl (volume-of (solid-of-revolution (solid-of-revolution (shape-of-cpfun (PLam p
+                                                (&& (<= 1 (x-coord p))
+                                                (<= (x-coord p) (+ 2 (* 4 ms)))
+                                                (<= 1 (y-coord p))
+                                                (<= (y-coord p) (- 2 (* 3 ms)))
+                                                (= (z-coord p) 0))))
+                                           (x-axis))
+                              (y-axis))))))))
 
 (def-answer p1 (PLam ms (= ms 0)))
 

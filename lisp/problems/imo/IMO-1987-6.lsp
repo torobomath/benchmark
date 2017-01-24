@@ -20,7 +20,7 @@
                (forall (k)
                   (-> (&& (<= 0 k)
                           (.<= (int->real k)
-                               (sqrt (/ (int->real n) (int->real 3)))))
+                               (sqrt (./ (int->real n) (int->real 3)))))
                       (is-prime (+ (^ k 2) k n)))))
            (forall (k)
               (-> (&& (<= 0 k)

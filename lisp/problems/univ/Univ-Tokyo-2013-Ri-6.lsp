@@ -29,7 +29,8 @@
                    (S (square A B C D))
                    (V1 (solid-of-revolution S (line B D)))
                    (V2 (solid-of-revolution S (line A C))))
-              (= x (area-of (intersection V1 (plane 1 0 0 t)))))))
+              (&& (<= 0 t) (< t 1)
+                  (= x (area-of (intersection V1 (plane 1 0 0 t))))))))
 
 (def-directive
   p2

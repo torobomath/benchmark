@@ -24,9 +24,9 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    8 (   0 unit;   2 type;   0 defn)
-%            Number of atoms       :  215 (  16 equality;  42 variable)
+%            Number of atoms       :  229 (  16 equality;  42 variable)
 %            Maximal formula depth :   24 (  12 average)
-%            Number of connectives :  177 (   0   ~;   0   |;  17   &; 160   @)
+%            Number of connectives :  191 (   0   ~;   0   |;  21   &; 170   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
@@ -115,14 +115,18 @@ thf(p3_qustion,question,
 
 thf(p1_answer,answer,(
     ^ [V_area_dot_0: $real] :
-      ( V_area_dot_0
-      = ( $sum @ ( $product @ ( $quotient @ 8.0 @ 'r/0' ) @ ( 'sqrt/1' @ ( $difference @ ( '^/2' @ 'r/0' @ 2.0 ) @ ( '^/2' @ 't/0' @ 2.0 ) ) ) ) @ ( $sum @ ( $product @ 2.0 @ ( '^/2' @ 't/0' @ 2.0 ) ) @ ( $product @ -2.0 @ ( '^/2' @ 'r/0' @ 2.0 ) ) ) ) ) ),
+      ( ( V_area_dot_0
+        = ( $sum @ ( $product @ ( $quotient @ 8.0 @ 'r/0' ) @ ( 'sqrt/1' @ ( $difference @ ( '^/2' @ 'r/0' @ 2.0 ) @ ( '^/2' @ 't/0' @ 2.0 ) ) ) ) @ ( $sum @ ( $product @ 2.0 @ ( '^/2' @ 't/0' @ 2.0 ) ) @ ( $product @ -2.0 @ ( '^/2' @ 'r/0' @ 2.0 ) ) ) ) )
+      & ( $less @ 0.0 @ 'r/0' )
+      & ( $lesseq @ 'r/0' @ ( 'sqrt/1' @ 2.0 ) ) ) ),
     answer_to(p1_question,[])).
 
 thf(p2_answer,answer,(
     ^ [V_V_dot_0: $real] :
-      ( V_V_dot_0
-      = ( $difference @ ( $product @ 4.0 @ ( $product @ 'Pi/0' @ 'r/0' ) ) @ ( $product @ ( $quotient @ 8.0 @ 3.0 ) @ ( '^/2' @ 'r/0' @ 3.0 ) ) ) ) ),
+      ( ( V_V_dot_0
+        = ( $difference @ ( $product @ 4.0 @ ( $product @ 'Pi/0' @ 'r/0' ) ) @ ( $product @ ( $quotient @ 8.0 @ 3.0 ) @ ( '^/2' @ 'r/0' @ 3.0 ) ) ) )
+      & ( $less @ 0.0 @ 'r/0' )
+      & ( $lesseq @ 'r/0' @ ( 'sqrt/1' @ 2.0 ) ) ) ),
     answer_to(p2_question,[])).
 
 thf(p3_answer,answer,(

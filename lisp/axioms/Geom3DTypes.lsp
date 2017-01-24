@@ -120,12 +120,13 @@
 ;; 2013-02-28 suzuki
 ;;(def-fun rotation-around :: Shape => Shape)
 
-;;@ not implemented
-;;@ rotation-around(S, L) = the shape obtained by rotating S around line L
-(def-fun rotation-around :: Shape -> Shape => Shape)
+;; (def-fun rotation-around :: Shape -> Shape => Shape)
 
 ;;@ sphere(p,a) = the sphere of which center is p and radius a
 (def-fun sphere :: Point -> R => Shape)
+
+;;@ hemisphere-face(p, vec) = the hemisphere face with center p, radius |vec|, and including p + vec
+(def-fun hemisphere-face :: Point -> Vector => Shape)
 
 ;;@ tetrahedron(a,b,c,d) = the tetrahedron abcd
 (def-fun tetrahedron :: Point -> Point -> Point -> Point => Shape)
@@ -245,6 +246,9 @@
 ;;@ prism(shape,v) = the prism of which base is shape, which is perpendicular to v, and of which height is the magnitude of v
 (def-fun prism :: Shape -> Vector => Shape)
 
+;;@ prism(shape,v) = the side of prism of which base is shape, which is perpendicular to v, and of which height is the magnitude of v
+(def-fun prism-surface :: Shape -> Vector => Shape)
+
 ;;@ upper-region-of(shape) = the upper region of shape, of which projection along the z-axis passes shape
 (def-fun upper-region-of :: Shape => Shape)
 
@@ -278,6 +282,10 @@
 ;;@ sphere-type(shape) <-> shape is a sphere
 (def-pred sphere-type :: Shape => Bool)
 (non-degen-cond sphere 2 sphere-type)
+
+;;@ hemisphere-face-type(shape) <-> shape is a hemisphere face
+(def-pred hemisphere-face-type :: Shape => Bool)
+(non-degen-cond hemisphere-face 2 hemisphere-face-type)
 
 ;;@ plane-type(shape) <-> shape is a plane
 (def-pred plane-type :: Shape => Bool)
@@ -333,6 +341,14 @@
 (def-pred cone-type :: Shape => Bool)
 (non-degen-cond cone 2 cone-type)
 
+;;@ conical-surface-type(shape) <-> shape is a conical-surface
+(def-pred conical-surface-type :: Shape => Bool)
+(non-degen-cond conical-surface 2 conical-surface-type)
+
+;;@ right-conical-surface-type(shape) <-> shape is a right-conical-surface
+(def-pred right-conical-surface-type :: Shape => Bool)
+(non-degen-cond right-conical-surface 2 right-conical-surface-type)
+
 ;;@ right-cone-type(shape) <-> shape is a right-cone
 (def-pred right-cone-type :: Shape => Bool)
 (non-degen-cond right-cone 2 right-cone-type)
@@ -341,6 +357,10 @@
 (def-pred cylinder-type :: Shape => Bool)
 (non-degen-cond cylinder 2 cylinder-type)
 
+;;@ cylindrical-surface-type(shape) <-> shape is a cylindrical-surface
+(def-pred cylindrical-surface-type :: Shape => Bool)
+(non-degen-cond cylindrical-surface 2 cylindrical-surface-type)
+
 ;;@ pyramid-type(shape) <-> shape is a pyramid
 (def-pred pyramid-type :: Shape => Bool)
 (non-degen-cond pyramid 2 pyramid-type)
@@ -348,3 +368,8 @@
 ;;@ prism-type(shape) <-> shape is a prism
 (def-pred prism-type :: Shape => Bool)
 (non-degen-cond prism 2 prism-type)
+
+;;@ prism-surface-type(shape) <-> shape is the side of a prism
+(def-pred prism-surface-type :: Shape => Bool)
+(non-degen-cond prism-surface 2 prism-surface-type)
+

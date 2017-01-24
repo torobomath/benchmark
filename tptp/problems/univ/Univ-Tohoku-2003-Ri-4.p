@@ -45,7 +45,7 @@ thf(p1_qustion,question,
         & ( $lesseq @ 0.0 @ 'u/0' )
         & ( $lesseq @ 'u/0' @ 1.0 )
         & ( V_x
-          = ( '3d.point-shape-distance/2' @ ( '3d.point/3' @ 'u/0' @ 0.0 @ 0.0 ) @ ( '3d.line/2' @ V_P @ V_Q ) ) ) ) )).
+          = ( '3d.point-shape-distance/2' @ ( '3d.point/3' @ 'u/0' @ 0.0 @ 0.0 ) @ ( '3d.seg/2' @ V_P @ V_Q ) ) ) ) )).
 
 thf(p2_qustion,question,
     ( 'find/1' @ $real
@@ -61,7 +61,7 @@ thf(p2_qustion,question,
                   = ( '3d.point/3' @ V_u @ V_u @ 0.0 ) )
                 & ( V_Q
                   = ( '3d.point/3' @ V_u @ 0.0 @ ( 'sqrt/1' @ ( $difference @ 1.0 @ ( '^/2' @ V_u @ 2.0 ) ) ) ) )
-                & ( '3d.on/2' @ V_p @ ( '3d.line/2' @ V_P @ V_Q ) ) ) ) )
+                & ( '3d.on/2' @ V_p @ ( '3d.seg/2' @ V_P @ V_Q ) ) ) ) )
         & ( V_V
           = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ V_S @ '3d.x-axis/0' ) ) ) ) )).
 

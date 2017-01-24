@@ -17,7 +17,7 @@
 
 (def-directive
   p1
-  (Find(x)
+  (Draw (x)
     (= x
       (shape-of-cpfun (PLam p (&& (<= (* (y-coord p) (+ (y-coord p) (- (abs (- (^ (x-coord p) 2) 5))) 4))
                       0)
@@ -32,15 +32,15 @@
                           0)
                         (<= (+ (y-coord p) (^ (x-coord p) 2) (- (* 2 (x-coord p))) -3) 0))))))))
 
-(def-answer p1 (PLam x (= x (shape-of-cpfun (PLam p (|| (&& (<= 0 (y-coord p))
-                                                            (<= (y-coord p) (- (abs (- (^ (x-coord p) 2) 5)) 4))
-                                                            (<= -1 (x-coord p))
-                                                            (<= (x-coord p) 1))
-                                                        (&& (<= (- (abs (- (^ (x-coord p) 2) 5)) 4)
-                                                                (y-coord p))
-                                                            (<= (y-coord p) 0)
-                                                            (<= 1 (x-coord p))
-                                                            (<= (x-coord p) 3))))))))
+(def-answer p1 (shape-of-cpfun (PLam p (|| (&& (<= 0 (y-coord p))
+                                               (<= (y-coord p) (- (abs (- (^ (x-coord p) 2) 5)) 4))
+                                               (<= -1 (x-coord p))
+                                               (<= (x-coord p) 1))
+                                           (&& (<= (- (abs (- (^ (x-coord p) 2) 5)) 4)
+                                                   (y-coord p))
+                                               (<= (y-coord p) 0)
+                                               (<= 1 (x-coord p))
+                                               (<= (x-coord p) 3))))))
 
 (def-answer p2 (PLam x (= x (- 20 (* (/ 20 3) (sqrt 5))))))
 

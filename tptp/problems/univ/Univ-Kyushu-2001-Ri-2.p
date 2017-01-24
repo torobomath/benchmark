@@ -15,17 +15,17 @@
 %% point on it.
 %%
 %% (3) Find the coordinates of the point symmetric to the point $(X, Y)$
-%% with respect to the straight line $m x + n y = 0$, where neither $m$
-%% nor $n$ is $0$.
+%% with respect to the straight line $m x + n y = 0$, where not both $m$
+%% $n$ are $0$.
 %%
 %% (4) Prove that $G$ is not line-symmetric with respect to any straight
 %% line that passes through the origin.
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :   15 (   0 unit;   9 type;   0 defn)
-%            Number of atoms       :  154 (   8 equality;  15 variable)
+%            Number of atoms       :  152 (   8 equality;  15 variable)
 %            Maximal formula depth :   17 (   6 average)
-%            Number of connectives :  137 (   5   ~;   0   |;   7   &; 124   @)
+%            Number of connectives :  135 (   5   ~;   2   |;   5   &; 122   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
@@ -78,9 +78,9 @@ thf(p2,conjecture,(
 thf(p3_qustion,question,
     ( 'find/1' @ '2d.Point'
     @ ^ [V_R: '2d.Point'] :
-        ( ( 'n/0' != 0.0 )
-        & ( 'm/0' != 0.0 )
-        & ( '2d.line-symmetry/3' @ ( '2d.point/2' @ 'X/0' @ 'Y/0' ) @ V_R @ ( '2d.line/2' @ ( '2d.point/2' @ 0.0 @ 0.0 ) @ ( '2d.point/2' @ 1.0 @ ( $quotient @ ( $uminus @ 'm/0' ) @ 'n/0' ) ) ) ) ) )).
+        ( ( ( 'n/0' != 0.0 )
+          | ( 'm/0' != 0.0 ) )
+        & ( '2d.line-symmetry/3' @ ( '2d.point/2' @ 'X/0' @ 'Y/0' ) @ V_R @ ( '2d.line/2' @ ( '2d.point/2' @ 0.0 @ 0.0 ) @ ( '2d.point/2' @ ( $uminus @ 'n/0' ) @ 'm/0' ) ) ) ) )).
 
 thf(p4,conjecture,(
     ! [V_G: '2d.Shape',V_a: $real,V_b: $real,V_c: $real,V_m: '2d.Shape'] :
@@ -98,8 +98,8 @@ thf(p1_answer,answer,(
 
 thf(p3_answer,answer,(
     ^ [V_R_dot_0: '2d.Point'] :
-      ( ( 'n/0' != 0.0 )
-      & ( 'm/0' != 0.0 )
+      ( ( ( 'n/0' != 0.0 )
+        | ( 'm/0' != 0.0 ) )
       & ( V_R_dot_0
         = ( '2d.point/2' @ ( $quotient @ ( $difference @ ( $product @ ( $difference @ ( '^/2' @ 'n/0' @ 2.0 ) @ ( '^/2' @ 'm/0' @ 2.0 ) ) @ 'X/0' ) @ ( $product @ 2.0 @ ( $product @ 'm/0' @ ( $product @ 'n/0' @ 'Y/0' ) ) ) ) @ ( $sum @ ( '^/2' @ 'm/0' @ 2.0 ) @ ( '^/2' @ 'n/0' @ 2.0 ) ) ) @ ( $quotient @ ( $sum @ ( $product @ -2.0 @ ( $product @ 'm/0' @ ( $product @ 'n/0' @ 'X/0' ) ) ) @ ( $product @ ( $difference @ ( '^/2' @ 'm/0' @ 2.0 ) @ ( '^/2' @ 'n/0' @ 2.0 ) ) @ 'Y/0' ) ) @ ( $sum @ ( '^/2' @ 'm/0' @ 2.0 ) @ ( '^/2' @ 'n/0' @ 2.0 ) ) ) ) ) ) ),
     answer_to(p3_question,[])).

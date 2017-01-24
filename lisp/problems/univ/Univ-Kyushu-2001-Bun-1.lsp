@@ -105,7 +105,7 @@
 
 (def-answer a1_1 (PLam _ (<= (+ (^ (- a 1) 2) (^ b 2)) 1)))
 
-(def-answer p1_2 (2d.shape-of-cpfun (PLam P (<= (+ (^ (- (2d.x-coord P) 1) 2) (^ (2d.y-coord P) 2)) 1))))
+(def-answer a1_2 (2d.shape-of-cpfun (PLam P (<= (+ (^ (- (2d.x-coord P) 1) 2) (^ (2d.y-coord P) 2)) 1))))
 
 (def-answer a2 (PLam _ (&& (<= 0 b) (<= b 1))))
 

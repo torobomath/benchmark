@@ -18,15 +18,15 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    5 (   0 unit;   1 type;   0 defn)
-%            Number of atoms       :  352 (   6 equality;  62 variable)
+%            Number of atoms       :  350 (   5 equality;  61 variable)
 %            Maximal formula depth :   21 (  15 average)
 %            Number of connectives :  336 (   0   ~;   6   |;  40   &; 290   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   23 (   1   :;   0   =)
-%            Number of variables   :   10 (   0 sgn;   0   !;   4   ?;   6   ^)
-%                                         (  10   :;   0  !>;   0  ?*)
+%            Number of symbols     :   24 (   1   :;   0   =)
+%            Number of variables   :    9 (   0 sgn;   0   !;   4   ?;   5   ^)
+%                                         (   9   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 %            Arithmetic symbols    :   11 (   1 pred;    4 func;    6 numbers)
 
@@ -52,7 +52,7 @@ thf(p1_qustion,question,
         & ( '2d.divide-internally/4' @ ( '2d.point/2' @ 'a/0' @ V_b ) @ ( '2d.seg/2' @ V_p @ V_q ) @ 1.0 @ 2.0 ) ) )).
 
 thf(p2_qustion,question,
-    ( 'find/1' @ '2d.Shape'
+    ( 'draw/1' @ '2d.Shape'
     @ ^ [V_x: '2d.Shape'] :
         ( V_x
         = ( '2d.shape-of-cpfun/1'
@@ -90,26 +90,24 @@ thf(p1_answer,answer,(
         & ( $lesseq @ V_b_dot_0 @ ( $sum @ ( $product @ 3.0 @ ( '^/2' @ 'a/0' @ 2.0 ) ) @ ( $sum @ ( $uminus @ ( $product @ 4.0 @ 'a/0' ) ) @ 2.0 ) ) ) ) ) ),
     answer_to(p1_question,[])).
 
-thf(p2_answer,answer,(
-    ^ [V_x_dot_0: '2d.Shape'] :
-      ( V_x_dot_0
-      = ( '2d.shape-of-cpfun/1'
-        @ ^ [V_p_dot_0: '2d.Point'] :
-            ( ( ( $lesseq @ ( $uminus @ 1.0 ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
-              & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ ( $uminus @ ( $quotient @ 1.0 @ 3.0 ) ) )
-              & ( $lesseq @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) @ ( '2d.y-coord/1' @ V_p_dot_0 ) )
-              & ( $lesseq @ ( '2d.y-coord/1' @ V_p_dot_0 ) @ ( $sum @ ( $product @ 3.0 @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ ( $sum @ ( $product @ 4.0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) ) @ 2.0 ) ) ) )
-            | ( ( $lesseq @ ( $uminus @ ( $quotient @ 1.0 @ 3.0 ) ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
-              & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 0.0 )
-              & ( $lesseq @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) @ ( '2d.y-coord/1' @ V_p_dot_0 ) )
-              & ( $lesseq @ ( '2d.y-coord/1' @ V_p_dot_0 ) @ ( $sum @ ( $product @ ( $quotient @ 3.0 @ 2.0 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ ( $sum @ ( $uminus @ ( '2d.x-coord/1' @ V_p_dot_0 ) ) @ ( $quotient @ 1.0 @ 2.0 ) ) ) ) )
-            | ( ( $lesseq @ 0.0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
-              & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ ( $quotient @ 1.0 @ 3.0 ) )
-              & ( $lesseq @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) @ ( '2d.y-coord/1' @ V_p_dot_0 ) )
-              & ( $lesseq @ ( '2d.y-coord/1' @ V_p_dot_0 ) @ ( $sum @ ( $product @ ( $quotient @ 3.0 @ 2.0 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ ( $sum @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ ( $quotient @ 1.0 @ 2.0 ) ) ) ) )
-            | ( ( $lesseq @ ( $quotient @ 1.0 @ 3.0 ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
-              & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 1.0 )
-              & ( $lesseq @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) @ ( '2d.y-coord/1' @ V_p_dot_0 ) )
-              & ( $lesseq @ ( '2d.y-coord/1' @ V_p_dot_0 ) @ ( $sum @ ( $product @ 3.0 @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ ( $sum @ ( $uminus @ ( $product @ 4.0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) ) ) @ 2.0 ) ) ) ) ) ) ) ),
+thf(p2_answer,answer,
+    ( '2d.shape-of-cpfun/1'
+    @ ^ [V_p_dot_0: '2d.Point'] :
+        ( ( ( $lesseq @ ( $uminus @ 1.0 ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ ( $uminus @ ( $quotient @ 1.0 @ 3.0 ) ) )
+          & ( $lesseq @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) @ ( '2d.y-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.y-coord/1' @ V_p_dot_0 ) @ ( $sum @ ( $product @ 3.0 @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ ( $sum @ ( $product @ 4.0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) ) @ 2.0 ) ) ) )
+        | ( ( $lesseq @ ( $uminus @ ( $quotient @ 1.0 @ 3.0 ) ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 0.0 )
+          & ( $lesseq @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) @ ( '2d.y-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.y-coord/1' @ V_p_dot_0 ) @ ( $sum @ ( $product @ ( $quotient @ 3.0 @ 2.0 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ ( $sum @ ( $uminus @ ( '2d.x-coord/1' @ V_p_dot_0 ) ) @ ( $quotient @ 1.0 @ 2.0 ) ) ) ) )
+        | ( ( $lesseq @ 0.0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ ( $quotient @ 1.0 @ 3.0 ) )
+          & ( $lesseq @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) @ ( '2d.y-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.y-coord/1' @ V_p_dot_0 ) @ ( $sum @ ( $product @ ( $quotient @ 3.0 @ 2.0 ) @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ ( $sum @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ ( $quotient @ 1.0 @ 2.0 ) ) ) ) )
+        | ( ( $lesseq @ ( $quotient @ 1.0 @ 3.0 ) @ ( '2d.x-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 1.0 )
+          & ( $lesseq @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) @ ( '2d.y-coord/1' @ V_p_dot_0 ) )
+          & ( $lesseq @ ( '2d.y-coord/1' @ V_p_dot_0 ) @ ( $sum @ ( $product @ 3.0 @ ( '^/2' @ ( '2d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ ( $sum @ ( $uminus @ ( $product @ 4.0 @ ( '2d.x-coord/1' @ V_p_dot_0 ) ) ) @ 2.0 ) ) ) ) ) ),
     answer_to(p2_question,[])).
 

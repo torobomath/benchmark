@@ -64,9 +64,13 @@
                (= K (intersection C D))
                (= V (volume-of K)))))) maxV)))
 
-(def-answer p1 (PLam area (= area (+ (* (/ 8 r) (sqrt (- (^ r 2) (^ t 2)))) (* 2 (^ t 2)) (* -2 (^ r 2))))))
+(def-answer p1 (PLam area (&& (= area (+ (* (/ 8 r) (sqrt (- (^ r 2) (^ t 2)))) (* 2 (^ t 2)) (* -2 (^ r 2))))
+                              (< 0 r)
+                              (<= r (sqrt 2)))))
 
-(def-answer p2 (PLam V (= V (- (* 4 (Pi) r) (* (/ 8 3) (^ r 3))))))
+(def-answer p2 (PLam V (&& (= V (- (* 4 (Pi) r) (* (/ 8 3) (^ r 3))))
+                           (< 0 r)
+                           (<= r (sqrt 2)))))
 
 (def-answer p3 (PLam maxV (= maxV (* (/ (* 4 (sqrt 2)) 3) (Pi) (sqrt (Pi))))))
 

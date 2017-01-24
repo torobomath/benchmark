@@ -36,7 +36,7 @@
                (= x1x2x3x4x5 (list-of s
                                       t
                                       (+ (- s) (* y t))
-                                      (- (+ (* (- (^ y 2) 1) s) (* y t)))
+                                      (- (+ (* y s) (* y t)))
                                       (- (* y s) t)))))
         (&& (= y 2)
             (exists (s) (= x1x2x3x4x5 (list-of s s s s s))))

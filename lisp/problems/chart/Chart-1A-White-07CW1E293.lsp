@@ -9,12 +9,11 @@
 
 (def-directive p1
   (Find (answer)
-    (forall (V A S) (->
-      (&& (sphere-type S)
-        (= 2 (radius-of S))
-        (= V (volume-of S))
-        (= A (area-of S))
-      )
+    (exists (V A S) (&&
+      (sphere-type S)
+      (= 2 (radius-of S))
+      (= V (volume-of S))
+      (= A (area-of S))
       (= answer (list-of V A))
     ))
   )
@@ -22,12 +21,11 @@
 
 (def-directive p2
   (Find (answer)
-    (forall (V A S) (->
-      (&& (sphere-type S)
-        (= (sqrt 5) (radius-of S))
-        (= V (volume-of S))
-        (= A (area-of S))
-      )
+    (exists (V A S) (&&
+      (sphere-type S)
+      (= (sqrt 5) (radius-of S))
+      (= V (volume-of S))
+      (= A (area-of S))
       (= answer (list-of V A))
     ))
   )
@@ -35,12 +33,11 @@
 
 (def-directive p3
   (Find (answer)
-    (forall (V A S) (->
-      (&& (sphere-type S)
-        (= (/ 12 2) (radius-of S))
-        (= V (volume-of S))
-        (= A (area-of S))
-      )
+    (exists (V A S) (&&
+      (sphere-type S)
+      (= (/ 12 2) (radius-of S))
+      (= V (volume-of S))
+      (= A (area-of S))
       (= answer (list-of V A))
     ))
   )

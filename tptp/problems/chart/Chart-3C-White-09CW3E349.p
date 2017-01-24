@@ -42,7 +42,7 @@ thf(p2_1_qustion,question,
                 & ( $lesseq @ 0.0 @ V_x )
                 & ( $lesseq @ V_x @ ( $quotient @ 'Pi/0' @ 2.0 ) ) ) ) )
         & ( V_V
-          = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ ( '3d.import-2d-shape/1' @ V_E ) @ '3d.y-axis/0' ) ) ) ) )).
+          = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ ( '3d.import-2d-shape/1' @ V_E ) @ '3d.x-axis/0' ) ) ) ) )).
 
 thf(p2_2_qustion,question,
     ( 'find/1' @ $real
@@ -56,7 +56,7 @@ thf(p2_2_qustion,question,
                 & ( $lesseq @ 0.0 @ V_x )
                 & ( $lesseq @ V_x @ ( $quotient @ 'Pi/0' @ 2.0 ) ) ) ) )
         & ( V_W
-          = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ ( '3d.import-2d-shape/1' @ V_E ) @ '3d.x-axis/0' ) ) ) ) )).
+          = ( '3d.volume-of/1' @ ( '3d.solid-of-revolution/2' @ ( '3d.import-2d-shape/1' @ V_E ) @ '3d.y-axis/0' ) ) ) ) )).
 
 thf(p1_answer,answer,(
     ^ [V_I_dot_0: $real] : ( V_I_dot_0 = 1.0 ) ),

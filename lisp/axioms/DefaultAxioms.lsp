@@ -15,6 +15,12 @@
   (<-> (false)
        (! (true))))
 
+;;# DONT_EXPORT
+(axiom
+  def_to_real
+  (x)
+  (= (to_real x) x))
+
 ;;------------------------------------------------------------------------------
 ;; variable
 ;;------------------------------------------------------------------------------
@@ -37,6 +43,10 @@
 ;; list
 ;;------------------------------------------------------------------------------
 
+(axiom
+  def-is-list
+  (xs)
+  (is-list xs))
 
 (axiom
   def_equal_all_elem0
@@ -71,7 +81,20 @@
   (= (map f (cons hd tl))
      (cons (LamApp f hd) (map f tl))))
 
+(axiom
+  def-map-eq-rec
+  (f hd tl xs)
+  (<-> (= (cons hd tl) (map f xs))
+       (exists (x1 xs1)
+         (&& (= xs (cons x1 xs1))
+             (= hd (LamApp f x1))
+             (= tl (map f xs1))))))
 
+(axiom
+  def-map-eq-base
+  (f xs)
+  (<-> (= (nil) (map f xs))
+       (= (nil) xs)))
 
 ; (a => b -> b) -> b -> (ListOf a) => b
 (axiom
@@ -451,6 +474,16 @@
   (= (remove-list (cons xhd xtl) y)
      (remove-list xtl (remove xhd y))))
 
+(axiom
+  def_circular_shift_nil
+  ()
+  (= (circular-shift (nil)) (nil)))
+
+(axiom
+  def_circular_shift
+  (xs)
+  (= (circular-shift xs) (cons (last xs) (butlast xs))))
+
 
 ;; (ListOf a) => Bool
 (axiom
@@ -673,6 +706,23 @@
 			 (&& (>= x0 x1)
 					 (is-decreasing-list (cons x1 xs)))))
 
+(axiom
+  eq-order-dir-asc
+  ()
+  (<-> (= (ascending-order) (ascending-order))
+       (true)))
+
+(axiom
+  eq-order-dir-dsc
+  ()
+  (<-> (= (descending-order) (descending-order))
+       (true)))
+
+(axiom
+  neq-order-dir
+  ()
+  (<-> (= (ascending-order) (descending-order))
+       (false)))
 
 ;;------------------------------------------------------------------------------
 ;; higher-order functions
@@ -899,6 +949,12 @@
   (<-> (is-empty a)
        (forall (x) (! (elem x a)))))
 
+(axiom
+  def-empty-set
+  ()
+  (= (empty-set)
+     (set-by-def (PLam x (false)))))
+
 ;; is-singleton :: (SetOf a) => Bool
 (axiom
   def_is_singleton
@@ -1015,6 +1071,36 @@
                                  (= e e4))))))))
 
 (axiom
+ def-cardinality-of-eq-0
+ (s)
+ (<-> (= (cardinality-of s) 0)
+      (is-cardinality-of 0 s)))
+
+(axiom
+ def-cardinality-of-eq-1
+ (s)
+ (<-> (= (cardinality-of s) 1)
+      (is-cardinality-of 1 s)))
+
+(axiom
+ def-cardinality-of-eq-2
+ (s)
+ (<-> (= (cardinality-of s) 2)
+      (is-cardinality-of 2 s)))
+
+(axiom
+ def-cardinality-of-eq-3
+ (s)
+ (<-> (= (cardinality-of s) 3)
+      (is-cardinality-of 3 s)))
+
+(axiom
+ def-cardinality-of-eq-4
+ (s)
+ (<-> (= (cardinality-of s) 4)
+      (is-cardinality-of 4 s)))
+
+(axiom
   def-list-is-belong-to-set-nil
   (s)
   (is-list-subset-of (nil) s))
@@ -1087,6 +1173,15 @@
   (x)
   (real-number x))
 
+(axiom
+  def_number
+  (x)
+  (is-number x))
+
+(axiom
+  def_real_type
+  (x)
+  (real-type x))
 
 (axiom
   def_is_floor_of
@@ -1104,18 +1199,32 @@
       (is-integer x)))
       ;(= (floor x) x)))
 
-;;# DONT_EXPORT
+;(axiom
+; def_is_integer
+; (x)
+; (<-> (is-integer x)
+;      (= (floor x) x)))
+
 (axiom
- def_is_integer
- (x)
- (<-> (is-integer x)
-      (= (floor x) x)))
+   def-real-is-natural-number
+   (x)
+   (<-> (is-natural-number x)
+        (&& (is-integer x)
+            (<= 1 x))))
 
 ;;# DONT_EXPORT
 (axiom
   def_is_rational
   (x)
   (<-> (is-rational x)
+       (exists (m n) 
+               (= x (/ (int->real n) (int->real m))))))
+
+;;# DONT_EXPORT
+(axiom
+  def_is_rational_number
+  (x)
+  (<-> (is-rational-number x)
        (exists (m n) 
                (= x (/ (int->real n) (int->real m))))))
 	
@@ -1990,6 +2099,70 @@
        (exists (k)
           (&& (! (= k 0))
               (= r1 (map (Lam x (* k x)) r2))))))
+
+;;------------------------------------------------------------------------------
+;; nth-elem => int.nth-larest-elem, int.nth-smallest-elem
+;;------------------------------------------------------------------------------
+(import "axioms/IntegerTypes.lsp")
+(axiom
+   def-nth-elem-asc
+   (x set k)
+   (<-> (nth-elem x set (ascending-order) k)
+        (int.nth-smallest-elem x set (Lam x x) k)))
+
+(axiom
+   def-nth-elem-desc
+   (x set k)
+   (<-> (nth-elem x set (descending-order) k)
+        (int.nth-largest-elem x set (Lam x x) k)))
+
+(axiom
+   def-nth-elem-by-asc
+   (x set eval-fun k)
+   (<-> (nth-elem-by x set eval-fun (ascending-order) k)
+        (int.nth-smallest-elem x set eval-fun k)))
+
+(axiom
+   def-nth-elem-by-desc
+   (x set eval-fun k)
+   (<-> (nth-elem-by x set eval-fun (descending-order) k)
+        (int.nth-largest-elem x set eval-fun k)))
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(axiom
+   def-is-finite-decimal
+   (x b)
+   (<-> (is-finite-decimal x b)
+        (exists (n k)
+           (= x (/ (int->real n)
+                   (int->real (int.^ b k)))))))
+(axiom
+   def-is-reccuring-decimal
+   (x b)
+   (<-> (is-recurring-decimal x b)
+        (&& (is-rational x)
+            (! (is-finite-decimal x b)))))
+
+(axiom
+   def-is-finite-decimal-base10
+   (x)
+   (<-> (is-finite-decimal x)
+        (is-finite-decimal x 10)))
+
+(axiom
+   def-is-recurring-decimal-base10
+   (x)
+   (<-> (is-recurring-decimal x)
+        (is-recurring-decimal x 10)))
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(axiom
+  def-order-rel-of
+  (rel)
+  (= (order-rel-of (order-rel rel))
+     rel))
 
 ;;------------------------------------------------------------------------------
 ;;------------------------------------------------------------------------------

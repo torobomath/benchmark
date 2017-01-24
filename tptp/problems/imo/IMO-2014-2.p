@@ -15,13 +15,13 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    3 (   0 unit;   1 type;   0 defn)
-%            Number of atoms       :  150 (   3 equality;  47 variable)
+%            Number of atoms       :  167 (   3 equality;  45 variable)
 %            Maximal formula depth :   25 (  12 average)
-%            Number of connectives :  147 (   3   ~;   0   |;  19   &; 121   @)
+%            Number of connectives :  165 (   3   ~;   0   |;  18   &; 140   @)
 %                                         (   0 <=>;   4  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   21 (   1   :;   0   =)
+%            Number of symbols     :   20 (   1   :;   0   =)
 %            Number of variables   :   11 (   0 sgn;   6   !;   2   ?;   3   ^)
 %                                         (  11   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
@@ -38,26 +38,25 @@ thf(p_qustion,question,
         ( 'int.maximum/2'
         @ ( 'set-by-def/1' @ $int
           @ ^ [V_k: $int] :
-            ! [V_ps: ( 'ListOf' @ ( 'ListOf' @ $int ) )] :
-              ( ( ( ( 'list-len/1' @ ( 'ListOf' @ $int ) @ V_ps )
+            ! [V_ps: ( 'ListOf' @ ( 'Pair' @ $int @ $int ) )] :
+              ( ( ( ( 'list-len/1' @ ( 'Pair' @ $int @ $int ) @ V_ps )
                   = 'n/0' )
                 & ! [V_i: $int] :
                     ( ( ( $lesseq @ 0 @ V_i )
                       & ( $less @ V_i @ 'n/0' ) )
-                   => ( ( 'int.is-lattice-point/1' @ ( 'nth/2' @ ( 'ListOf' @ $int ) @ V_i @ V_ps ) )
-                      & ( $lesseq @ 1 @ ( 'int.x-coord/1' @ ( 'nth/2' @ ( 'ListOf' @ $int ) @ V_i @ V_ps ) ) )
-                      & ( $lesseq @ ( 'int.x-coord/1' @ ( 'nth/2' @ ( 'ListOf' @ $int ) @ V_i @ V_ps ) ) @ 'n/0' )
-                      & ( $lesseq @ 1 @ ( 'int.y-coord/1' @ ( 'nth/2' @ ( 'ListOf' @ $int ) @ V_i @ V_ps ) ) )
-                      & ( $lesseq @ ( 'int.y-coord/1' @ ( 'nth/2' @ ( 'ListOf' @ $int ) @ V_i @ V_ps ) ) @ 'n/0' ) ) )
+                   => ( ( $lesseq @ 1 @ ( 'fst/1' @ $int @ $int @ ( 'nth/2' @ ( 'Pair' @ $int @ $int ) @ V_i @ V_ps ) ) )
+                      & ( $lesseq @ ( 'fst/1' @ $int @ $int @ ( 'nth/2' @ ( 'Pair' @ $int @ $int ) @ V_i @ V_ps ) ) @ 'n/0' )
+                      & ( $lesseq @ 1 @ ( 'snd/1' @ $int @ $int @ ( 'nth/2' @ ( 'Pair' @ $int @ $int ) @ V_i @ V_ps ) ) )
+                      & ( $lesseq @ ( 'snd/1' @ $int @ $int @ ( 'nth/2' @ ( 'Pair' @ $int @ $int ) @ V_i @ V_ps ) ) @ 'n/0' ) ) )
                 & ! [V_k_dot_0: $int,V_l: $int] :
                     ( ( ( $lesseq @ 0 @ V_k_dot_0 )
                       & ( $less @ V_k_dot_0 @ 'n/0' )
                       & ( $lesseq @ 0 @ V_l )
                       & ( $less @ V_l @ 'n/0' ) )
-                   => ( ( ( 'int.x-coord/1' @ ( 'nth/2' @ ( 'ListOf' @ $int ) @ V_k_dot_0 @ V_ps ) )
-                       != ( 'int.x-coord/1' @ ( 'nth/2' @ ( 'ListOf' @ $int ) @ V_l @ V_ps ) ) )
-                      & ( ( 'int.y-coord/1' @ ( 'nth/2' @ ( 'ListOf' @ $int ) @ V_k_dot_0 @ V_ps ) )
-                       != ( 'int.y-coord/1' @ ( 'nth/2' @ ( 'ListOf' @ $int ) @ V_l @ V_ps ) ) ) ) ) )
+                   => ( ( ( 'fst/1' @ $int @ $int @ ( 'nth/2' @ ( 'Pair' @ $int @ $int ) @ V_k_dot_0 @ V_ps ) )
+                       != ( 'fst/1' @ $int @ $int @ ( 'nth/2' @ ( 'Pair' @ $int @ $int ) @ V_l @ V_ps ) ) )
+                      & ( ( 'snd/1' @ $int @ $int @ ( 'nth/2' @ ( 'Pair' @ $int @ $int ) @ V_k_dot_0 @ V_ps ) )
+                       != ( 'snd/1' @ $int @ $int @ ( 'nth/2' @ ( 'Pair' @ $int @ $int ) @ V_l @ V_ps ) ) ) ) ) )
              => ? [V_x: $int,V_y: $int] :
                   ( ( $lesseq @ 0 @ V_x )
                   & ( $less @ ( $sum @ V_x @ V_k ) @ 'n/0' )
@@ -68,7 +67,7 @@ thf(p_qustion,question,
                         & ( $less @ V_i_dot_0 @ ( $sum @ V_x @ V_k ) )
                         & ( $lesseq @ V_y @ V_j )
                         & ( $less @ V_j @ ( $sum @ V_y @ V_k ) ) )
-                     => ~ ( 'member/2' @ ( 'ListOf' @ $int ) @ ( 'cons/2' @ $int @ V_i_dot_0 @ ( 'cons/2' @ $int @ V_j @ ( 'nil/0' @ $int ) ) ) @ V_ps ) ) ) ) )
+                     => ~ ( 'member/2' @ ( 'Pair' @ $int @ $int ) @ ( 'pair/2' @ $int @ $int @ V_i_dot_0 @ V_j ) @ V_ps ) ) ) ) )
         @ V_max_k ) )).
 
 thf(p_answer,answer,(

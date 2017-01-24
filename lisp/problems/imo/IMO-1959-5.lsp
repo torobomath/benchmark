@@ -48,12 +48,15 @@
   (Show
    (forall (A B)
      (-> (! (= A B))
+         (let*
+               ((V (vec-rotate-around-origin (vec A B) (/ (Pi) 2))))
          (exists (S)
           (forall (M C D E F K1 K2 P Q N)
           (-> (&& (on M (seg A B)) (! (= M A)) (! (= M B))
                       (is-regular-square A M C D)
                       (is-regular-square M B E F)
-                      (vec-same-direction (vec M C) (vec M F))
+                      (vec-same-direction (vec M C) V)
+                      (vec-same-direction (vec M F) V)
                       (circle-type K1)
                       (circle-type K2)
           (is-inscribed-in (square A M C D) K1)
@@ -63,7 +66,7 @@
                       (intersect K1 K2 N)
                       (!(= M N))
                       )
-                  (on S (line M N)))))))))
+                  (on S (line M N))))))))))
 
 (def-directive p3
   (Find (Sp)

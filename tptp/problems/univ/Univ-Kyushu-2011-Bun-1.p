@@ -25,9 +25,9 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    9 (   0 unit;   1 type;   0 defn)
-%            Number of atoms       :  328 (  23 equality;  88 variable)
+%            Number of atoms       :  331 (  23 equality;  88 variable)
 %            Maximal formula depth :   32 (  16 average)
-%            Number of connectives :  274 (   0   ~;   0   |;  43   &; 231   @)
+%            Number of connectives :  277 (   0   ~;   0   |;  44   &; 233   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
@@ -155,8 +155,9 @@ thf(p2_answer,answer,(
 
 thf(p3_answer,answer,(
     ^ [V_S1_dot_0: $real] :
-      ( V_S1_dot_0
-      = ( $sum @ ( $product @ ( $quotient @ 1.0 @ 4.0 ) @ ( '^/2' @ 't/0' @ 4.0 ) ) @ ( $sum @ ( $product @ ( $quotient @ -1.0 @ 6.0 ) @ ( '^/2' @ 't/0' @ 3.0 ) ) @ ( $sum @ ( $product @ ( $quotient @ 1.0 @ 4.0 ) @ ( '^/2' @ 't/0' @ 2.0 ) ) @ ( $quotient @ 1.0 @ 6.0 ) ) ) ) ) ),
+      ( ( V_S1_dot_0
+        = ( $sum @ ( $product @ ( $quotient @ 1.0 @ 4.0 ) @ ( '^/2' @ 't/0' @ 4.0 ) ) @ ( $sum @ ( $product @ ( $quotient @ -1.0 @ 6.0 ) @ ( '^/2' @ 't/0' @ 3.0 ) ) @ ( $sum @ ( $product @ ( $quotient @ 1.0 @ 4.0 ) @ ( '^/2' @ 't/0' @ 2.0 ) ) @ ( $quotient @ 1.0 @ 6.0 ) ) ) ) )
+      & ( $less @ 1.0 @ 't/0' ) ) ),
     answer_to(p3_question,[])).
 
 thf(p4_answer,answer,(

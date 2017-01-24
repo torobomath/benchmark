@@ -20,23 +20,20 @@
 %% (2) Find the value of $\lim_{a\rightarrow\infty } V(a)$.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    6 (   0 unit;   2 type;   0 defn)
-%            Number of atoms       :  117 (  13 equality;  31 variable)
-%            Maximal formula depth :   23 (  10 average)
+% Syntax   : Number of formulae    :    5 (   0 unit;   1 type;   0 defn)
+%            Number of atoms       :  117 (  13 equality;  33 variable)
+%            Maximal formula depth :   23 (  11 average)
 %            Number of connectives :   87 (   0   ~;   0   |;  10   &;  76   @)
 %                                         (   0 <=>;   1  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   29 (   2   :;   0   =)
-%            Number of variables   :   16 (   0 sgn;   1   !;   6   ?;   9   ^)
-%                                         (  16   :;   0  !>;   0  ?*)
+%            Number of symbols     :   28 (   1   :;   0   =)
+%            Number of variables   :   18 (   1 sgn;   1   !;   8   ?;   9   ^)
+%                                         (  18   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 %            Arithmetic symbols    :   10 (   2 pred;    4 func;    4 numbers)
 
 include('axioms.ax').
-
-thf('E/0_type',type,(
-    'E/0': '3d.Shape' )).
 
 thf('a/0_type',type,(
     'a/0': $real )).
@@ -44,18 +41,18 @@ thf('a/0_type',type,(
 thf(p1_1_qustion,question,
     ( 'find/1' @ $real
     @ ^ [V_W: $real] :
-      ? [V_D1: '3d.Shape'] :
+      ? [V_D1: '3d.Shape',V_E: '3d.Shape',V_W_dot_0: $real] :
         ( ( V_D1
           = ( '3d.shape-of-cpfun/1'
             @ ^ [V_p_dot_0: '3d.Point'] :
                 ( ( $lesseq @ ( $sum @ ( '^/2' @ ( '3d.x-coord/1' @ V_p_dot_0 ) @ 2.0 ) @ ( '^/2' @ ( '3d.y-coord/1' @ V_p_dot_0 ) @ 2.0 ) ) @ 1.0 )
                 & ( 'a/0'
                   = ( '3d.z-coord/1' @ V_p_dot_0 ) ) ) ) )
-        & ( 'E/0'
+        & ( V_E
           = ( '3d.solid-of-revolution/2' @ V_D1 @ '3d.y-axis/0' ) )
-        & ( V_W
+        & ( V_W_dot_0
           = ( '3d.volume-of/1'
-            @ ( '3d.intersection/2' @ 'E/0'
+            @ ( '3d.intersection/2' @ V_E
               @ ( '3d.shape-of-cpfun/1'
                 @ ^ [V_p: '3d.Point'] :
                     ( $lesseq @ 0.0 @ ( '3d.x-coord/1' @ V_p ) ) ) ) ) ) ) )).
@@ -91,8 +88,8 @@ thf(p2_qustion,question,
             & ( 'converge-plus-inf/2' @ V_V @ V_V_lim ) ) ) )).
 
 thf(p1_1_answer,answer,(
-    ^ [V_W_dot_0: $real] :
-      ( V_W_dot_0
+    ^ [V_W_dot_1: $real] :
+      ( V_W_dot_1
       = ( $product @ ( $quotient @ 2.0 @ 3.0 ) @ 'Pi/0' ) ) ),
     answer_to(p1_1_question,[])).
 

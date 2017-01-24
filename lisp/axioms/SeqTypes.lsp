@@ -15,6 +15,9 @@
 ;;@ index(n) = n of the type Index
 (def-fun index :: Z => Index)
 
+;;@ index-value-of(index(n)) = n
+(def-fun index-value-of :: Index => Z)
+
 ;;@-----------------------------------------------------------------------------
 ;;@ Constructors
 ;;@-----------------------------------------------------------------------------

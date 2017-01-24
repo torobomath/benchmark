@@ -32,7 +32,7 @@
 
 (def-directive
   p2
-  (Find (x)
+  (Draw (x)
   (= x
      (shape-of-cpfun (PLam y (exists (p q)
             (&& (&& (&& (&& (= (y-coord p) (^ (x-coord p) 2))
@@ -59,7 +59,7 @@
           (<= (^ a 2) b)
           (<= b (+ (* 3 (^ a 2)) (- (* 4 a)) 2))))))
 
-(def-answer p2 (PLam x (= x (shape-of-cpfun (PLam p (|| (&& (<= (- 1) (x-coord p))
+(def-answer p2 (shape-of-cpfun (PLam p (|| (&& (<= (- 1) (x-coord p))
                   (<= (x-coord p) (- (/ 1 3)))
                   (<= (^ (x-coord p) 2) (y-coord p))
                   (<= (y-coord p) (+ (* 3 (^ (x-coord p) 2))
@@ -83,5 +83,5 @@
                   (<= (^ (x-coord p) 2) (y-coord p))
                   (<= (y-coord p) (+ (* 3 (^ (x-coord p) 2))
                          (- (* 4 (x-coord p)))
-                         2)))))))))
+                         2)))))))
 

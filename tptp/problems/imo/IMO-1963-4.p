@@ -16,9 +16,9 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    3 (   0 unit;   1 type;   0 defn)
-%            Number of atoms       :  146 (  11 equality;  37 variable)
-%            Maximal formula depth :   21 (  13 average)
-%            Number of connectives :  124 (   0   ~;   2   |;   7   &; 115   @)
+%            Number of atoms       :  142 (  11 equality;  37 variable)
+%            Maximal formula depth :   17 (  12 average)
+%            Number of connectives :  120 (   0   ~;   2   |;   7   &; 111   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
@@ -56,7 +56,7 @@ thf(p_answer,answer,(
           = 0.0 )
         & ? [V_s_dot_0: $real,V_t: $real] :
             ( V_x1x2x3x4x5_dot_0
-            = ( 'cons/2' @ $real @ V_s_dot_0 @ ( 'cons/2' @ $real @ V_t @ ( 'cons/2' @ $real @ ( $sum @ ( $uminus @ V_s_dot_0 ) @ ( $product @ 'y/0' @ V_t ) ) @ ( 'cons/2' @ $real @ ( $uminus @ ( $sum @ ( $product @ ( $difference @ ( '^/2' @ 'y/0' @ 2.0 ) @ 1.0 ) @ V_s_dot_0 ) @ ( $product @ 'y/0' @ V_t ) ) ) @ ( 'cons/2' @ $real @ ( $difference @ ( $product @ 'y/0' @ V_s_dot_0 ) @ V_t ) @ ( 'nil/0' @ $real ) ) ) ) ) ) ) )
+            = ( 'cons/2' @ $real @ V_s_dot_0 @ ( 'cons/2' @ $real @ V_t @ ( 'cons/2' @ $real @ ( $sum @ ( $uminus @ V_s_dot_0 ) @ ( $product @ 'y/0' @ V_t ) ) @ ( 'cons/2' @ $real @ ( $uminus @ ( $sum @ ( $product @ 'y/0' @ V_s_dot_0 ) @ ( $product @ 'y/0' @ V_t ) ) ) @ ( 'cons/2' @ $real @ ( $difference @ ( $product @ 'y/0' @ V_s_dot_0 ) @ V_t ) @ ( 'nil/0' @ $real ) ) ) ) ) ) ) )
       | ( ( 'y/0' = 2.0 )
         & ? [V_s: $real] :
             ( V_x1x2x3x4x5_dot_0

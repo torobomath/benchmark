@@ -85,9 +85,93 @@
 (def-pred @RegardlessOf :: a -> Bool => Bool)
 (def-pred @Constant :: a => Bool)
 (def-pred @Closure :: Bool => Bool)
+(def-pred @CLOSURE :: a -> Bool => Bool)
 (def-pred @Bound :: a => Bool)
 ;(def-pred @UnivBound :: a => Bool)
 (def-pred @Free  :: a => Bool)
+
+(def-pred @NonAssert :: Bool => Bool)
+
+;;------------------------------------------------------------------------------
+;; Equality represented by an apposition: e.g., P(x,y) --> P == (x,y)
+;; NOTE: == should be replaced with = in discourse processing
+;;------------------------------------------------------------------------------
+(def-pred == :: a -> a => Bool)
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(def-pred @nth-elem-by :: a -> (IntentSetOf a)
+                            -> b
+                            -> OrderDir 
+                            -> Z => Bool)
+
+(def-pred @nth-fun-value :: b -> (IntentSetOf a)
+                              -> b
+                              -> OrderDir 
+                              -> Z => Bool)
+
+;;------------------------------------------------------------------------------
+;;       --> (order-by-dir |x+y| (descending-order))
+;;------------------------------------------------------------------------------
+(def-type (OrderDirBy a))
+(def-fun order-dir-by :: OrderDir -> a => (OrderDirBy a))
+(def-fun order-dir-of :: (OrderDirBy a) => OrderDir)
+(def-fun order-term-of :: (OrderDirBy a) => a)
+
+(axiom
+   def-order-dir-of
+   (dir term)
+   (= (order-dir-of (order-dir-by dir term)) dir))
+
+(axiom
+   def-order-term-of
+   (dir term)
+   (= (order-term-of (order-dir-by dir term)) term))
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(def-type (SeqOf a))
+(def-fun and-so-on :: (ListOf a) => (SeqOf a))
+
+;;------------------------------------------------------------------------------
+;; ProblemLabel
+;;------------------------------------------------------------------------------
+(def-type ProblemLabel)
+(def-fun problem-label :: => ProblemLabel)
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(def-type NumeralSystem)
+
+;;@ numeral-system-of-base(n) = the numeral system of base n
+(def-fun numeral-system-of-base :: Z => NumeralSystem)
+
+;;@ ns-base-of(numeral-system-of-base(k)) = k
+(def-fun ns-base-of :: NumeralSystem => Z)
+
+;;@ a notation of a number in some numeral system
+(def-type NumberNotation)
+
+;;@ for type inference
+(def-pred is-number-notation :: NumberNotation => Bool)
+
+;;@ number-in-nn(n, k) = the notation of number n in base k
+(def-fun number-in-nn :: Z -> Z => NumberNotation)
+
+;;@ digits-in-nn([n1, n2, ..., n_m], k) = number-in-nn(n_m * k^{m-1} + ... + n2 * k + n1, k)
+(def-fun digits-in-nn :: (ListOf Z) -> Z => NumberNotation)
+
+;;@ (nn-base-of nn) = the base of number notation nn
+(def-fun nn-base-of :: NumberNotation => Z)
+
+;;@ (nn-value-of nn) = the value of number notation nn
+(def-fun nn-value-of :: NumberNotation => Z)
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(def-type MathExprSymbol)
+
+(def-fun abs-symbol :: => MathExprSymbol) 
 
 ;;------------------------------------------------------------------------------
 ;; implementation
@@ -161,3 +245,66 @@
   (= (rem-of (integer-division n m))
      (int.mod n m)))
 
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(axiom
+  def-is-number-notation
+  (nn)
+  (<-> (is-number-notation nn)
+       (true)))
+
+(axiom
+  def-ns-base-of
+  (k)
+  (= (ns-base-of (numeral-system-of-base k)) k))
+
+(axiom
+  def-eq-numeral-system
+  (k1 k2)
+  (<-> (= (numeral-system-of-base k1) (numeral-system-of-base k2))
+       (= k1 k2)))
+
+(axiom
+  def-eq-number-notation1
+  (n1 k1 n2 k2)
+  (<-> (= (number-in-nn n1 k1) (number-in-nn n2 k2))
+       (&& (= n1 n2)
+           (= k1 k2))))
+
+(axiom
+  def-eq-number-notation2
+  (ds1 k1 ds2 k2)
+  (<-> (= (digits-in-nn ds1 k1) (digits-in-nn ds2 k2))
+       (&& (= ds1 ds2)
+           (= k1 k2))))
+
+(axiom
+  def-eq-number-notation3
+  (ds k1 n k2)
+  (<-> (= (digits-in-nn ds k1) (number-in-nn n k2))
+       (&& (= (int.number-in-base ds k1) n)
+           (= k1 k2))))
+
+(axiom
+  def-nn-base-of-number-notation
+  (n k)
+  (= (nn-base-of (number-in-nn n k))
+     k))
+
+(axiom
+  def-nn-base-of-number-in-base
+  (ds k)
+  (= (nn-base-of (digits-in-nn ds k))
+     k))
+
+(axiom
+  def-nn-value-of-number-notation
+  (n k)
+  (= (nn-value-of (number-in-nn n k))
+     n))
+
+(axiom
+  def-nn-value-of-number-in-base
+  (ds k)
+  (= (nn-value-of (digits-in-nn ds k))
+     (int.number-in-base ds k)))

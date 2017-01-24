@@ -22,23 +22,20 @@
 %% $P$ that give the minimum value.
 %% </PROBLEM-TEXT>
 
-% Syntax   : Number of formulae    :    9 (   0 unit;   1 type;   0 defn)
-%            Number of atoms       :  403 (  45 equality; 116 variable)
-%            Maximal formula depth :   33 (  16 average)
-%            Number of connectives :  316 (   7   ~;   0   |;  51   &; 258   @)
+% Syntax   : Number of formulae    :    8 (   0 unit;   0 type;   0 defn)
+%            Number of atoms       :  414 (  46 equality; 119 variable)
+%            Maximal formula depth :   34 (  18 average)
+%            Number of connectives :  325 (   7   ~;   0   |;  52   &; 266   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   30 (   1   :;   0   =)
-%            Number of variables   :   52 (   0 sgn;   0   !;  40   ?;  12   ^)
-%                                         (  52   :;   0  !>;   0  ?*)
+%            Number of symbols     :   29 (   0   :;   0   =)
+%            Number of variables   :   53 (   0 sgn;   0   !;  41   ?;  12   ^)
+%                                         (  53   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 %            Arithmetic symbols    :    9 (   1 pred;    3 func;    5 numbers)
 
 include('axioms.ax').
-
-thf('x_max/0_type',type,(
-    'x_max/0': $real )).
 
 thf(p1_1_qustion,question,
     ( 'find/1' @ $real
@@ -68,12 +65,12 @@ thf(p1_1_qustion,question,
 thf(p1_2_qustion,question,
     ( 'find/1' @ '2d.Point'
     @ ^ [V_P: '2d.Point'] :
-      ? [V_A: '2d.Matrix',V_R: '2d.Point',V_x_set: ( 'SetOf' @ $real ),V_a: $real,V_b: $real,V_B: '2d.Point',V_Q: '2d.Point'] :
+      ? [V_A: '2d.Matrix',V_R: '2d.Point',V_x_set: ( 'SetOf' @ $real ),V_x_max: $real,V_a: $real,V_b: $real,V_B: '2d.Point',V_Q: '2d.Point'] :
         ( ( V_A
           = ( '2d.sm*/2' @ ( $quotient @ 1.0 @ 3.0 ) @ ( '2d.matrix/4' @ 2.0 @ -1.0 @ -1.0 @ 2.0 ) ) )
         & ( ( '2d.vec->point/1' @ ( '2d.mv*/2' @ V_A @ ( '2d.vec/2' @ '2d.origin/0' @ V_R ) ) )
           = ( '2d.point/2' @ 1.0 @ -1.0 ) )
-        & ( 'maximum/2' @ V_x_set @ 'x_max/0' )
+        & ( 'maximum/2' @ V_x_set @ V_x_max )
         & ( V_x_set
           = ( 'set-by-def/1' @ $real
             @ ^ [V_x: $real] :
@@ -98,7 +95,7 @@ thf(p1_2_qustion,question,
           = ( '2d.point/2' @ ( $sum @ 1.0 @ V_a ) @ ( $difference @ V_b @ 1.0 ) ) )
         & ( ( '2d.vec->point/1' @ ( '2d.mv*/2' @ V_A @ ( '2d.vec/2' @ '2d.origin/0' @ V_Q ) ) )
           = V_B )
-        & ( 'x_max/0'
+        & ( V_x_max
           = ( $quotient @ ( '2d.distance/2' @ V_R @ V_Q ) @ ( '2d.distance/2' @ '2d.origin/0' @ V_P ) ) ) ) )).
 
 thf(p2_1_qustion,question,
@@ -136,6 +133,8 @@ thf(p2_2_qustion,question,
                 & ( $lesseq @ ( 'abs/1' @ V_b_dot_0 ) @ ( $quotient @ 1.0 @ 2.0 ) )
                 & ( V_P_dot_0
                   = ( '2d.point/2' @ V_a_dot_0 @ V_b_dot_0 ) )
+                & ( V_A_dot_0
+                  = ( '2d.sm*/2' @ ( $quotient @ 1.0 @ 3.0 ) @ ( '2d.matrix/4' @ 2.0 @ -1.0 @ -1.0 @ 2.0 ) ) )
                 & ( V_P_dot_0 != '2d.origin/0' )
                 & ( V_B_dot_0
                   = ( '2d.point/2' @ ( $sum @ 1.0 @ V_a_dot_0 ) @ ( $difference @ V_b_dot_0 @ 1.0 ) ) )

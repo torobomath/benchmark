@@ -9,8 +9,17 @@
 ;;@ trivially true for any Z
 (def-pred is-integer :: Z => Bool)
 
+;;@ trivially true for any Z
+(def-pred is-number :: Z => Bool)
+
 ;;@ is-natural-number(n) <-> n is a natural number i.e. n is an integer and 1 <= n
 (def-pred is-natural-number :: Z => Bool)
+
+;;# DONT_EXPORT: $to_rat
+(def-fun to_rat :: Z => Q)
+
+;;# DONT_EXPORT: $to_real
+(def-fun to_real :: Z => R)
 
 ;; a + b = the sum of a and b in integers
 ;;# DONT_EXPORT: $sum
@@ -31,6 +40,9 @@
 ;;@ a ^ b = the power of a to b in integers
 ;; effective only if b >= 0
 (def-fun ^   :: Z -> Z => Z)
+
+;;@ a / b = the fraction a / b as a rational number
+(def-fun / :: Z -> Z => Q)
 
 ;; div(a,b) = the quotient of a and b by division with remainders in integers
 ;;# DONT_EXPORT: $quotient_f
@@ -138,6 +150,21 @@
 ;;@ minimum(set,n) <-> n is the minimum in set
 (def-pred minimum :: (SetOf Z) -> Z => Bool)
 
+;;@ nth-largest-elem(x, set, ord-by, n) <-> x in set has n-th largest value of ord-by
+(def-pred nth-largest-elem :: a -> (SetOf a) -> (a -> Z) -> Z => Bool)
+
+;;@ nth-smallest-elem(x, set, ord-by, n) <-> x in set has n-th smallest value of ord-by
+(def-pred nth-smallest-elem :: a -> (SetOf a) -> (a -> Z) -> Z => Bool)
+
+;;@ nth-largest-fun-value(x, set, eval-fun, k) 
+;;@ <-> x is the k-th largest element in the image of set by eval-fun
+(def-pred nth-largest-fun-value :: Z -> (SetOf a) -> (a -> Z) -> Z => Bool)
+
+;;@ nth-smallest-fun-value(x, set, eval-fun, k)
+;;@ <-> x is the k-th smallest element in the image of set by eval-fun
+(def-pred nth-smallest-fun-value :: Z -> (SetOf a) -> (a -> Z) -> Z => Bool)
+
+
 ;; concepts
 ;;@ is-odd-number(n) <-> n is an odd number
 (def-pred is-odd-number :: Z => Bool)
@@ -154,17 +181,21 @@
 ;;@ is-divisible-by(a,b) <-> a is divisible by b
 (def-pred is-divisible-by :: Z -> Z => Bool)
 
+;;@ divides(a,b) <-> b is divisible by a
+(def-pred divides :: Z -> Z => Bool)
+
+;; 2016-10-05:
 ;;lattice
-;;@ is-lattice-point(list) <-> list is a list of integers of length two
-(def-pred is-lattice-point :: (ListOf Z) => Bool)
+;; @ is-lattice-point(list) <-> list is a list of integers of length two
+;; (def-pred is-lattice-point :: (ListOf Z) => Bool)
 
-;;@ x-coord([a,b]) = a
-;;@ effective only if the argument is of length two
-(def-fun x-coord :: (ListOf Z) => Z)
+;; @ x-coord([a,b]) = a
+;; @ effective only if the argument is of length two
+;; (def-fun x-coord :: (ListOf Z) => Z)
 
-;;@ y-coord([a,b]) = b
-;;@ effective only if the argument is of length two
-(def-fun y-coord :: (ListOf Z) => Z)
+;; @ y-coord([a,b]) = b
+;; @ effective only if the argument is of length two
+;; (def-fun y-coord :: (ListOf Z) => Z)
 
 ;;@ is-square-number(n) <-> n is a square number
 (def-pred is-square-number :: Z => Bool)
@@ -179,8 +210,42 @@
 (def-pred is-finite-set :: (SetOf Z) => Bool)
 (def-pred is-infinite-set :: (SetOf Z) => Bool)
 
+;;@-----------------------------------------------------------------------------
+;;@ Numeral system
+;;@-----------------------------------------------------------------------------
+;;@ digits-in-base(n, k) = [n1, n2, ..., n_m]
+;;@ <-> n = n_m * k^{m-1} + ... + n2 * k + n1
+;;@ where each n_i is in range 0..(k-1)
+;;@ effective only when k > 0 and n > 0
+(def-fun digits-in-base :: Z -> Z => (ListOf Z))
+
+;;@ number-in-base([n1, n2, .., n_m], k) = n1 + n2 * k + .. + n_m * k^{m-1}
+(def-fun number-in-base :: (ListOf Z) -> Z => Z)
+
+;;------------------------------------------------------------
+;;------------------------------------------------------------
+;;# DONT_EXPORT
+;(def-pred parametrize :: (ListOf Z) -> (Unit -> Bool) => Bool)
+
 ;;------------------------------------------------------------
 ;;------------------------------------------------------------
 ;;@ iota(m,n) = the list [m, ..., n]
 ;;@ iota(m,n) is [m, m+1, ..., n] if m <= n, and [m, m-1, ..., n] if n < m
 (def-fun iota :: Z -> Z => (ListOf Z))
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+;;# DONT_EXPORT
+(def-pred pfd :: (Unit -> Bool) -> (Unit -> Bool) => Bool)
+
+(def-pred pfd_ee :: Z -> Z => Bool)
+
+(def-pred pfd_fe :: (Unit -> Bool) -> Z => Bool)
+
+(def-pred pfd_ef :: Z -> (Unit -> Bool) => Bool)
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+;;# DONT_EXPORT
+(def-pred transform :: (Unit -> Bool) -> (Unit -> Bool) => Bool)
+

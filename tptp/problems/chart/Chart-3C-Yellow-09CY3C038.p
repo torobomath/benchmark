@@ -38,7 +38,7 @@ thf(p1_1_qustion,question,
       ? [V_E: '2d.Shape'] :
         ( ( V_E
           = ( '2d.set-of-cfun/1'
-            @ ^ [V_y: $real,V_x: $real] :
+            @ ^ [V_x: $real,V_y: $real] :
                 ( ( $greatereq @ V_y @ ( $difference @ ( '^/2' @ V_x @ 2.0 ) @ 1.0 ) )
                 & ( $lesseq @ V_y @ 0.0 ) ) ) )
         & ( V_V

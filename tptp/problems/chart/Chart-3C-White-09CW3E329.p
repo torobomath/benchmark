@@ -7,7 +7,7 @@
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
 %            Number of atoms       :  118 (  12 equality;  30 variable)
-%            Maximal formula depth :   16 (  12 average)
+%            Maximal formula depth :   17 (  12 average)
 %            Number of connectives :   88 (   0   ~;   0   |;  11   &;  77   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
@@ -49,7 +49,7 @@ thf(p2_qustion,question,
       ? [V_C: '2d.Shape',V_E: '3d.Shape'] :
         ( ( V_C
           = ( '2d.set-of-cfun/1'
-            @ ^ [V_y: $real,V_x: $real] :
+            @ ^ [V_x: $real,V_y: $real] :
                 ( ( $greatereq @ V_x @ ( $difference @ ( '^/2' @ V_y @ 2.0 ) @ V_y ) )
                 & ( $greatereq @ 0.0 @ V_x ) ) ) )
         & ( V_E
@@ -63,8 +63,8 @@ thf(p3_qustion,question,
       ? [V_C: '2d.Shape',V_E: '3d.Shape'] :
         ( ( V_C
           = ( '2d.set-of-cfun/1'
-            @ ^ [V_y: $real,V_x: $real] :
-                ( ( $lesseq @ V_y @ ( $sum @ ( '^/2' @ V_x @ 2.0 ) @ ( $product @ 2.0 @ V_x ) ) )
+            @ ^ [V_x: $real,V_y: $real] :
+                ( ( $lesseq @ ( $sum @ ( '^/2' @ V_x @ 2.0 ) @ ( $product @ 2.0 @ V_x ) ) @ V_y )
                 & ( $lesseq @ 0.0 @ V_x )
                 & ( $lesseq @ V_x @ 1.0 )
                 & ( $lesseq @ 0.0 @ V_y )

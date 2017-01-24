@@ -95,7 +95,8 @@
 
 (def-answer a1 (PLam B (&&
   (< 0 a) (< a 1)
-  (= B (point a 0)))))
+  (= B (point a 0))
+  (= S (* (/ 1 3) (- a (^ a 3)))))))
 
 (def-answer a2 (PLam S (&&
   (< 0 a) (< a 1)

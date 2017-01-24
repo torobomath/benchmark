@@ -25,5 +25,7 @@
                                                     a))))))
             (= V (volume-of (solid-of-revolution D (y-axis))))))))
 
-(def-answer p (PLam V (= V (* (/ (- 1 (* 4 a)) 4) (^ (Pi) 2)))))
+(def-answer p (PLam V (&& (< 0 a)
+                          (< a (/ 1 4))
+                          (= V (* (/ (- 1 (* 4 a)) 4) (^ (Pi) 2))))))
 

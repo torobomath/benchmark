@@ -9,6 +9,17 @@
  (cr ci)
  (= c (complex cr ci)))
 
+(def-typing-trigger
+ (is-number c)
+ (cr ci)
+ (= c (complex cr ci)))
+
+;; TORIAEZU
+(axiom
+   def-complex-to-real
+   (c)
+   (= (to_real c) (real-part c)))
+
 ;; i :: => Complex
 (axiom
   def_i
@@ -53,18 +64,80 @@
 			 (= cr 0)))
 
 (axiom
-  def_arg
-  (x y)
-  (= (arg (complex x y))
-     (if (> x 0)
-       (.arctan (./ y x))
-       (if (< x 0)
-         (.+ (.arctan (./ y x)) (Pi))
-         (if (> y 0)
-           (./ (Pi) 2)
-           (if (< y 0)
-             (./ (.* 3 (Pi)) 2)
-             0))))))
+  def_arg_eq
+  (c a)
+  (<-> (= a (arg c))
+       (&& (= (cos a) (./ (real-part c) (abs c)))
+           (= (sin a) (./ (imaginary-part c) (abs c))))))
+;(axiom
+;  def_arg
+;  (x y)
+;  (= (arg (complex x y))
+;     (if (> x 0)
+;       (.arctan (./ y x))
+;       (if (< x 0)
+;         (.+ (.arctan (./ y x)) (Pi))
+;         (if (> y 0)
+;           (./ (Pi) 2)
+;           (if (< y 0)
+;             (./ (.* 3 (Pi)) 2)
+;             0))))))
+(axiom
+   def-arg-in-cos
+   (c)
+   (= (cos (arg c))
+      (./ (real-part c) (abs c))))
+(axiom
+   def-arg-in-sin
+   (c)
+   (= (sin (arg c))
+      (./ (imaginary-part c) (abs c))))
+(axiom
+   def-arg-in-cos+1
+   (c x)
+   (= (cos (.+ (arg c) x))
+      (.- (.* (cos (arg c)) (cos x))
+          (.* (sin (arg c)) (sin x)))))
+(axiom
+   def-arg-in-cos+2
+   (c x)
+   (= (cos (.+ x (arg c)))
+      (cos (.+ (arg c) x))))
+
+(axiom
+   def-arg-in-cos-1
+   (c x)
+   (= (cos (.- (arg c) x))
+      (.+ (.* (cos (arg c)) (cos x))
+          (.* (sin (arg c)) (sin x)))))
+(axiom
+   def-arg-in-cos-2
+   (c x)
+   (= (cos (.- x (arg c)))
+      (cos (.- (arg c) x))))
+(axiom
+   def-arg-in-sin+1
+   (c x)
+   (= (sin (.+ (arg c) x))
+      (.+ (.* (sin (arg c)) (cos x))
+          (.* (cos (arg c)) (sin x)))))
+(axiom
+   def-arg-in-sin+2
+   (c x)
+   (= (sin (.+ x (arg c)))
+      (sin (.+ (arg c) x))))
+
+(axiom
+   def-arg-in-sin-1
+   (c x)
+   (= (sin (.- (arg c) x))
+      (.- (.* (sin (arg c)) (cos x))
+          (.* (cos (arg c)) (sin x)))))
+(axiom
+   def-arg-in-sin-2
+   (c x)
+   (= (sin (.- x (arg c)))
+      (sin (.- (arg c) x))))
 
 ;; real->complex :: R => Complex)
 (axiom
@@ -365,3 +438,15 @@
   (f x)
   (= (funapp (fun f) x)
      (LamApp f x)))
+
+;; TORIAEZU
+(axiom
+   def-to-complex-from-complex
+   (x)
+   (= (to_complex x) x))
+
+(default-namespace)
+(axiom
+   def-to-complex-from-real
+   (x)
+   (= (to_complex x) (complex.complex x 0)))

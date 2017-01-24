@@ -108,6 +108,9 @@
 ;;@ Polymorphic list of elements of type a
 (def-type (ListOf a))
 
+;;@ trivially true for any list
+(def-pred is-list :: (ListOf a) => Bool)
+
 ;;@ list constructor
 (def-fun cons :: a -> (ListOf a) => (ListOf a))
 
@@ -226,6 +229,9 @@
 ;;@ preserves the original order of the input list
 (def-fun remove-list :: (ListOf a) -> (ListOf a) => (ListOf a)) 
 
+;;@ circular-shift([a1,...,an-1,an]) =[an,a1,...,an-1] 
+(def-fun circular-shift :: (ListOf a) => (ListOf a))
+
 ;;2013/12/13
 ;;@ list-number(a, lis) = the number of occurrences of a in lis
 (def-fun list-number :: a -> (ListOf a) => Z)
@@ -258,6 +264,12 @@
 
 ;;@ list definition by example
 (def-fun list-from-to :: (ListOf a) -> (ListOf a) => (ListOf a))
+
+;;@ sum definition by example
+(def-fun sum-from-to :: (ListOf R) -> (ListOf R) => R)
+
+;;@ product definition by example
+(def-fun prod-from-to :: (ListOf R) -> (ListOf R) => R)
 
 ;;@-----------------------------------------------------------------------------
 ;;@ other higher-order functions
@@ -361,6 +373,9 @@
 ;;@ is-empty(set) <-> set is an empty set
 (def-pred is-empty :: (SetOf a) => Bool)
 
+;;@ empty-set() = (polymorphic) empty set
+(def-fun empty-set :: => (SetOf a))
+
 ;;@ is-singleton(set) <-> set contains exactly one element
 (def-pred is-singleton :: (SetOf a) => Bool)
 
@@ -394,6 +409,28 @@
 
 ;;@ is-list-subset-of(list, set) <-> all members in list are an element of set
 (def-pred is-list-subset-of :: (ListOf a) -> (SetOf a) => Bool)
+
+;;@ ascending/descending order
+(def-type OrderDir)
+(def-fun descending-order :: => OrderDir)
+(def-fun ascending-order  :: => OrderDir)
+
+;;@ (total) ordering relation
+(def-type (OrderRel a))
+(def-fun order-rel :: (a -> a -> Bool) => (OrderRel a))
+(def-fun order-rel-of :: (OrderRel a) => (a -> a -> Bool))
+
+;; {default, rat., int.}maximum
+;; {default, rat., int.}minimum
+;;@ nth-elem(x, set, order, k) <-> x is the k-th largest/smallest element in set
+(def-pred nth-elem :: a -> (SetOf a) -> OrderDir -> Z => Bool)
+
+;;@ nth-elem-by(x, set, eval-fun, order, k) <-> x is the k-th largest/smallest element in set when ordered by eval-fun(x)
+(def-pred nth-elem-by :: a -> (SetOf a) -> (a -> b) -> OrderDir -> Z => Bool)
+
+;;@ nth-fun-value(x, set, eval-fun, order, k) <-> x is the k-th largest/smallest
+;;@ value in the image of set by eval-fun
+(def-pred nth-fun-value :: b -> (SetOf a) -> (a -> b) -> OrderDir -> Z => Bool)
 
 ;;@------------------------------------------------------------------------------
 ;;@ if/cond/pcond
@@ -602,6 +639,18 @@
 ;;@ are-triangle-edges(x,y,z) <-> x, y, z satisfy the triangle inequality
 (def-pred are-triangle-edges :: R -> R -> R => Bool)
 
+;;@ is-finite-decimal(r) <-> r is a finite decimal
+(def-pred is-finite-decimal :: R => Bool)
+
+;;@ is-finite-decimal(r, b) <-> r is a finite decimal in base b
+(def-pred is-finite-decimal :: R -> Z => Bool)
+
+;;@ is-reccuring-decimal(r) <-> r is a recurring decimal
+(def-pred is-recurring-decimal :: R => Bool)
+
+;;@ is-reccuring-decimal(r, b) <-> r is a recurring decimal in base b
+(def-pred is-recurring-decimal :: R -> Z => Bool)
+
 ;;@------------------------------------------------------------------------------
 ;;@ Trigonometric functions
 ;;@------------------------------------------------------------------------------
@@ -691,9 +740,15 @@
 ;;# DONT_EXPORT: $is_int
 (def-pred is-integer :: R => Bool)
 
+;; is-natural-number <-> a is a natural number
+(def-pred is-natural-number :: R => Bool)
+
 ;; is-rationa(a) <-> a is a rational number
 ;;# DONT_EXPORT: $is_rat
 (def-pred is-rational :: R => Bool)
+
+;;# DONT_EXPORT:
+(def-pred is-rational-number :: R => Bool)
 
 ;;@ is-irrational(a) <-> a is an irrational number
 (def-pred is-irrational :: R => Bool)
@@ -704,9 +759,22 @@
 ;;@ trivially true for any real number
 (def-pred real-number  :: R => Bool)
 
+;;@ trivially true for any real number
+(def-pred is-number  :: R => Bool)
+
+(def-pred real-type :: R => Bool)
+
 ;; int->real(x) = x of the type of R
 ;;# DONT_EXPORT: $to_real
 (def-fun int->real :: Z => R)
+
+;; rat->real(x) = x of the type of R
+;;# DONT_EXPORT: $to_real
+(def-fun rat->real :: Q => R)
+
+;; to_real(x) = x
+;; for the auto-generation of lex items for math expressions
+(def-fun to_real :: R => R)
 
 ;;@ list-int->real([a1,...,an]) = the list [a1,...,an] of which members have the type R
 (def-fun list-int->real :: (ListOf Z) => (ListOf R))
@@ -789,8 +857,12 @@
 
 ;;@ deriv(f) = derivative of function f
 (def-fun deriv :: (R -> R) => (R -> R))
+
 ;;@ integral(f,a,b) = the definite integral of f from a to b
 (def-fun integral :: (R -> R) -> R -> R => R)
+
+;;@ integral(f, a, b, param-cond) = the definite integral of f from a to b, with condition on the free parameter 'param-cond'
+(def-fun integral :: (R -> R) -> R -> R -> (Unit -> Bool) => R)
 
 ;;@ func-even(f) <-> f is an even function
 (def-pred func-even :: R2R => Bool)
@@ -968,6 +1040,28 @@
 
 ;;@ minimum(set, < ,a) <-> a is the minimum value of set with an order <
 (def-pred minimum :: (SetOf a) -> (a -> a -> Bool) -> a => Bool) ;(maximum (set) (order predicate) (min value))
+
+;;@ nth-largest-elem(x, set, eval-fun, k)
+;;@ <-> x is the element in set that gives the k-th largest value 
+;;@     in the image of set by eval-fun
+;;@ e.g., nth-largest-elem(1, {x|x in Z & x >= 0}, Lam x (-sqrt(x)), 2)
+(def-pred nth-largest-elem :: a -> (SetOf a) -> (a -> R) -> Z => Bool)
+
+;;@ nth-smallest-elem(x, set, eval-fun, k)
+;;@ <-> x is the element in set that gives the k-th smallest value 
+;;@     in the image of set by eval-fun
+;;@ e.g., nth-smallest-elem(1, {x|x in Z & x >= 0}, Lam x (sqrt(x)), 2)
+(def-pred nth-smallest-elem :: a -> (SetOf a) -> (a -> R) -> Z => Bool)
+
+;;@ nth-largest-fun-value(x, set, eval-fun, k) 
+;;@ <-> x is the k-th largest element in the image of set by eval-fun
+;;@ e.g., nth-largest-fun-value(-1, {x|x in Z & x >= 0}, Lam x (-sqrt(x)), 2)
+(def-pred nth-largest-fun-value :: R -> (SetOf a) -> (a -> R) -> Z => Bool)
+
+;;@ nth-smallest-fun-value(x, set, eval-fun, k)
+;;@ <-> x is the k-th smallest element in the image of set by eval-fun
+;;@ e.g., nth-smallest-fun-value(1, {x|x in Z & x >= 0}, Lam x (sqrt(x)), 2)
+(def-pred nth-smallest-fun-value :: R -> (SetOf a) -> (a -> R) -> Z => Bool)
 
 ;;@------------------------------------------------------------------------------
 ;;@ Equations
@@ -1189,4 +1283,7 @@
 ;; TODO: implementation
 (def-type DerivSignChart)
 (def-fun deriv-sign-chart-of :: R2R => DerivSignChart)
+
+;;# DONT_EXPORT
+(def-pred DUMMY :: a => Bool)
 

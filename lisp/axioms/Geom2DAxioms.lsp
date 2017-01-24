@@ -79,7 +79,6 @@
   (&& (= C (disk c r))
       (< 0 r)))
 
-
 (def-typing-trigger
    (semicircle-type C)
    (c r ini)
@@ -389,6 +388,12 @@
    (= (shape-rotate-around-origin S t)
       (shape-of-cpfun (PLam p (on (point-rotate-around-origin p (- t)) S)))))
           
+(axiom
+   def_shape_rotate_around_point_general_case
+   (S Point t)
+   (= (shape-rotate-around S Point t)
+      (translate (shape-rotate-around-origin (translate S (vec Point (origin))) t) (vec (origin) Point))))
+
 ; Point -> Line => R
 (axiom
   def_point_shape_distance_line_2d
@@ -404,18 +409,6 @@
  (= (point-shape-distance^2 P (line A B))
     (/ (^ (outer-prod (vec A B) (vec A P)) 2) (distance^2 A B))))
 
-(axiom
-  def-point-shape-distance-generic
-  (P S d)
-  (<-> (= d (point-shape-distance P S))
-       (&& (<= 0 d)
-           (minimum
-               (set-by-def (PLam dd (exists (p)
-                   (&& (on p S)
-                   (= dd (distance^2 p P)))
-               )))
-               (^ d 2)
-            ))))
 
 ; Line -> Line => R
 (axiom
@@ -511,12 +504,22 @@
      (circle (origin) 1)))
 
 ;; is-radius-of :: Seg -> Circle => Bool
+;;
 (axiom
   def_is_radius_of
   (p q c r)
   (<-> (is-radius-of (seg p q) (circle c r))
        (|| (&& (= p c) (on q (circle c r)))
            (&& (= q c) (on p (circle c r))))))
+
+(axiom
+  def_is_radius_of-2
+  (s c r)
+  (<-> (is-radius-of s (circle c r))
+       (exists (p q)
+          (&& (= s (seg p q))
+              (|| (&& (= p c) (on q (circle c r)))
+                  (&& (= q c) (on p (circle c r))))))))
 
 ;; is-diameter-of :: Seg -> Circle => Bool
 (axiom
@@ -529,6 +532,24 @@
            ;(on c (seg p q)))))
            (= c (midpoint-of p q)))))
 
+(axiom
+  def_is_diameter_of_disk
+  (p q c r)
+  (<-> (is-diameter-of (seg p q) (disk c r))
+       (is-diameter-of (seg p q) (circle c r))))
+
+(axiom
+  def_is_diameter_of-2
+  (s c r)
+  (<-> (is-diameter-of s (circle c r))
+       (exists (p q)
+           (&& (= s (seg p q))
+               (on p (circle c r))
+               (on q (circle c r))
+               
+               ;(on c (seg p q)))))
+               (= c (midpoint-of p q))))))
+
 ;; is-chord-of :: Seg -> Circle => Bool
 (axiom
   def_is_chord_of
@@ -538,6 +559,23 @@
            (on p (circle c r))
            (on q (circle c r)))))
 
+(axiom
+  def_is_chord_of-2
+  (s c r)
+  (<-> (is-chord-of s (circle c r))
+       (exists (p q)
+          (&& (= s (seg p q))
+              (! (= p q))
+              (on p (circle c r))
+              (on q (circle c r))))))
+
+(axiom
+  def_is_chord_of_semicircle
+  (p q c r ini)
+  (<-> (is-chord-of (seg p q) (semicircle c r ini))
+       (&& (! (= p q))
+           (on p (arc-of (semicircle c r ini)))
+           (on q (arc-of (semicircle c r ini))))))
 
 ;; is-diameter-of :: Seg -> Circle => Bool
 ;(axiom
@@ -595,6 +633,18 @@
   (<-> (concircular ps)
        (exists (c r) (all (PLam p (on p (circle c r))) ps))))
 
+(axiom 
+  def_congruent_circle_2d_1
+  (c r shape)
+  (<-> (congruent (circle c r) shape)
+       (congruent (circle-shape (circle c r)) shape)))
+
+(axiom 
+  def_congruent_circle_2d_2
+  (c r shape)
+  (<-> (congruent shape (circle c r))
+       (congruent shape (circle-shape (circle c r)))))
+
 (axiom
   def_is_radius_of_disk_2d
   (p q c r)
@@ -640,6 +690,18 @@
   (<-> (is-radius-of (seg p q) (arc c r ini end))
        (|| (&& (= p c) (on q (arc c r ini end)))
            (&& (= q c) (on p (arc c r ini end))))))
+
+(axiom 
+  def_congruent_arc_2d_1
+  (c r ini end shape)
+  (<-> (congruent (arc c r ini end) shape)
+       (congruent (arc-shape (arc c r ini end)) shape)))
+
+(axiom 
+  def_congruent_arc_2d_2
+  (c r ini end shape)
+  (<-> (congruent shape (arc c r ini end))
+       (congruent shape (arc-shape (arc c r ini end)))))
 
 (axiom
   def_local_system_of_arc_2d
@@ -700,6 +762,18 @@
   (p r a b)
   (= (circular-sector-end-point (circular-sector p r a b))
      (arc-end-point (arc p r a b))))
+
+(axiom 
+  def_congruent_circular_sector_2d_1
+  (c r ini end shape)
+  (<-> (congruent (circular-sector c r ini end) shape)
+       (congruent (circular-sector-shape (circular-sector c r ini end)) shape)))
+
+(axiom 
+  def_congruent_circular_sector_2d_2
+  (c r ini end shape)
+  (<-> (congruent shape (circular-sector c r ini end))
+       (congruent shape (circular-sector-shape (circular-sector c r ini end)))))
 
 (axiom
   def_is_radius_of_circular_sector_2d
@@ -763,6 +837,38 @@
           (&& (= q (vec-translate c (sv* r (vec2d (cos ini) (sin ini)))))
               (= p (vec-translate c (sv* r (vec2d (- (cos ini)) (- (sin ini))))))))))
 
+(axiom
+  def-boundary-of-semicircle
+  (c r ini)
+  (= (boundary-of (semicircle c r ini))
+     (union (list-of (arc-of (semicircle c r ini)) (seg (vec-translate c (sv* r (vec2d (cos ini) (sin ini)))) (vec-translate c (sv* r (vec2d (- (cos ini)) (- (sin ini))))))))))
+
+(axiom
+  def-on-semicircle
+  (c r ini p)
+  (<-> (on p (semicircle c r ini))
+       (on p (boundary-of (semicircle c r ini)))))
+
+(axiom 
+  def_congruent_semicircle
+  (c1 c2 r1 r2 ini1 ini2)
+  (<-> (congruent (semicircle c1 r1 ini1) (semicircle c2 r2 ini2))
+       (= r1 r2)))
+
+(axiom
+    def-circle-circle-similar
+        (c1 r1 c2 r2)
+            (similar (circle c1 r1) (circle c2 r2)))
+
+(axiom
+    def-disk-disk-similar
+        (c1 r1 c2 r2)
+            (similar (disk c1 r1) (disk c2 r2)))
+
+(axiom
+    def-semicircle-semicircle-similar
+        (c1 r1 ini1 c2 r2 ini2)
+            (similar (semicircle c1 r1 ini1) (semicircle c2 r2 ini2)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Ellipses
@@ -793,6 +899,13 @@
  (<-> (on P (ellipse f1 f2 ap))
       (= (+ (distance P f1) (distance P f2))
          ap)))
+
+(axiom
+  def-boundary-of-ellipse
+  (f1 f2 ap)
+  (= (boundary-of (ellipse f1 f2 ap))
+     (set-of-cfun (Lam x (PLam y (on (point x y) (ellipse f1 f2 ap)))))))
+
 
 (axiom
   def-is-axis-of
@@ -828,6 +941,12 @@
   (= (center-of (ellipse f1 f2 ap))
      (midpoint-of f1 f2)))
 
+(axiom
+  def-congruent-ellipse
+  (f1 f2 ap1 f3 f4 ap2)
+  (<-> (congruent (ellipse f1 f2 ap1) (ellipse f3 f4 ap2))
+       (&& (= ap1 ap2)
+           (= (distance f1 f2) (distance f3 f4)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Hyperbola
@@ -863,6 +982,13 @@
                       (perpendicular (line D A) (line f1 f2)) 
                       (= (distance^2 A D) (/ (- (distance^2 f1 f2) (^ ap 2)) 4)))))))
 
+(axiom
+  def-congruent-hyperbola
+  (f1 f2 ap1 f3 f4 ap2)
+  (<-> (congruent (hyperbola f1 f2 ap1) (hyperbola f3 f4 ap2))
+       (&& (= (^ ap1 2) (^ ap2 2))
+           (= (distance f1 f2) (distance f3 f4)))))
+           
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Parabola
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -885,8 +1011,19 @@
       (= (distance P f)
          (point-shape-distance P (directrix (parabola f d))))))
 
-                  
+(axiom
+  def-congruent-parabola
+  (f1 d1 f2 d2)
+  (<-> (congruent (parabola f1 d1) (parabola f2 d2))
+       (= (distance f1 d1) (distance f2 d2))))
 
+;(axiom
+;  def-parabola
+;    (shape)
+;    (<-> (parabola shape)
+;         (exists (f d)
+;           (forall (P) 
+;             (<-> (on P shape) (on P (parabola f d)))))))
 
 
 ;; Line -> (ListOf Point) => Bool
@@ -938,6 +1075,24 @@
   (p c r ini end)
   (<-> (point-inside-of p (circular-sector c r ini end))
        (point-inside-of p (circular-sector-shape (circular-sector c r ini end)))))
+
+(axiom
+  def_point_inside_of_semicircle
+  (p c r ini)
+  (<-> (point-inside-of p (semicircle c r ini))
+       (on p (inner-part-of (semicircle c r ini)))))
+
+(axiom
+  def_point_inside_of_ellipse
+  (p f1 f2 ap)
+  (<-> (point-inside-of p (ellipse f1 f2 ap))
+       (on p (inner-part-of (ellipse f1 f2 ap)))))
+
+(axiom
+  def_point_inside_of_seg
+  (p P Q)
+  (<-> (point-inside-of p (seg P Q))
+       (on p (inner-part-of (seg P Q)))))
 
 ;; (point-inside-of p (set-of-cfun f)) <-> (point-inside-of p (circle c r))
 (axiom
@@ -1097,6 +1252,15 @@
 						(line-symmetry P Q l)))))))
 
 (axiom
+	def_line_symmetry_shapes_semicircle
+	(c1 c2 r1 r2 ini1 ini2 l)
+	(<-> (line-symmetry-shapes (semicircle c1 r1 ini1) (semicircle c2 r2 ini2) l)
+       (&&
+        (= r1 r2)
+        (line-symmetry c1 c2 l)
+        (= (+ ini1 ini2) (* 2 (Pi))))))
+
+(axiom
  def_is_symmetry_axis_of
  (C l)
  (<-> (is-symmetry-axis-of l C)
@@ -1125,6 +1289,14 @@
       (exists (a)
          (= f (fun (Lam x (+ (* a (^ (- x (x-coord P)) 2))
                              (y-coord P))))))))
+
+(axiom
+  def-are-vertices-of-fun-graph
+  (Ps f)
+  (<-> (are-vertices-of Ps (graph-of f))
+       (exists (P)
+          (&& (is-vertex-of P (graph-of f))
+              (= Ps (list-of P))))))
 
 (axiom
  def_parabola_translate
@@ -1302,6 +1474,7 @@
        (tangent (line p q)
                 (circle c r)
                 P)))
+
 (axiom
  def_tangent_circle_and_seg
  (p q c r P)
@@ -1340,6 +1513,162 @@
                (half-line p q)
                P)))
 
+(axiom
+  def_tangent_line_and_semicircle
+  (p q c r ini P)
+  (<-> (tangent (line p q)
+                (semicircle c r ini)
+                P)
+       (&& (on P (semicircle c r ini))
+           (|| (tangent (line p q) (circle c r) P)
+               (on (vec-translate c (sv* r (vec2d (cos ini) (sin ini)))) (line p q))))))
+
+(axiom
+  def_tangent_line_and_disk
+  (p q c r P)
+  (<-> (tangent (line p q)
+               (disk c r)
+               P)
+      (tangent (line p q) (circle c r) P)))
+
+(axiom
+  def_tangent_disk_and_line
+  (p q c r P)
+  (<-> (tangent (disk c r)
+                (line p q)
+               P)
+      (tangent (line p q) (disk c r) P)))
+
+(axiom
+  def_tangent_disk_and_half_line
+  (p q c r P)
+  (<-> (tangent (disk c r)
+                (half-line p q)
+               P)
+      (tangent (circle c r) (half-line p q) P)))
+
+(axiom
+  def_tangent_disk_and_seg
+  (p q c r P)
+  (<-> (tangent (disk c r)
+                (seg p q)
+               P)
+      (tangent (circle c r) (seg p q) P)))
+
+(axiom
+  def_tangent_line_and_arc
+  (p q c r ini end P)
+  (<-> (tangent (line p q)
+               (arc c r ini end)
+               P)
+      (&&
+        (on P (arc c r ini end))
+        (tangent (line p q) (circle c r) P))))
+
+(axiom
+  def_tangent_line_and_circular_sector
+  (p q c r ini end P)
+  (<-> (tangent (line p q)
+               (circular-sector c r ini end)
+               P)
+      (tangent (line p q) (arc c r ini end) P)))
+
+(axiom
+  def_tangent_line_and_triangle
+  (p q A B C P)
+  (<-> (tangent (line p q)
+                (triangle A B C)
+                 P)
+       (&& (on P (triangle A B C))
+           (|| (&& (on A (line p q))
+                   (on B (line p q)))
+               (&& (on B (line p q))
+                   (on C (line p q)))
+               (&& (on C (line p q))
+                   (on A (line p q)))))))
+
+(axiom
+  def_tangent_line_and_square
+  (p q A B C D P)
+  (<-> (tangent (line p q)
+               (square A B C D)
+               P)
+      (&& (on P (square A B C D))
+          (|| (&& (on A (line p q))
+                  (on B (line p q)))
+              (&& (on B (line p q))
+                  (on C (line p q)))
+              (&& (on C (line p q))
+                  (on D (line p q)))
+              (&& (on D (line p q))
+                  (on A (line p q)))))))
+
+(axiom
+  def_tangent_line_and_polygon
+  (p q Ps P)
+  (<-> (tangent (line p q)
+               (polygon Ps)
+               P)
+      (&& (on P (polygon Ps))
+          (exists (r s)
+            (&& (is-a-side-of (seg r s) (polygon Ps))
+                (on r (line p q))
+                (on s (line p q)))))))
+
+(axiom
+  def_tangent_circle_and_triangle
+  (c r A B C P)
+  (<-> (tangent (circle c r)
+               (triangle A B C)
+               P)
+      (|| (tangent (circle c r) (seg A B) P)
+          (tangent (circle c r) (seg B C) P)
+          (tangent (circle c r) (seg C A) P))))
+
+(axiom
+  def_tangent_circle_and_square
+  (c r A B C D P)
+  (<-> (tangent (circle c r)
+               (square A B C D)
+               P)
+      (|| (tangent (circle c r) (seg A B) P)
+          (tangent (circle c r) (seg B C) P)
+          (tangent (circle c r) (seg C D) P)
+          (tangent (circle c r) (seg D A) P))))
+
+(axiom
+  def_tangent_circle_and_polygon
+  (c r Ps P)
+  (<-> (tangent (circle c r)
+               (polygon Ps)
+               P)
+       (exists (p q)
+         (&& (is-a-side-of (seg p q) (polygon Ps))
+             (tangent (line p q) (circle c r) P)))))
+
+(axiom
+  def_tangent_disk_and_triangle
+  (c r A B C P)
+  (<-> (tangent (disk c r)
+               (triangle A B C)
+               P)
+       (tangent (circle c r) (triangle A B C) P)))
+
+(axiom
+  def_tangent_disk_and_square
+  (c r A B C D P)
+  (<-> (tangent (disk c r)
+               (square A B C D)
+               P)
+       (tangent (circle c r) (square A B C D) P)))
+
+(axiom
+  def_tangent_disk_and_polygon
+  (c r Ps P)
+  (<-> (tangent (disk c r)
+               (polygon Ps)
+               P)
+       (tangent (circle c r) (polygon Ps) P)))
 
 (axiom
  def-tangent-line-and-ellipse
@@ -1370,7 +1699,80 @@
  (<-> (tangent (ellipse f1 f2 ap) (line p q) C)
       (tangent (line p q) (ellipse f1 f2 ap))))
 
+(axiom
+ def-tangent-ellipse-and-half-line
+ (p q f1 f2 ap C)
+ (<-> (tangent (ellipse f1 f2 ap) (half-line p q) C)
+      (&& (tangent (ellipse f1 f2 ap) (line p q) C)
+          (on C (half-line p q)))))
 
+(axiom
+ def-tangent-ellipse-and-seg
+ (p q f1 f2 ap C)
+ (<-> (tangent (ellipse f1 f2 ap) (seg p q) C)
+      (&& (tangent (ellipse f1 f2 ap) (line p q) C)
+          (on C (seg p q)))))
+
+(axiom
+ def-tangent-ellipse-and-triangle
+ (A B C f1 f2 ap P)
+ (<-> (tangent (ellipse f1 f2 ap) (triangle A B C) P)
+      (|| (tangent (ellipse f1 f2 ap) (seg A B) P)
+          (tangent (ellipse f1 f2 ap) (seg B C) P)
+          (tangent (ellipse f1 f2 ap) (seg C A) P))))
+
+(axiom
+ def-tangent-ellipse-and-square
+ (A B C D f1 f2 ap P)
+ (<-> (tangent (ellipse f1 f2 ap) (square A B C D) P)
+      (|| (tangent (ellipse f1 f2 ap) (seg A B) P)
+          (tangent (ellipse f1 f2 ap) (seg B C) P)
+          (tangent (ellipse f1 f2 ap) (seg C D) P)
+          (tangent (ellipse f1 f2 ap) (seg D A) P))))
+
+(axiom
+ def-tangent-ellipse-and-polygon
+ (Ps f1 f2 ap P)
+ (<-> (tangent (ellipse f1 f2 ap) (polygon Ps) P)
+       (exists (p q)
+         (&& (is-a-side-of (seg p q) (polygon Ps))
+             (tangent (line p q) (ellipse f1 f2 ap) P)))))
+
+(axiom
+ def-tangent-circle-and-ellipse
+ (c r f1 f2 ap P)
+ (<-> (tangent (circle c r) (ellipse f1 f2 ap) P)
+      (exists (Q)
+        (&& (! (= Q P))
+            (tangent (line Q P) (circle c r) P)
+            (tangent (line Q P) (ellipse f1 f2 ap) P)))))
+
+(axiom
+ def-tangent-ellipse-and-circle
+ (c r f1 f2 ap P)
+ (<-> (tangent (ellipse f1 f2 ap) (circle c r) P)
+      (tangent (circle c r) (ellipse f1 f2 ap) P)))
+
+(axiom
+ def-tangent-disk-and-ellipse
+ (c r f1 f2 ap P)
+ (<-> (tangent (disk c r) (ellipse f1 f2 ap) P)
+      (tangent (circle c r) (ellipse f1 f2 ap) P)))
+
+(axiom
+ def-tangent-ellipse-and-disk
+ (c r f1 f2 ap P)
+ (<-> (tangent (ellipse f1 f2 ap) (disk c r) P)
+      (tangent (disk c r) (ellipse f1 f2 ap) P)))
+
+(axiom
+ def-tangent-ellipse-and-ellipse
+ (f1 f2 f3 f4 ap1 ap2 P)
+ (<-> (tangent (ellipse f1 f2 ap1) (ellipse f3 f4 ap2) P)
+      (exists (Q)
+        (&& (! (= Q P))
+            (tangent (line Q P) (ellipse f1 f2 ap1) P)
+            (tangent (line Q P) (ellipse f3 f4 ap2) P)))))
 
 (axiom
  def-tangent-line-and-hyperbola
@@ -1390,7 +1792,29 @@
  (<-> (tangent (hyperbola f1 f2 ap) (line p q) C)
       (tangent (line p q) (hyperbola f1 f2 ap) C)))
  
+(axiom
+ def-tangent-circle-and-hyperbola
+ (c r f1 f2 ap P)
+ (<-> (tangent (circle c r) (hyperbola f1 f2 ap) P)
+      (exists (Q)
+        (&& (! (= Q P))
+            (tangent (line Q P) (circle c r) P)
+            (tangent (line Q P) (hyperbola f1 f2 ap) P)))))
 
+(axiom
+ def-tangent-disk-and-hyperbola
+ (c r f1 f2 ap P)
+ (<-> (tangent (disk c r) (hyperbola f1 f2 ap) P)
+      (tangent (circle c r) (hyperbola f1 f2 ap) P)))
+
+(axiom
+ def-tangent-ellipse-and-hyperbola
+ (f1 f2 f3 f4 ap1 ap2 P)
+ (<-> (tangent (ellipse f1 f2 ap1) (hyperbola f3 f4 ap2) P)
+      (exists (Q)
+        (&& (! (= Q P))
+            (tangent (line Q P) (ellipse f1 f2 ap1) P)
+            (tangent (line Q P) (hyperbola f3 f4 ap2) P)))))
 
 (axiom
  def-tangent-line-and-parabola
@@ -1423,8 +1847,29 @@
                (parabola f d)
                C)))
 
+(axiom
+ def-tangent-circle-and-parabola
+ (c r f d P)
+ (<-> (tangent (circle c r) (parabola f d) P)
+      (exists (Q)
+        (&& (! (= Q P))
+            (tangent (line Q P) (circle c r) P)
+            (tangent (line Q P) (parabola f d) P)))))
 
+(axiom
+ def-tangent-disk-and-parabola
+ (c r f d P)
+ (<-> (tangent (disk c r) (parabola f d) P)
+      (tangent (circle c r) (parabola f d) P)))
 
+(axiom
+ def-tangent-ellipse-and-parabola
+ (f1 f2 ap f d P)
+ (<-> (tangent (ellipse f1 f2 ap) (parabola f d) P)
+      (exists (Q)
+        (&& (! (= Q P))
+            (tangent (line Q P) (ellipse f1 f2 ap) P)
+            (tangent (line Q P) (parabola f d) P)))))
 
 (axiom
 	def_tangent_line_and_graph_of_implicit_function
@@ -1453,6 +1898,48 @@
 	(<-> (tangent (graph-of-implicit-function f) (line p q) P)
 		(tangent (line p q) (graph-of-implicit-function f) P)))
 
+(axiom
+  def_tangent_circle_and_disk
+    (c1 r1 c2 r2 P)
+      (<-> (tangent (circle c1 r1) (disk c2 r2) P)
+           (tangent (circle c1 r1) (circle c2 r2) P)))
+           
+(axiom
+  def_tangent_disk_and_circle
+    (c1 r1 c2 r2 P)
+      (<-> (tangent (disk c1 r1) (circle c2 r2) P)
+           (tangent (circle c1 r1) (disk c2 r2) P)))
+           
+(axiom
+  def_tangent_disk_and_disk
+    (c1 r1 c2 r2 P)
+      (<-> (tangent (disk c1 r1) (disk c2 r2) P)
+           (tangent (circle c1 r1) (circle c2 r2) P)))
+
+(axiom
+  def_tangent_circle_and_arc
+    (c1 r1 c2 r2 ini end P)
+      (<-> (tangent (circle c1 r1) (arc c2 r2 ini end) P)
+           (&&  (on P (arc c2 r2 ini end))
+                (tangent (circle c1 r1) (circle c2 r2) P))))
+
+(axiom
+  def_tangent_disk_and_arc
+    (c1 r1 c2 r2 ini end P)
+      (<-> (tangent (disk c1 r1) (arc c2 r2 ini end) P)
+           (tangent (circle c1 r1) (arc c2 r2 ini end) P)))
+
+(axiom
+  def_tangent_circle_and_circular_sector
+    (c1 r1 c2 r2 ini end P)
+      (<-> (tangent (circle c1 r1) (circular-sector c2 r2 ini end) P)
+           (tangent (circle c1 r1) (arc c2 r2 ini end))))
+
+(axiom
+  def_tangent_disk_and_circular_sector
+    (c1 r1 c2 r2 ini end P)
+      (<-> (tangent (disk c1 r1) (circular-sector c2 r2 ini end) P)
+           (tangent (circle c1 r1) (circular-sector c2 r2 ini end))))
 
 (axiom
   def_normal_line_of_curve
@@ -1466,10 +1953,121 @@
                (&& (= 0 (funapp (derivative f) (x-coord P)))
                    (= (x-coord p) (x-coord q)))))))
                            
+(axiom
+  def_normal_line_of_line
+  (p q r s P)
+  (<-> (normal-line (line p q)
+                    (line r s)
+                    P)
+       (&& (on P (line r s))
+           (on P (line p q))
+           (= 0 (inner-prod (vec p q) (vec r s))))))
+
+(axiom
+  def_normal_line_of_half_line
+  (p q r s P)
+  (<-> (normal-line (line p q)
+                    (half-line r s)
+                    P)
+       (&& (on P (line r s))
+           (on P (half-line p q))
+           (= 0 (inner-prod (vec p q) (vec r s))))))
+
+(axiom
+  def_normal_line_of_half_segment
+  (p q r s P)
+  (<-> (normal-line (line p q)
+                    (seg r s)
+                    P)
+       (&& (on P (line r s))
+           (on P (seg p q))
+           (= 0 (inner-prod (vec p q) (vec r s))))))
+
+(axiom
+  def_normal_line_of_circle
+  (p q c r P)
+  (<-> (normal-line (line p q)
+                    (circle c r)
+                    P)
+       (&& (on P (line p q))
+           (on c (line p q))
+           (on P (circle c r)))))
+           
+
+(axiom
+  def_normal_line_of_semicircle
+  (p q c r ini P)
+  (<-> (normal-line (line p q)
+                    (semicircle c r ini)
+                    P)
+       (&& (on P (line p q))
+           (on P (semicircle c r ini))
+           (|| (on c (line p q))
+               (= 0 (inner-prod (vec (vec-translate c (sv* r (vec2d (cos ini) (sin ini)))) (vec-translate c (sv* r (vec2d (- (cos ini)) (- (sin ini)))))) (vec p q)))))))
+
+(axiom
+  def_normal_line_of_arc
+  (p q c r ini end P)
+  (<-> (normal-line (line p q)
+                    (arc c r ini end)
+                    P)
+       (&& (on P (line p q))
+           (on c (line p q))
+           (on P (arc c r ini end)))))
+
+(axiom
+  def_normal_line_of_ellipse
+  (p q f1 f2 ap P)
+  (<-> (normal-line (line p q)
+                    (ellipse f1 f2 ap)
+                    P)
+       (exists (R)
+         (&& (on P (line p q))
+             (on P (ellipse f1 f2 ap))
+             (= 0 (inner-prod (vec R P) (vec p q)))
+             (! (= R P))
+             (tangent (line R P) (ellipse f1 f2 ap) P)))))
+
+(axiom
+  def_normal_line_of_parabola
+  (p q f d P)
+  (<-> (normal-line (line p q)
+                    (parabola f d)
+                    P)
+       (exists (R)
+         (&& (on P (line p q))
+             (on P (parabola f d))
+             (= 0 (inner-prod (vec R P) (vec p q)))
+             (! (= R P))
+             (tangent (line R P) (parabola f d) P)))))
+
+(axiom
+  def_normal_line_of_hyperbola
+  (p q f1 f2 ap P)
+  (<-> (normal-line (line p q)
+                    (hyperbola f1 f2 ap)
+                    P)
+       (exists (R)
+         (&& (on P (line p q))
+             (on P (hyperbola f1 f2 ap))
+             (= 0 (inner-prod (vec R P) (vec p q)))
+             (! (= R P))
+             (tangent (line R P) (hyperbola f1 f2 ap) P)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; inscribed-in/circumscribed-about
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(axiom
+  def_is_inscribed_in_disk_2d_1
+  (c r S)
+  (<-> (is-inscribed-in (disk c r) S)
+    (is-inscribed-in (circle c r) S)))
+
+(axiom
+  def_is_inscribed_in_disk_2d_2
+  (c r S)
+  (<-> (is-inscribed-in S (disk c r))
+    (is-inscribed-in S (circle c r))))
 
 (axiom
   def_is_inscribed_in
@@ -1501,6 +2099,39 @@
        (is-inscribed-in (polygon (list-of p1 p2 p3 p4)) (circle c r))))
 
 (axiom
+  def_triangle_is_inscribed_in_ellipse 
+  (f1 f2 ap x y z)
+  (<-> (is-inscribed-in (triangle x y z) (ellipse f1 f2 ap))
+       (&& (on x (ellipse f1 f2 ap))
+           (on y (ellipse f1 f2 ap))
+           (on z (ellipse f1 f2 ap)))))
+
+(axiom
+ def_is_inscribed_polygon_ellipse
+ (f1 f2 ap x y z ps)
+ (<-> (is-inscribed-in (polygon (cons x (cons y (cons z ps)))) (ellipse f1 f2 ap))
+      (&& (is-inscribed-in (triangle x y z) (ellipse f1 f2 ap))
+          (all (PLam p (on p (ellipse f1 f2 ap))) ps))))
+
+(axiom
+  def_is_inscribed_square_ellipse
+  (f1 f2 ap p1 p2 p3 p4)
+  (<-> (is-inscribed-in (square p1 p2 p3 p4) (ellipse f1 f2 ap))
+       (is-inscribed-in (polygon (list-of p1 p2 p3 p4)) (ellipse f1 f2 ap))))
+
+(axiom
+  def_is_inscribed_circle_ellipse
+  (f1 f2 ap c r)
+  (<-> (is-inscribed-in (circle c r) (ellipse f1 f2 ap))
+       (exists (p q)
+         (&& (< (* 2 r) ap)
+             (! (= p q))
+             (tangent (circle c r) (ellipse f1 f2 ap) p)
+             (tangent (circle c r) (ellipse f1 f2 ap) q)))))
+
+
+
+(axiom
   def_circle_is_inscribed_in_triangle 
   (c r x y z)
   (<-> (is-inscribed-in (circle c r) (triangle x y z))
@@ -1522,8 +2153,6 @@
        (is-inscribed-in (circle c r) (polygon (list-of p0 p1 p2 p3)))
   )
 )
-
-
 
 (axiom
   def_square_is_inscribed_in_circle 
@@ -1607,6 +2236,32 @@
 	))
 
 (axiom
+  def_lists_of_points_bending_in_same_way_2d
+  (p0 p1 ps q0 q1 qs)
+    (<-> (lists-of-points-bending-in-same-way (cons p0 (cons p1 ps)) (cons q0 (cons q1 qs)))
+        (let
+          (
+            (Ps (cons p0 (cons p1 ps)))
+            (Qs (cons q0 (cons q1 qs)))
+            (Pyx (vec (fst y) (fst x)))
+            (Pyz (vec (fst y) (fst z)))
+            (Qyx (vec (snd y) (snd x)))
+            (Qyz (vec (snd y) (snd z)))
+          )
+          (exists (sig) (&&
+              (= sig (if (> 0 (* (outer-prod (vec p0 (last ps)) (vec p0 p1)) (outer-prod (vec q0 (last qs)) (vec q0 q1)))) -1 1))
+              (= (list-len Ps) (list-len Qs))
+              (cyclic-all
+                  (Lam x (Lam y (PLam z (&&
+                      (= (* (* (radius Qyx) (radius Qyz)) (inner-prod Pyx Pyz)) (* (* (radius Pyx) (radius Pyz)) (inner-prod Qyx Qyz)))
+                      (< 0 (* (* sig (outer-prod Pyx Pyz)) (outer-prod Qyx Qyz)))
+                  ))))
+                  (zip Ps Qs)
+              )
+          ))
+        )))
+
+(axiom
  def_tangent_circle_and_circle
  ;;; 2013-01-16: avoid redundancy
  ;(c1 r1 c2 r2 t)
@@ -1681,14 +2336,47 @@
   (<-> (are-intersection-points-of Ps (list-of (graph-of (poly-fun (list-of c b a))) (line A B)))
        (are-intersection-points-of Ps (list-of (line A B) (graph-of (poly-fun (list-of c b a)))))))
 
-(axiom
-  def-are-intersection-points-of-general-case
-  (Ps A B)
-  (<-> (are-intersection-points-of Ps (list-of A B))
-       (forall (P)
-         (<-> (member P Ps)
-              (&& (on P A)
-                  (on P B))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; parallel and perpendicular
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;(axiom
+;  def_parallel_line_shape
+;  (P Q X)
+;  (<-> (parallel (line P Q) X)
+;       (exists (A B) (&&
+;           (! (= A B))
+;           (|| (= X (line A B))
+;               (= X (half-line A B))
+;               (= X (seg A B)))
+;           (parallel (line A B) (line P Q))
+;       ))))
+;
+;(axiom
+;  def_parallel_shape_line
+;  (P Q X)
+;  (<-> (parallel X (line P Q))
+;       (parallel (line P Q) X)))
+;
+;(axiom
+;  def_perpendicular_line_shape
+;  (P Q X)
+;  (<-> (perpendicular (line P Q) X)
+;       (exists (A B) (&&
+;           (! (= A B))
+;           (|| (= X (line A B))
+;               (= X (half-line A B))
+;               (= X (seg A B)))
+;           (perpendicular (line A B) (line P Q))
+;       ))))
+;
+;(axiom
+;  def_perpendicular_shape_line
+;  (P Q X)
+;  (<-> (perpendicular X (line P Q))
+;       (perpendicular (line P Q) X)))
+
+
 
 ;; default
 ;(axiom
@@ -1823,6 +2511,18 @@
   (= (area-of (disk c r))
      (* (Pi) (^ r 2))))
 
+(axiom 
+  def_congruent_disk_2d_1
+  (c r shape)
+  (<-> (congruent (disk c r) shape)
+       (congruent (disk-shape (disk c r)) shape)))
+       
+(axiom 
+  def_congruent_disk_2d_2
+  (c r shape)
+  (<-> (congruent shape (disk c r))
+       (congruent shape (disk-shape (disk c r)))))
+
 (axiom
   def_area_of_arc_2d
   (c r ini end)
@@ -1834,6 +2534,18 @@
   (c r ini end)
   (= (area-of (circular-sector c r ini end))
      (area-of (arc c r ini end))))
+
+(axiom
+  def_area_of_semicircle_2d
+  (c r ini)
+  (= (area-of (semicircle c r ini))
+     (/ (* (Pi) (^ r 2)) 2)))
+
+(axiom
+  def_area_of_ellipse_2d
+  (f1 f2 ap)
+  (= (area-of (ellipse f1 f2 ap))
+     (* (minor-radius (ellipse f1 f2 ap)) (major-radius (ellipse f1 f2 ap)) (Pi))))
 
 ;(axiom
 ;  def_line2d_eq_obj
@@ -1855,16 +2567,40 @@
 ;; length of perimeter
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (axiom
-  def-perimeter-of-circle
+  def-perimeter-of-circle_2d
   (c r)
   (= (length-of (circle c r))
-     (* 2 (Pi) r)))
+     (length-of (circle-shape (circle c r)))))
+
+(axiom
+  def-perimeter-of-disk_2d
+  (c r)
+  (= (length-of (disk c r))
+     (length-of (disk-shape (disk c r)))))
 
 (axiom
   def-length-of-arc
   (c r ini end)
   (= (length-of (arc c r ini end))
      (length-of (arc-shape (arc c r ini end)))))
+
+(axiom
+  def-length-of-circular-sector
+  (c r ini end)
+  (= (length-of (circular-sector c r ini end))
+     (length-of (circular-sector-shape (circular-sector c r ini end)))))
+
+(axiom
+  def-length-of-semicircle
+  (c r ini)
+  (= (length-of (semicircle c r ini))
+     (+ (* (Pi) r) (* 2 r ))))
+
+(axiom
+  def-length-of-ellipse
+  (f1 f2 ap)
+  (= (length-of (ellipse f1 f2 ap))
+     (* 4 (major-radius (ellipse f1 f2 ap)) (integration (fun (Lam x (sqrt (- 1 (* (- 1 (^ (/ (minor-radius (ellipse f1 f2 ap)) (major-radius (ellipse f1 f2 ap))) 2)) (^ (cos x) 2)))))) 0 (/ (Pi) 2)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; length of union of shapes
@@ -1983,6 +2719,19 @@
 	(= (char-fun-of (inner-part-of (circular-sector c r b e)))
 		(char-fun-of (inner-part-of (circular-sector-shape (circular-sector c r b e))))))
 
+(axiom
+	def_char_fun_of_inside_of_semicircle
+	(c r ini)
+	(= (char-fun-of (inner-part-of (semicircle c r ini))) 
+     (char-fun-of (inner-part-of (circular-sector c r ini (+ ini (Pi)))))))
+
+(axiom
+	def_char_fun_of_inside_of_ellipse
+	(f1 f2 ap)
+	(= (char-fun-of (inner-part-of (ellipse f1 f2 ap)))
+     (PLam p (&&
+     (< (+ (distance p f1) (distance p f2)) ap)))))
+
 ;with-boundary
 (axiom
 	def_char_fun_of_circle_with_boundary_2d
@@ -2005,6 +2754,22 @@
 	(c r b e)
 	(= (char-fun-of (with-boundary (circular-sector c r b e)))
 		(char-fun-of (with-boundary (circular-sector-shape (circular-sector c r b e))))))
+
+(axiom
+  def_char_gun_of_semicircle_with_boundary
+  (c r ini)
+  (= (char-fun-of (with-boundary (semicircle c r ini)))
+     (PLam p
+       (|| (on p (inner-part-of (semicircle c r ini)))
+           (on p (semicircle c r ini))))))
+
+(axiom
+  def_char_gun_of_ellipse_with_boundary
+  (f1 f2 ap)
+  (= (char-fun-of (with-boundary (ellipse f1 f2 ap)))
+     (PLam p
+       (|| (on p (inner-part-of (ellipse f1 f2 ap)))
+           (on p (ellipse f1 f2 ap))))))
 
 ;boundary
 (axiom
@@ -2052,6 +2817,29 @@
 	(= (char-fun-of (circular-sector c r b e))
 		(char-fun-of (circular-sector-shape (circular-sector c r b e)))))
 
+(axiom
+	def_char_fun_of_semicircle
+	(c r ini)
+	(= (char-fun-of (semicircle c r ini))
+		 (PLam P (on P (semicircle c r ini)))))
+
+(axiom
+	def_char_fun_of_ellipse
+	(f1 f2 ap)
+	(= (char-fun-of (ellipse f1 f2 ap))
+		 (PLam P (on P (ellipse f1 f2 ap)))))
+
+(axiom
+	def_char_fun_of_hyperbola
+	(f1 f2 ap)
+	(= (char-fun-of (hyperbola f1 f2 ap))
+		 (PLam P (on P (hyperbola f1 f2 ap)))))
+
+(axiom
+	def_char_fun_of_parabola
+	(f d)
+	(= (char-fun-of (parabola f d))
+		 (PLam P (on P (parabola f d)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; equality between geometric figures
@@ -2532,6 +3320,54 @@
   (= (translate (graph-of f) v)
      (graph-of (fun (Lam x (+ (funapp f (- x (vec-x-coord v))) (vec-y-coord v)))))))
 
+(axiom
+  def-translation-of-circle
+  (c r v)
+  (= (translate (circle c r) v)
+     (circle (vec-translate c v) r)))
+
+(axiom
+  def-translation-of-disk
+  (c r v)
+  (= (translate (disk c r) v)
+     (disk (vec-translate c v) r)))
+     
+(axiom
+  def-translation-of-semicircle
+  (c r ini v)
+  (= (translate (semicircle c r ini) v)
+     (semicircle (vec-translate c v) r ini)))
+
+(axiom
+  def-translation-of-arc
+  (c r ini end v)
+  (= (translate (arc c r ini end) v)
+     (arc (vec-translate c v) r ini end)))
+
+(axiom
+  def-translation-of-circular-sector
+  (c r ini end v)
+  (= (translate (circular-sector c r ini end) v)
+     (circular-sector (vec-translate c v) r ini end)))
+
+(axiom
+  def-translation-of-ellipse
+  (f1 f2 ap v)
+  (= (translate (ellipse f1 f2 ap) v)
+     (ellipse (vec-translate f1 v) (vec-translate f2 v) ap)))
+
+(axiom
+  def-translation-of-hyperbola
+  (f1 f2 ap v)
+  (= (translate (hyperbola f1 f2 ap) v)
+     (hyperbola (vec-translate f1 v) (vec-translate f2 v) ap)))
+
+(axiom
+  def-translation-of-parabola2
+  (f d v)
+  (= (translate (parabola f d) v)
+     (parabola (vec-translate f v) (vec-translate d v))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Intersection points between 2D geometric objects
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2575,6 +3411,15 @@
   (<-> (are-intersection-points-of Ps (list-of (circle c r) (seg p q)))
        (are-intersection-points-of Ps (list-of (seg p q) (circle c r)))))
 
+(axiom
+  def-are-intersection-points-of-general-case
+  (Ps A B)
+  (<-> (are-intersection-points-of Ps (list-of A B))
+       (forall (P)
+         (<-> (member P Ps)
+              (&& (on P A)
+                  (on P B))))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; non-degenerated condition of polygon
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2583,6 +3428,14 @@
   (ps)
   (&& (= p (polygon ps))
       (int.<= 3 (list-len ps))))
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(axiom
+   def-char-fun-of-graph
+   (f)
+   (= (char-fun-of (graph-of f))
+      (PLam p (= (funapp f (x-coord p)) (y-coord p)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Overloaded definitions for 2D/3D geometry, part 2

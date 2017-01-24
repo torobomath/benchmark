@@ -17,6 +17,7 @@
                     (on A Cir)
                     (on B Cir)
                     (on C Cir)
+                    (! (= B C))
                     (on O (seg C B))
                     (tangent Cir l A)
                     (intersect (line B C) l D)

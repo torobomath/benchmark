@@ -6,9 +6,9 @@
 %% GENERATED: 2015-01-07
 
 % Syntax   : Number of formulae    :    4 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  148 (  11 equality;  67 variable)
-%            Maximal formula depth :   29 (  17 average)
-%            Number of connectives :  124 (   0   ~;   0   |;  23   &; 101   @)
+%            Number of atoms       :  151 (  12 equality;  69 variable)
+%            Maximal formula depth :   30 (  17 average)
+%            Number of connectives :  126 (   1   ~;   0   |;  24   &; 101   @)
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
@@ -31,6 +31,7 @@ thf(p1_qustion,question,
         & ( '2d.on/2' @ V_A @ V_Cir )
         & ( '2d.on/2' @ V_B @ V_Cir )
         & ( '2d.on/2' @ V_C @ V_Cir )
+        & ( V_B != V_C )
         & ( '2d.on/2' @ V_O @ ( '2d.seg/2' @ V_C @ V_B ) )
         & ( '2d.tangent/3' @ V_Cir @ V_l @ V_A )
         & ( '2d.intersect/3' @ ( '2d.line/2' @ V_B @ V_C ) @ V_l @ V_D )

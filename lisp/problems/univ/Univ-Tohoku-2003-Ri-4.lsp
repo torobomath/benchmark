@@ -19,15 +19,15 @@
 (namespace 3d)
 
 (def-directive
-  p1
-  (Find (x)
-        (exists (P Q)
-          (&& (= P (point u u 0))
-        (= Q (point u 0 (sqrt (- 1 (^ u 2)))))
-        (<= 0 u)
-        (<= u 1)
-        (= x (point-shape-distance (point u 0 0)
-                 (line P Q)))))))
+    p1
+    (Find (x)
+          (exists (P Q)
+              (&& (= P (point u u 0))
+              (= Q (point u 0 (sqrt (- 1 (^ u 2)))))
+              (<= 0 u)
+              (<= u 1)
+              (= x (point-shape-distance (point u 0 0)
+                             (seg P Q)))))))
 
 (def-directive
   p2
@@ -38,7 +38,7 @@
                                                              (<= u 1)
                                                              (= P (point u u 0))
                                                              (= Q (point u 0 (sqrt (- 1 (^ u 2)))))
-                                                             (on p (line P Q)))))))
+                                                             (on p (seg P Q)))))))
                     (= V (volume-of (solid-of-revolution S (x-axis))))))))
 
 (def-answer p1 (PLam x (&& (<= 0 u) (<= u 1) (= x (* u (sqrt (- 1 (^ u 2))))))))

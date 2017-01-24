@@ -208,8 +208,26 @@
 ;;@ effective only if shape is a triangle or a square
 (def-pred is-interior-angle :: Angle -> Shape => Bool)
 
+;;@ center-point-of-angle = the center point of angle
+(def-fun center-point-of-angle ::  Angle => Point)
+
+;;@ angle-cyclic-all-rec(points) = all angles that points make
+(def-fun angle-cyclic-all-rec ::  (ListOf Point) => (ListOf Angle))
+
+;;@ angle-of-cyclic-all-rec(points) = all rad-of-angles that points make
+(def-fun angle-of-cyclic-all-rec ::  (ListOf Point) => (ListOf R))
+
 ;;@ are-interior-angles(angles,shape) <-> angles are the interior angles of shape
 (def-pred are-interior-angles :: (ListOf Angle) -> Shape => Bool)
+
+;;@ angles-of-polygon(shape) = the interior rad-of-angles of shape
+(def-fun angles-of-polygon :: Shape => (ListOf R))
+
+;;@ cyclic-point(List,int) = int cyclic list of List
+(def-fun cyclic-point :: (ListOf Point)-> (Z) => (ListOf (Point)))
+
+;;@ reverse-point(List) = reverse list of list
+(def-fun reverse-point :: (ListOf Point) => (ListOf (Point)))
 
 ;;@ is-angle-bisector(line, a) <-> line is the angle bisector of a
 (def-pred is-angle-bisector :: Line -> Angle => Bool)
@@ -481,8 +499,11 @@
 ;;@ y-axis() = the y-axis
 (def-fun y-axis :: => Line)
 
-;; xy-plane() = the xy-plane
+;;@ xy-plane() = the xy-plane
 (def-fun xy-plane :: => Plane)
+
+;;@ empty-set() = empty set as a Shape
+(def-fun empty-set :: => Shape)
 
 ;; predicates
 ;;@ is-empty(shape) <-> shape is empty
@@ -648,6 +669,9 @@
 ;;@ effective only if shape1 and shape2 are both triangles or squares
 (def-pred ordered-similar :: Shape -> Shape => Bool)
 
+;;@ congruent-polygon-check(shape1,shape2,n) <-> shape1 and shape2 are congruent with cyclic n
+(def-pred congruent-polygon-check :: Shape -> Shape -> (Z) => Bool)
+
 ;;@ congruent(shape1,shape2) <-> shape1 and shape2 are congruent
 (def-pred congruent :: Shape -> Shape => Bool)
 
@@ -679,6 +703,9 @@
 ;;@ point-symmetry-shape(shape,p) <-> shape is symmetric with respect to point p
 (def-pred point-symmetry-shape :: Shape -> Point => Bool)
 
+;;@ point-symmetry-shapes-order(shape1,shape2,p) <-> shape1 and shape2 are symmetric with respect to point q considering order
+(def-pred point-symmetry-shapes-order :: Shape -> Shape -> Point => Bool)
+
 ;;@ point-symmetry-shapes(shape1,shape2,p) <-> shape1 and shape2 are symmetric with respect to point q
 (def-pred point-symmetry-shapes :: Shape -> Shape -> Point => Bool)
 
@@ -707,6 +734,12 @@
 
 ;;@ sides-of(shape) = the list of the sides of shape
 (def-fun sides-of :: Shape => (ListOf Shape)) 
+
+;;@ lengths-of-sides-of-butlast(shape) = the butlast list of the lengths of the sides of shape
+(def-fun lengths-of-sides-of-butlast :: Shape => (ListOf R)) 
+
+;;@ lengths-of-sides-of(shape) = the list of the lengths of the sides of shape
+(def-fun lengths-of-sides-of :: Shape => (ListOf R)) 
 
 ;;@ converge-point([an], p) <-> the sequence of points [an] converges to p
 (def-pred converge-point :: (Z -> Point) -> Point => Bool)
@@ -765,7 +798,7 @@
 
 ;;@ complement(shape) = the complement of shape in R^2 or R^3
 (def-fun complement :: Shape => Shape)
-
+(def-fun Complement :: Shape => Shape)
 ;;@ shape-(shape1,shape2) = the defference of shape1 and shape2
 (def-fun shape- :: Shape -> Shape => Shape)
 

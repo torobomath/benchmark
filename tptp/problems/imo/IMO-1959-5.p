@@ -20,17 +20,17 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    8 (   0 unit;   4 type;   0 defn)
-%            Number of atoms       :  287 (  26 equality; 158 variable)
+%            Number of atoms       :  302 (  26 equality; 162 variable)
 %            Maximal formula depth :   40 (  16 average)
-%            Number of connectives :  244 (  13   ~;   0   |;  50   &; 178   @)
+%            Number of connectives :  259 (  13   ~;   0   |;  51   &; 192   @)
 %                                         (   0 <=>;   3  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   34 (   4   :;   0   =)
+%            Number of symbols     :   37 (   4   :;   0   =)
 %            Number of variables   :   42 (   0 sgn;  24   !;  15   ?;   3   ^)
 %                                         (  42   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
-%            Arithmetic symbols    :    2 (   0 pred;    1 func;    1 numbers)
+%            Arithmetic symbols    :    3 (   0 pred;    1 func;    2 numbers)
 
 include('axioms.ax').
 
@@ -77,7 +77,8 @@ thf(p2,conjecture,(
             & ( V_M != V_B )
             & ( '2d.is-regular-square/4' @ V_A @ V_M @ V_C @ V_D )
             & ( '2d.is-regular-square/4' @ V_M @ V_B @ V_E @ V_F )
-            & ( '2d.vec-same-direction/2' @ ( '2d.vec/2' @ V_M @ V_C ) @ ( '2d.vec/2' @ V_M @ V_F ) )
+            & ( '2d.vec-same-direction/2' @ ( '2d.vec/2' @ V_M @ V_C ) @ ( '2d.vec-rotate-around-origin/2' @ ( '2d.vec/2' @ V_A @ V_B ) @ ( $quotient @ 'Pi/0' @ 2.0 ) ) )
+            & ( '2d.vec-same-direction/2' @ ( '2d.vec/2' @ V_M @ V_F ) @ ( '2d.vec-rotate-around-origin/2' @ ( '2d.vec/2' @ V_A @ V_B ) @ ( $quotient @ 'Pi/0' @ 2.0 ) ) )
             & ( '2d.circle-type/1' @ V_K1 )
             & ( '2d.circle-type/1' @ V_K2 )
             & ( '2d.is-inscribed-in/2' @ ( '2d.square/4' @ V_A @ V_M @ V_C @ V_D ) @ V_K1 )

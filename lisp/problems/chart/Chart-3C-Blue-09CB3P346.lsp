@@ -19,17 +19,15 @@
 
 (def-directive p2
   (Find (V)
-    (exists (f1 f2 D2 D3) (&&
+    (exists (f1 f2 D2 D3 x1 x2) (&&
       (= f1 (Lam x (sqrt (- 4 (^ x 2)))))
       (= f2 (Lam x (* (sqrt 3) (^ x 2))))
+      (<= -2 x1) (< x1 x2) (<= x2 2)
+      (= (LamApp f1 x1) (LamApp f2 x1))
+      (= (LamApp f1 x2) (LamApp f2 x2))
       (= D2 (2d.set-of-cfun (Lam x (PLam y (&& (<= (LamApp f2 x) y) (<= y (LamApp f1 x)) (<= x1 x) (<= x x2))))))
       (= D3 (import-2d-shape D2))
-      (exists (x1 x2) (&&
-        (<= -2 x1) (< x1 x2) (<= x2 2)
-        (= (LamApp f1 x1) (LamApp f2 x1))
-        (= (LamApp f1 x2) (LamApp f2 x2))
-        (= V (volume-of (solid-of-revolution D3 (x-axis))))
-      ))
+      (= V (volume-of (solid-of-revolution D3 (x-axis))))
     ))
   )
 )

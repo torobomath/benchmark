@@ -328,13 +328,281 @@
 
 
 ;;@------------------------------------------------------------------------------
+;;@ Congruent between 3d shapes
+;;@------------------------------------------------------------------------------
+(axiom
+  def_congruent_cone
+  (c1 c2 r1 r2 n1 n2 P1 P2)
+  (<-> (congruent (cone (disk c1 r1 n1) P1) (cone (disk c2 r2 n2) P2))
+      (&& (= r1 r2)
+          (= (distance^2 c1 P1) (distance^2 c2 P2))
+          (= (* (inner-prod n1 (vec c1 P1)) (radius n2))  (* (inner-prod n2 (vec c2 P2)) (radius n1)))
+      )))
+
+(axiom
+  def_congruent_right_cone
+  (c1 c2 r1 r2 n1 n2 P1 P2)
+  (<-> (congruent (right-cone (disk c1 r1 n1) P1) (right-cone (disk c2 r2 n2) P2))
+      (&& (= r1 r2)
+          (= (distance^2 c1 P1) (distance^2 c2 P2))
+      )))
+
+(axiom
+  def_congruent_cylinder
+  (c1 c2 r1 r2 n1 n2 C1 C2 R1 R2 N1 N2)
+  (<-> (congruent (cylinder (disk c1 r1 n1) (disk c2 r2 n2)) (cylinder (disk C1 R1 N1) (disk C2 R2 N2)))
+      (&& (= r1 R1)
+          (= (distance^2 c1 c2) (distance^2 C1 C2))
+      )))
+
+(axiom 
+  def_congruent_arc_3d_1
+  (c p a n shape)
+  (<-> (congruent (arc c p a n) shape)
+       (congruent (arc-shape (arc c p a n)) shape)))
+
+(axiom 
+  def_congruent_arc_3d_2
+  (c p a n shape)
+  (<-> (congruent shape (arc c p a n))
+       (congruent shape (arc-shape (arc c p a n)))))
+
+(axiom 
+  def_congruent_circular_sector_3d_1
+  (c r ini end shape)
+  (<-> (congruent (circular-sector c r ini end) shape)
+       (congruent (circular-sector-shape (circular-sector c r ini end)) shape)))
+
+(axiom 
+  def_congruent_circular_sector_3d_2
+  (c r ini end shape)
+  (<-> (congruent shape (circular-sector c r ini end))
+       (congruent shape (circular-sector-shape (circular-sector c r ini end)))))
+
+(axiom
+  def_congruent_circle_3d_1
+  (c r n shape)
+  (<-> (congruent (circle c r n) shape)
+      (congruent (circle-shape (circle c r n)) shape)))
+
+(axiom
+  def_congruent_circle_3d_2
+  (c r n shape)
+  (<-> (congruent shape (circle c r n))
+      (congruent shape (circle-shape (circle c r n)))))
+
+(axiom
+  def_congruent_disk_3d_1
+  (c r n shape)
+  (<-> (congruent (disk c r n) shape)
+      (congruent (disk-shape (disk c r n)) shape)))
+
+(axiom
+  def_congruent_disk_3d_2
+  (c r n shape)
+  (<-> (congruent shape (disk c r n))
+      (congruent shape (disk-shape (disk c r n)))))
+
+;;ordered-congruent
+(axiom
+  def_ordered_congruent_tetrahedron
+  (p1 p2 p3 p4 q1 q2 q3 q4)
+  (<-> (ordered-congruent (tetrahedron p1 p2 p3 p4) (tetrahedron q1 q2 q3 q4))
+      (&& (ordered-congruent (triangle p1 p2 p3) (triangle q1 q2 q3))
+          (= (distance^2 p1 p4) (distance^2 q1 q4))
+          (= (distance^2 p2 p4) (distance^2 q2 q4))
+          (= (distance^2 p3 p4) (distance^2 q3 q4))
+      )))
+
+(axiom
+  def_ordered_congruent_cuboid
+  (p1 p2 p3 p4 p5 p6 p7 p8 q1 q2 q3 q4 q5 q6 q7 q8)
+  (<-> (ordered-congruent (cuboid p1 p2 p3 p4 p5 p6 p7 p8) (cuboid q1 q2 q3 q4 q5 q6 q7 q8))
+      (&& (= (distance^2 p1 p2) (distance^2 q1 q2))
+          (= (distance^2 p1 p4) (distance^2 q1 q4))
+          (= (distance^2 p1 p5) (distance^2 q1 q5))
+      )))
+
+(axiom
+  def_ordered_congruent_cube
+  (p1 p2 p3 p4 p5 p6 p7 p8 q1 q2 q3 q4 q5 q6 q7 q8)
+  (<-> (ordered-congruent (cube p1 p2 p3 p4 p5 p6 p7 p8) (cube q1 q2 q3 q4 q5 q6 q7 q8))
+      (= (distance^2 p1 p2) (distance^2 q1 q2))))
+
+(axiom
+  def_ordered_congruent_square_pyramid
+  (P p1 p2 p3 p4 Q q1 q2 q3 q4)
+  (<-> (ordered-congruent (square-pyramid P p1 p2 p3 p4) (square-pyramid Q q1 q2 q3 q4))
+      (&& (ordered-congruent (square p1 p2 p3 p4) (square q1 q2 q3 q4))
+          (= (distance^2 p1 P) (distance^2 q1 Q))
+          (= (distance^2 p2 P) (distance^2 q2 Q))
+          (= (distance^2 p3 P) (distance^2 q3 Q))
+      )))
+
+(axiom
+  def_ordered_congruent_octahedron
+  (P1 p1 p2 p3 p4 P2 Q1 q1 q2 q3 q4 Q2)
+  (<-> (ordered-congruent (octahedron P1 p1 p2 p3 p4 P2) (octahedron Q1 q1 q2 q3 q4 Q2))
+      (&& (ordered-congruent (square p1 p2 p3 p4) (square q1 q2 q3 q4))
+          (= (distance^2 p1 P1) (distance^2 q1 Q1))
+          (= (distance^2 p2 P1) (distance^2 q2 Q1))
+          (= (distance^2 p3 P1) (distance^2 q3 Q1))
+          (= (distance^2 p1 P2) (distance^2 q1 Q2))
+          (= (distance^2 p2 P2) (distance^2 q2 Q2))
+          (= (distance^2 p3 P2) (distance^2 q3 Q2))
+      )))
+
+(axiom
+  def_ordered_congruent_pyramid
+  (P p0 p1 p2 ps Q q0 q1 q2 qs)
+  (<-> (ordered-congruent (pyramid (polygon (cons p0 (cons p1 (cons p2 ps)))) P) (pyramid (polygon (cons q0 (cons q1 (cons q2 qs)))) Q))
+      (&& (ordered-congruent (polygon (cons p0 (cons p1 (cons p2 ps)))) (polygon (cons q0 (cons q1 (cons q2 qs)))))
+          (= (distance^2 p0 P) (distance^2 q0 Q))
+          (= (distance^2 p1 P) (distance^2 q1 Q))
+          (= (distance^2 p2 P) (distance^2 q2 Q))
+      )))
+
+(axiom
+  def_ordered_congruent_prism
+  (A1 H1 A2 H2)
+  (<-> (ordered-congruent (prism A1 H1) (prism A2 H2))
+      (&& (ordered-congruent A1 A2)
+          (= (radius^2 H1) (radius^2 H2))
+      )))
+
+;;ordered-similar
+(axiom
+  def_ordered_similar_tetrahedron
+  (p1 p2 p3 p4 q1 q2 q3 q4)
+  (<-> (ordered-similar (tetrahedron p1 p2 p3 p4) (tetrahedron q1 q2 q3 q4))
+      (&& (ordered-similar (triangle p1 p2 p3) (triangle q1 q2 q3) (distance p1 p4) (distance q1 q4))
+          (= (* (distance^2 q1 q4) (distance^2 p2 p4)) (* (distance^2 p1 p4) (distance^2 q2 q4)))
+          (= (* (distance^2 q1 q4) (distance^2 p3 p4)) (* (distance^2 p1 p4) (distance^2 q3 q4)))
+      )))
+
+(axiom
+  def_ordered_similar_cuboid
+  (p1 p2 p3 p4 p5 p6 p7 p8 q1 q2 q3 q4 q5 q6 q7 q8)
+  (<-> (ordered-similar (cuboid p1 p2 p3 p4 p5 p6 p7 p8) (cuboid q1 q2 q3 q4 q5 q6 q7 q8))
+      (&& (= (* (distance^2 q1 q2) (distance^2 p1 p4)) (* (distance^2 p1 p2) (distance^2 q1 q4)))
+          (= (* (distance^2 q1 q2) (distance^2 p1 p5)) (* (distance^2 p1 p2) (distance^2 q1 q5)))
+      )))
+
+(axiom
+  def_ordered_similar_cube
+  (p1 p2 p3 p4 p5 p6 p7 p8 q1 q2 q3 q4 q5 q6 q7 q8)
+  (<-> (ordered-similar (cube p1 p2 p3 p4 p5 p6 p7 p8) (cube q1 q2 q3 q4 q5 q6 q7 q8))
+      (true)))
+
+(axiom
+  def_ordered_similar_square_pyramid
+  (P p1 p2 p3 p4 Q q1 q2 q3 q4)
+  (<-> (ordered-similar (square-pyramid P p1 p2 p3 p4) (square-pyramid Q q1 q2 q3 q4))
+      (&& (ordered-similar (square p1 p2 p3 p4) (square q1 q2 q3 q4) (distance p1 P) (distance q1 Q))
+          (= (* (distance^2 q1 Q) (distance^2 p2 P)) (* (distance^2 p1 P) (distance^2 q2 Q)))
+          (= (* (distance^2 q1 Q) (distance^2 p3 P)) (* (distance^2 p1 P) (distance^2 q3 Q)))
+      )))
+
+(axiom
+  def_ordered_similar_octahedron
+  (P1 p1 p2 p3 p4 P2 Q1 q1 q2 q3 q4 Q2)
+  (<-> (ordered-similar (octahedron P1 p1 p2 p3 p4 P2) (octahedron Q1 q1 q2 q3 q4 Q2))
+      (&& (ordered-similar (square p1 p2 p3 p4) (square q1 q2 q3 q4) (distance p1 P1) (distance q1 Q1))
+          (= (* (distance^2 q1 Q1) (distance^2 p2 P1)) (* (distance^2 p1 P1) (distance^2 q2 Q1)))
+          (= (* (distance^2 q1 Q1) (distance^2 p3 P1)) (* (distance^2 p1 P1) (distance^2 q3 Q1)))
+          (= (* (distance^2 q1 Q1) (distance^2 p1 P2)) (* (distance^2 p1 P1) (distance^2 q1 Q2)))
+          (= (* (distance^2 q1 Q1) (distance^2 p2 P2)) (* (distance^2 p1 P1) (distance^2 q2 Q2)))
+          (= (* (distance^2 q1 Q1) (distance^2 p3 P2)) (* (distance^2 p1 P1) (distance^2 q3 Q2)))
+      )))
+
+(axiom
+  def_ordered_similar_pyramid
+  (P p0 p1 p2 ps Q q0 q1 q2 qs)
+  (<-> (ordered-similar (pyramid (polygon (cons p0 (cons p1 (cons p2 ps)))) P) (pyramid (polygon (cons q0 (cons q1 (cons q2 qs)))) Q))
+      (&& (ordered-similar
+              (polygon (cons p0 (cons p1 (cons p2 ps))))
+              (polygon (cons q0 (cons q1 (cons q2 qs))))
+              (distance p0 P)
+              (distance q0 Q)
+          )
+          (= (* (distance^2 q0 Q) (distance^2 p1 P)) (* (distance^2 p0 P) (distance^2 q1 Q)))
+          (= (* (distance^2 q0 Q) (distance^2 p2 P)) (* (distance^2 p0 P) (distance^2 q2 Q)))
+      )))
+
+(axiom
+  def_ordered_similar_prism
+  (A1 H1 A2 H2)
+  (<-> (ordered-similar (prism A1 H1) (prism A2 H2))
+      (ordered-similar A1 A2 (radius H1) (radius H2))))
+
+;;@------------------------------------------------------------------------------
 ;;@ Operations & relations on geomtric figures
 ;;@------------------------------------------------------------------------------
+(axiom
+  def_translate_tetrahedron
+  (A B C D v a A1 B1 C1 D1)
+  (<-> (translate (tetrahedron A B C D) v a (tetrahedron A1 B1 C1 D1)) 
+       (= (tetrahedron A1 B1 C1 D1) (tetrahedron (vec-translate A (sv* a v)) (vec-translate B (sv* a v)) (vec-translate C (sv* a v)) (vec-translate D (sv* a v))))))
+
+(axiom
+  def_translate_octahedron
+  (A B C D E F v a A1 B1 C1 D1 E1 F1)
+  (<-> (translate (octahedron A B C D E F) v a (octahedron A1 B1 C1 D1 E1 F1)) 
+       (&&
+       (= A1 (vec-translate A (sv* a v))) 
+       (= B1 (vec-translate B (sv* a v)))
+       (= C1 (vec-translate C (sv* a v))) 
+       (= D1 (vec-translate D (sv* a v))) 
+       (= E1 (vec-translate E (sv* a v)))
+       (= F1 (vec-translate F (sv* a v))))))
+
+(axiom
+  def_translate_cone
+  (C R N P a v C1 R1 N1 P1)
+  (<-> (translate (cone (disk C R N) P) v a (cone (disk C1 R1 N1) P1)) 
+       (&&
+        (= C1 (vec-translate C (sv* a v)))
+        (= R R1)
+        (vec-parallel N N1)
+        (= P1 (vec-translate P (sv* a v))))))
+
+(axiom
+  def_translate_right_cone
+  (C R N P a v C1 R1 N1 P1)
+  (<-> (translate (right-cone (disk C R N) P) v a (right-cone (disk C1 R1 N1) P1)) 
+       (&&
+        (= C1 (vec-translate C (sv* a v)))
+        (= R R1)
+        (vec-parallel N N1)
+        (= P1 (vec-translate P (sv* a v))))))
+
+(axiom
+  def_translate_cylinder
+  (c r n C R N a v c1 r1 n1 C1 R1 N1)
+  (<-> (translate (cylinder (disk c r n) (disk C R N)) v a (cylinder (disk c1 r1 n1) (disk C1 R1 N1))) 
+       (&&
+        (= c1 (vec-translate c (sv* a v)))
+        (= C1 (vec-translate C (sv* a v)))
+        (= r r1)
+        (= R R1)
+        (vec-parallel n n1)
+        (vec-parallel N N1))))
+
+(axiom
+  def_translate_disk
+  (c r n a v c1 r1 n1)
+  (<-> (translate (disk c r n) v a (disk c1 r1 n1)) 
+       (&&
+        (= c1 (vec-translate c (sv* a v)))
+        (= r r1)
+        (vec-parallel n n1))))
+
 (axiom
 	def_translate_general_3d
 	(v m s1 s2)
 	(<-> (translate s1 v m s2)
-		(= s2 (shape-of-cpfun (PLam p (PLamApp (char-fun-of s1) (vec-translate p (sv* (/ m (radius v)) v))))))))
+		(= (char-fun-of s2) (PLam p (PLamApp (char-fun-of s1) (vec-translate p (sv* (/ m (radius v)) v)))))))
+
 
 (axiom
   def_mat_shape*_line
@@ -352,7 +620,7 @@
 						))))))
 
 (axiom
-	def_congruent_3d
+	def_congruent_3d_general
 	(shape1 shape2)
 	(<-> (congruent shape1 shape2)
 		(exists (a b c d e f g h i s t r u) (&&
@@ -361,14 +629,13 @@
 		))))
 
 (axiom
-	def_similar_3d
+	def_similar_3d_general
 	(shape1 shape2)
 	(<-> (similar shape1 shape2)
-		(exists (a b c d e f g h i s t r u) (&&
-            
-			;(is-non-singular (matrix a b c d e f g h i))
+		(exists (a b c d e f g h i k s t r u) (&&
+			(< 0 k)
 			(is-inverse-of (matrix a b c d e f g h i) (transposed-matrix (matrix a b c d e f g h i)))
-			(translate (mat-shape* (matrix a b c d e f g h i) shape1) (vec3d s t r) u shape2)
+			(translate (mat-shape* (sm* k (matrix a b c d e f g h i)) shape1) (vec3d s t r) u shape2)
 		))))
 
 
@@ -668,6 +935,41 @@
 		(normal-vector-to (plane-shape (plane2 P V)) point)))
 
 (axiom
+  def_normal_line_plane_implement
+  (p q P plane)
+  (<-> (normal-line (line p q) (plane-shape plane) P)
+       (&&
+        (on P (line p q))
+        (= (zero-vector) (normal-vector-to (plane-shape plane) P))
+        (vec-parallel (vec p q) (normal-vector-of (plane-shape plane))))))
+
+(axiom
+	def_normal_line_plane
+	(p q P a b c d)
+	(<-> (normal-line (line p q) (plane a b c d) P)
+	     (normal-line (line p q) (plane-shape (plane a b c d)) P)))
+(axiom
+	def_normal_line_plane1
+	(p q P1 P Q R)
+	(<-> (normal-line (line p q) (plane1 P Q R) P1)
+	     (normal-line (line p q) (plane-shape (plane1 P Q R)) P1)))
+(axiom
+	def_normal_line_plane2
+	(p q P1 P V)
+	(<-> (normal-line (line p q) (plane2 P V) P1)
+		(normal-line (line p q) (plane-shape (plane2 P V)) P1)))
+
+(axiom
+  def_normal_line_sphere
+  (p q r c P)
+  (<-> (normal-line (line p q) (sphere c r) P)
+       (&&
+        (on P (line p q))
+        (on c (line p q))
+        (on P (sphere c r)))))
+
+
+(axiom
 	def_a_point_on_parametric_form_plane
 	(s t u v)
 	(= (a-point-on (plane s t u v))
@@ -696,6 +998,18 @@
 	     )
 	)
 )
+
+(axiom
+	def_perpendicular_plane_including_half_line
+	(P Q R)
+	(= (perpendicular-plane-including R (half-line P Q))
+	   (perpendicular-plane-including R (line P Q))))
+
+(axiom
+	def_perpendicular_plane_including_seg
+	(P Q R)
+	(= (perpendicular-plane-including R (seg P Q))
+	   (perpendicular-plane-including R (line P Q))))
 
 (axiom
 	def_extend_triangle_to_plane
@@ -860,6 +1174,95 @@
 	(<-> (parallel (disk c r n) p)
 		(parallel (plane-shape (extend-to-plane (disk c r n))) p)))
 
+(axiom
+	def_line_parallel_implement
+	(p q P)
+	(<-> (parallel (line p q) (plane-shape P))
+		(= 0 (inner-prod (vec p q) (normal-vector-of (plane-shape P))))))
+
+(axiom
+	def_line_parallel1
+	(p q A B C)
+	(<-> (parallel (line p q) (plane1 A B C))
+		(parallel (line p q) (plane-shape (plane1 A B C)))))
+
+(axiom
+	def_line_parallel2
+	(p q P V)
+	(<-> (parallel (line p q) (plane2 P V))
+		(parallel (line p q) (plane-shape (plane2 P V)))))
+
+(axiom
+	def_line_parallel3
+	(p q s t u v)
+	(<-> (parallel (line p q) (plane s t u v))
+		(parallel (line p q) (plane-shape (plane s t u v)))))
+
+(axiom
+	def_line_parallel4
+	(p q P)
+	(<-> (parallel (plane-shape P) (line p q))
+		(parallel (line p q) (plane-shape P))))
+
+(axiom
+	def_half_line_parallel_implement
+	(p q P)
+	(<-> (parallel (half-line p q) (plane-shape P))
+		   (parallel (line p q) (plane-shape P))))
+
+(axiom
+	def_half_line_parallel1
+	(p q A B C)
+	(<-> (parallel (half-line p q) (plane1 A B C))
+		(parallel (half-line p q) (plane-shape (plane1 A B C)))))
+
+(axiom
+	def_half_line_parallel2
+	(p q P V)
+	(<-> (parallel (half-line p q) (plane2 P V))
+		(parallel (half-line p q) (plane-shape (plane2 P V)))))
+
+(axiom
+	def_half_line_parallel3
+	(p q s t u v)
+	(<-> (parallel (half-line p q) (plane s t u v))
+		(parallel (half-line p q) (plane-shape (plane s t u v)))))
+
+(axiom
+	def_half_line_parallel4
+	(p q P)
+	(<-> (parallel (plane-shape P) (half-line p q))
+		(parallel (half-line p q) (plane-shape P))))
+
+(axiom
+	def_seg_parallel_implement
+	(p q P)
+	(<-> (parallel (seg p q) (plane-shape P))
+		   (parallel (line p q) (plane-shape P))))
+
+(axiom
+	def_seg_parallel1
+	(p q A B C)
+	(<-> (parallel (seg p q) (plane1 A B C))
+		(parallel (seg p q) (plane-shape (plane1 A B C)))))
+
+(axiom
+	def_seg_parallel2
+	(p q P V)
+	(<-> (parallel (seg p q) (plane2 P V))
+		(parallel (seg p q) (plane-shape (plane2 P V)))))
+
+(axiom
+	def_seg_parallel3
+	(p q s t u v)
+	(<-> (parallel (seg p q) (plane s t u v))
+		(parallel (seg p q) (plane-shape (plane s t u v)))))
+
+(axiom
+	def_seg_parallel4
+	(p q P)
+	(<-> (parallel (plane-shape P) (seg p q))
+		(parallel (seg p q) (plane-shape P))))
 
 ;;@------------------------------------------------------------------------------
 ;;@ 3D Geometric objects
@@ -877,6 +1280,12 @@
   (x y z r)
   (&& (= S (sphere (point x y z) r))
       (< 0 r)))
+
+(def-typing-trigger
+  (hemisphere-face-type S)
+  (P V)
+  (&& (= S (hemisphere-face P V))
+      (! (= V (zero-vector)))))
 
 (def-typing-trigger
   (cuboid-type T)
@@ -929,6 +1338,12 @@
 		 (sphere (origin) 1)))
 
 (axiom
+  def_is_sphere2
+  (C r)
+  (<-> (is-sphere (sphere C r))
+       (< 0 r)))
+
+(axiom
   def_is_sphere
   (S)
   (<-> (is-sphere S)
@@ -943,6 +1358,15 @@
 			 (&& (on p (sphere c r))
 					 (on q (sphere c r))
 					 (on c (seg p q)))))
+
+(axiom
+  def_is_diameter_of_circle
+  (p q c r n)
+  (<-> (is-diameter-of (seg p q) (circle c r n))
+       (&& (on p (circle c r n))
+           (on q (circle c r n))
+           (= c (midpoint-of p q)))))
+
 (axiom
   def_is_diameter_of_disk
   (c r n A B)
@@ -1005,10 +1429,10 @@
  (<-> (is-parallelopiped A B C D
                          E F G H)
       (&& (is-tetrahedron A B D E)
-          (= (vec C B) (vec A D))
-          (= (vec H D) (vec A E))
-          (= (vec F E) (vec A B))
-          (= (vec G C) (vec A E))
+          (= (vec B C) (vec A D))
+          (= (vec D H) (vec A E))
+          (= (vec E F) (vec A B))
+          (= (vec C G) (vec A E))
       )))
 
 (axiom
@@ -1079,6 +1503,17 @@
   (= (radius-of (sphere C r))
      r))
 
+(axiom
+  def_center_of_hemisphere_face
+  (P V)
+  (= (center-of (hemisphere-face P V))
+     P))
+
+(axiom
+   def_radius_of_hemisphere_face
+   (P V)
+   (= (radius-of (hemisphere-face P V))
+      (radius V)))
 
 ;;kudou
 
@@ -1097,9 +1532,27 @@
   ;(&& (!(on C (disk c r n)))
   ;    (vec-parallel n (vec c P))
   (&& (= C (right-cone (disk c r n) P))
+      (! (= r 0))
+      (! (= n (zero-vector)))
+      (! (= c P))
       (vec-parallel n (vec c P))
   )
 )
+
+(def-typing-trigger
+  (conical-surface-type C)
+  ( c r n P )
+  (&& (= C (conical-surface (disk c r n) P))
+      (! (= 0 (inner-prod (vec c P) n)))))
+
+(def-typing-trigger
+  (right-conical-surface-type C)
+  ( c r n P )
+  (&& (= C (right-conical-surface (disk c r n) P))
+      (! (= r 0))
+      (! (= n (zero-vector)))
+      (! (= c P))
+      (vec-parallel n (vec c P))))
 
 (def-typing-trigger
   (cylinder-type C)
@@ -1108,6 +1561,32 @@
       (vec-parallel n1 (vec c1 c2))
       (= r1 r2)
       (!(= 0 (distance c1 c2)))
+  )
+)
+
+(def-typing-trigger
+  (cylindrical-surface-type C)
+  (c1 r1 n1 c2 r2 n2)
+  (&& (= C (cylindrical-surface (disk c1 r1 n1) (disk c2 r2 n2)))
+      (vec-parallel n1 (vec c1 c2))
+      (= r1 r2)
+      (!(= 0 (distance c1 c2)))
+  )
+)
+
+(axiom
+ def_is_pyramid_triangle_3d
+ (p1 p2 p3 p)
+ (<-> (is-pyramid (triangle p1 p2 p3) p)
+      (is-tetrahedron p p1 p2 p3)
+  )
+)
+
+(axiom
+ def_is_pyramid_square_3d
+ (p1 p2 p3 p4 p)
+ (<-> (is-pyramid (square p1 p2 p3 p4) p)
+      (is-tetrahedron p p1 p2 p3)
   )
 )
 
@@ -1135,6 +1614,77 @@
       (is-polygon ps)
       (! (= h (zero-vector)))))
 
+(def-typing-trigger
+  (prism-surface-type P)
+  (ps h)
+  (&& (= P (prism-surface (polygon ps) h))
+      (is-polygon ps)
+      (! (= h (zero-vector)))))
+
+(axiom
+  def_is_diagonal_of_cuboid
+  (p q A B C D E F G H)
+  (<-> (is-diagonal-of (seg p q) (cuboid A B C D E F G H))
+     (member (seg p q) (list-of
+         (seg A G) (seg B H) (seg C E) (seg D F)
+     ))))
+
+(axiom
+  def_is_diagonal_of_cube
+  (p q A B C D E F G H)
+  (<-> (is-diagonal-of (seg p q) (cube A B C D E F G H))
+    (is-diagonal-of (seg p q) (cuboid A B C D E F G H))))
+
+(axiom
+  def_is_diagonal_of_octahedron
+  (p q P A B C D Q)
+  (<-> (is-diagonal-of (seg p q) (octahedron P A B C D Q))
+     (member (seg p q) (list-of
+         (seg A C) (seg B D) (seg P Q)
+     ))))
+
+(axiom
+  def_is_diagonal_of_prism_0
+  (p q H)
+  (<-> (is-diagonal-of (seg p q) (prism (polygon (nil)) H)) (false)))
+
+(axiom
+  def_is_diagonal_of_prism_1
+  (p q x H)
+  (<-> (is-diagonal-of (seg p q) (prism (polygon (cons x (nil))) H)) (false)))
+
+(axiom
+  def_is_diagonal_of_prism_2
+  (p q x y H)
+  (<-> (is-diagonal-of (seg p q) (prism (polygon (cons x (cons y (nil)))) H)) (false)))
+
+(def-fun diagonals-of-prism :: (ListOf Point) -> Vector => (ListOf Shape))
+(axiom
+  def_diagonals_of_prism_nil
+  (H)
+  (= (diagonals-of-prism (nil) H) (nil)))
+
+(axiom
+  def_diagonals_of_prism_rec
+  (P Ps H)
+  (= (diagonals-of-prism (cons P Ps) H)
+    (let*
+      (
+        (shifted (circular-shift (cons P Ps)))
+        (diag-vertice (cdr (cdr (cdr shifted))))
+      )
+      (append (map (Lam p (seg P (vec-translate p H))) diag-vertice) (diagonals-of-prism Ps H))
+    )))
+
+
+(axiom
+  def_is_diagonal_of_prism
+  (p q Ps H)
+  (<-> (is-diagonal-of (seg p q) (prism (polygon Ps) H))
+    (member (seg p q) (diagonals-of-prism Ps H))))
+
+
+
 
 ;;@------------------------------------------------------------------------------
 ;;@ 2D-objects in 3D-space
@@ -1152,6 +1702,13 @@
   (&& (= C (circle (point x y z) r (vec3d nx ny nz)))
       (< 0 r)
       (! (= (vec3d nx ny nz) (zero-vector)))))
+
+(axiom
+  def_area_of_circle3d
+  (c r n)
+  (= (area-of (circle c r n))
+     (* (Pi) (^ r 2))))
+
 (axiom
   def_center_of_circle_3d
   (c r n)
@@ -1163,6 +1720,12 @@
   (c r n)
   (= (radius-of (circle c r n))
      r))
+
+(axiom
+  def_perimeter_of_circle_3d
+  (c r n)
+  (= (length-of (circle c r n))
+     (length-of (circle-shape (circle c r n)))))
 
 (axiom
   def_normal_vector_of_circle_3d
@@ -1196,6 +1759,12 @@
   (c r n)
   (= (radius-of (disk c r n))
      r))
+
+(axiom
+  def_perimeter_of_disk_3d
+  (c r n)
+  (= (length-of (disk c r n))
+     (length-of (disk-shape (disk c r n)))))
 
 (axiom
   def_disk_equality
@@ -1354,6 +1923,16 @@
   (= (local-system-of (arc c p q))
      (local-system-of (minor-arc (arc c p q)))))
 
+(axiom
+ def-connect-by-arc_3d
+ (pq c p a n)
+ (<-> (connect (arc c p a n) pq)
+  (|| (= pq (list-of (arc-ini-point (arc c p a n))
+                     (arc-end-point (arc c p a n))))
+      (= pq (list-of (arc-end-point (arc c p a n))
+                     (arc-ini-point (arc c p a n)))))))
+
+
 (def-typing-trigger
   (circular-sector-type A)
   (c p a n)
@@ -1393,6 +1972,11 @@
   def_radius_of_circular_sector_3d
   (c p a n)
   (= (radius-of (circular-sector c p a n)) (distance c p)))
+
+(axiom
+	def_length_of_circular_sector__3d
+	(c p a n)
+	(= (length-of (circular-sector c p a n)) (length-of (circular-sector-shape (circular-sector c p a n)))))
 
 (axiom
 	def_area_of_circular_sector_3d
@@ -1472,6 +2056,32 @@
 				(cons p0 (cons p1 ps))
 			)
 		)))
+
+(axiom
+  def_lists_of_points_bending_in_same_way_3d
+  (p0 p1 ps q0 q1 qs)
+    (<-> (lists-of-points-bending-in-same-way (cons p0 (cons p1 ps)) (cons q0 (cons q1 qs)))
+        (let
+          (
+            (Ps (cons p0 (cons p1 ps)))
+            (Qs (cons q0 (cons q1 qs)))
+            (Pyx (vec (fst y) (fst x)))
+            (Pyz (vec (fst y) (fst z)))
+            (Qyx (vec (snd y) (snd x)))
+            (Qyz (vec (snd y) (snd z)))
+          )
+          (exists (sig) (&&
+              (= sig (if (> 0 (inner-prod (outer-prod (vec p0 (last ps)) (vec p0 p1)) (outer-prod (vec q0 (last qs)) (vec q0 q1)))) -1 1))
+              (= (list-len Ps) (list-len Qs))
+              (cyclic-all
+                  (Lam x (Lam y (PLam z (&&
+                      (= (* (* (radius Qyx) (radius Qyz)) (inner-prod Pyx Pyz)) (* (* (radius Pyx) (radius Pyz)) (inner-prod Qyx Qyz)))
+                      (< 0 (* sig (inner-prod (outer-prod Pyx Pyz) (outer-prod Qyx Qyz))))
+                  ))))
+                  (zip Ps Qs)
+              )
+          ))
+        )))
 
 (def-typing-trigger
   (polygon-type P)
@@ -1568,6 +2178,8 @@
 	(= (point-shape-distance P (plane2 A n))
 		(radius (normal-vector-to (plane2 A n) P))))
 
+
+;; point-shape-distance^2
 (axiom
  def_point_shape_square_distance_line_3d
  (P A B)
@@ -1594,6 +2206,8 @@
 	(= (point-shape-distance^2 P (plane2 A n))
 		(radius^2 (normal-vector-to (plane2 A n) P))))
 
+
+;; distance-between-parallel-planes
 (axiom
 	def_distance_between_parallel_planes
 	(P Q)
@@ -1647,6 +2261,7 @@
 	(= (distance^2-between-parallel-planes P (plane-shape Q))
 		(distance^2-between-parallel-planes (plane-shape Q) P)))
 
+;; line-line-distance
 (axiom
 	def_line_line_distance_3d
 	(p1 p2 q1 q2)
@@ -1665,6 +2280,7 @@
 			(point-shape-distance^2 p1 (plane1 q1 q2 (vec-translate q1 (vec p1 p2))))
 		)))
 
+;; shape-shape-distance
 (axiom
 	def_line_plane_distance
 	(p1 p2 plane)
@@ -1834,46 +2450,175 @@
 	def_perpendicular_line_vs_plane_shape
 	(p q plane)
 	(<-> (perpendicular (line p q) (plane-shape plane))
-		(vec-parallel (vec p q) (normal-vector-of plane))))
+		(vec-parallel (vec p q) (normal-vector-of (plane-shape plane)))))
 
 (axiom
 	def_perpendicular_line_vs_plane1
 	(p q P Q R)
 	(<-> (perpendicular (line p q) (plane1 P Q R))
-		(&& (vec-perpendicular (vec p q) (vec P Q))
-			(vec-perpendicular (vec p q) (vec P R)))))
-
-(axiom
-	def_perpendicular_plane_shape_vs_line
-	(p q plane)
-	(<-> (perpendicular (plane-shape plane) (line p q))
-		(perpendicular (line p q) (plane-shape plane))))
-(axiom
-	def_perpendicular_plane1_vs_line
-	(p q P Q R)
-	(<-> (perpendicular (plane1 P Q R) (line p q))
-		(perpendicular (line p q) (plane1 P Q R))))
+       (perpendicular (line p q) (plane-shape (plane1 P Q R)))))
 
 (axiom
 	def_perpendicular_line_vs_plane
 	(p q a b c d)
 	(<-> (perpendicular (line p q) (plane a b c d))
 		(perpendicular (line p q) (plane-shape (plane a b c d)))))
+
 (axiom
 	def_perpendicular_line_vs_plane2
 	(p q P V)
 	(<-> (perpendicular (line p q) (plane2 P V))
 		(perpendicular (line p q) (plane-shape (plane2 P V)))))
+
+(axiom
+	def_perpendicular_plane1_vs_line
+	(p q P Q R)
+	(<-> (perpendicular (plane1 P Q R) (line p q))
+       (perpendicular (line p q) (plane-shape (plane1 P Q R)))))
+
 (axiom
 	def_perpendicular_plane_vs_line
 	(p q a b c d)
 	(<-> (perpendicular (plane a b c d) (line p q))
 		(perpendicular (line p q) (plane-shape (plane a b c d)))))
+
 (axiom
 	def_perpendicular_plane2_vs_line
 	(p q P V)
 	(<-> (perpendicular (plane2 P V) (line p q))
 		(perpendicular (line p q) (plane-shape (plane2 P V)))))
+
+(axiom
+  def_perpendicular_half_line_plane_implement
+  (p q P)
+  (<-> (perpendicular (half-line p q) (plane-shape P))
+    (perpendicular (line p q) (plane-shape P))))
+
+(axiom
+	def_perpendicular_half_line_vs_plane1
+	(p q P Q R)
+	(<-> (perpendicular (half-line p q) (plane1 P Q R))
+       (perpendicular (half-line p q) (plane-shape (plane1 P Q R)))))
+
+(axiom
+	def_perpendicular_half_line_vs_plane
+	(p q a b c d)
+	(<-> (perpendicular (half-line p q) (plane a b c d))
+		(perpendicular (half-line p q) (plane-shape (plane a b c d)))))
+
+(axiom
+	def_perpendicular_half_line_vs_plane2
+	(p q P V)
+	(<-> (perpendicular (half-line p q) (plane2 P V))
+		(perpendicular (half-line p q) (plane-shape (plane2 P V)))))
+
+(axiom
+	def_perpendicular_plane1_vs_half_line
+	(p q P Q R)
+	(<-> (perpendicular (plane1 P Q R) (half-line p q))
+       (perpendicular (line p q) (plane-shape (plane1 P Q R)))))
+
+(axiom
+	def_perpendicular_plane_vs_half_line
+	(p q a b c d)
+	(<-> (perpendicular (plane a b c d) (half-line p q))
+		(perpendicular (line p q) (plane-shape (plane a b c d)))))
+
+(axiom
+	def_perpendicular_plane2_vs_half_line
+	(p q P V)
+	(<-> (perpendicular (plane2 P V) (half-line p q))
+		(perpendicular (line p q) (plane-shape (plane2 P V)))))
+
+(axiom
+  def_perpendicular_seg_plane_implement
+  (p q P)
+  (<-> (perpendicular (seg p q) (plane-shape P))
+    (perpendicular (line p q) (plane-shape P))))
+
+(axiom
+	def_perpendicular_seg_vs_plane1
+	(p q P Q R)
+	(<-> (perpendicular (seg p q) (plane1 P Q R))
+       (perpendicular (seg p q) (plane-shape (plane1 P Q R)))))
+
+(axiom
+	def_perpendicular_seg_vs_plane
+	(p q a b c d)
+	(<-> (perpendicular (seg p q) (plane a b c d))
+		(perpendicular (seg p q) (plane-shape (plane a b c d)))))
+
+(axiom
+	def_perpendicular_seg_vs_plane2
+	(p q P V)
+	(<-> (perpendicular (seg p q) (plane2 P V))
+		(perpendicular (seg p q) (plane-shape (plane2 P V)))))
+
+(axiom
+	def_perpendicular_plane1_vs_seg
+	(p q P Q R)
+	(<-> (perpendicular (plane1 P Q R) (seg p q))
+       (perpendicular (line p q) (plane-shape (plane1 P Q R)))))
+
+(axiom
+	def_perpendicular_plane_vs_seg
+	(p q a b c d)
+	(<-> (perpendicular (plane a b c d) (seg p q))
+		(perpendicular (line p q) (plane-shape (plane a b c d)))))
+
+(axiom
+	def_perpendicular_plane2_vs_seg
+	(p q P V)
+	(<-> (perpendicular (plane2 P V) (seg p q))
+		(perpendicular (line p q) (plane-shape (plane2 P V)))))
+
+(axiom
+	def_perpendicular_plane_vs_plane_shape
+	(plane1 plane2)
+	(<-> (perpendicular (plane-shape plane1) (plane-shape plane2))
+		(= 0 (inner-prod (normal-vector-of (plane-shape plane1)) (normal-vector-of (plane-shape plane2))))))
+
+(axiom
+	def_perpendicular_plane1_vs_plane1
+	(P Q R P1 Q1 R1)
+	(<-> (perpendicular (plane1 P Q R) (plane1 P1 Q1 R1))
+		(perpendicular (plane-shape (plane1 P Q R)) (plane-shape (plane1 P1 Q1 R1)))))
+
+(axiom
+	def_perpendicular_plane_vs_plane
+	(a b c d e f g h)
+	(<-> (perpendicular (plane a b c d) (plane e f g h))
+		(perpendicular (plane-shape (plane a b c d)) (plane-shape (plane e f g h)))))
+
+(axiom
+	def_perpendicular_plane2_vs_plane2
+	(P V P1 V1)
+	(<-> (perpendicular (plane2 P V) (plane2 P1 V1))
+		(perpendicular (plane-shape (plane2 P V)) (plane-shape (plane2 P1 V1)))))
+
+(axiom
+	def_perpendicular_plane1_vs_plane2
+	(P Q R P1 V)
+	(<-> (perpendicular (plane1 P Q R) (plane2 P1 V))
+		(perpendicular (plane-shape (plane1 P Q R)) (plane-shape (plane2 P V)))))
+
+(axiom
+	def_perpendicular_plane1_vs_plane
+	(P Q R a b c d)
+	(<-> (perpendicular (plane1 P Q R) (plane a b c d))
+		(perpendicular (plane-shape (plane1 P Q R)) (plane-shape (plane a b c d)))))
+
+(axiom
+	def_perpendicular_plane2_vs_plane
+	(P V a b c d)
+	(<-> (perpendicular (plane2 P V) (plane a b c d))
+		(perpendicular (plane-shape (plane2 P V)) (plane-shape (plane a b c d)))))
+
+(axiom
+	def_perpendicular_plane_vs_plane_sym
+	(plane1 plane2)
+	(<-> (perpendicular (plane-shape plane1) (plane-shape plane2))
+		(perpendicular (plane-shape plane2) (plane-shape plane1))))
 
 (axiom
  def_perpendicular_line3d_vs_plane
@@ -1935,10 +2680,47 @@
        (&& (on P A)
           (on P B))))
 
+(axiom
+  def_is_opposite_of_wrt
+  (p1 p2 s t u v)
+  (<-> (is-opposite-of-wrt p1 p2 (plane s t u v))
+       (intersect (seg p1 p2) (plane s t u v))))
+
+(axiom
+  def_is_opposite_of_wrt1
+  (p1 p2 p q r)
+  (<-> (is-opposite-of-wrt p1 p2 (plane1 p q r))
+       (intersect (seg p1 p2) (plane1 p q r))))
+
+(axiom
+  def_is_opposite_of_wrt2
+  (p1 p2 p v)
+  (<-> (is-opposite-of-wrt p1 p2 (plane2 p v))
+       (intersect (seg p1 p2) (plane2 p v))))
 
 ;;@------------------------------------------------------------------------------
 ;;@ inscribed-in/circumscribed-about
 ;;@------------------------------------------------------------------------------
+(axiom
+  def_is_inscribed_in_disk_3d_1
+  (c r n S)
+  (<-> (is-inscribed-in (disk c r n) S)
+    (is-inscribed-in (circle c r n) S)))
+
+(axiom
+  def_is_inscribed_in_disk_3d_2
+  (c r n S)
+  (<-> (is-inscribed-in S (disk c r n))
+    (is-inscribed-in S (circle c r n))))
+
+(axiom
+  def_is_inscribed_in
+  (c1 r1 n1 c2 r2 n2)
+  (<-> (is-inscribed-in (circle c1 r1 n1) (circle c2 r2 n2))
+    (&& (= (extend-to-plane (circle c1 r1 n1)) (extend-to-plane (circle c2 r2 n2)))
+        (< r1 r2)
+        (= (distance^2 c1 c2) (^ (- r2 r1) 2)))))
+
 (axiom
 	def_circle_is_inscribed_in_triangle_3d
 	(c r n A B C)
@@ -1962,6 +2744,22 @@
 			(cyclic-all (Lam p0 (Lam p1 (PLam p2 (= (^ r 2) (point-shape-distance^2 c (line p1 p2)))))) ps))))
 
 (axiom
+  def_is_circumscribed_about_circle_3d
+  (c1 r1 n1 c2 r2 n2)
+  (<-> (is-circumscribed-about (circle c1 r1 n1)
+                               (circle c2 r2 n2))
+       (&& (= (extend-to-plane (circle c1 r1 n1)) (extend-to-plane (circle c2 r2 n2)))
+           (= (distance c1 c2) (+ r1 r2)))))
+
+
+(axiom
+        def_sphere_is_inscribed_in_sphere
+        (c1 r1 c2 r2)
+        (<-> (is-inscribed-in (sphere c1 r1) (sphere c2 r2))
+                (&& (< r1 r2)
+                    (= (distance^2 c1 c2) (^ (- r2 r1) 2)))))
+
+(axiom
 	def_sphere_is_inscribed_in_polyhedron
 	(c r P)
 	(<-> (is-inscribed-in (sphere c r) (convex-polyhedron P))
@@ -1976,6 +2774,17 @@
 			(= c (midpoint-of C1 C2))
 			(= (distance^2 C1 C2) (* 4 (^ r 2)))
 		)))
+
+(axiom
+  def_sphere_is_inscribed_in_cone
+  (c r C R N P)
+  (<-> (is-inscribed-in (sphere c r) (cone (disk C R N) P))
+    (&& (forall (A) (-> 
+            (on A (circle C R N))
+            (= (^ r 2) (point-shape-distance^2 c (line A P)))
+        ))
+        (= (^ r 2) (point-shape-distance^2 c (extend-to-plane (disk C R N))))
+    )))
 
 (axiom
 	def_sphere_is_inscribed_in_right_cone
@@ -1993,16 +2802,30 @@
 	(<-> (is-inscribed-in (sphere c r) (tetrahedron A B C D))
 		(is-inscribed-in (sphere c r) (convex-polyhedron (tetrahedron A B C D)))))
 (axiom
+        def_sphere_is_inscribed_in_octahedron
+        (c r P A B C D Q)
+        (<-> (is-inscribed-in (sphere c r) (octahedron P A B C D Q))
+                (is-inscribed-in (sphere c r) (convex-polyhedron (octahedron P A B C D Q)))))
+(axiom
 	def_sphere_is_inscribed_in_cube
 	(c r A B C D E F G H)
 	(<-> (is-inscribed-in (sphere c r) (cube A B C D E F G H))
 		(is-inscribed-in (sphere c r) (convex-polyhedron (cube A B C D E F G H)))))
 (axiom
+	def_sphere_is_inscribed_in_cuboid
+	(c r A B C D E F G H)
+	(<-> (is-inscribed-in (sphere c r) (cuboid A B C D E F G H))
+		(is-inscribed-in (sphere c r) (convex-polyhedron (cuboid A B C D E F G H)))))
+(axiom
 	def_sphere_is_inscribed_in_suquare_pyramid
 	(c r O A B C D)
 	(<-> (is-inscribed-in (sphere c r) (square-pyramid O A B C D))
 		(is-inscribed-in (sphere c r) (convex-polyhedron (square-pyramid O A B C D)))))
-
+(axiom
+	def_sphere_is_inscribed_in_pyramid
+	(c r S P)
+	(<-> (is-inscribed-in (sphere c r) (pyramid S P))
+		(is-inscribed-in (sphere c r) (convex-polyhedron (pyramid S P)))))
 (axiom
     def_sphere_is_inscribed_in_prism
     (c r A H)
@@ -2048,6 +2871,22 @@
 	(<-> (is-inscribed-in (convex-polyhedron P) (sphere c r))
 		(all (PLam vertex (on vertex (sphere c r))) (vertices-of P))))
 
+
+(axiom
+	def_cuboid_is_inscribed_in_sphere
+	(c r A B C D E F G H)
+	(<-> (is-inscribed-in (cuboid A B C D E F G H) (sphere c r))
+		(&& (on A (sphere c r))
+		    (on B (sphere c r))
+		    (on D (sphere c r)) 
+		    (on E (sphere c r))
+		)))
+(axiom
+	def_cube_is_inscribed_in_sphere
+	(c r A B C D E F G H)
+	(<-> (is-inscribed-in (cube A B C D E F G H) (sphere c r))
+		(is-inscribed-in (cuboid A B C D E F G H) (sphere c r))))
+
 (axiom
 	def_cylinder_is_inscribed_in_sphere
 	(c r C1 R1 N1 C2 R2 N2)
@@ -2058,13 +2897,24 @@
 		)))
 
 (axiom
-	def_right_cone_is_inscribed_in_sphere
+	def_cone_is_inscribed_in_sphere
 	(c r C R N P)
-	(<-> (is-inscribed-in (right-cone (disk C R N) P) (sphere c r))
+	(<-> (is-inscribed-in (cone (disk C R N) P) (sphere c r))
 	(&&
 		(on P (sphere c r))
 		(forall (x y z) (-> (on (point x y z) (circle C R N)) (on (point x y z) (sphere c r))))
 	)))
+
+(axiom
+	def_right_cone_is_inscribed_in_sphere
+	(c r C R N P)
+	(<-> (is-inscribed-in (right-cone (disk C R N) P) (sphere c r))
+	  (let ((h (height-of (right-cone (disk C R N) P))))
+	      (&& (on P (sphere c r))
+	          (= 0 (+ (+ (^ R 2) (* (* -2 r) h)) (^ h 2)))
+	      )
+	  )
+))
 
 (axiom
 	def_tetrahedron_is_inscribed_in_sphere
@@ -2072,21 +2922,32 @@
 	(<-> (is-inscribed-in (tetrahedron A B C D) (sphere c r))
 		(is-inscribed-in (convex-polyhedron (tetrahedron A B C D)) (sphere c r))))
 (axiom
-	def_cube_is_inscribed_in_sphere
-	(c r A B C D E F G H)
-	(<-> (is-inscribed-in (cube A B C D E F G H) (sphere c r))
-		(is-inscribed-in (convex-polyhedron (cube A B C D E F G H)) (sphere c r))))
+	def_octahedron_is_inscribed_in_sphere
+	(c r P A B C D Q)
+	(<-> (is-inscribed-in (octahedron P A B C D Q) (sphere c r))
+		(is-inscribed-in (convex-polyhedron (octahedron P A B C D Q)) (sphere c r))))
 (axiom
 	def_square_pyramid_is_inscribed_in_sphere
 	(c r O A B C D)
 	(<-> (is-inscribed-in (square-pyramid O A B C D) (sphere c r))
 		(is-inscribed-in (convex-polyhedron (square-pyramid O A B C D)) (sphere c r))))
-
+(axiom
+        def_pyramid_is_inscribed_in_sphere
+        (c r S P)
+        (<-> (is-inscribed-in (pyramid S P) (sphere c r))
+                (is-inscribed-in (convex-polyhedron (pyramid S P)) (sphere c r))))
 (axiom
     def_prism_is_inscribed_in_sphere
     (c r A H)
     (<-> (is-inscribed-in (prism A H) (sphere c r))
          (is-inscribed-in (convex-polyhedron (prism A H)) (sphere c r))))
+
+(axiom
+  def_is_circumscribed_about_sphere_3d
+  (c1 r1 c2 r2)
+  (<-> (is-circumscribed-about (sphere c1 r1)
+                               (sphere c2 r2))
+       (= (distance c1 c2) (+ r1 r2))))
 
 ;;@------------------------------------------------------------------------------
 ;;@ Height, area, volume of 3D geometric objects
@@ -2169,6 +3030,12 @@
   def_height_of_prism
   (A H)
   (= (height-of (prism A H))
+     (radius H)))
+
+(axiom
+  def_height_of_prism_surface
+  (A H)
+  (= (height-of (prism-surface A H))
      (radius H)))
 
 (axiom
@@ -2266,6 +3133,12 @@
       (* (/ 1 3) (height-of (pyramid B V)) (area-of B))))
 
 (axiom
+   def_volume_of_octahedron
+   (P A B C D Q)
+   (= (volume-of (octahedron P A B C D Q))
+      (* (/ 1 3) (area-of (square A B C D)) (+ (point-shape-distance P (plane1 A B C)) (point-shape-distance Q (plane1 A B C))))))
+
+(axiom
   def_side_of_cylinder
   (c1 r1 n1 c2 r2 n2)
   (= (side-of (cylinder (disk c1 r1 n1) (disk c2 r2 n2)))
@@ -2357,6 +3230,11 @@
 	(= (vertices-of (tetrahedron A B C D)) (list-of A B C D)))
 
 (axiom
+	def_vertices_of_octahedron
+	(P A B C D Q)
+	(= (vertices-of (octahedron P A B C D Q)) (list-of P A B C D Q)))
+
+(axiom
 	def_vertices_of_cuboid
 	(A B C D E F G H)
 	(= (vertices-of (cuboid A B C D E F G H)) (list-of A B C D E F G H)))
@@ -2402,6 +3280,83 @@
   def_vertice_of_right_conical_surface
   (c r n P)
   (= (vertice-of (right-conical-surface (circle c r n) P)) P))
+
+(axiom 
+  def_are_vertices-of_tetrahedron
+    (A B C D vertices)
+    (<-> (are-vertices-of vertices (tetrahedron A B C D))
+         (is-a-permutation-of vertices 
+            (list-of A B C D))))
+
+(axiom 
+  def_are_vertices-of_cuboid
+    (A B C D E F G H vertices)
+    (<-> (are-vertices-of vertices (cuboid A B C D E F G H))
+         (is-a-permutation-of vertices 
+            (list-of A B C D E F G H))))
+
+(axiom 
+  def_are_vertices-of_cube
+    (A B C D E F G H vertices)
+    (<-> (are-vertices-of vertices (cube A B C D E F G H))
+         (is-a-permutation-of vertices 
+            (list-of A B C D E F G H))))
+
+(axiom 
+  def_are_vertices-of_square_pyramid
+    (O A B C D vertices)
+    (<-> (are-vertices-of vertices (square-pyramid O A B C D))
+         (is-a-permutation-of vertices 
+            (list-of O A B C D))))
+
+(axiom 
+  def_are_vertices-of_octahedron
+    (P A B C D Q vertices)
+    (<-> (are-vertices-of vertices (octahedron P A B C D Q))
+         (is-a-permutation-of vertices 
+            (list-of P A B C D Q))))
+
+(axiom 
+  def_are_vertices-of_pyramid_triangle
+    (P A B C vertices)
+    (<-> (are-vertices-of vertices (pyramid (triangle A B C) P))
+         (is-a-permutation-of vertices 
+            (list-of P A B C))))
+
+(axiom 
+  def_are_vertices-of_pyramid_square
+    (P A B C D vertices)
+    (<-> (are-vertices-of vertices (pyramid (square A B C D) P))
+         (is-a-permutation-of vertices 
+            (list-of P A B C D))))
+
+(axiom 
+  def_are_vertices-of_pyramid_polygon
+    (P Ps vertices)
+    (<-> (are-vertices-of vertices (pyramid (polygon Ps) P))
+         (is-a-permutation-of vertices 
+            (cons P (vertices-of (polygon Ps))))))
+
+(axiom 
+  def_are_vertices-of_prism_triangle
+    (V A B C vertices)
+    (<-> (are-vertices-of vertices (prism (triangle A B C) V))
+         (is-a-permutation-of vertices 
+            (list-of  A B C (vec-translate A V) (vec-translate B V) (vec-translate C V)))))
+
+(axiom 
+  def_are_vertices-of_prism_square
+    (V A B C D vertices)
+    (<-> (are-vertices-of vertices (prism (square A B C D) V))
+         (is-a-permutation-of vertices 
+            (list-of A B C D (vec-translate A V) (vec-translate B V) (vec-translate C V) (vec-translate D V)))))
+
+(axiom 
+  def_are_vertices-of_prism_polygon
+    (Ps V vertices)
+    (<-> (are-vertices-of vertices (prism (polygon Ps) V))
+         (is-a-permutation-of vertices 
+            (append (vertices-of (polygon Ps)) (vertices-of (translate (polygon Ps) V))))))
 
 (axiom
 	def_faces_of_cuboid
@@ -2458,6 +3413,134 @@
                              (seg D B)))))
 
 (axiom
+  def_is_a_side_of_a_cuboid
+  (A B C D E F G H side)
+  (<-> (is-a-side-of side (cuboid A B C D E F G H))
+   (member side (list-of (seg A B)
+                 (seg B C)
+                 (seg C D)
+                 (seg D A)
+                 (seg D H)
+                 (seg A E)
+                 (seg B F)
+                 (seg C G)
+                 (seg E F)
+                 (seg F G)
+                 (seg G H)
+                 (seg H E)))))
+
+(axiom
+  def_is_a_side_of_a_cube
+  (A B C D E F G H side)
+  (<-> (is-a-side-of side (cube A B C D E F G H))
+   (is-a-side-of side (cuboid A B C D E F G H))))
+
+(axiom
+  def_is_a_side_of_a_square_pyramid
+  (O A B C D side)
+  (<-> (is-a-side-of side (square-pyramid O A B C D))
+       (member side
+        (list-of (seg O A)
+         (seg O B)
+         (seg O C)
+         (seg O D)
+         (seg A B)
+         (seg B C)
+         (seg C D)
+         (seg D A)))))
+
+(axiom
+  def_is_a_sides_of_a_octahedron
+  (P A B C D Q side)
+  (<-> (is-a-side-of side (octahedron P A B C D Q))
+       (member side
+        (list-of (seg P A)
+         (seg P B)
+         (seg P C)
+         (seg P D)
+         (seg A B)
+         (seg B C)
+         (seg C D)
+         (seg D A)
+         (seg Q A)
+         (seg Q B)
+         (seg Q C)
+         (seg Q D)))))
+
+(axiom
+  def_is_a_side_of_pyramid_triangle
+  (O A B C side)
+  (<-> (is-a-side-of side (pyramid (triangle A B C) O))
+       (member side 
+          (list-of (seg O A)
+                   (seg O B)
+                   (seg O C)
+                   (seg A B)
+                   (seg B C)
+                   (seg C A)))))
+
+(axiom
+  def_is_a_side_of_pyramid_square
+  (O A B C D side)
+  (<-> (is-a-side-of side (pyramid (square A B C D) O))
+       (is-a-side-of side (square-pyramid O A B C D))))
+       
+(axiom
+  def_is_a_side_of_pyramid_polygon
+  (O Ps side)
+  (<-> (is-a-side-of side (pyramid (polygon Ps) O))
+       (member side
+        (append (sides-of (polygon Ps))
+                (map (Lam x (seg O x))
+                     Ps)))))
+
+(axiom 
+  def_is_a_side_of_prism_triangle
+    (V A B C side)
+    (<-> (is-a-side-of side (prism (triangle A B C) V))
+         (member side 
+            (list-of  
+              (seg A B)
+              (seg B C)
+              (seg C A)
+              (seg A (vec-translate A V))
+              (seg B (vec-translate B V))
+              (seg C (vec-translate C V))
+              (seg (vec-translate A V) (vec-translate B V)) 
+              (seg (vec-translate B V) (vec-translate C V))
+              (seg (vec-translate C V) (vec-translate A V))))))
+
+(axiom 
+  def_is_a_side-of_prism_square
+    (V A B C D side)
+    (<-> (is-a-side-of side (prism (square A B C D) V))
+         (member side 
+            (list-of 
+              (seg A B)
+              (seg B C)
+              (seg C D)
+              (seg D A)
+              (seg A (vec-translate A V))
+              (seg B (vec-translate B V))
+              (seg C (vec-translate C V))
+              (seg D (vec-translate D V))
+              (seg (vec-translate A V) (vec-translate B V)) 
+              (seg (vec-translate B V) (vec-translate C V))
+              (seg (vec-translate C V) (vec-translate D V))
+              (seg (vec-translate D V) (vec-translate A V))))))
+
+(axiom 
+  def_is_a_side-of_prism_polygon
+    (Ps V side)
+    (<-> (is-a-side-of side (prism (polygon Ps) V))
+         (member side 
+            (append
+              (sides-of (polygon Ps))
+              (append
+                (sides-of (polygon (map (Lam x (vec-translate x V)) Ps)))
+                (map (Lam x (seg x (vec-translate x V))) Ps))))))
+
+(axiom
   def_are_the_sides_of_a_tetrahedron
   (A B C D sides)
   (<-> (are-the-sides-of sides (tetrahedron A B C D))
@@ -2468,6 +3551,187 @@
                                      (seg B C)
                                      (seg C D)
                                      (seg D B)))))
+
+(axiom
+  def_are_the_sides_of_a_cuboid
+  (A B C D E F G H sides)
+  (<-> (are-the-sides-of sides (cuboid A B C D E F G H))
+       (is-a-permutation-of sides
+                            (list-of (seg A B)
+                                     (seg B C)
+                                     (seg C D)
+                                     (seg D A)
+                                     (seg D H)
+                                     (seg A E)
+                                     (seg B F)
+                                     (seg C G)
+                                     (seg E F)
+                                     (seg F G)
+                                     (seg G H)
+                                     (seg H E)))))
+
+(axiom
+  def_are_the_sides_of_a_cube
+  (A B C D E F G H sides)
+  (<-> (are-the-sides-of sides (cube A B C D E F G H))
+       (are-the-sides-of sides (cuboid A B C D E F G H))))
+
+(axiom
+  def_are_the_sides_of_a_square_pyramid
+  (O A B C D sides)
+  (<-> (are-the-sides-of sides (square-pyramid O A B C D))
+       (is-a-permutation-of sides
+        (list-of (seg O A)
+         (seg O B)
+         (seg O C)
+         (seg O D)
+         (seg A B)
+         (seg B C)
+         (seg C D)
+         (seg D A)))))
+
+(axiom
+  def_are_the_sides_of_a_octahedron
+  (P A B C D Q sides)
+  (<-> (are-the-sides-of sides (octahedron P A B C D Q))
+       (is-a-permutation-of sides
+        (list-of (seg P A)
+         (seg P B)
+         (seg P C)
+         (seg P D)
+         (seg A B)
+         (seg B C)
+         (seg C D)
+         (seg D A)
+         (seg Q A)
+         (seg Q B)
+         (seg Q C)
+         (seg Q D)))))
+
+
+(axiom
+  def_are_the_sides_of_pyramid_triangle
+  (O A B C sides)
+  (<-> (are-the-sides-of sides (pyramid (triangle A B C) O))
+       (is-a-permutation-of sides 
+          (list-of (seg O A)
+                   (seg O B)
+                   (seg O C)
+                   (seg A B)
+                   (seg B C)
+                   (seg C A)))))
+
+(axiom
+  def_are_the_sides_of_pyramid_square
+  (O A B C D sides)
+  (<-> (are-the-sides-of sides (pyramid (square A B C D) O))
+       (are-the-sides-of sides (square-pyramid O A B C D))))
+       
+(axiom
+  def_are_the_sides_of_pyramid_polygon
+  (O Ps sides)
+  (<-> (are-the-sides-of sides (pyramid (polygon Ps) O))
+       (is-a-permutation-of sides
+        (append (sides-of (polygon Ps))
+                (map (Lam x (seg O x))
+                     Ps)))))
+
+(axiom 
+  def_are_the_sides_of_prism_triangle
+    (V A B C sides)
+    (<-> (are-the-sides-of sides (prism (triangle A B C) V))
+         (is-a-permutation-of sides 
+            (list-of  
+              (seg A B)
+              (seg B C)
+              (seg C A)
+              (seg A (vec-translate A V))
+              (seg B (vec-translate B V))
+              (seg C (vec-translate C V))
+              (seg (vec-translate A V) (vec-translate B V)) 
+              (seg (vec-translate B V) (vec-translate C V))
+              (seg (vec-translate C V) (vec-translate A V))))))
+
+(axiom 
+  def_are_the_sides_of_prism_square
+    (V A B C D sides)
+    (<-> (are-the-sides-of sides (prism (square A B C D) V))
+         (is-a-permutation-of sides 
+            (list-of 
+              (seg A B)
+              (seg B C)
+              (seg C D)
+              (seg D A)
+              (seg A (vec-translate A V))
+              (seg B (vec-translate B V))
+              (seg C (vec-translate C V))
+              (seg D (vec-translate D V))
+              (seg (vec-translate A V) (vec-translate B V)) 
+              (seg (vec-translate B V) (vec-translate C V))
+              (seg (vec-translate C V) (vec-translate D V))
+              (seg (vec-translate D V) (vec-translate A V))))))
+
+(axiom 
+  def_are_the_sides_of_prism_polygon
+    (Ps V sides)
+    (<-> (are-the-sides-of sides (prism (polygon Ps) V))
+         (is-a-permutation-of sides 
+            (append
+              (sides-of (polygon Ps))
+              (append
+                (sides-of (polygon (map (Lam x (vec-translate x V)) Ps)))
+                (map (Lam x (seg x (vec-translate x V))) Ps))))))
+
+(axiom
+  def_sides_of_a_tetrahedron
+  (A B C D)
+  (= (sides-of (tetrahedron A B C D))
+     (list-of (seg A B)
+              (seg A C)
+              (seg A D)
+              (seg B C)
+              (seg C D)
+              (seg D B))))
+
+(axiom
+  def_sides_of_a_cuboid
+  (A B C D E F G H)
+  (= (sides-of (cuboid A B C D E F G H))
+       (list-of (seg A B)
+                (seg B C)
+                (seg C D)
+                (seg D A)
+                (seg D H)
+                (seg A E)
+                (seg B F)
+                (seg C G)
+                (seg E F)
+                (seg F G)
+                (seg G H)
+                (seg H E))))
+
+(axiom
+  def_sides_of_a_cube
+  (A B C D E F G H)
+  (= (sides-of (cube A B C D E F G H))
+       (sides-of (cuboid A B C D E F G H))))
+
+(axiom
+  def_sides_of_a_octahedron
+  (P A B C D Q)
+  (= (sides-of (octahedron P A B C D Q))
+        (list-of (seg P A)
+                 (seg P B)
+                 (seg P C)
+                 (seg P D)
+                 (seg A B)
+                 (seg B C)
+                 (seg C D)
+                 (seg D A)
+                 (seg Q A)
+                 (seg Q B)
+                 (seg Q C)
+                 (seg Q D))))
 
 (axiom
   def-sides-of-square-pyramid
@@ -2481,6 +3745,74 @@
               (seg B C)
               (seg C D)
               (seg D A))))
+
+(axiom
+  def_sides_of_pyramid_triangle
+  (O A B C)
+  (= (sides-of (pyramid (triangle A B C) O))
+          (list-of (seg O A)
+                   (seg O B)
+                   (seg O C)
+                   (seg A B)
+                   (seg B C)
+                   (seg C A))))
+
+(axiom
+  def_sides_of_pyramid_square
+  (O A B C D)
+  (= (sides-of (pyramid (square A B C D) O))
+       (sides-of (square-pyramid O A B C D))))
+       
+(axiom
+  def_sides_of_pyramid_polygon
+  (O Ps)
+  (= (sides-of (pyramid (polygon Ps) O))
+        (append (sides-of (polygon Ps))
+                (map (Lam x (seg O x))
+                     Ps))))
+
+(axiom 
+  def_sides_of_prism_triangle
+    (V A B C)
+    (= (sides-of (prism (triangle A B C) V))
+            (list-of  
+              (seg A B)
+              (seg B C)
+              (seg C A)
+              (seg A (vec-translate A V))
+              (seg B (vec-translate B V))
+              (seg C (vec-translate C V))
+              (seg (vec-translate A V) (vec-translate B V)) 
+              (seg (vec-translate B V) (vec-translate C V))
+              (seg (vec-translate C V) (vec-translate A V)))))
+
+(axiom 
+  def_sides_of_prism_square
+    (V A B C D)
+    (= (sides-of (prism (square A B C D) V))
+            (list-of 
+              (seg A B)
+              (seg B C)
+              (seg C D)
+              (seg D A)
+              (seg A (vec-translate A V))
+              (seg B (vec-translate B V))
+              (seg C (vec-translate C V))
+              (seg D (vec-translate D V))
+              (seg (vec-translate A V) (vec-translate B V)) 
+              (seg (vec-translate B V) (vec-translate C V))
+              (seg (vec-translate C V) (vec-translate D V))
+              (seg (vec-translate D V) (vec-translate A V)))))
+
+(axiom 
+  def_sides_of_prism_polygon
+    (Ps V)
+    (= (sides-of (prism (polygon Ps) V))
+            (append
+              (sides-of (polygon Ps))
+              (append
+                (sides-of (polygon (map (Lam x (vec-translate x V)) Ps)))
+                (map (Lam x (seg x (vec-translate x V))) Ps)))))
 
 ;(axiom
 ; def_face_of_tetrahedron
@@ -2497,6 +3829,12 @@
 	(O A B C)
 	(= (faces-of (tetrahedron O A B C))
 		(list-of (triangle O A B) (triangle O B C) (triangle O C A) (triangle A B C))))
+
+(axiom
+	def_faces_of_octahedron
+	(P A B C D Q)
+	(= (faces-of (octahedron P A B C D Q))
+		(list-of (triangle P A B) (triangle P B C) (triangle P C D) (triangle P D A) (triangle Q A B) (triangle Q B C) (triangle Q C D) (triangle Q D A))))
 
 (axiom
 	def_faces_of_square_pyramid
@@ -2571,6 +3909,12 @@
       A))
 
 (axiom
+    def_base_of_hemisphere_face
+    (P V)
+    (= (base-of (hemisphere-face P V))
+       (disk P (radius V) V)))
+
+(axiom
 	def_faces_of_corn
 	(c r n P)
 	(= (faces-of (cone (disk c r n) P))
@@ -2624,6 +3968,8 @@
     (A H)
     (= (area-of (prism A H)) (area-of (solid-shape (prism A H)))))
 
+;; TODO: area-of(prism-surface)
+
 (axiom
     def_area_of_pyramid
     (A V)
@@ -2635,12 +3981,24 @@
 	(= (area-of (sphere C r))
 		(* (* 4 (Pi)) (^ r 2))))
 
+(axiom
+  def_area_of_hemisphere_face
+  (P V)
+  (= (area-of (hemisphere-face P V))
+     (* (* 2 (Pi)) (radius^2 V))))
+
 (def-fun an-inner-point-of :: Shape => Point)
 (axiom
 	def_an_inner_point_of_tetrahedron
 	(O A B C)
 	(= (an-inner-point-of (tetrahedron O A B C))
 		 (vec->point (sv* (/ 1 4) (v+ (v+ (v+ (vec (origin) O) (vec (origin) A)) (vec (origin) B)) (vec (origin) C))))))
+
+(axiom
+	def_an_inner_point_of_octahedron
+	(P A B C D Q)
+	(= (an-inner-point-of (octahedron P A B C D Q))
+		 (an-inner-point-of (tetrahedron P A B C))))
 
 (axiom
 	def_an_inner_point_of_cuboid
@@ -2716,6 +4074,12 @@
 	(point O A B C)
 	(<-> (on point (tetrahedron O A B C))
 		(on point (shape-common-operation (tetrahedron O A B C)))))
+
+(axiom
+	def_on_octahedron
+	(point P A B C D Q)
+	(<-> (on point (octahedron P A B C D Q))
+		(on point (shape-common-operation (octahedron P A B C D Q)))))
 
 (axiom
 	def_on_cuboid
@@ -2855,6 +4219,12 @@
     (<-> (on p (import-2d-shape S))
         (on p (shape-common-operation (import-2d-shape S)))))
 
+(axiom
+    def_on_orthographic_projection
+    (p S plane)
+    (<-> (on p (orthographic-projection S plane))
+        (PLamApp (char-fun-of (orthographic-projection S plane)) p)))
+
 
 ;;@------------------------------------------------------------------------------
 ;;@ inside/outside of an object
@@ -2864,6 +4234,12 @@
 	(point O A B C)
 	(<-> (point-inside-of point (tetrahedron O A B C))
 		(point-inside-of point (shape-common-operation (tetrahedron O A B C)))))
+
+(axiom
+	def_point_inside_of_octahedron
+	(point P A B C D Q)
+	(<-> (point-inside-of point (octahedron P A B C D Q))
+		(point-inside-of point (shape-common-operation (octahedron P A B C D Q)))))
 
 (axiom
 	def_point_inside_of_cuboid
@@ -3008,6 +4384,44 @@
    (P S)
    (<-> (point-outside-of P S)
         (! (point-inside-of P S))))
+
+;;@------------------------------------------------------------------------------
+;;@ point-symmetry_shape
+;;@------------------------------------------------------------------------------
+
+(axiom
+  def_point_symmetry_shape_octahedron
+  (point P A B C D Q)
+  (<-> (point-symmetry-shape (octahedron P A B C D Q) point)
+       (&&
+        (= point (seg-midpoint-of (seg P Q)))
+        (= point (seg-midpoint-of (seg A C)))
+        (= point (seg-midpoint-of (seg B D))))))
+    
+;;@------------------------------------------------------------------------------
+;;@ point-symmetry-shapes
+;;@------------------------------------------------------------------------------
+
+(axiom
+  def_point_symmetry_shapes_octahedron_order
+  (point P1 A1 B1 C1 D1 Q1 P2 A2 B2 C2 D2 Q2)
+  (<-> (point-symmetry-shapes-order (octahedron P1 A1 B1 C1 D1 Q1) (octahedron P2 A2 B2 C2 D2 Q2) point)
+       (&&
+        (point-symmetry-shapes (square A1 B1 C1 D1) (square A2 B2 C2 D2) point)
+        (point-symmetry P1 P2 point)
+        (point-symmetry Q1 Q2 point))))
+
+(axiom
+  def_point_symmetry_shapes_octahedron
+  (point P1 A1 B1 C1 D1 Q1 P2 A2 B2 C2 D2 Q2)
+  (<-> (point-symmetry-shapes (octahedron P1 A1 B1 C1 D1 Q1) (octahedron P2 A2 B2 C2 D2 Q2) point)
+       (||
+        (point-symmetry-shapes-order (octahedron P1 A1 B1 C1 D1 Q1) (octahedron P2 A2 B2 C2 D2 Q2) point)
+        (point-symmetry-shapes-order (octahedron P1 A1 B1 C1 D1 Q1) (octahedron Q2 A2 B2 C2 D2 P2) point)
+        (point-symmetry-shapes-order (octahedron P1 A1 B1 C1 D1 Q1) (octahedron A2 P2 B2 Q2 D2 C2) point)
+        (point-symmetry-shapes-order (octahedron P1 A1 B1 C1 D1 Q1) (octahedron C2 P2 B2 Q2 D2 A2) point)
+        (point-symmetry-shapes-order (octahedron P1 A1 B1 C1 D1 Q1) (octahedron B2 A2 P2 C2 Q2 D2) point)
+        (point-symmetry-shapes-order (octahedron P1 A1 B1 C1 D1 Q1) (octahedron D2 A2 P2 C2 Q2 B2) point))))
 
 
 ;;@------------------------------------------------------------------------------
@@ -3169,6 +4583,12 @@
 	(O A B C)
 	(= (char-fun-of (inner-part-of (tetrahedron O A B C)))
 		(char-fun-of (inner-part-of (convex-polyhedron (tetrahedron O A B C))))))
+
+(axiom
+	def_char_fun_of_inside_of_octahedron
+	(P A B C D Q)
+	(= (char-fun-of (inner-part-of (octahedron P A B C D Q)))
+		(char-fun-of (inner-part-of (convex-polyhedron (octahedron P A B C D Q))))))
 
 (axiom
 	def_char_fun_of_inside_of_cuboid
@@ -3362,6 +4782,12 @@
 		(char-fun-of (with-boundary (convex-polyhedron (tetrahedron O A B C))))))
 
 (axiom
+	def_char_fun_of_octahedron_with_boundary
+	(P A B C D Q)
+	(= (char-fun-of (with-boundary (octahedron P A B C D Q)))
+		(char-fun-of (with-boundary (convex-polyhedron (octahedron P A B C D Q))))))
+
+(axiom
 	def_char_fun_of_cuboid_with_boundary
 	(A B C D E F G H)
 	(= (char-fun-of (with-boundary (cuboid A B C D E F G H)))
@@ -3502,6 +4928,12 @@
 		(char-fun-of (solid-shape (boundary-of (tetrahedron O A B C))))))
 
 (axiom
+	def_char_fun_of_boundary_of_octahedron
+	(P A B C D Q)
+	(= (char-fun-of (boundary-of (octahedron P A B C D Q)))
+		(char-fun-of (solid-shape (boundary-of (octahedron P A B C D Q))))))
+
+(axiom
 	def_char_fun_of_boundary_of_cuboid
 	(A B C D E F G H)
 	(= (char-fun-of (boundary-of (cuboid A B C D E F G H)))
@@ -3640,6 +5072,12 @@
 	(O A B C)
 	(= (char-fun-of (tetrahedron O A B C))
 		(char-fun-of (boundary-of (tetrahedron O A B C)))))
+
+(axiom
+	def_char_fun_of_octahedron
+	(P A B C D Q)
+	(= (char-fun-of (octahedron P A B C D Q))
+		(char-fun-of (boundary-of (octahedron P A B C D Q)))))
 
 (axiom
 	def_char_fun_of_cuboid
@@ -3800,10 +5238,28 @@
   )
 )
 
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(axiom
+  def-axis-of-solid-of-rev-seg
+  (S P Q)
+  (= (solid-of-revolution S (seg P Q))
+     (solid-of-revolution S (line P Q))))
+
+(axiom
+  def-axis-of-solid-of-rev-half-line
+  (S P Q)
+  (= (solid-of-revolution S (half-line P Q))
+     (solid-of-revolution S (line P Q))))
+
+
+;;------------------------------------------------------------------------------
+;;------------------------------------------------------------------------------
+(def-fun shape-of-solid-of-revolution :: Shape -> Shape => Shape) 
 (axiom
 	def_solid_of_revolution
 	(S P Q)
-	(= (solid-of-revolution S (line P Q))
+	(= (shape-of-solid-of-revolution S (line P Q))
 		(let ((H (vec->point (v- (vec (origin) q) (normal-vector-to (line P Q) q)))))
 		  (shape-of-cpfun (PLam p
 					(exists (q) (&&
@@ -3813,7 +5269,6 @@
 				))
 			))
 		)))
-
 
 ;;@------------------------------------------------------------------------------
 ;;@ central axis of 3D objects

@@ -15,8 +15,8 @@
 ;; point on it.
 ;;
 ;; (3) Find the coordinates of the point symmetric to the point $(X, Y)$
-;; with respect to the straight line $m x + n y = 0$, where neither $m$
-;; nor $n$ is $0$.
+;; with respect to the straight line $m x + n y = 0$, where not both $m$
+;; $n$ are $0$.
 ;;
 ;; (4) Prove that $G$ is not line-symmetric with respect to any straight
 ;; line that passes through the origin.
@@ -40,9 +40,9 @@
 (def-directive
   p3
   (Find (R) (&&
-    (! (= n 0))
-    (! (= m 0))
-    (line-symmetry (point X Y) R (line (point 0 0) (point 1 (/ (- m) n)))))))
+    (|| (! (= n 0))
+            (! (= m 0)))
+    (line-symmetry (point X Y) R (line (point 0 0) (point (- n) m))))))
 
 (def-directive
   p4
@@ -60,8 +60,8 @@
 (def-answer p1 (PLam P (= P (point (- (* 2 p) X) (- (* 2 q) Y)))))
 
 (def-answer p3 (PLam R (&&
-  (! (= n 0))
-  (! (= m 0))
+  (|| (! (= n 0))
+      (! (= m 0)))
   (= R (point (/ (- (* (- (^ n 2) (^ m 2)) X) (* 2 m n Y)) (+ (^ m 2) (^ n 2)))
               (/ (+ (* -2 m n X) (* (- (^ m 2) (^ n 2)) Y)) (+ (^ m 2) (^ n 2))))))))
 

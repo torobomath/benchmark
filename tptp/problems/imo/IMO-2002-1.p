@@ -15,13 +15,13 @@
 %% </PROBLEM-TEXT>
 
 % Syntax   : Number of formulae    :    1 (   0 unit;   0 type;   0 defn)
-%            Number of atoms       :  146 (   9 equality;  52 variable)
-%            Maximal formula depth :   27 (  27 average)
-%            Number of connectives :  154 (   4   ~;   0   |;  19   &; 127   @)
+%            Number of atoms       :  188 (   9 equality;  51 variable)
+%            Maximal formula depth :   28 (  28 average)
+%            Number of connectives :  210 (   4   ~;   0   |;  18   &; 184   @)
 %                                         (   0 <=>;   4  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   18 (   0   :;   0   =)
+%            Number of symbols     :   17 (   0   :;   0   =)
 %            Number of variables   :   15 (   0 sgn;  12   !;   0   ?;   3   ^)
 %                                         (  15   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
@@ -30,45 +30,44 @@
 include('axioms.ax').
 
 thf(p,conjecture,(
-    ! [V_n: $int,V_S: ( 'SetOf' @ ( 'ListOf' @ $int ) ),V_B: ( 'SetOf' @ ( 'ListOf' @ $int ) ),V_R: ( 'SetOf' @ ( 'ListOf' @ $int ) ),V_X: ( 'SetOf' @ ( 'SetOf' @ ( 'ListOf' @ $int ) ) ),V_Y: ( 'SetOf' @ ( 'SetOf' @ ( 'ListOf' @ $int ) ) )] :
+    ! [V_n: $int,V_S: ( 'SetOf' @ ( 'Pair' @ $int @ $int ) ),V_B: ( 'SetOf' @ ( 'Pair' @ $int @ $int ) ),V_R: ( 'SetOf' @ ( 'Pair' @ $int @ $int ) ),V_X: ( 'SetOf' @ ( 'SetOf' @ ( 'Pair' @ $int @ $int ) ) ),V_Y: ( 'SetOf' @ ( 'SetOf' @ ( 'Pair' @ $int @ $int ) ) )] :
       ( ( ( V_S
-          = ( 'set-by-def/1' @ ( 'ListOf' @ $int )
-            @ ^ [V_z_dot_0: ( 'ListOf' @ $int )] :
-                ( ( 'int.is-lattice-point/1' @ V_z_dot_0 )
-                & ( $greatereq @ ( 'int.x-coord/1' @ V_z_dot_0 ) @ 0 )
-                & ( $greatereq @ ( 'int.y-coord/1' @ V_z_dot_0 ) @ 0 )
-                & ( $less @ ( $sum @ ( 'int.x-coord/1' @ V_z_dot_0 ) @ ( 'int.y-coord/1' @ V_z_dot_0 ) ) @ V_n ) ) ) )
-        & ( 'is-subset-of/2' @ ( 'ListOf' @ $int ) @ V_R @ V_S )
-        & ! [V_w_dot_1: ( 'ListOf' @ $int ),V_z: ( 'ListOf' @ $int )] :
-            ( ( ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_z @ V_R )
-              & ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_w_dot_1 @ V_S )
-              & ( $lesseq @ ( 'int.x-coord/1' @ V_w_dot_1 ) @ ( 'int.x-coord/1' @ V_z ) )
-              & ( $lesseq @ ( 'int.y-coord/1' @ V_w_dot_1 ) @ ( 'int.y-coord/1' @ V_z ) ) )
-           => ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_w_dot_1 @ V_R ) )
+          = ( 'set-by-def/1' @ ( 'Pair' @ $int @ $int )
+            @ ^ [V_z_dot_0: ( 'Pair' @ $int @ $int )] :
+                ( ( $greatereq @ ( 'fst/1' @ $int @ $int @ V_z_dot_0 ) @ 0 )
+                & ( $greatereq @ ( 'snd/1' @ $int @ $int @ V_z_dot_0 ) @ 0 )
+                & ( $less @ ( $sum @ ( 'fst/1' @ $int @ $int @ V_z_dot_0 ) @ ( 'snd/1' @ $int @ $int @ V_z_dot_0 ) ) @ V_n ) ) ) )
+        & ( 'is-subset-of/2' @ ( 'Pair' @ $int @ $int ) @ V_R @ V_S )
+        & ! [V_w_dot_1: ( 'Pair' @ $int @ $int ),V_z: ( 'Pair' @ $int @ $int )] :
+            ( ( ( 'elem/2' @ ( 'Pair' @ $int @ $int ) @ V_z @ V_R )
+              & ( 'elem/2' @ ( 'Pair' @ $int @ $int ) @ V_w_dot_1 @ V_S )
+              & ( $lesseq @ ( 'fst/1' @ $int @ $int @ V_w_dot_1 ) @ ( 'fst/1' @ $int @ $int @ V_z ) )
+              & ( $lesseq @ ( 'snd/1' @ $int @ $int @ V_w_dot_1 ) @ ( 'snd/1' @ $int @ $int @ V_z ) ) )
+           => ( 'elem/2' @ ( 'Pair' @ $int @ $int ) @ V_w_dot_1 @ V_R ) )
         & ( V_B
-          = ( 'complement-of-in/2' @ ( 'ListOf' @ $int ) @ V_R @ V_S ) )
+          = ( 'complement-of-in/2' @ ( 'Pair' @ $int @ $int ) @ V_R @ V_S ) )
         & ( V_X
-          = ( 'set-by-def/1' @ ( 'SetOf' @ ( 'ListOf' @ $int ) )
-            @ ^ [V_U_dot_0: ( 'SetOf' @ ( 'ListOf' @ $int ) )] :
-                ( ( 'is-subset-of/2' @ ( 'ListOf' @ $int ) @ V_U_dot_0 @ V_S )
-                & ( 'is-cardinality-of/2' @ ( 'ListOf' @ $int ) @ V_n @ ( 'set-intersection/2' @ ( 'ListOf' @ $int ) @ V_B @ V_U_dot_0 ) )
-                & ! [V_w_dot_0: ( 'ListOf' @ $int ),V_v_dot_0: ( 'ListOf' @ $int )] :
-                    ( ( ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_w_dot_0 @ V_U_dot_0 )
-                      & ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_v_dot_0 @ V_U_dot_0 )
+          = ( 'set-by-def/1' @ ( 'SetOf' @ ( 'Pair' @ $int @ $int ) )
+            @ ^ [V_U_dot_0: ( 'SetOf' @ ( 'Pair' @ $int @ $int ) )] :
+                ( ( 'is-subset-of/2' @ ( 'Pair' @ $int @ $int ) @ V_U_dot_0 @ V_S )
+                & ( 'is-cardinality-of/2' @ ( 'Pair' @ $int @ $int ) @ V_n @ ( 'set-intersection/2' @ ( 'Pair' @ $int @ $int ) @ V_B @ V_U_dot_0 ) )
+                & ! [V_w_dot_0: ( 'Pair' @ $int @ $int ),V_v_dot_0: ( 'Pair' @ $int @ $int )] :
+                    ( ( ( 'elem/2' @ ( 'Pair' @ $int @ $int ) @ V_w_dot_0 @ V_U_dot_0 )
+                      & ( 'elem/2' @ ( 'Pair' @ $int @ $int ) @ V_v_dot_0 @ V_U_dot_0 )
                       & ( V_w_dot_0 != V_v_dot_0 ) )
-                   => ( ( 'int.x-coord/1' @ V_w_dot_0 )
-                     != ( 'int.x-coord/1' @ V_v_dot_0 ) ) ) ) ) )
+                   => ( ( 'fst/1' @ $int @ $int @ V_w_dot_0 )
+                     != ( 'fst/1' @ $int @ $int @ V_v_dot_0 ) ) ) ) ) )
         & ( V_Y
-          = ( 'set-by-def/1' @ ( 'SetOf' @ ( 'ListOf' @ $int ) )
-            @ ^ [V_U: ( 'SetOf' @ ( 'ListOf' @ $int ) )] :
-                ( ( 'is-subset-of/2' @ ( 'ListOf' @ $int ) @ V_U @ V_B )
-                & ( 'is-cardinality-of/2' @ ( 'ListOf' @ $int ) @ V_n @ ( 'set-intersection/2' @ ( 'ListOf' @ $int ) @ V_B @ V_U ) )
-                & ! [V_w: ( 'ListOf' @ $int ),V_v: ( 'ListOf' @ $int )] :
-                    ( ( ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_w @ V_U )
-                      & ( 'elem/2' @ ( 'ListOf' @ $int ) @ V_v @ V_U )
+          = ( 'set-by-def/1' @ ( 'SetOf' @ ( 'Pair' @ $int @ $int ) )
+            @ ^ [V_U: ( 'SetOf' @ ( 'Pair' @ $int @ $int ) )] :
+                ( ( 'is-subset-of/2' @ ( 'Pair' @ $int @ $int ) @ V_U @ V_B )
+                & ( 'is-cardinality-of/2' @ ( 'Pair' @ $int @ $int ) @ V_n @ ( 'set-intersection/2' @ ( 'Pair' @ $int @ $int ) @ V_B @ V_U ) )
+                & ! [V_w: ( 'Pair' @ $int @ $int ),V_v: ( 'Pair' @ $int @ $int )] :
+                    ( ( ( 'elem/2' @ ( 'Pair' @ $int @ $int ) @ V_w @ V_U )
+                      & ( 'elem/2' @ ( 'Pair' @ $int @ $int ) @ V_v @ V_U )
                       & ( V_w != V_v ) )
-                   => ( ( 'int.y-coord/1' @ V_w )
-                     != ( 'int.y-coord/1' @ V_v ) ) ) ) ) ) )
-     => ( ( 'cardinality-of/1' @ ( 'SetOf' @ ( 'ListOf' @ $int ) ) @ V_X )
-        = ( 'cardinality-of/1' @ ( 'SetOf' @ ( 'ListOf' @ $int ) ) @ V_Y ) ) ) )).
+                   => ( ( 'snd/1' @ $int @ $int @ V_w )
+                     != ( 'snd/1' @ $int @ $int @ V_v ) ) ) ) ) ) )
+     => ( ( 'cardinality-of/1' @ ( 'SetOf' @ ( 'Pair' @ $int @ $int ) ) @ V_X )
+        = ( 'cardinality-of/1' @ ( 'SetOf' @ ( 'Pair' @ $int @ $int ) ) @ V_Y ) ) ) )).
 

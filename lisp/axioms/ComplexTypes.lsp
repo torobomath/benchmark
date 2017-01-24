@@ -11,6 +11,9 @@
 ;;@ complex(x, y) = complex number with real part x and imaginary part y
 (def-ctor complex :: R -> R => Complex)
 
+;; TORIAEZU
+(def-fun to_real :: Complex => R)
+
 ;;@ a + b = the sum of a and b in complex numbers
 (def-fun +  :: Complex -> Complex => Complex)
 
@@ -55,6 +58,9 @@
 
 ;;@ trivially true for any Complex
 (def-pred is-complex :: Complex => Bool)
+
+;;@ trivially true for any Complex
+(def-pred is-number :: Complex => Bool)
 
 ;;@ real-number(a) <-> a is a real number
 (def-pred real-number :: Complex => Bool)
@@ -137,3 +143,10 @@
   (a b)
   (= (point->complex (2d.point a b))
      (complex a b)))
+
+;; TORIAEZU
+(def-fun to_complex :: Complex => Complex)
+
+(default-namespace)
+(def-fun to_complex :: R => complex.Complex)
+

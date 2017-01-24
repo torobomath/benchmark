@@ -7,13 +7,13 @@
 
 % Syntax   : Number of formulae    :    6 (   0 unit;   0 type;   0 defn)
 %            Number of atoms       :  133 (  15 equality;  30 variable)
-%            Maximal formula depth :   12 (  11 average)
-%            Number of connectives :  103 (   0   ~;   0   |;   9   &;  91   @)
-%                                         (   0 <=>;   3  =>;   0  <=;   0 <~>)
+%            Maximal formula depth :   15 (  12 average)
+%            Number of connectives :  103 (   0   ~;   0   |;  12   &;  91   @)
+%                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
 %            Number of symbols     :   23 (   0   :;   0   =)
-%            Number of variables   :   15 (   0 sgn;   9   !;   0   ?;   6   ^)
+%            Number of variables   :   15 (   0 sgn;   0   !;   9   ?;   6   ^)
 %                                         (  15   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
 %            Arithmetic symbols    :   11 (   0 pred;    2 func;    9 numbers)
@@ -23,43 +23,43 @@ include('axioms.ax').
 thf(p1_qustion,question,
     ( 'find/1' @ ( 'ListOf' @ $real )
     @ ^ [V_answer: ( 'ListOf' @ $real )] :
-      ! [V_V: $real,V_A: $real,V_S: '3d.Shape'] :
-        ( ( ( '3d.sphere-type/1' @ V_S )
-          & ( 2.0
-            = ( '3d.radius-of/1' @ V_S ) )
-          & ( V_V
-            = ( '3d.volume-of/1' @ V_S ) )
-          & ( V_A
-            = ( '3d.area-of/1' @ V_S ) ) )
-       => ( V_answer
+      ? [V_V: $real,V_A: $real,V_S: '3d.Shape'] :
+        ( ( '3d.sphere-type/1' @ V_S )
+        & ( 2.0
+          = ( '3d.radius-of/1' @ V_S ) )
+        & ( V_V
+          = ( '3d.volume-of/1' @ V_S ) )
+        & ( V_A
+          = ( '3d.area-of/1' @ V_S ) )
+        & ( V_answer
           = ( 'cons/2' @ $real @ V_V @ ( 'cons/2' @ $real @ V_A @ ( 'nil/0' @ $real ) ) ) ) ) )).
 
 thf(p2_qustion,question,
     ( 'find/1' @ ( 'ListOf' @ $real )
     @ ^ [V_answer: ( 'ListOf' @ $real )] :
-      ! [V_V: $real,V_A: $real,V_S: '3d.Shape'] :
-        ( ( ( '3d.sphere-type/1' @ V_S )
-          & ( ( 'sqrt/1' @ 5.0 )
-            = ( '3d.radius-of/1' @ V_S ) )
-          & ( V_V
-            = ( '3d.volume-of/1' @ V_S ) )
-          & ( V_A
-            = ( '3d.area-of/1' @ V_S ) ) )
-       => ( V_answer
+      ? [V_V: $real,V_A: $real,V_S: '3d.Shape'] :
+        ( ( '3d.sphere-type/1' @ V_S )
+        & ( ( 'sqrt/1' @ 5.0 )
+          = ( '3d.radius-of/1' @ V_S ) )
+        & ( V_V
+          = ( '3d.volume-of/1' @ V_S ) )
+        & ( V_A
+          = ( '3d.area-of/1' @ V_S ) )
+        & ( V_answer
           = ( 'cons/2' @ $real @ V_V @ ( 'cons/2' @ $real @ V_A @ ( 'nil/0' @ $real ) ) ) ) ) )).
 
 thf(p3_qustion,question,
     ( 'find/1' @ ( 'ListOf' @ $real )
     @ ^ [V_answer: ( 'ListOf' @ $real )] :
-      ! [V_V: $real,V_A: $real,V_S: '3d.Shape'] :
-        ( ( ( '3d.sphere-type/1' @ V_S )
-          & ( ( $quotient @ 12.0 @ 2.0 )
-            = ( '3d.radius-of/1' @ V_S ) )
-          & ( V_V
-            = ( '3d.volume-of/1' @ V_S ) )
-          & ( V_A
-            = ( '3d.area-of/1' @ V_S ) ) )
-       => ( V_answer
+      ? [V_V: $real,V_A: $real,V_S: '3d.Shape'] :
+        ( ( '3d.sphere-type/1' @ V_S )
+        & ( ( $quotient @ 12.0 @ 2.0 )
+          = ( '3d.radius-of/1' @ V_S ) )
+        & ( V_V
+          = ( '3d.volume-of/1' @ V_S ) )
+        & ( V_A
+          = ( '3d.area-of/1' @ V_S ) )
+        & ( V_answer
           = ( 'cons/2' @ $real @ V_V @ ( 'cons/2' @ $real @ V_A @ ( 'nil/0' @ $real ) ) ) ) ) )).
 
 thf(p1_answer,answer,(

@@ -18,9 +18,9 @@
   (Find (V)
   (exists (l A)
     (&&
-     (= l (line (point 1 0 1) (point 1 0 2)))
-     (= A (rotation-around l (z-axis)))
-     (= V (volume-of (rotation-around A (x-axis))))))))
+     (= l (seg (point 1 0 1) (point 1 0 2)))
+     (= A (solid-of-revolution l (z-axis)))
+     (= V (volume-of (solid-of-revolution A (x-axis))))))))
 
 (def-answer p (PLam V (= V (* 6 (Pi)))))
 

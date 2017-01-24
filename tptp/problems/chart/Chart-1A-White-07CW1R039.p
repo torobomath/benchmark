@@ -12,11 +12,11 @@
 %                                         (   0 <=>;   0  =>;   0  <=;   0 <~>)
 %                                         (   0  ~|;   0  ~&)
 %            Number of type conns  :    0 (   0   >;   0   *;   0   +;   0  <<)
-%            Number of symbols     :   26 (   0   :;   0   =)
+%            Number of symbols     :   27 (   0   :;   0   =)
 %            Number of variables   :    7 (   0 sgn;   0   !;   0   ?;   7   ^)
 %                                         (   7   :;   0  !>;   0  ?*)
 %                                         (   0  @-;   0  @+)
-%            Arithmetic symbols    :   21 (   3 pred;    5 func;   13 numbers)
+%            Arithmetic symbols    :   22 (   4 pred;    5 func;   13 numbers)
 
 include('axioms.ax').
 
@@ -28,7 +28,7 @@ thf(p1_qustion,question,
           @ ( 'set-by-def/1' @ $int
             @ ^ [V_n0: $int] :
                 ( ( 'int.is-natural-number/1' @ V_n0 )
-                & ( $lesseq @ ( $sum @ ( $quotient @ ( $to_rat @ ( $sum @ ( $product @ 3 @ V_n0 ) @ -1 ) ) @ ( $to_rat @ 4 ) ) @ ( $quotient @ ( $to_rat @ ( $uminus @ ( $sum @ ( $product @ 2 @ V_n0 ) @ -3 ) ) ) @ ( $to_rat @ 5 ) ) ) @ ( $sum @ ( $quotient @ ( $to_rat @ ( $sum @ ( $product @ 7 @ V_n0 ) @ -7 ) ) @ ( $to_rat @ 10 ) ) @ ( $to_rat @ -1 ) ) ) ) )
+                & ( $greater @ ( $sum @ ( $quotient @ ( $to_rat @ ( $sum @ ( $product @ 3 @ V_n0 ) @ -1 ) ) @ ( $to_rat @ 4 ) ) @ ( $quotient @ ( $to_rat @ ( $uminus @ ( $sum @ ( $product @ 2 @ V_n0 ) @ -3 ) ) ) @ ( $to_rat @ 5 ) ) ) @ ( $sum @ ( $quotient @ ( $to_rat @ ( $sum @ ( $product @ 7 @ V_n0 ) @ -7 ) ) @ ( $to_rat @ 10 ) ) @ ( $to_rat @ -1 ) ) ) ) )
           @ ^ [V_lhs: $int,V_rhs: $int] :
               ( $less @ V_lhs @ V_rhs )
           @ V_n ) ) )).
